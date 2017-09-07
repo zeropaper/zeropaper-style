@@ -1,0 +1,38 @@
+{
+  "name": "zeropaper.github.io",
+  "version": "1.0.0",
+  "description": "Personal webpage",
+  "main": "src/index.js",
+  "scripts": {
+    "build": "neutrino build",
+    "start": "neutrino start",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zeropaper/zeropaper.github.io.git"
+  },
+  "keywords": [
+    "personal",
+    "gh-pages"
+  ],
+  "author": "Valentin Vago <zeropaper@irata.ch>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/zeropaper/zeropaper.github.io/issues"
+  },
+  "homepage": "https://github.com/zeropaper/zeropaper.github.io#readme",
+  "devDependencies": {
+    "neutrino": "^6.1.5",
+    "neutrino-preset-react": "^6.1.5"
+  },
+  "dependencies": {
+    "leaflet": "^1.2.0",
+    "lodash.throttle": "^4.1.1",
+    "moment": "^2.18.1",
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1",
+    "react-hot-loader": "^3.0.0-beta.7",
+    "vis": "^4.20.1"
+  }
+}
