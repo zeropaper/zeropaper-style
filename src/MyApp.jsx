@@ -6,7 +6,7 @@ require('./root.css');
 
 export default class MyApp extends React.Component {
   constructor(props) {
-    super();
+    super(props);
     this.state = {
       events: [],
       currentEvent: null
@@ -30,11 +30,11 @@ export default class MyApp extends React.Component {
     this.state.events.forEach((event, e) => {
       const current = event.el.getBoundingClientRect().top + (scrolledTop);
       positions.push([
-                      prev,
-                      current,
-                      (current) - prev,
-                      event.name
-                    ]);
+        prev,
+        current,
+        (current) - prev,
+        event.name
+      ]);
       prev = current;
     });
 
@@ -85,6 +85,7 @@ export default class MyApp extends React.Component {
     this.scrolled();
   }
 
+
   componentWillUnmount() {
     const opts = {
       passive: true,
@@ -98,8 +99,8 @@ export default class MyApp extends React.Component {
     return (
       <div>
         <div className="wrapper">
-          <Timeline />
-          <Leaflet />
+          <Timeline events={this.state.events} currentEvent={this.state.currentEvent} />
+          <Leaflet events={this.state.events} currentEvent={this.state.currentEvent} />
         </div>
       </div>
     );

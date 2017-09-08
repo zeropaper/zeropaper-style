@@ -5,6 +5,7 @@ module.exports = {
   // },
 
   use: [
+    ['neutrino-preset-airbnb', {}],
     ['neutrino-preset-react', {
       html: {
         title: 'Valentin "zeropaper" Vago\'s page',

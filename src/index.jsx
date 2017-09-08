@@ -2,7 +2,7 @@ import React from 'react';
 import { render } from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
 import MyApp from './MyApp';
-require('./index.css');
+// require('./index.css');
 
 
 const load = () => {
