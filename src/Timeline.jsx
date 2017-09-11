@@ -1,6 +1,7 @@
 import React from 'react';
-import moment from 'moment';
+// import moment from 'moment';
 import vis from 'vis';
+
 require('vis/dist/vis.css');
 require('vis/dist/vis-timeline-graph2d.min.css');
 
@@ -9,19 +10,19 @@ export default class Timeline extends React.Component {
     super();
     this.state = {
       events: props.events || [],
-      currentEvent: props.currentEvent || null
+      currentEvent: props.currentEvent || null,
     };
     this.updateEvents = this.updateEvents.bind(this);
     this.updateCurrentEvent = this.updateCurrentEvent.bind(this);
-    console.log('Timeline props', props);
+    // console.log('Timeline props', props);
   }
 
   updateEvents(events) {
-    this.setState({events: events});
+    this.setState({ events });
   }
 
   updateCurrentEvent(currentEvent) {
-    this.setState({events: events});
+    this.setState({ currentEvent });
   }
 
   componentDidMount() {
@@ -40,11 +41,11 @@ export default class Timeline extends React.Component {
     //     location: el.getAttribute('data-location')
     //   });
     // });
-    console.info('this.state', this.state);
+    // console.info('this.state', this.state);
     const events = this.state.events;
     const items = new vis.DataSet(events);
     this.timeline = new vis.Timeline(this.el, items, {
-      height: '100%'
+      height: '100%',
     });
   }
 
@@ -54,7 +55,7 @@ export default class Timeline extends React.Component {
 
   render() {
     return (
-      <div className="timeline" ref={el => this.el = el}></div>
+      <div className="timeline" ref={(el) => { this.el = el; }}></div>
     );
   }
-};
+}
