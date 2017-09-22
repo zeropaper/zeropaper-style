@@ -8,7 +8,10 @@ import MyApp from './MyApp.jsx';
 /* eslint-enable no-unused-vars */
 
 const load = () => {
-  if (document.body.clientWidth < 600) return;
+  if (document.body.clientWidth < 600) {
+    // unmount app...
+    return;
+  }
   render((
     <AppContainer>
       <MyApp />

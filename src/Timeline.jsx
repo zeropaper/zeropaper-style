@@ -6,47 +6,59 @@ require('vis/dist/vis.css');
 require('vis/dist/vis-timeline-graph2d.min.css');
 
 export default class Timeline extends React.Component {
-  constructor(props) {
+  constructor() {
     super();
     this.state = {
-      events: props.events || [],
-      currentEvent: props.currentEvent || null,
+      events: [],
+      currentIndex: null,
     };
-    this.updateEvents = this.updateEvents.bind(this);
-    this.updateCurrentEvent = this.updateCurrentEvent.bind(this);
-    // console.log('Timeline props', props);
   }
 
-  updateEvents(events) {
-    this.setState({ events });
-  }
-
-  updateCurrentEvent(currentEvent) {
-    this.setState({ currentEvent });
+  currentEvent() {
+    return this.state.events[this.state.currentIndex];
   }
 
   componentDidMount() {
-    // const events = [];
-    // document.querySelectorAll('[data-event]').forEach((el, e) => {
-    //   const dates = el.getAttribute('data-date')
-    //                 .split(' ')
-    //                 .filter(str => !!str.trim())
-    //                 .map(str => moment(str.trim()));
-    //   events.push({
-    //     id: e,
-    //     content: el.getAttribute('data-event'),
-    //     start: dates[0].format('YYYY-MM-DD'),
-    //     end: dates[1] ? dates[1].format('YYYY-MM-DD') : null,
-    //     coords: el.getAttribute('data-coords'),
-    //     location: el.getAttribute('data-location')
-    //   });
-    // });
-    // console.info('this.state', this.state);
     const events = this.state.events;
     const items = new vis.DataSet(events);
+
     this.timeline = new vis.Timeline(this.el, items, {
       height: '100%',
     });
+
+    this.timeline.on('select', (properties) => {
+      this.props.focusEvent(properties.items[0]);
+      this.timeline.focus(properties.items[0]);
+    });
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    return !this.state.events.length ||
+           this.state.currentIndex === null ||
+            this.state.currentIndex !== nextState.currentIndex;
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    const tl = this.timeline;
+    // console.info(prevState.events.length, this.state.events.length);
+    if (prevState.events.length !== this.state.events.length) {
+      tl.setItems(this.state.events.map((event, e) => {
+        const info = {
+          id: e,
+          content: event.name,
+          start: event.dates[0],
+        };
+        if (event.dates[1]) info.end = event.dates[1];
+        return info;
+      }));
+      tl.fit();
+    }
+
+    const currentEvent = this.currentEvent();
+    if (currentEvent) {
+      tl.focus(this.state.currentIndex);
+      // tl.zoomIn(0.5);
+    }
   }
 
   componentWillUnmount() {
@@ -55,7 +67,8 @@ export default class Timeline extends React.Component {
 
   render() {
     return (
-      <div className="timeline" ref={(el) => { this.el = el; }}></div>
+      <div className="timeline"
+        ref={(el) => { this.el = el; }}></div>
     );
   }
 }

@@ -25,8 +25,12 @@ export default class Leaflet extends React.Component {
     super();
     this.state = {
       events: [],
-      currentEvent: null,
+      currentIndex: null,
     };
+  }
+
+  currentEvent() {
+    return this.state.events[this.state.currentIndex];
   }
 
   componentDidMount() {
@@ -44,10 +48,8 @@ export default class Leaflet extends React.Component {
       });
     });
 
-    this.state.currentEvent = this.state.events[0] || null;
-
     this.map = L.map(this.el, {
-      center: (this.state.currentEvent || {}).coords || [51.505, -0.09],
+      center: (this.currentEvent() || {}).coords || [51.505, -0.09],
       zoom: 11,
     });
 
@@ -68,6 +70,12 @@ export default class Leaflet extends React.Component {
     (new L.StamenTileLayer('toner', {
       detectRetina: true,
     })).addTo(this.map);
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    return !this.state.events.length ||
+           this.state.currentIndex === null ||
+            this.state.currentIndex !== nextState.currentIndex;
   }
 
   componentWillUnmount() {

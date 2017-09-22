@@ -10,30 +10,38 @@ import Timeline from './Timeline.jsx';
 
 require('./root.css');
 
+function scrollVert(el) {
+  window.scroll(0, el.offsetTop - (window.innerHeight / 2));
+}
+
 export default class MyApp extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      scrolledTop: 0,
+      positions: [],
       events: [],
-      currentEvent: null,
+      currentIndex: null,
     };
 
-    this.scrolledTop = 0;
-    this.positions = [];
-
+    this.broadcastState = this.broadcastState.bind(this);
     this.populatePositions = this.populatePositions.bind(this);
     this.scrolled = throttle(this.scrolled, 100, { trailing: true }).bind(this);
+    this.focusEvent = this.focusEvent.bind(this);
+  }
+
+  currentEvent() {
+    return this.state.events[this.state.currentIndex];
   }
 
   populatePositions(force) {
-    if (this.positions.length && !force) return this.positions;
+    if (this.state.positions.length && !force) return this.state.positions;
 
     let prev = 0;
     const rect = document.body.getBoundingClientRect();
     const scrolledTop = Math.abs(rect.top);
 
-    this.positions = [];
-    const positions = this.positions;
+    const positions = [];
 
     this.state.events.forEach((event) => {
       const current = event.el.getBoundingClientRect().top + (scrolledTop);
@@ -46,19 +54,24 @@ export default class MyApp extends React.Component {
       prev = current;
     });
 
+    this.broadcastState({ positions });
+
     return positions;
   }
 
   scrolled() {
     const rect = document.body.getBoundingClientRect();
-    this.scrolledTop = Math.abs(rect.top - (window.innerHeight * 0.5));
-    const scrolledTop = this.scrolledTop;
+    const scrolledTop = Math.abs(rect.top - (window.innerHeight * 0.5));
+    this.setState({ scrolledTop });
+
     this.populatePositions();
 
-    const currentIndex = this.positions
+    const currentIndex = this.state.positions
       .findIndex(position => scrolledTop >= position[0] && scrolledTop < position[1]);
 
     this.state.events.forEach((event, e) => event.el.classList[e === currentIndex ? 'add' : 'remove']('current'));
+
+    this.broadcastState({ currentIndex });
   }
 
   componentWillMount() {
@@ -72,26 +85,39 @@ export default class MyApp extends React.Component {
 
 
   componentDidMount() {
+    const events = [];
     document.querySelectorAll('[data-event]').forEach((el) => {
       const name = el.getAttribute('data-event');
+
       const coords = el.getAttribute('data-coords')
         .split(',')
         .map(val => parseFloat(val.trim(), 10));
-      this.state.events.push({
+
+      const dates = el.getAttribute('data-date')
+        .split(' ')
+        .filter(str => str.trim())
+        .map(str => moment(str));
+
+      events.push({
         el,
         name,
         coords,
-        dates: el.getAttribute('data-date')
-          .split(' ')
-          .filter(str => !str.trim())
-          .map(str => moment(str)),
+        dates,
         location: el.getAttribute('data-location'),
       });
     });
+    this.timelineHeight = document.querySelector('.timeline').clientHeight;
+
+    this.broadcastState({ events });
 
     this.scrolled();
   }
 
+  broadcastState(obj) {
+    this.setState(obj);
+    Object.keys(this.refs)
+      .forEach(key => this.refs[key].setState(obj));
+  }
 
   componentWillUnmount() {
     const opts = {
@@ -102,12 +128,33 @@ export default class MyApp extends React.Component {
     window.removeEventListener('scroll', this.scrolled, opts);
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    return !this.state.events.length ||
+           this.state.currentIndex === null ||
+            this.state.currentIndex !== nextState.currentIndex;
+  }
+
+  focusEvent(index) {
+    this.setState({ currentIndex: index });
+    const currentEvent = this.currentEvent();
+    if (!currentEvent) return;
+    scrollVert(currentEvent.el);
+    this.scrolled();
+    this.broadcastState({ currentEvent });
+  }
+
   render() {
     return (
       <div>
         <div className="wrapper">
-          <Timeline events={this.state.events} currentEvent={this.state.currentEvent} />
-          <Leaflet events={this.state.events} currentEvent={this.state.currentEvent} />
+          <Timeline
+            ref="timeline"
+            focusEvent={this.focusEvent}
+          />
+          <Leaflet
+            ref="map"
+            focusEvent={this.focusEvent}
+          />
         </div>
       </div>
     );
