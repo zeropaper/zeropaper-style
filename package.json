@@ -6,7 +6,7 @@
   "scripts": {
     "build": "neutrino build",
     "start": "neutrino start",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "wdio test/wdio.conf.js"
   },
   "repository": {
     "type": "git",
@@ -23,9 +23,18 @@
   },
   "homepage": "https://github.com/zeropaper/zeropaper.github.io#readme",
   "devDependencies": {
+    "async": "^2.5.0",
+    "mkdirp": "^0.5.1",
     "neutrino": "^6.1.5",
     "neutrino-preset-airbnb-base": "^6.1.8",
-    "neutrino-preset-react": "^6.1.5"
+    "neutrino-preset-react": "^6.1.5",
+    "node-resemble-v2": "^1.0.0",
+    "wdio": "^1.0.3",
+    "wdio-mocha-framework": "^0.5.11",
+    "wdio-screenshot": "^0.6.0",
+    "wdio-selenium-standalone-service": "0.0.9",
+    "wdio-spec-reporter": "^0.1.2",
+    "wdio-static-server-service": "^1.0.1"
   },
   "dependencies": {
     "leaflet": "^1.2.0",
