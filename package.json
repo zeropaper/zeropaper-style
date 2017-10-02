@@ -24,6 +24,7 @@
   "homepage": "https://github.com/zeropaper/zeropaper.github.io#readme",
   "devDependencies": {
     "async": "^2.5.0",
+    "is-ci": "^1.0.10",
     "mkdirp": "^0.5.1",
     "neutrino": "^6.1.5",
     "neutrino-preset-airbnb-base": "^6.1.8",
