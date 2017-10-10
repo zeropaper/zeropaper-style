@@ -201,17 +201,11 @@ body > footer {
   margin-top: 10vh;
 }
 
-body > footer ul {
-  text-align: center;
-  display: block;
-  list-style: none;
-  margin: 0;
-  padding: 0;
+body > footer > div {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: var(--layout-max-width, 850px);
 }
-body > footer li {
-  display: inline-block;
-}
-
 
 dt:after {
   margin-top: 2em;
@@ -238,60 +232,29 @@ dd > ul {
 
 
 
-.x-rows,
-.x-columns,
-.x-r-rows,
-.x-r-columns {
-  display: flex;
-}
-.x-columns {
-  flex-direction: row;
-}
-.x-r-columns {
-  flex-direction: row-reverse;
-}
-.x-r-rows {
-  flex-direction: column-reverse;
-}
-.x-shrink {
-  flex-shrink: 2;
-}
-.x-shrink-l {
-  flex-shrink: 3;
-}
-.x-shrink-xl {
-  flex-shrink: 4;
-}
-.x-grow {
-  flex-grow: 2;
-}
-.x-grow-l {
-  flex-grow: 3;
-}
-.x-grow-xl {
-  flex-grow: 4;
-}
 
-
-#hello main {
+main {
   display: flex;
   flex-wrap: wrap;
 }
-#hello main > div {
+main > div {
   width: 100%;
 }
 @media screen and (min-width: 600px) {
-  #hello main > div {
+  main > div {
     font-size: 0.85em;
     width: calc(50% - 1rem);
     margin: 1rem;
   }
-  #hello main > div:nth-child(2n+1) {
+  main > div:nth-child(2n+1) {
     margin-left: 0;
   }
-  #hello main > div:nth-child(2n+0) {
+  main > div:nth-child(2n+0) {
     margin-right: 0;
   }
+}
+#introduction {
+  width: 100%;
 }
 
     </style>
@@ -311,9 +274,9 @@ dd > ul {
 
 
 
-    <header>
+    <% /* <header>
       <img class="page-badge" title="Valentin Vago - Web Craftsman - Backend &amp; Frontend"  src="./static/v-vago.svg"/>
-    </header>
+    </header> */ %>
 
 
 
@@ -333,11 +296,20 @@ dd > ul {
               data-location="Montreux"
               data-coords="46.4461397,6.8807008">
         <h1>Hello, my name is Valentin Vago.</h1>
+        <div>Internet technologies are shaping my career since the end of the <span title="I loved Netscape">90's</span>.</div>
       </header>
 
       <main>
-        <div>
-          <h2>About</h2>
+        <div id="introduction">
+          It is during my media design studies that my interest for interaction and visual creation has developed.<br/>
+          Berlin seemed like a natural choice to immerge in a creative and technology friendly environment after I graduated from <a href="http://eikon.ch/">EIKON</a>.<br/>
+          After more than 7 years of freelancing experience, <a href="https://camunda.org">Camunda</a> convinced my to join their team of great developers. My work in this company has been varied, from setting up complex build system to the elaboration of a consistant design for the webapps, widget library and websites of the company.<br/>
+          But after 3 years, the surge to work on a <a href="#pet-projects">personal project</a> was too big and decided to concentrate on that for a while.<br/>
+          In 2017, an offer for a position of lecturer at <a href="https://www.facebook.com/devugees/">Devugees</a> picked my curiosity and I gave it a try. But I actually prefer to learn and <a href="#hire-me">create</a>.
+        </div>
+
+        <div id="miscellaneous">
+          <h2>Miscellaneous</h2>
 
           <dl>
             <dt>From</dt>
@@ -387,8 +359,8 @@ dd > ul {
           </dl>
         </div>
 
-        <div>
-          <h2>Timeline</h2>
+        <div id="story">
+          <h2>Story</h2>
 
           <dl>
             <dt data-event="Technical drawer"
@@ -412,8 +384,8 @@ dd > ul {
                     École de multimedia et d'art de Fribourg (now <a href="https://eikon.ch">eikon</a>), Switzerland. Studied topics like communication theories, art history, graphic &amp; web design, color theories or typography.</div>
                 </li>
                 <li>
-                  Started VJing and wrote my first VJing software
-                  <div class="note">https://en.wikipedia.org/wiki/VJing</div>
+                  Wrote my first <a href="https://en.wikipedia.org/wiki/VJing">VJing</a> software
+                  <div class="note">To mix, live, videos and vector shapes</div>
                 </li>
               </ul>
             </dd>
@@ -472,37 +444,38 @@ dd > ul {
               <ul>
                 <li>Lecturer at devugees.org</li>
 
-                <li data-event="Part of your team?"
+                <li data-event="And now?"
                     data-date="2017-11-01T00:00:00Z"
                     data-location="Berlin"
-                    data-coords="52.5067614,13.2846512">Hire me :)</li>
+                    data-coords="52.5067614,13.2846512"
+                    id="hire-me">Hire me :)</li>
               </ul>
             </dd>
           </dl>
         </div>
 
-        <div>
+        <div id="skills">
           <h2>Skills</h2>
 
           <dl>
             <dt>Frontend</dt>
-            <dd>SASS / Less (CSS), JavaScript, HTML, Grunt.js, Webpack 2</dd>
+            <dd>CSS Pre and post processors, JavaScript (love VanillaJS), HTML, Grunt.js, Webpack</dd>
 
             <dt>Backend</dt>
-            <dd>Bash, Apache2, PHP, MySQL</dd>
+            <dd>Apache2, PHP, SQL, Drupal, NodeJS</dd>
 
             <dt>Team Work</dt>
             <dd>GIT, SVN, Scrum</dd>
 
             <dt>CMS</dt>
-            <dd><a href="https://drupal.org/">Drupal</a>, <a href="https://wordpress.org/">Wordpress</a></dd>
+            <dd>Drupal, Wordpress</dd>
 
             <dt>Operating Systems</dt>
             <dd>Linux, OSX, Windows (in order of preference)</dd>
           </dl>
         </div>
 
-        <div>
+        <div id="works">
           <h2>Some Works</h2>
 
           <dl>
@@ -512,12 +485,15 @@ dd > ul {
               <div class="note">Based on <a href="https://drupal.org/">Drupal</a> and Clickatell 2 ways SMS API.</div>
             </dd>
 
-            <dt>RESET.to</dt>
+            <dt><a href="https://reset.org">RESET.to</a></dt>
+            <dd>Information and donation platform based on <a href="https://drupal.org/">Drupal</a>.</dd>
+
+            <dt><a href="https://mundraub.org">Mundraub.org</a></dt>
             <dd>Information and donation platform based on <a href="https://drupal.org/">Drupal</a>.</dd>
 
             <dt>Nitro USA Snowboard</dt>
             <dd>
-              Complete online catalogue, using <a href="https://drupal.org/">Drupal</a>, for each brands of the company.
+              Complete online, multilingual and country specific catalogue, using <a href="https://drupal.org/">Drupal</a>, for each brands of the company.
               <div class="note">Including Raiden Bindings and L1 Outerwear for seasons 2010-2011 and 2011-2012.</div>
             </dd>
 
@@ -527,6 +503,10 @@ dd > ul {
                 <li>
                   <a href="https://camunda.github.io/camunda-commons-ui/">Camunda Commons UI</a>
                   <div class="note">Angular.js widgets and CSS framework based on Bootstrap</div>
+                </li>
+                <li>
+                  <a href="https://docs.camunda.org/manual/7.6/webapps/tasklist/">Camunda Webapps</a>
+                  <div class="note">Angular.js based webapps</div>
                 </li>
                 <li>
                   <a href="https://blog.camunda.org">Camunda Blog</a>
@@ -542,7 +522,7 @@ dd > ul {
         </div>
 
         <div>
-          <h2>Pet Projects</h2>
+          <h2 id="pet-projects">Pet Projects</h2>
 
           <dl>
             <dt>Visual Fiha</dt>
@@ -587,16 +567,12 @@ dd > ul {
     </section>
     */ %>
 
-    <% /*
     <footer>
-      <nav>
-        <ul>
-          <li>
-            <a href="https://github.com/zeropaper/zeropaper.github.io">fork this</a>
-          </li>
-        </ul>
-      </nav>
+      <div class="note">
+        This is my first attempt at using React.js, I am still <a href="https://github.com/zeropaper/zeropaper-gh">working on it</a>.
+      </div>
     </footer>
+    <% /*
     */ %>
 
     <% if (htmlWebpackPlugin.options.window) { %>
