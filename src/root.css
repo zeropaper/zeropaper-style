@@ -1,18 +1,8 @@
-/*
-body:after {
-  display: block;
-  content: '';
-  width: 100%;
-  position: fixed;
-  top: 50vh;
-  border-top: 1px solid red;
-}
-*/
 #root {
-  /*visibility: hidden;*/
   margin-bottom: 10vh;
   position: sticky;
   top: 0;
+  z-index: 10;
 }
 @media screen and (max-width: 599px) {
   #root {
@@ -42,11 +32,6 @@ body:after {
   background-color: var(--bg-color, #fff);
 }
 
-
-#root .vis-range {
-
-}
-
 #root .vis-selected {
   border-color: var(--invert-color, #fff);
   color: var(--invert-color, #fff);
@@ -55,13 +40,6 @@ body:after {
 
 #root .vis-item:hover {
   z-index: 999;
-}
-#root .vis-item:hover .vis-item-overflow {
-  overflow: visible;
-}
-#root .vis-item:hover .vis-item-content {
-  width: auto !important;/*that sucks, I get it*/
-  background-color: var(--bg-color, #fff);
 }
 #root .vis-selected.vis-item:hover .vis-item-content {
   background-color: var(--invert-bg-color, #000);
@@ -95,7 +73,3 @@ body:after {
   font-style: italic;
   box-shadow: 0 1px 0 0 var(--link-color, #11bfa5);
 }
-/*
-#hello dt.current + dd {
-}
-*/
