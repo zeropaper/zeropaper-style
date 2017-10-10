@@ -28,7 +28,8 @@ export default class Timeline extends React.Component {
 
     this.timeline.on('select', (properties) => {
       this.props.focusEvent(properties.items[0]);
-      this.timeline.focus(properties.items[0]);
+      const currentEvent = this.currentEvent();
+      if (currentEvent.end) this.timeline.setWindow(currentEvent.start, currentEvent.end);
     });
   }
 
@@ -56,8 +57,10 @@ export default class Timeline extends React.Component {
 
     const currentEvent = this.currentEvent();
     if (currentEvent) {
-      tl.focus(this.state.currentIndex);
-      // tl.zoomIn(0.5);
+      tl.setSelection(this.state.currentIndex, {
+        focus: true,
+      });
+      if (currentEvent.end) tl.setWindow(currentEvent.start, currentEvent.end);
     }
   }
 
