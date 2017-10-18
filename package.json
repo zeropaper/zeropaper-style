@@ -2,7 +2,7 @@
   "name": "zeropaper.github.io",
   "version": "1.0.0",
   "description": "Personal webpage",
-  "main": "src/index.js",
+  "main": "src/index.jsx",
   "scripts": {
     "build": "neutrino build",
     "start": "neutrino start",
