@@ -20,6 +20,7 @@
 #root .timeline {
   flex-grow: 2;
   font-size: 14px;
+  height: 40vh;
 }
 
 #root .vis-timeline {
@@ -44,30 +45,6 @@
 #root .vis-selected.vis-item:hover .vis-item-content {
   background-color: var(--invert-bg-color, #000);
 }
-
-
-#root .vis-item-content {
-
-}
-
-#root .vis-current-time {
-  background-color: var(--link-color, #11bfa5)
-}
-
-
-
-#root .map {
-  width: 50%;
-  height: 40vh;
-}
-#root .map a {
-  text-shadow: none;
-  box-shadow: none;
-}
-.leaflet-container a {
-  color: var(--link-color, #11bfa5);
-}
-
 
 #hello dt.current {
   font-style: italic;

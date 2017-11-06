@@ -4,7 +4,6 @@ import moment from 'moment';
 import React from 'react';
 import throttle from 'lodash.throttle';
 /* eslint-disable no-unused-vars */
-// import Leaflet from './Leaflet.jsx';
 import Timeline from './Timeline.jsx';
 /* eslint-enable no-unused-vars */
 
