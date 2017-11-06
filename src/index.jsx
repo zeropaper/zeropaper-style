@@ -12,6 +12,7 @@ const load = () => {
     // unmount app...
     return;
   }
+  console.info('loading');
   render((
     <AppContainer>
       <MyApp />
