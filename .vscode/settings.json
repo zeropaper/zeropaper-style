@@ -1,0 +1,16 @@
+{
+  "files.exclude": {
+    "**/.vscode": true,
+    "**/.cache": true,
+    "**/node_modules": true,
+    "**/public": true
+  },
+  "files.watcherExclude": {
+    "**/.cache/**": true,
+    "**/public/**": true
+  },
+  "search.exclude": {
+    "**/.cache": true,
+    "**/public": true
+  }
+}
