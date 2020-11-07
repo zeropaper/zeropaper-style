@@ -1,74 +1,76 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { useStaticQuery, graphql } from 'gatsby';
+import { createUseStyles } from 'react-jss';
+
+import 'modern-css-reset';
 
 import Header from './Header';
+import Menu from './Menu';
 import Footer from './Footer';
-import { useAssets } from '../AssetsProvider/Context';
+// import { useAssets } from '../AssetsProvider/Context';
 
-// eslint-disable-next-line react/prop-types
-const LayoutBase = ({ children, noHeader }) => {
-  const classes = {};
-  return (
-    <>
-      {!noHeader && (
-        <Header
-          className={classes.header}
-        />
-      )}
+const useStyles = createUseStyles({
+  '@global': {
+    body: {
+      position: 'relative',
+    },
+    '#___gatsby, #gatsby-focus-wrapper': {
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      width: '100%',
+      height: '100%',
+      overflow: 'auto',
+    },
+  },
+  header: {},
+  menu: {},
+  main: {},
+  bodyOverlayVisible: {},
+  overlay: {},
+  overlayVisible: {},
+  iqwsiuqhs: {},
+  iqwsiuqhsVisible: {},
+}, { name: 'Layout ' });
 
-      <nav className={classes.menu}>
-        TODO: menu
-      </nav>
+const Layout = ({ children, ...props }) => {
+  // const assets = useAssets();
+  // console.info('Layout assets', assets);
 
-      <main className={classes.main}>
-        {children}
-      </main>
-
-      <Footer />
-    </>
-  );
-};
-
-const Layout = ({
-  children,
-  noHeader,
-}) => {
-  const classes = {};
-
-  const assets = useAssets();
-  console.info('Layout assets', assets);
+  const classes = useStyles(props);
 
   const [visible, setVisible] = React.useState(true);
-  const handleMouseMove = () => !visible && setVisible(true);
+
+  const handleMouseMove = () => setVisible(true);
+
   React.useEffect(() => {
     const timer = setTimeout(() => setVisible(false), 1500);
     window.addEventListener('mousemove', handleMouseMove, { passive: true });
+
     return () => {
       clearTimeout(timer);
       window.removeEventListener('mousemove', handleMouseMove, { passive: true });
     };
   });
 
-  const data = useStaticQuery(graphql`{
-  site {
-    siteMetadata {
-      title
-    }
-  }
-}`);
+  React.useEffect(() => {
+    document.body.classList[visible ? 'add' : 'remove'](classes.bodyOverlayVisible);
+  }, [visible]);
 
   return (
-    <LayoutBase
-      focus={visible}
-      data={data}
-      noHeader={noHeader}
-      className={classes.root}
-    >
-      <div
-        className={classNames(classes.innerlay, {
-          [classes.innerlayVisible]: visible,
+    <>
+      <Header
+        className={classes.header}
+      />
+
+      <Menu
+        className={classes.menu}
+      />
+
+      <main
+        className={classNames(classes.main, classes.iqwsiuqhs, {
+          [classes.iqwsiuqhsVisible]: visible,
         })}
       >
         <div
@@ -78,18 +80,18 @@ const Layout = ({
         >
           {children}
         </div>
-      </div>
-    </LayoutBase>
+      </main>
+
+      <Footer />
+    </>
   );
 };
 
 Layout.propTypes = {
   children: PropTypes.node.isRequired,
-  noHeader: PropTypes.bool,
 };
 
 Layout.defaultProps = {
-  noHeader: false,
 };
 
 export default Layout;

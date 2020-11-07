@@ -42,7 +42,7 @@ module.exports = {
               backgroundColor: 'transparent',
             },
           },
-          // 'gatsby-remark-prismjs',
+          'gatsby-remark-prismjs',
           'gatsby-remark-copy-linked-files',
           'gatsby-remark-smartypants',
           // 'gatsby-remark-autolink-headers',
