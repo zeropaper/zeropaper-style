@@ -93,15 +93,23 @@ jobs:
       #     path: main/public
       #     name: build
 
-      - name: Copy main public to gh-pages
-        run: cp -rf main/public/* gh-pages/
+      # - name: Copy main public to gh-pages
+      #   run: cp -rf main/public/* gh-pages/
 
-      - name: Commit and push GH pages
-        run: |
-          cd gh-pages
-          git config --global user.email "valentin.vago@gmail.com"
-          git config --global user.name "Valentin Vago (CI)"
-          git status
-          git add .
-          git commit -m "update site" --allow-empty
-          git push
+      # - name: Commit and push GH pages
+      #   run: |
+      #     cd gh-pages
+      #     git config --global user.email "valentin.vago@gmail.com"
+      #     git config --global user.name "Valentin Vago (CI)"
+      #     git status
+      #     git add .
+      #     git commit -m "update site" --allow-empty
+      #     git push
+
+      - name: SFTP Deploy
+        uses: SamKirkland/FTP-Deploy-Action@3.0.0
+        with:
+          ftp-server: ${{ secrets.FTP_SERVER }}
+          ftp-username: ${{ secrets.FTP_USER }}
+          ftp-password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: public/
