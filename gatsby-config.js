@@ -11,6 +11,22 @@ module.exports = {
     'gatsby-plugin-react-helmet',
 
     {
+      resolve: 'gatsby-plugin-svgr',
+      options: {
+        // use prettier to format JS code output (default)
+        prettier: true,
+        // use svgo to optimize SVGs (default)
+        svgo: true,
+        svgoConfig: {
+          // remove viewBox when possible (default)
+          removeViewBox: true,
+          // remove unused IDs and minify remaining IDs (default)
+          cleanupIDs: true,
+        },
+      },
+    },
+
+    {
       resolve: 'gatsby-source-filesystem',
       options: {
         name: 'pages',
