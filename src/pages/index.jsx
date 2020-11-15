@@ -6,12 +6,11 @@ import { createUseStyles } from 'react-jss';
 import Layout from '../components/Layout/Layout';
 import SEO from '../components/Layout/SEO';
 
-import { ReactComponent as Zeropaper } from '../assets/images/zeropaper-fat.svg';
+import Logo from '../components/Logo/Logo';
 
 const useStyles = createUseStyles({
   root: {},
   layoutMain: {
-    background: 'lime',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
@@ -43,7 +42,7 @@ const IndexPage = () => {
       <SEO title="Valentin Vago" />
 
       <div className={classes.logoWrapper}>
-        <Zeropaper className={classes.logo} />
+        <Logo />
       </div>
     </Layout>
   );
