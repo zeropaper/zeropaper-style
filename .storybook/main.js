@@ -1,21 +1,28 @@
-const path = require('path');
+const { join } = require('path');
+
+const srcDir = join(__dirname, '..', 'src');
 
 module.exports = {
   stories: [
-    `../src/components/**/*.stories.jsx`,
-    `../stories/**/*.stories.jsx`,
-    // '../stories/**/*.stories.jsx'
+    '../src/**/*.stories.mdx',
+    '../src/**/*.stories.@(js|jsx|ts|tsx)'
   ],
   addons: [
-    '@storybook/addon-essentials',
+    '@storybook/addon-links',
+    '@storybook/addon-essentials'
   ],
-  webpackFinal: async (config, { configType }) => {
-    // `configType` has a value of 'DEVELOPMENT' or 'PRODUCTION'
-    // You can change the configuration based on that.
-    // 'PRODUCTION' is used when building the static version of storybook.
+  webpackFinal: async (config) => {
+    const svgRule = config.module.rules.find((rule) => 'test.svg'.match(rule.test));
+    svgRule.exclude = [srcDir];
 
-    // Return the altered config
+    config.module.rules.push({
+      test: /\.svg$/i,
+      include: [srcDir],
+      use: [{
+        loader: '@svgr/webpack',
+      }, 'file-loader'],
+    });
+
     return config;
   },
-};
-console.info(module.exports.stories);
+}
