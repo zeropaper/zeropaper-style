@@ -12,7 +12,7 @@
     "test": "jest --passWithNoTests",
     "storybook": "start-storybook -p 6006 --no-dll",
     "build-storybook": "build-storybook --no-dll",
-    "lint": "eslint --ext js,jsx gatsby-* src"
+    "lint": "eslint --ext js,jsx gatsby-* src .storybook"
   },
   "dependencies": {
     "@mdx-js/mdx": "^1.6.21",
