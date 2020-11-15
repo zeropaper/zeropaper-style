@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { Link as GatsbyLink } from 'gatsby';
+import GatsbyLink from 'gatsby-link';
 import { createUseStyles } from 'react-jss';
 
 const useStyles = createUseStyles({}, { name: 'Link' });

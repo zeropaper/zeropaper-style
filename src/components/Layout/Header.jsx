@@ -1,8 +1,8 @@
 import React from 'react';
 import { createUseStyles } from 'react-jss';
 
-import { ReactComponent as Zeropaper } from '../../assets/images/zeropaper-fat.svg';
-import Link from '../Link';
+import Link from '../Link/Link';
+import Logo from '../Logo/Logo';
 import Menu from './Menu';
 
 const useStyles = createUseStyles({
@@ -15,7 +15,9 @@ const useStyles = createUseStyles({
       right: 10,
     },
   },
-  title: {},
+  title: {
+    fontWeight: 100,
+  },
   titleLink: {
     display: 'flex',
     alignItems: 'center',
@@ -25,8 +27,9 @@ const useStyles = createUseStyles({
     maxHeight: '1em',
     maxWidth: '1em',
     '& path': {
-      stroke: 'none',
-      fill: 'currentColor',
+      stroke: 'currentColor',
+      strokeWidth: 50,
+      fill: 'none',
     },
   },
   linkText: {},
@@ -40,7 +43,7 @@ const Header = (props) => {
     <header className={classes.root}>
       <h1 className={classes.title}>
         <Link to="/" className={classes.titleLink}>
-          <Zeropaper className={classes.logo} />
+          <Logo slim className={classes.logo} />
 
           <span>
             Valentin &quot;zeropaper&quot; Vago

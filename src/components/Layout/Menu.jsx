@@ -1,7 +1,7 @@
 import React from 'react';
 import { createUseStyles } from 'react-jss';
 
-import Link from '../Link';
+import Link from '../Link/Link';
 
 const useStyles = createUseStyles({
   root: {
