@@ -6,9 +6,7 @@ import { createUseStyles } from 'react-jss';
 import 'modern-css-reset';
 
 import Header from './Header';
-import Menu from './Menu';
 import Footer from './Footer';
-// import { useAssets } from '../AssetsProvider/Context';
 
 const useStyles = createUseStyles({
   '@global': {
@@ -23,21 +21,32 @@ const useStyles = createUseStyles({
       height: '100%',
       overflow: 'auto',
     },
+    '#gatsby-focus-wrapper': {
+      display: 'flex',
+      flexDirection: 'column',
+    },
+    a: {
+      color: 'inherit',
+      textDecoration: 'none',
+    },
   },
   header: {},
   menu: {},
-  main: {},
+  main: {
+    flexGrow: 1,
+    padding: 10,
+  },
   bodyOverlayVisible: {},
   overlay: {},
   overlayVisible: {},
-  iqwsiuqhs: {},
-  iqwsiuqhsVisible: {},
+  mainVisible: {},
 }, { name: 'Layout ' });
 
-const Layout = ({ children, ...props }) => {
-  // const assets = useAssets();
-  // console.info('Layout assets', assets);
-
+const Layout = ({
+  children,
+  classes: passedClasses,
+  ...props
+}) => {
   const classes = useStyles(props);
 
   const [visible, setVisible] = React.useState(true);
@@ -55,27 +64,25 @@ const Layout = ({ children, ...props }) => {
   });
 
   React.useEffect(() => {
-    document.body.classList[visible ? 'add' : 'remove'](classes.bodyOverlayVisible);
+    document.body.classList[visible ? 'add' : 'remove'](classes.bodyOverlayVisible, passedClasses.bodyOverlayVisible);
   }, [visible]);
 
   return (
     <>
       <Header
-        className={classes.header}
-      />
-
-      <Menu
-        className={classes.menu}
+        className={classNames(classes.header, passedClasses.header)}
       />
 
       <main
-        className={classNames(classes.main, classes.iqwsiuqhs, {
-          [classes.iqwsiuqhsVisible]: visible,
+        className={classNames(classes.main, classes.main, passedClasses.main, {
+          [classes.mainVisible]: visible,
+          [passedClasses.mainVisible]: visible,
         })}
       >
         <div
-          className={classNames(classes.overlay, {
+          className={classNames(classes.overlay, passedClasses.overlay, {
             [classes.overlayVisible]: visible,
+            [passedClasses.overlayVisible]: visible,
           })}
         >
           {children}
@@ -89,9 +96,19 @@ const Layout = ({ children, ...props }) => {
 
 Layout.propTypes = {
   children: PropTypes.node.isRequired,
+  classes: PropTypes.shape({
+    header: PropTypes.string,
+    menu: PropTypes.string,
+    main: PropTypes.string,
+    mainVisible: PropTypes.string,
+    bodyOverlayVisible: PropTypes.string,
+    overlay: PropTypes.string,
+    overlayVisible: PropTypes.string,
+  }),
 };
 
 Layout.defaultProps = {
+  classes: {},
 };
 
 export default Layout;
