@@ -13,14 +13,14 @@ module.exports = {
     {
       resolve: 'gatsby-plugin-svgr',
       options: {
-        // use prettier to format JS code output (default)
-        prettier: true,
-        // use svgo to optimize SVGs (default)
-        svgo: true,
+        // use prettier to format JS code output (default: true)
+        prettier: false,
+        // use svgo to optimize SVGs (default: true)
+        svgo: false,
         svgoConfig: {
-          // remove viewBox when possible (default)
-          removeViewBox: true,
-          // remove unused IDs and minify remaining IDs (default)
+          // remove viewBox when possible (default: true)
+          removeViewBox: false,
+          // remove unused IDs and minify remaining IDs (default: true)
           cleanupIDs: true,
         },
       },
@@ -31,6 +31,14 @@ module.exports = {
       options: {
         name: 'pages',
         path: `${__dirname}/src/pages`,
+      },
+    },
+
+    {
+      resolve: 'gatsby-source-filesystem',
+      options: {
+        name: 'blog',
+        path: `${__dirname}/src/blog`,
       },
     },
 
@@ -84,6 +92,6 @@ module.exports = {
 
     // // this (optional) plugin enables Progressive Web App + Offline functionality
     // // To learn more, visit: https://gatsby.dev/offline
-    // 'gatsby-plugin-offline',
+    'gatsby-plugin-offline',
   ],
 };
