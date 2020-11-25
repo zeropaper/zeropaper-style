@@ -20,7 +20,7 @@ const Header = (props) => {
             className={classes.link}
             activeClassName={classes.linkActive}
           >
-            about
+            About
           </Link>
         </li>
 
@@ -30,7 +30,7 @@ const Header = (props) => {
             className={classes.link}
             activeClassName={classes.linkActive}
           >
-            contact
+            Contact
           </Link>
         </li>
       </ul>
