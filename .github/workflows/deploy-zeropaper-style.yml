@@ -60,25 +60,19 @@ jobs:
 
       - name: Checkout current
         uses: actions/checkout@v2
-        with:
-          path: main
 
       - name: Cache
         uses: actions/cache@v2.0.0
         with:
-          path: ~/main/.npm
+          path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/main/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-
       - name: Install
-        run: |
-          cd main
-          npm ci
+        run: npm ci
 
       - name: Build
-        run: |
-          cd main
-          npm run build
+        run: npm run build
 
       - name: SFTP Deploy
         uses: SamKirkland/FTP-Deploy-Action@4.0.0
