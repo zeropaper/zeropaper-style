@@ -4,16 +4,20 @@ import { ThemeProvider } from 'react-jss';
 
 import data from './data';
 
+const spacing = (val = 1) => val * data.spacingBase;
+
 const CustomTheme = ({ children }) => (
   <ThemeProvider
     theme={{
+      spacing,
+
       palette: {
         common: {
           black: '#000',
           white: '#fff',
         },
       },
-      spacing: (val) => val * data.spacingBase,
+
       mixins: {
         inlineListClasses: {
           root: {
@@ -28,8 +32,8 @@ const CustomTheme = ({ children }) => (
           item: {
             display: 'block',
             padding: {
-              left: 5,
-              right: 5,
+              left: spacing(),
+              right: spacing(),
             },
             '&:first-child': {
               paddingLeft: 0,
