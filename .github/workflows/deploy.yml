@@ -5,9 +5,9 @@ name: deploy
 
 on:
   push:
-    branches: [main]
+    branches: [redesign]
   # pull_request:
-  #   branches: [ main ]
+  #   branches: [ redesign ]
 
 jobs:
   qa:
@@ -113,3 +113,4 @@ jobs:
           ftp-username: ${{ secrets.FTP_USER }}
           ftp-password: ${{ secrets.FTP_PASSWORD }}
           local-dir: public/
+          server-dir: sites/zeropaper.style

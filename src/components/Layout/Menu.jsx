@@ -3,21 +3,9 @@ import { createUseStyles } from 'react-jss';
 
 import Link from '../Link/Link';
 
-const useStyles = createUseStyles({
-  root: {
-    display: 'flex',
-  },
-  list: {
-    display: 'inline-flex',
-    listStyle: 'none',
-    padding: 0,
-    margin: 0,
-  },
-  item: {
-  },
-  link: {
-  },
-}, {
+const useStyles = createUseStyles(({ mixins: { inlineListClasses } }) => ({
+  ...inlineListClasses,
+}), {
   name: 'LayoutMenu',
 });
 

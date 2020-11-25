@@ -13,7 +13,7 @@ const useStyles = createUseStyles({
     stroke = 'currentColor',
     strokeWidth = 0,
   }) => ({
-    '& path': slim ? {
+    '& path': !slim ? {
       fill,
       stroke,
       strokeWidth: strokeWidth || 25,

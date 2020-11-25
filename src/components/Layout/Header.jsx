@@ -3,20 +3,37 @@ import { createUseStyles } from 'react-jss';
 
 import Link from '../Link/Link';
 import Logo from '../Logo/Logo';
-import Menu from './Menu';
+// import Menu from './Menu';
 
 const useStyles = createUseStyles({
+  '@keyframes drawStroke': {
+    '0%': {
+      strokeDasharray: '200%',
+      strokeDashoffset: '0%',
+    },
+    '100%': {
+      strokeDasharray: '200%',
+      strokeDashoffset: '400%',
+    },
+  },
+
   root: {
     display: 'flex',
     justifyContent: 'space-between',
-    alignItems: 'baseline',
+    alignItems: 'center',
     padding: {
       left: 10,
       right: 10,
     },
+
+    '&:hover $logo path': {
+      animationName: '$drawStroke',
+    },
   },
   title: {
-    fontWeight: 100,
+    fontWeight: 300,
+    fontSize: 'min(32px, 5vw)',
+    fontFamily: 'Roboto',
   },
   titleLink: {
     display: 'flex',
@@ -28,8 +45,12 @@ const useStyles = createUseStyles({
     maxWidth: '1em',
     '& path': {
       stroke: 'currentColor',
-      strokeWidth: 50,
+      strokeWidth: 40,
       fill: 'none',
+      animationDuration: '2s',
+      // animationIterationCount: 'infinite',
+      animationFillMode: 'forwards',
+      animationTimingFunction: 'linear',
     },
   },
   linkText: {},
@@ -51,7 +72,7 @@ const Header = (props) => {
         </Link>
       </h1>
 
-      <Menu />
+      {/* <Menu /> */}
     </header>
   );
 };

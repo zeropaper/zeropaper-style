@@ -2,6 +2,9 @@
 const React = require('react');
 
 const {
+  default: ThemeProvider,
+} = require('./src/themes/Theme');
+const {
   default: AssetsProvider,
 } = require('./src/components/AssetsProvider/AssetsProvider');
 
@@ -16,6 +19,8 @@ const {
 // eslint-disable-next-line react/prop-types
 exports.wrapRootElement = ({ element }) => (
   <AssetsProvider>
-    {element}
+    <ThemeProvider>
+      {element}
+    </ThemeProvider>
   </AssetsProvider>
 );

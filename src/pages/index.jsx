@@ -7,8 +7,29 @@ import Layout from '../components/Layout/Layout';
 import SEO from '../components/Layout/SEO';
 
 import Logo from '../components/Logo/Logo';
+import Link from '../components/Link/Link';
 
 const useStyles = createUseStyles({
+  '@keyframes drawStroke': {
+    from: {
+      strokeDasharray: '200%',
+      strokeDashoffset: '400%',
+    },
+    to: {
+      strokeDasharray: '200%',
+      strokeDashoffset: '200%',
+    },
+  },
+  '@keyframes collapseLogo': {
+    from: {
+      // maxWidth: '50vh',
+      maxHeight: '50vh',
+    },
+    to: {
+      // maxWidth: 0,
+      maxHeight: 0,
+    },
+  },
   root: {},
   layoutMain: {
     display: 'flex',
@@ -25,9 +46,25 @@ const useStyles = createUseStyles({
     maxWidth: '50vh',
     maxHeight: '50vh',
     '& path': {
-      stroke: 'none',
-      fill: 'currentColor',
+      strokeWidth: 10,
+      stroke: 'currentColor',
+      fill: 'none',
+      animationDuration: '2s',
+      // animationIterationCount: 'infinite',
+      animationTimingFunction: 'linear',
+      animationFillMode: 'both',
+      // },
+      // '&:hover path': {
+      animationName: '$drawStroke',
     },
+    animationName: '$collapseLogo',
+    animationDelay: '2s',
+    animationDuration: '1s',
+    animationTimingFunction: 'linear',
+    animationFillMode: 'both',
+  },
+  aboutLink: {
+    fontSize: 'max(2rem, 5vw)',
   },
 }, { name: 'IndexPage' });
 
@@ -42,7 +79,15 @@ const IndexPage = () => {
       <SEO title="Valentin Vago" />
 
       <div className={classes.logoWrapper}>
-        <Logo />
+        <Logo slim className={classes.logo} />
+      </div>
+
+      <div className={classes.logoWrapper}>
+        <h1>
+          <Link to="/about" className={classes.aboutLink}>
+            About
+          </Link>
+        </h1>
       </div>
     </Layout>
   );

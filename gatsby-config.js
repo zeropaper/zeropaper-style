@@ -75,6 +75,13 @@ module.exports = {
     },
 
     'gatsby-plugin-catch-links',
+    // 'gatsby-plugin-transition-link',
+    {
+      resolve: 'gatsby-plugin-transition-link',
+      options: {
+        // layout: require.resolve('./src/components/Layout/Layout.jsx'),
+      },
+    },
 
     {
       resolve: 'gatsby-plugin-manifest',

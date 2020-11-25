@@ -1,19 +1,29 @@
+/* eslint-disable max-len */
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { createUseStyles } from 'react-jss';
+import { TransitionState } from 'gatsby-plugin-transition-link';
 
 import 'modern-css-reset';
+// import 'typeface-bungee-hairline';
+import 'typeface-bungee-inline';
+import 'typeface-roboto';
 
 import Header from './Header';
 import Footer from './Footer';
 
 const useStyles = createUseStyles({
   '@global': {
+    html: {
+      fontSize: 16,
+      fontFamily: 'Roboto',
+    },
     body: {
+      fontSize: 16,
       position: 'relative',
     },
-    '#___gatsby, #gatsby-focus-wrapper': {
+    '#___gatsby, #gatsby-focus-wrapper, .tl-edges, .tl-wrapper': {
       position: 'absolute',
       top: 0,
       left: 0,
@@ -21,7 +31,7 @@ const useStyles = createUseStyles({
       height: '100%',
       overflow: 'auto',
     },
-    '#gatsby-focus-wrapper': {
+    '#gatsby-focus-wrapper, .tl-wrapper': {
       display: 'flex',
       flexDirection: 'column',
     },
@@ -29,16 +39,37 @@ const useStyles = createUseStyles({
       color: 'inherit',
       textDecoration: 'none',
     },
+    h1: {
+      fontFamily: 'Bungee inline',
+      fontWeight: 'normal',
+    },
   },
   header: {},
   menu: {},
-  main: {
-    flexGrow: 1,
-    padding: 10,
+  main: ({ contentType }) => {
+    const base = {
+      flexGrow: 1,
+      padding: 10,
+    };
+    if (contentType === 'text') {
+      base.marginTop = '16.18vw';
+      base.width = '100%';
+      base.maxWidth = 650;
+      base.margin = 'auto';
+      base['& p'] = {
+        marginBottom: '0.618em',
+        fontSize: '1.2rem',
+      };
+      base['& h1'] = {
+        marginBottom: '1.618em',
+        fontSize: 'max(2rem, 5vw)',
+      };
+    }
+    return base;
   },
   bodyOverlayVisible: {},
-  overlay: {},
-  overlayVisible: {},
+  mainContent: {},
+  mainContentVisible: {},
   mainVisible: {},
 }, { name: 'Layout ' });
 
@@ -49,23 +80,23 @@ const Layout = ({
 }) => {
   const classes = useStyles(props);
 
-  const [visible, setVisible] = React.useState(true);
+  // const [visible, setVisible] = React.useState(true);
 
-  const handleMouseMove = () => setVisible(true);
+  // const handleMouseMove = () => setVisible(true);
 
-  React.useEffect(() => {
-    const timer = setTimeout(() => setVisible(false), 1500);
-    window.addEventListener('mousemove', handleMouseMove, { passive: true });
+  // React.useEffect(() => {
+  //   const timer = setTimeout(() => setVisible(false), 1500);
+  //   window.addEventListener('mousemove', handleMouseMove, { passive: true });
 
-    return () => {
-      clearTimeout(timer);
-      window.removeEventListener('mousemove', handleMouseMove, { passive: true });
-    };
-  });
+  //   return () => {
+  //     clearTimeout(timer);
+  //     window.removeEventListener('mousemove', handleMouseMove, { passive: true });
+  //   };
+  // });
 
-  React.useEffect(() => {
-    document.body.classList[visible ? 'add' : 'remove'](classes.bodyOverlayVisible, passedClasses.bodyOverlayVisible);
-  }, [visible]);
+  // React.useEffect(() => {
+  //   document.body.classList[visible ? 'add' : 'remove'](classes.bodyOverlayVisible, passedClasses.bodyOverlayVisible);
+  // }, [visible]);
 
   return (
     <>
@@ -73,21 +104,37 @@ const Layout = ({
         className={classNames(classes.header, passedClasses.header)}
       />
 
-      <main
-        className={classNames(classes.main, classes.main, passedClasses.main, {
-          [classes.mainVisible]: visible,
-          [passedClasses.mainVisible]: visible,
-        })}
-      >
-        <div
-          className={classNames(classes.overlay, passedClasses.overlay, {
-            [classes.overlayVisible]: visible,
-            [passedClasses.overlayVisible]: visible,
-          })}
-        >
-          {children}
-        </div>
-      </main>
+      <TransitionState>
+        {({
+          transitionStatus,
+          exit,
+          entry,
+          mount,
+        }) => {
+          console.groupCollapsed(`transition ${transitionStatus}`);
+          console.log('exit object is', exit);
+          console.log('entry object is', entry);
+          console.log('mount object is', mount);
+          console.groupEnd();
+          return (
+            <main
+              className={classNames(classes.main, classes.main, passedClasses.main, {
+              // [classes.mainVisible]: visible,
+              // [passedClasses.mainVisible]: visible,
+              })}
+            >
+              <div
+                className={classNames(classes.mainContent, passedClasses.mainContent, {
+                // [classes.mainContentVisible]: visible,
+                // [passedClasses.mainContentVisible]: visible,
+                })}
+              >
+                {children}
+              </div>
+            </main>
+          );
+        }}
+      </TransitionState>
 
       <Footer />
     </>
@@ -102,8 +149,8 @@ Layout.propTypes = {
     main: PropTypes.string,
     mainVisible: PropTypes.string,
     bodyOverlayVisible: PropTypes.string,
-    overlay: PropTypes.string,
-    overlayVisible: PropTypes.string,
+    mainContent: PropTypes.string,
+    mainContentVisible: PropTypes.string,
   }),
 };
 

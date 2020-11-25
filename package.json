@@ -30,6 +30,7 @@
     "gatsby-plugin-react-helmet": "^3.4.0",
     "gatsby-plugin-sharp": "^2.8.0",
     "gatsby-plugin-sitemap": "^2.6.0",
+    "gatsby-plugin-transition-link": "^1.20.5",
     "gatsby-remark-autolink-headers": "^2.5.0",
     "gatsby-remark-copy-linked-files": "^2.4.0",
     "gatsby-remark-images": "^3.5.1",
@@ -47,7 +48,11 @@
     "react-dom": "^17.0.1",
     "react-helmet": "^6.1.0",
     "react-jss": "^10.4.0",
-    "react-use": "^15.3.4"
+    "react-use": "^15.3.4",
+    "typeface-bungee-hairline": "^1.1.13",
+    "typeface-bungee-inline": "^1.1.13",
+    "typeface-roboto": "^1.1.13",
+    "typeface-roboto-mono": "^1.1.13"
   },
   "repository": {
     "type": "git",
