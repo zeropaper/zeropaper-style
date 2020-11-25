@@ -87,4 +87,4 @@ jobs:
           username: ${{ secrets.FTP_USER }}
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: public/
-          server-dir: sites/zeropaper.style
+          server-dir: sites/zeropaper.style/
