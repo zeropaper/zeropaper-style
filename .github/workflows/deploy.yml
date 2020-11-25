@@ -63,13 +63,13 @@ jobs:
         with:
           path: main
 
-      - name: Checkout GH pages
-        uses: actions/checkout@v2
-        with:
-          repository: zeropaper.github.io
-          token: ${{ secrets.ACCESS_TOKEN }}
-          path: gh-pages
-          ref: master
+      # - name: Checkout GH pages
+      #   uses: actions/checkout@v2
+      #   with:
+      #     repository: zeropaper.github.io
+      #     token: ${{ secrets.ACCESS_TOKEN }}
+      #     path: gh-pages
+      #     ref: master
 
       - name: Cache
         uses: actions/cache@v2.0.0
