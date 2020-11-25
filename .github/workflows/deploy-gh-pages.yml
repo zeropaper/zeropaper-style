@@ -1,13 +1,13 @@
 # This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
 
-name: deploy
+name: deploy-gh-pages
 
 on:
   push:
-    branches: [redesign]
+    branches: [main]
   # pull_request:
-  #   branches: [ redesign ]
+  #   branches: [ main ]
 
 jobs:
   qa:
@@ -63,13 +63,13 @@ jobs:
         with:
           path: main
 
-      # - name: Checkout GH pages
-      #   uses: actions/checkout@v2
-      #   with:
-      #     repository: zeropaper.github.io
-      #     token: ${{ secrets.ACCESS_TOKEN }}
-      #     path: gh-pages
-      #     ref: master
+      - name: Checkout GH pages
+        uses: actions/checkout@v2
+        with:
+          repository: zeropaper.github.io
+          token: ${{ secrets.ACCESS_TOKEN }}
+          path: gh-pages
+          ref: master
 
       - name: Cache
         uses: actions/cache@v2.0.0
@@ -93,24 +93,15 @@ jobs:
       #     path: main/public
       #     name: build
 
-      # - name: Copy main public to gh-pages
-      #   run: cp -rf main/public/* gh-pages/
+      - name: Copy main public to gh-pages
+        run: cp -rf main/public/* gh-pages/
 
-      # - name: Commit and push GH pages
-      #   run: |
-      #     cd gh-pages
-      #     git config --global user.email "valentin.vago@gmail.com"
-      #     git config --global user.name "Valentin Vago (CI)"
-      #     git status
-      #     git add .
-      #     git commit -m "update site" --allow-empty
-      #     git push
-
-      - name: SFTP Deploy
-        uses: SamKirkland/FTP-Deploy-Action@3.0.0
-        with:
-          ftp-server: ${{ secrets.FTP_SERVER }}
-          ftp-username: ${{ secrets.FTP_USER }}
-          ftp-password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: public/
-          server-dir: sites/zeropaper.style
+      - name: Commit and push GH pages
+        run: |
+          cd gh-pages
+          git config --global user.email "valentin.vago@gmail.com"
+          git config --global user.name "Valentin Vago (CI)"
+          git status
+          git add .
+          git commit -m "update site" --allow-empty
+          git push
