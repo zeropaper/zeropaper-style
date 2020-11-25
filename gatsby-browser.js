@@ -8,13 +8,17 @@ const {
   default: AssetsProvider,
 } = require('./src/components/AssetsProvider/AssetsProvider');
 
-/**
- * Implement Gatsby's Browser APIs in this file.
- *
- * See: https://www.gatsbyjs.org/docs/browser-apis/
- */
-
-// You can delete this file if you're not using it
+const {
+  hostname,
+  protocol,
+  host,
+  pathname,
+  search,
+  hash,
+} = window.location;
+if (hostname !== 'localhost' && protocol !== 'https:') {
+  window.location.href = `https://${host}${pathname}${search}${hash}`;
+}
 
 // eslint-disable-next-line react/prop-types
 exports.wrapRootElement = ({ element }) => (
