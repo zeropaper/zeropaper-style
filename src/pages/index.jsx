@@ -11,11 +11,19 @@ import Link from '../components/Link/Link';
 
 const useStyles = createUseStyles({
   '@keyframes drawStroke': {
-    from: {
+    '0%': {
       strokeDasharray: '200%',
-      strokeDashoffset: '400%',
+      strokeDashoffset: '-200%',
     },
-    to: {
+    '25%': {
+      strokeDasharray: '200%',
+      strokeDashoffset: '0%',
+    },
+    '75%': {
+      strokeDasharray: '200%',
+      strokeDashoffset: '0%',
+    },
+    '100%': {
       strokeDasharray: '200%',
       strokeDashoffset: '200%',
     },
