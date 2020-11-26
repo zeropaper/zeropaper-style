@@ -13,14 +13,26 @@ import 'typeface-roboto';
 import Header from './Header';
 import Footer from './Footer';
 
-const useStyles = createUseStyles({
+const useStyles = createUseStyles(({
+  spacing,
+  typography: {
+    fontSize,
+    fontFamily,
+    color,
+  },
+  background: {
+    color: backgroundColor,
+  },
+}) => ({
   '@global': {
     html: {
-      fontSize: 16,
-      fontFamily: 'Roboto',
+      fontSize,
     },
     body: {
-      fontSize: 16,
+      fontSize,
+      fontFamily,
+      color,
+      backgroundColor,
       position: 'relative',
     },
     '#___gatsby, #gatsby-focus-wrapper, .tl-edges, .tl-wrapper': {
@@ -49,7 +61,7 @@ const useStyles = createUseStyles({
   main: ({ contentType }) => {
     const base = {
       flexGrow: 1,
-      padding: 10,
+      padding: spacing(2),
     };
     if (contentType === 'text') {
       base.marginTop = '16.18vw';
@@ -64,6 +76,9 @@ const useStyles = createUseStyles({
         marginBottom: '1.618em',
         fontSize: 'max(2rem, 5vw)',
       };
+      base['& code'] = {
+        fontSize: '0.618em',
+      };
     }
     return base;
   },
@@ -71,7 +86,7 @@ const useStyles = createUseStyles({
   mainContent: {},
   mainContentVisible: {},
   mainVisible: {},
-}, { name: 'Layout ' });
+}), { name: 'Layout ' });
 
 const Layout = ({
   children,

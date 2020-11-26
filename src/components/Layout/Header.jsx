@@ -1,9 +1,8 @@
 import React from 'react';
-import { createUseStyles } from 'react-jss';
+import { createUseStyles, useTheme } from 'react-jss';
 
 import Link from '../Link/Link';
 import Logo from '../Logo/Logo';
-// import Menu from './Menu';
 
 const useStyles = createUseStyles({
   '@keyframes drawStroke': {
@@ -25,10 +24,6 @@ const useStyles = createUseStyles({
       left: 10,
       right: 10,
     },
-
-    '&:hover $logo path': {
-      animationName: '$drawStroke',
-    },
   },
   title: {
     fontWeight: 300,
@@ -38,6 +33,10 @@ const useStyles = createUseStyles({
   titleLink: {
     display: 'flex',
     alignItems: 'center',
+
+    '&:hover $logo path': {
+      animationName: '$drawStroke',
+    },
   },
   logo: {
     marginRight: 10,
@@ -59,6 +58,7 @@ const useStyles = createUseStyles({
 });
 
 const Header = (props) => {
+  const { toggleMode, mode } = useTheme();
   const classes = useStyles(props);
   return (
     <header className={classes.root}>
@@ -72,7 +72,7 @@ const Header = (props) => {
         </Link>
       </h1>
 
-      {/* <Menu /> */}
+      <button type="button" onClick={toggleMode}>{mode}</button>
     </header>
   );
 };

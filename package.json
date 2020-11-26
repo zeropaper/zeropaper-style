@@ -49,6 +49,7 @@
     "react-helmet": "^6.1.0",
     "react-jss": "^10.4.0",
     "react-use": "^15.3.4",
+    "tinycolor2": "^1.4.2",
     "typeface-bungee-hairline": "^1.1.13",
     "typeface-bungee-inline": "^1.1.13",
     "typeface-roboto": "^1.1.13",

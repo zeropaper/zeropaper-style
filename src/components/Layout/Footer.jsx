@@ -5,7 +5,11 @@ import Link from '../Link/Link';
 import Menu from './Menu';
 import SocialNetworks from './SocialNetworks';
 
-const useStyles = createUseStyles({
+const useStyles = createUseStyles(({
+  background: {
+    shades,
+  },
+}) => ({
   root: {
     padding: 10,
     display: 'flex',
@@ -15,9 +19,9 @@ const useStyles = createUseStyles({
     zIndex: 1000,
     width: '100%',
     fontSize: '0.85rem',
-    background: 'rgba(255,255,255,.85)',
+    background: shades[0],
   },
-}, {
+}), {
   name: 'LayoutFooter',
 });
 
