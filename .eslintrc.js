@@ -3,6 +3,7 @@ module.exports = {
     'airbnb',
     'eslint:recommended',
     'plugin:react/recommended',
+    'plugin:react-hooks/recommended',
   ],
   env: {
     browser: true,

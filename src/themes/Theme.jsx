@@ -10,10 +10,10 @@ const spacing = (val = 1) => val * data.spacingBase;
 const CustomTheme = ({ children }) => {
   const [dark, setDarkMode] = React.useState(!!localStorage.getItem('darkMode'));
 
-  const toggleDarkMode = () => setDarkMode((val) => {
+  const toggleDarkMode = React.useCallback(() => setDarkMode((val) => {
     localStorage.setItem('darkMode', val ? '' : 'true');
     return !val;
-  });
+  }), [setDarkMode]);
 
   React.useEffect(() => {
     const mediaQueryMatch = window.matchMedia('(prefers-color-scheme: dark)');

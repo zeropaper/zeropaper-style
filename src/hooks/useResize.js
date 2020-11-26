@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import throttle from 'lodash.throttle';
 
 const useResize = () => {
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const scope = typeof window !== 'undefined' ? window : {};
   const [size, setSize] = useState({
     width: scope?.innerWidth,
@@ -15,7 +16,7 @@ const useResize = () => {
     })), 1000 / 60);
     scope?.addEventListener('resize', listener, opts);
     return () => scope?.removeEventListener('resize', listener, opts);
-  }, [setSize]);
+  }, [setSize, scope]);
   return size;
 };
 export default useResize;
