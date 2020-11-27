@@ -8,10 +8,12 @@ import data from './data';
 const spacing = (val = 1) => val * data.spacingBase;
 
 const CustomTheme = ({ children }) => {
-  const [dark, setDarkMode] = React.useState(!!localStorage.getItem('darkMode'));
+  const [dark, setDarkMode] = React.useState(typeof localStorage !== 'undefined' && !!localStorage.getItem('darkMode'));
 
   const toggleDarkMode = React.useCallback(() => setDarkMode((val) => {
-    localStorage.setItem('darkMode', val ? '' : 'true');
+    if (typeof localStorage !== 'undefined') {
+      localStorage.setItem('darkMode', val ? '' : 'true');
+    }
     return !val;
   }), [setDarkMode]);
 
