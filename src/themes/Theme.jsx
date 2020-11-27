@@ -107,7 +107,6 @@ const CustomTheme = ({ children }) => {
     },
   };
 
-  window.theme = theme;
   return (
     <ThemeProvider theme={theme}>
       {children}
