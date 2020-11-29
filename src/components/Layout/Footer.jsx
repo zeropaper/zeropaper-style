@@ -21,6 +21,18 @@ const useStyles = createUseStyles(({
     fontSize: '0.85rem',
     background: shades[0],
   },
+  column: {
+    width: '33%',
+  },
+  menu: {
+    width: '34%',
+  },
+  menuList: {
+    margin: 'auto',
+  },
+  snList: {
+    marginLeft: 'auto',
+  },
 }), {
   name: 'LayoutFooter',
 });
@@ -29,9 +41,27 @@ const Footer = (props) => {
   const classes = useStyles(props);
   return (
     <footer className={classes.root}>
-      <Link to="/no-cookies">No Cookies</Link>
-      <Menu className={classes.menu} />
-      <SocialNetworks />
+      <Link
+        className={classes.column}
+        to="/no-cookies"
+      >
+        No Cookies
+
+      </Link>
+
+      <Menu
+        classes={{
+          root: classes.menu,
+          list: classes.menuList,
+        }}
+      />
+
+      <SocialNetworks
+        className={classes.column}
+        classes={{
+          list: classes.snList,
+        }}
+      />
     </footer>
   );
 };

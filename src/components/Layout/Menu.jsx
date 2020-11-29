@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import classNames from 'classnames';
 import { createUseStyles } from 'react-jss';
 
 import Link from '../Link/Link';
@@ -9,11 +11,11 @@ const useStyles = createUseStyles(({ mixins: { inlineListClasses } }) => ({
   name: 'LayoutMenu',
 });
 
-const Header = (props) => {
+const Header = ({ className, classes: passedClasses, ...props }) => {
   const classes = useStyles(props);
   return (
-    <nav className={classes.root}>
-      <ul className={classes.list}>
+    <nav className={classNames(classes.root, passedClasses?.root, className)}>
+      <ul className={classNames(classes.list, passedClasses?.list)}>
         <li className={classes.item}>
           <Link
             to="/hello"
@@ -36,6 +38,16 @@ const Header = (props) => {
       </ul>
     </nav>
   );
+};
+
+Header.propTypes = {
+  className: PropTypes.string,
+  classes: PropTypes.objectOf(PropTypes.string),
+};
+
+Header.defaultProps = {
+  className: null,
+  classes: null,
 };
 
 export default Header;

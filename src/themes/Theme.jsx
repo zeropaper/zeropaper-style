@@ -7,8 +7,14 @@ import data from './data';
 
 const spacing = (val = 1) => val * data.spacingBase;
 
+const mediaQueryMatch = typeof window !== 'undefined'
+  && window.matchMedia('(prefers-color-scheme: dark)');
+const defaultDark = typeof localStorage !== 'undefined' && localStorage.getItem('darkMode') !== null
+  ? !!localStorage.getItem('darkMode')
+  : mediaQueryMatch?.matches;
+
 const CustomTheme = ({ children }) => {
-  const [dark, setDarkMode] = React.useState(typeof localStorage !== 'undefined' && !!localStorage.getItem('darkMode'));
+  const [dark, setDarkMode] = React.useState(defaultDark);
 
   const toggleDarkMode = React.useCallback(() => setDarkMode((val) => {
     if (typeof localStorage !== 'undefined') {
@@ -18,8 +24,6 @@ const CustomTheme = ({ children }) => {
   }), [setDarkMode]);
 
   React.useEffect(() => {
-    const mediaQueryMatch = window.matchMedia('(prefers-color-scheme: dark)');
-
     const queryListener = (e) => {
       if (!!e.matches !== dark) toggleDarkMode();
     };

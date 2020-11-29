@@ -84,7 +84,7 @@ const IndexPage = () => {
         main: classes.layoutMain,
       }}
     >
-      <SEO title="Valentin Vago" />
+      <SEO title="Personal web page of Valentin &quot;zeropaper&quot; Vago" />
 
       <div className={classes.logoWrapper}>
         <Logo slim className={classes.logo} />

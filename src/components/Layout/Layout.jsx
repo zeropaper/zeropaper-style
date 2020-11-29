@@ -64,7 +64,7 @@ const useStyles = createUseStyles(({
       padding: spacing(2),
     };
     if (contentType === 'text') {
-      base.marginTop = '16.18vw';
+      base.marginTop = '13vw';
       base.width = '100%';
       base.maxWidth = 650;
       base.margin = 'auto';

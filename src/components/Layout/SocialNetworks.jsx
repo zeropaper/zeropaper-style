@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import classNames from 'classnames';
 import { createUseStyles } from 'react-jss';
 
 import { ReactComponent as Twitter } from '../../assets/icons/twitter.svg';
@@ -22,11 +24,11 @@ const useStyles = createUseStyles(({ mixins: { inlineListClasses } }) => ({
   name: 'SocialNetworks',
 });
 
-const SocialNetworks = (props) => {
+const SocialNetworks = ({ className, classes: passedClasses, ...props }) => {
   const classes = useStyles(props);
   return (
-    <nav className={classes.root}>
-      <ul className={classes.list}>
+    <nav className={classNames(classes.root, passedClasses?.root, className)}>
+      <ul className={classNames(classes.list, passedClasses?.list)}>
         <li className={classes.item}>
           <a className={classes.link} href="https://twitter.com/zeropaper">
             <Twitter />
@@ -50,6 +52,16 @@ const SocialNetworks = (props) => {
       </ul>
     </nav>
   );
+};
+
+SocialNetworks.propTypes = {
+  className: PropTypes.string,
+  classes: PropTypes.objectOf(PropTypes.string),
+};
+
+SocialNetworks.defaultProps = {
+  className: null,
+  classes: null,
 };
 
 export default SocialNetworks;
