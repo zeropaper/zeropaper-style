@@ -92,8 +92,8 @@ const IndexPage = () => {
 
       <div className={classes.logoWrapper}>
         <h1>
-          <Link to="/about" className={classes.aboutLink}>
-            About
+          <Link to="/hello" className={classes.aboutLink}>
+            Hello
           </Link>
         </h1>
       </div>

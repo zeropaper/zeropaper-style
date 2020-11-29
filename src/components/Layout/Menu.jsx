@@ -16,11 +16,11 @@ const Header = (props) => {
       <ul className={classes.list}>
         <li className={classes.item}>
           <Link
-            to="/about"
+            to="/hello"
             className={classes.link}
             activeClassName={classes.linkActive}
           >
-            About
+            Hello
           </Link>
         </li>
 
