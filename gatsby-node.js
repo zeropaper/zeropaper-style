@@ -1,14 +1,10 @@
 const { resolve } = require('path');
 
-// Implement the Gatsby API “createPages”. This is called once the
-// data layer is bootstrapped to let plugins create pages from data.
 exports.createPages = async ({ graphql, actions, reporter }) => {
   const { createPage } = actions;
 
-  // Create pages for each markdown file.
   const blogPostLayout = resolve('src/components/Layout/Layout.jsx');
 
-  // Query for markdown nodes to use in creating pages.
   const result = await graphql(`query blogPagesQuery {
   allMdx {
     nodes {
@@ -21,6 +17,9 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
           sourceInstanceName
           name
           id
+          atimeMs
+          ctimeMs
+          mtimeMs
         }
       }
     }
@@ -36,7 +35,12 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   result.data.allMdx.nodes.forEach(({
     slug,
     frontmatter,
-    parent: { sourceInstanceName },
+    parent: {
+      sourceInstanceName,
+      atimeMs,
+      ctimeMs,
+      mtimeMs,
+    },
   }) => {
     if (sourceInstanceName !== 'blog') return;
 
@@ -44,11 +48,14 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
     createPage({
       path,
       component: blogPostLayout,
-      // In your blog post template's graphql query, you can use pagePath
-      // as a GraphQL variable to query for data from the markdown file.
       context: {
         pagePath: path,
         ...frontmatter,
+        fileEvents: {
+          accessed: atimeMs,
+          changed: ctimeMs,
+          modified: mtimeMs,
+        },
       },
     });
   });
