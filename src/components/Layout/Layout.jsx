@@ -66,7 +66,7 @@ const useStyles = createUseStyles(({
     if (contentType === 'text') {
       base.marginTop = '13vw';
       base.width = '100%';
-      base.maxWidth = 650;
+      base.maxWidth = 800;
       base.margin = 'auto';
       base['& p'] = {
         marginBottom: '0.618em',
@@ -78,6 +78,9 @@ const useStyles = createUseStyles(({
       };
       base['& code'] = {
         fontSize: '0.618em',
+      };
+      base['& a'] = {
+        textDecoration: 'underline',
       };
     }
     return base;
