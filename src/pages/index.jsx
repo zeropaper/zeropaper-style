@@ -44,7 +44,7 @@ const useStyles = createUseStyles({
     flexDirection: 'column',
     justifyContent: 'center',
   },
-  logoWrapper: {
+  contentWrapper: {
     textAlign: 'center',
     overflow: 'hidden',
     flexGrow: 1,
@@ -71,7 +71,7 @@ const useStyles = createUseStyles({
     animationTimingFunction: 'linear',
     animationFillMode: 'both',
   },
-  aboutLink: {
+  helloLink: {
     fontSize: 'max(2rem, 5vw)',
     textDecoration: 'none',
   },
@@ -87,16 +87,40 @@ const IndexPage = () => {
     >
       <SEO title="Personal web page of Valentin &quot;zeropaper&quot; Vago" />
 
-      <div className={classes.logoWrapper}>
+      <div className={classes.contentWrapper}>
         <Logo slim className={classes.logo} />
       </div>
 
-      <div className={classes.logoWrapper}>
+      <div className={classes.contentWrapper}>
         <h1>
-          <Link to="/hello" className={classes.aboutLink}>
+          <Link
+            title="Let me intoduce myself"
+            to="/hello"
+            className={classes.helloLink}
+          >
             Hello
           </Link>
         </h1>
+      </div>
+
+      <div className={classes.contentWrapper}>
+        {'This page is '}
+        <a
+          title="Project on GitHub"
+          href="https://github.com/zeropaper/zeropaper-style/projects/1"
+        >
+          under construction
+        </a>
+        .
+        <br />
+        {'Have a look at '}
+        <a
+          title="Code on GitHub"
+          href="https://github.com/zeropaper/zeropaper-style"
+        >
+          its source
+        </a>
+        .
       </div>
     </Layout>
   );
