@@ -76,7 +76,7 @@ const useStyles = createUseStyles(({
         fontSize: 'max(2rem, 5vw)',
       };
       base['& code'] = {
-        fontSize: '0.618em',
+        fontSize: '0.9em',
       };
     }
     return base;
