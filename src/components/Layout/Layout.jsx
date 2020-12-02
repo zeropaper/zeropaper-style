@@ -81,11 +81,8 @@ const useStyles = createUseStyles(({
     }
     return base;
   },
-  bodyOverlayVisible: {},
-  mainContent: {},
-  mainContentVisible: {},
-  mainVisible: {},
-}), { name: 'Layout ' });
+  content: {},
+}), { name: 'Layout' });
 
 const Layout = ({
   children,
@@ -93,24 +90,6 @@ const Layout = ({
   ...props
 }) => {
   const classes = useStyles(props);
-
-  // const [visible, setVisible] = React.useState(true);
-
-  // const handleMouseMove = () => setVisible(true);
-
-  // React.useEffect(() => {
-  //   const timer = setTimeout(() => setVisible(false), 1500);
-  //   window.addEventListener('mousemove', handleMouseMove, { passive: true });
-
-  //   return () => {
-  //     clearTimeout(timer);
-  //     window.removeEventListener('mousemove', handleMouseMove, { passive: true });
-  //   };
-  // });
-
-  // React.useEffect(() => {
-  //   document.body.classList[visible ? 'add' : 'remove'](classes.bodyOverlayVisible, passedClasses.bodyOverlayVisible);
-  // }, [visible]);
 
   return (
     <>
@@ -125,23 +104,14 @@ const Layout = ({
           entry,
           mount,
         }) => {
-          console.groupCollapsed(`transition ${transitionStatus}`);
-          console.log('exit object is', exit);
-          console.log('entry object is', entry);
-          console.log('mount object is', mount);
-          console.groupEnd();
+          const mainClass = classNames(classes.main, classes.main, passedClasses.main);
+          const contentClass = classNames(classes.content, passedClasses.content);
           return (
             <main
-              className={classNames(classes.main, classes.main, passedClasses.main, {
-              // [classes.mainVisible]: visible,
-              // [passedClasses.mainVisible]: visible,
-              })}
+              className={classNames(classes.main, classes.main, passedClasses.main)}
             >
               <div
-                className={classNames(classes.mainContent, passedClasses.mainContent, {
-                // [classes.mainContentVisible]: visible,
-                // [passedClasses.mainContentVisible]: visible,
-                })}
+                className={classNames(classes.mainContent, passedClasses.mainContent)}
               >
                 {children}
               </div>
@@ -161,10 +131,7 @@ Layout.propTypes = {
     header: PropTypes.string,
     menu: PropTypes.string,
     main: PropTypes.string,
-    mainVisible: PropTypes.string,
-    bodyOverlayVisible: PropTypes.string,
-    mainContent: PropTypes.string,
-    mainContentVisible: PropTypes.string,
+    content: PropTypes.string,
   }),
 };
 
