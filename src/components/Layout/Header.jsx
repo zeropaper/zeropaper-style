@@ -76,7 +76,7 @@ const Header = (props) => {
           <Logo slim className={classes.logo} />
 
           <span>
-            Valentin &quot;zeropaper&quot; Vago
+            Valentin “zeropaper” Vago
           </span>
         </Link>
       </h1>
