@@ -49,7 +49,6 @@ const useStyles = createUseStyles(({
     },
     a: {
       color: 'inherit',
-      textDecoration: 'none',
     },
     h1: {
       fontFamily: 'Bungee inline',
@@ -78,9 +77,6 @@ const useStyles = createUseStyles(({
       };
       base['& code'] = {
         fontSize: '0.618em',
-      };
-      base['& a'] = {
-        textDecoration: 'underline',
       };
     }
     return base;

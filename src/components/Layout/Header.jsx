@@ -33,6 +33,7 @@ const useStyles = createUseStyles({
   titleLink: {
     display: 'flex',
     alignItems: 'center',
+    textDecoration: 'none',
 
     '&:hover $logo path': {
       animationName: '$drawStroke',
