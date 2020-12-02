@@ -54,6 +54,14 @@ const useStyles = createUseStyles({
     },
   },
   linkText: {},
+  themeToggle: {
+    background: 'none',
+    border: 'none',
+    textDecoration: 'underline',
+    font: 'inherit',
+    cursor: 'pointer',
+    color: 'inherit',
+  },
 }, {
   name: 'LayoutHeader',
 });
@@ -73,7 +81,14 @@ const Header = (props) => {
         </Link>
       </h1>
 
-      <button type="button" onClick={toggleMode}>{mode}</button>
+      <button
+        type="button"
+        title="Toggle the page styling theme"
+        onClick={toggleMode}
+        className={classes.themeToggle}
+      >
+        {`${mode === 'dark' ? 'light' : 'dark'} theme`}
+      </button>
     </header>
   );
 };
