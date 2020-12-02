@@ -12,10 +12,11 @@ module.exports = {
     '@storybook/addon-essentials',
   ],
   webpackFinal: async (config) => {
-    const svgRule = config.module.rules.find((rule) => 'test.svg'.match(rule.test));
+    const newConfig = { ...config };
+    const svgRule = newConfig.module.rules.find((rule) => 'test.svg'.match(rule.test));
     svgRule.exclude = [srcDir];
 
-    config.module.rules.push({
+    newConfig.module.rules.push({
       test: /\.svg$/i,
       include: [srcDir],
       use: [{
@@ -23,6 +24,8 @@ module.exports = {
       }, 'file-loader'],
     });
 
-    return config;
+    newConfig.resolve.alias['gatsby-plugin-transition-link'] = require.resolve('gatsby-link');
+
+    return newConfig;
   },
 };

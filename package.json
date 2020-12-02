@@ -10,8 +10,8 @@
     "serve": "gatsby serve",
     "clean": "gatsby clean",
     "test": "jest --passWithNoTests",
-    "storybook": "start-storybook -p 6006 --no-dll",
-    "build-storybook": "build-storybook --no-dll",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook",
     "lint": "eslint --ext js,jsx gatsby-* src .storybook"
   },
   "dependencies": {
