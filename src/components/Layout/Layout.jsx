@@ -64,6 +64,7 @@ const useStyles = createUseStyles(({
     };
     if (contentType === 'text') {
       base.marginTop = '13vw';
+      base.marginBottom = '3vw';
       base.width = '100%';
       base.maxWidth = 800;
       base.margin = 'auto';
