@@ -3,7 +3,8 @@
     "**/.vscode": true,
     "**/.cache": true,
     "**/node_modules": true,
-    "**/public": true
+    "**/public": true,
+    "**/storybook-static": true
   },
   "files.watcherExclude": {
     "**/.cache/**": true,

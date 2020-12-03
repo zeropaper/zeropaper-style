@@ -4,14 +4,15 @@
   "description": "Valentin zeropaper Vago web page",
   "main": "index.js",
   "scripts": {
-    "build": "gatsby build",
+    "build": "npm run build-storybook && npm run build-gatsby && mv storybook-static public/storybook",
+    "build-gatsby": "gatsby build",
+    "build-storybook": "build-storybook",
     "develop": "gatsby develop",
     "start": "npm run develop",
     "serve": "gatsby serve",
     "clean": "gatsby clean",
     "test": "jest --passWithNoTests",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook",
     "lint": "eslint --ext js,jsx gatsby-* src .storybook"
   },
   "dependencies": {
