@@ -2,6 +2,12 @@
 const React = require('react');
 
 const {
+  MDXProvider,
+} = require('@mdx-js/react');
+const {
+  default: Link,
+} = require('./src/components/Link/Link');
+const {
   default: ThemeProvider,
 } = require('./src/themes/Theme');
 const {
@@ -11,8 +17,14 @@ const {
 // eslint-disable-next-line react/prop-types
 exports.wrapRootElement = ({ element }) => (
   <AssetsProvider>
-    <ThemeProvider>
-      {element}
-    </ThemeProvider>
+    <MDXProvider
+      components={{
+        a: Link,
+      }}
+    >
+      <ThemeProvider>
+        {element}
+      </ThemeProvider>
+    </MDXProvider>
   </AssetsProvider>
 );

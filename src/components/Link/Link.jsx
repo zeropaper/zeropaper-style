@@ -7,6 +7,27 @@ import { createUseStyles } from 'react-jss';
 
 const useStyles = createUseStyles({}, { name: 'Link' });
 
+export const ExternalLink = ({
+  href,
+  children,
+  ...rest
+}) => (
+  <a
+    target="_blank"
+    rel="noreferrer"
+    // eslint-disable-next-line react/jsx-props-no-spreading
+    {...rest}
+    href={href}
+  >
+    {children}
+  </a>
+);
+
+ExternalLink.propTypes = {
+  href: PropTypes.string.isRequired,
+  children: PropTypes.node.isRequired,
+};
+
 const Link = ({
   children,
   className,
@@ -14,11 +35,23 @@ const Link = ({
   ...props
 }) => {
   const classes = useStyles(props);
-  const { to } = props;
+  const { to, href, ...rest } = props;
+
+  if (href && !to) {
+    return (
+      <ExternalLink
+        // eslint-disable-next-line react/jsx-props-no-spreading
+        {...rest}
+        className={classNames(className, classes.root)}
+        href={href}
+      >
+        {children}
+      </ExternalLink>
+    );
+  }
 
   return (
     <TransitionLink
-      to={to}
       // exit={{
       //   length: 0,
       //   trigger: ({ exit, node }) => console.info({ exit, node, direction: 'out' }),
@@ -30,7 +63,8 @@ const Link = ({
       className={classNames(className, classes.root)}
       activeClassName={activeClassName || classes.active}
       // eslint-disable-next-line react/jsx-props-no-spreading
-      {...props}
+      {...rest}
+      to={to}
     >
       {children}
     </TransitionLink>
@@ -39,13 +73,16 @@ const Link = ({
 
 Link.propTypes = {
   children: PropTypes.node.isRequired,
-  to: PropTypes.string.isRequired,
+  href: PropTypes.string,
+  to: PropTypes.string,
   className: PropTypes.string,
   activeClassName: PropTypes.string,
 };
 
 Link.defaultProps = {
   className: null,
+  href: null,
+  to: null,
   activeClassName: null,
 };
 

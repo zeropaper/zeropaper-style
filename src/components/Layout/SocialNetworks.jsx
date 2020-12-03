@@ -7,6 +7,7 @@ import { ReactComponent as Twitter } from '../../assets/icons/twitter.svg';
 import { ReactComponent as StackExchange } from '../../assets/icons/stackexchange.svg';
 import { ReactComponent as LinkedIn } from '../../assets/icons/linkedin.svg';
 import { ReactComponent as GitHub } from '../../assets/icons/github.svg';
+import { ExternalLink } from '../Link/Link';
 
 const useStyles = createUseStyles(({ mixins: { inlineListClasses } }) => ({
   ...inlineListClasses,
@@ -30,24 +31,24 @@ const SocialNetworks = ({ className, classes: passedClasses, ...props }) => {
     <nav className={classNames(classes.root, passedClasses?.root, className)}>
       <ul className={classNames(classes.list, passedClasses?.list)}>
         <li className={classes.item}>
-          <a className={classes.link} href="https://twitter.com/zeropaper">
+          <ExternalLink className={classes.link} href="https://twitter.com/zeropaper">
             <Twitter />
-          </a>
+          </ExternalLink>
         </li>
         <li className={classes.item}>
-          <a className={classes.link} href="https://github.com/zeropaper">
+          <ExternalLink className={classes.link} href="https://github.com/zeropaper">
             <GitHub />
-          </a>
+          </ExternalLink>
         </li>
         <li className={classes.item}>
-          <a className={classes.link} href="https://stackoverflow.com/users/story/662964">
+          <ExternalLink className={classes.link} href="https://stackoverflow.com/users/story/662964">
             <StackExchange />
-          </a>
+          </ExternalLink>
         </li>
         <li className={classes.item}>
-          <a className={classes.link} href="https://www.linkedin.com/in/vvago">
+          <ExternalLink className={classes.link} href="https://www.linkedin.com/in/vvago">
             <LinkedIn />
-          </a>
+          </ExternalLink>
         </li>
       </ul>
     </nav>
