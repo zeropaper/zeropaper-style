@@ -94,26 +94,22 @@ const Layout = ({
 
   return (
     <>
-      <Header
-        className={classNames(classes.header, passedClasses.header)}
-      />
+      <Header className={classNames(classes.header, passedClasses.header)} />
 
       <TransitionState>
         {({
+          /* eslint-disable no-unused-vars */
           transitionStatus,
           exit,
           entry,
           mount,
+          /* eslint-enable no-unused-vars */
         }) => {
           const mainClass = classNames(classes.main, classes.main, passedClasses.main);
           const contentClass = classNames(classes.content, passedClasses.content);
           return (
-            <main
-              className={classNames(classes.main, classes.main, passedClasses.main)}
-            >
-              <div
-                className={classNames(classes.mainContent, passedClasses.mainContent)}
-              >
+            <main className={mainClass}>
+              <div className={contentClass}>
                 {children}
               </div>
             </main>
