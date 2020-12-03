@@ -14,7 +14,6 @@ import Header from './Header';
 import Footer from './Footer';
 
 const useStyles = createUseStyles(({
-  spacing,
   typography: {
     fontSize,
     fontFamily,
@@ -22,6 +21,9 @@ const useStyles = createUseStyles(({
   },
   background: {
     color: backgroundColor,
+  },
+  mixins: {
+    textContent,
   },
 }) => ({
   '@global': {
@@ -80,26 +82,8 @@ const useStyles = createUseStyles(({
   main: ({ contentType }) => {
     const base = {
       flexGrow: 1,
-      padding: spacing(2),
     };
-    if (contentType === 'text') {
-      base.marginTop = '13vw';
-      base.marginBottom = '3vw';
-      base.width = '100%';
-      base.maxWidth = 800;
-      base.margin = 'auto';
-      base['& p'] = {
-        marginBottom: '0.618em',
-        fontSize: '1.2rem',
-      };
-      base['& h1'] = {
-        marginBottom: '1.618em',
-        fontSize: 'max(2rem, 5vw)',
-      };
-      base['& code'] = {
-        fontSize: '0.9em',
-      };
-    }
+    if (contentType === 'text') return { ...base, ...textContent };
     return base;
   },
   content: {},

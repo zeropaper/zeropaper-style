@@ -81,6 +81,26 @@ const CustomTheme = ({ children }) => {
     },
 
     mixins: {
+      textContent: {
+        padding: spacing(2),
+        marginTop: '13vw',
+        marginBottom: '3vw',
+        width: '100%',
+        maxWidth: 800,
+        margin: 'auto',
+        '& p': {
+          marginBottom: '0.618em',
+          fontSize: '1.2rem',
+        },
+        '& h1': {
+          marginBottom: '1.618em',
+          fontSize: 'max(2rem, 5vw)',
+        },
+        '& code': {
+          fontSize: '0.9em',
+        },
+      },
+
       inlineListClasses: {
         root: {
           display: 'flex',
