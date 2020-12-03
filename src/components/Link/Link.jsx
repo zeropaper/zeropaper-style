@@ -19,14 +19,14 @@ const Link = ({
   return (
     <TransitionLink
       to={to}
-      exit={{
-        length: 0,
-        trigger: ({ exit, node }) => console.info({ exit, node, direction: 'out' }),
-      }}
-      entry={{
-        length: 0,
-        trigger: ({ exit, node }) => console.info({ exit, node, direction: 'in' }),
-      }}
+      // exit={{
+      //   length: 0,
+      //   trigger: ({ exit, node }) => console.info({ exit, node, direction: 'out' }),
+      // }}
+      // entry={{
+      //   length: 0,
+      //   trigger: ({ exit, node }) => console.info({ exit, node, direction: 'in' }),
+      // }}
       className={classNames(className, classes.root)}
       activeClassName={activeClassName || classes.active}
       // eslint-disable-next-line react/jsx-props-no-spreading
