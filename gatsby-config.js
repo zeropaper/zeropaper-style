@@ -93,7 +93,7 @@ module.exports = {
         theme_color: theme.color,
         display: 'minimal-ui',
         // This path is relative to the root of the site.
-        icon: 'src/assets/images/zeropaper-fat.svg',
+        icon: 'src/assets/icons/zeropaper.svg',
       },
     },
 
