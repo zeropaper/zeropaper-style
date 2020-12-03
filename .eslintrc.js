@@ -22,5 +22,6 @@ module.exports = {
     'graphql',
   ],
   rules: {
+    'no-console': ['warn', { allow: ['warn', 'error'] }],
   },
 };
