@@ -47,6 +47,26 @@ const useStyles = createUseStyles(({
       display: 'flex',
       flexDirection: 'column',
     },
+
+    '.tl-wrapper': {
+      overflowX: 'hidden',
+    },
+    '.tl-wrapper > main': {
+      transition: 'transform 1s',
+    },
+    '.tl-wrapper-status--entering > main': {
+      transform: 'translateX(-100vw)',
+    },
+    '.tl-wrapper-status--entered > main': {
+      transform: 'translateX(0vw)',
+    },
+    '.tl-wrapper-status--exiting > main': {
+      transform: 'translateX(100vw)',
+    },
+    '.tl-wrapper-status--exited > main': {
+      transform: 'translateX(100vw)',
+    },
+
     a: {
       color: 'inherit',
     },
