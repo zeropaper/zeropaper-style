@@ -74,7 +74,6 @@ const useStyles = createUseStyles({
   },
   helloLink: {
     fontSize: 'max(2rem, 5vw)',
-    textDecoration: 'none',
   },
 }, { name: 'IndexPage' });
 
