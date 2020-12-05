@@ -66,22 +66,45 @@ module.exports = {
               backgroundColor: 'transparent',
             },
           },
-          'gatsby-remark-prismjs',
           'gatsby-remark-copy-linked-files',
           'gatsby-remark-smartypants',
-          // 'gatsby-remark-autolink-headers',
+          {
+            resolve: 'gatsby-remark-table-of-contents',
+            options: {
+              exclude: 'Table of Contents',
+              tight: true,
+              ordered: true,
+              fromHeading: 2,
+              toHeading: 6,
+              // className: 'toc',
+            },
+          },
+          {
+            resolve: 'gatsby-remark-autolink-headers',
+            // https://www.npmjs.com/package/gatsby-remark-autolink-headers#user-content-options
+            options: {
+              // icon: false,
+              removeAccents: true,
+              elements: ['h2', 'h3', 'h4', 'h5', 'h6'],
+              isIconAfterHeader: true,
+              // offsetY: `100`,
+              // className: `custom-class`,
+              // maintainCase: true,
+            },
+          },
+          'gatsby-remark-prismjs',
         ],
       },
     },
 
     'gatsby-plugin-catch-links',
-    // 'gatsby-plugin-transition-link',
-    {
-      resolve: 'gatsby-plugin-transition-link',
-      options: {
-        // layout: require.resolve('./src/components/Layout/Layout.jsx'),
-      },
-    },
+    'gatsby-plugin-transition-link',
+    // {
+    //   resolve: 'gatsby-plugin-transition-link',
+    //   options: {
+    //     // layout: require.resolve('./src/components/Layout/Layout.jsx'),
+    //   },
+    // },
 
     {
       resolve: 'gatsby-plugin-manifest',

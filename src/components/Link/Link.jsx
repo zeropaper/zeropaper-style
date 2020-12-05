@@ -37,16 +37,29 @@ const Link = ({
   const classes = useStyles(props);
   const { to, href, ...rest } = props;
 
-  if (href && !to) {
+  if (href) {
+    if (href.startsWith('http')) {
+      return (
+        <ExternalLink
+          // eslint-disable-next-line react/jsx-props-no-spreading
+          {...rest}
+          className={classNames(className, classes.root)}
+          href={href}
+        >
+          {children}
+        </ExternalLink>
+      );
+    }
+
     return (
-      <ExternalLink
-        // eslint-disable-next-line react/jsx-props-no-spreading
+      <a
+          // eslint-disable-next-line react/jsx-props-no-spreading
         {...rest}
         className={classNames(className, classes.root)}
         href={href}
       >
         {children}
-      </ExternalLink>
+      </a>
     );
   }
 
