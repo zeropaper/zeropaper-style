@@ -71,12 +71,12 @@ const Header = (props) => {
   const classes = useStyles(props);
   return (
     <header className={classes.root}>
-      <h1 className={classes.title}>
+      <h1 className={classes.title} title="Valentin “zeropaper” Vago">
         <Link to="/" className={classes.titleLink}>
           <Logo slim className={classes.logo} />
 
           <span>
-            Valentin “zeropaper” Vago
+            zeropaper
           </span>
         </Link>
       </h1>
