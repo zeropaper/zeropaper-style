@@ -14,7 +14,7 @@ const useStyles = createUseStyles(({
     padding: 10,
     display: 'flex',
     justifyContent: 'space-around',
-    position: 'sticky',
+    position: 'fixed',
     bottom: 0,
     zIndex: 1000,
     width: '100%',

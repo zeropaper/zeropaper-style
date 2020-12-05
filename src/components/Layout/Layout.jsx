@@ -29,18 +29,16 @@ const useStyles = createUseStyles(({
   '@global': {
     html: {
       fontSize,
+      height: '100%',
     },
     body: {
       fontSize,
       fontFamily,
       color,
       backgroundColor,
-      position: 'relative',
+      height: '100%',
     },
     '#___gatsby, #gatsby-focus-wrapper, .tl-edges, .tl-wrapper': {
-      position: 'absolute',
-      top: 0,
-      left: 0,
       width: '100%',
       height: '100%',
       overflow: 'auto',
