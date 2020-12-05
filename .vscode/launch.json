@@ -4,25 +4,33 @@
     {
       "name": "Gatsby develop",
       "type": "node",
-      "runtimeVersion": "12.8",
+      "runtimeVersion": "15.3.0",
       "request": "launch",
       "protocol": "inspector",
       "program": "${workspaceRoot}/node_modules/gatsby/dist/bin/gatsby",
-      "args": ["develop"],
+      "args": [
+        "develop"
+      ],
       "stopOnEntry": false,
-      "runtimeArgs": ["--nolazy"],
+      "runtimeArgs": [
+        "--nolazy"
+      ],
       "sourceMaps": false
     },
     {
       "name": "Gatsby build",
       "type": "node",
-      "runtimeVersion": "12.8",
+      "runtimeVersion": "15.3.0",
       "request": "launch",
       "protocol": "inspector",
       "program": "${workspaceRoot}/node_modules/gatsby/dist/bin/gatsby",
-      "args": ["build"],
+      "args": [
+        "build"
+      ],
       "stopOnEntry": false,
-      "runtimeArgs": ["--nolazy"],
+      "runtimeArgs": [
+        "--nolazy"
+      ],
       "sourceMaps": false
     }
   ]
