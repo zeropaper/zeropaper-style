@@ -3,23 +3,20 @@ const { resolve } = require('path');
 exports.createPages = async ({ graphql, actions, reporter }) => {
   const { createPage } = actions;
 
-  const blogPostLayout = resolve('src/components/Layout/Layout.jsx');
+  const blogPostLayout = resolve('src/blog/BlogTemplate.jsx');
+  const stuffPostLayout = resolve('src/stuff/StuffTemplate.jsx');
 
-  const result = await graphql(`query blogPagesQuery {
+  const result = await graphql(`query mdxPagesQuery {
   allMdx {
     nodes {
-      slug
       frontmatter {
         title
+        slug
+        date
       }
       parent {
         ... on File {
           sourceInstanceName
-          name
-          id
-          atimeMs
-          ctimeMs
-          mtimeMs
         }
       }
     }
@@ -33,30 +30,36 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   }
 
   result.data.allMdx.nodes.forEach(({
-    slug,
     frontmatter,
     parent: {
       sourceInstanceName,
-      atimeMs,
-      ctimeMs,
-      mtimeMs,
     },
   }) => {
-    if (sourceInstanceName !== 'blog') return;
+    switch (sourceInstanceName) {
+      case 'blog':
+        createPage({
+          path: `blog/${frontmatter.slug}`,
+          component: blogPostLayout,
+          context: {
+            pageType: sourceInstanceName,
+            ...frontmatter,
+          },
+        });
+        break;
 
-    const path = `blog/${slug}`;
-    createPage({
-      path,
-      component: blogPostLayout,
-      context: {
-        pagePath: path,
-        ...frontmatter,
-        fileEvents: {
-          accessed: atimeMs,
-          changed: ctimeMs,
-          modified: mtimeMs,
-        },
-      },
-    });
+      case 'stuff':
+        createPage({
+          path: `stuff/${frontmatter.slug}`,
+          component: stuffPostLayout,
+          context: {
+            pageType: sourceInstanceName,
+            ...frontmatter,
+          },
+        });
+        break;
+
+      default:
+        break;
+    }
   });
 };

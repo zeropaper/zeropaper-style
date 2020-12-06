@@ -45,6 +45,14 @@ module.exports = {
     {
       resolve: 'gatsby-source-filesystem',
       options: {
+        name: 'stuff',
+        path: `${__dirname}/src/stuff`,
+      },
+    },
+
+    {
+      resolve: 'gatsby-source-filesystem',
+      options: {
         name: 'images',
         path: `${__dirname}/src/assets/images`,
       },
@@ -99,12 +107,6 @@ module.exports = {
 
     'gatsby-plugin-catch-links',
     'gatsby-plugin-transition-link',
-    // {
-    //   resolve: 'gatsby-plugin-transition-link',
-    //   options: {
-    //     // layout: require.resolve('./src/components/Layout/Layout.jsx'),
-    //   },
-    // },
 
     {
       resolve: 'gatsby-plugin-manifest',
