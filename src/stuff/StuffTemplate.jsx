@@ -4,16 +4,33 @@ import { MDXRenderer } from 'gatsby-plugin-mdx';
 import { graphql } from 'gatsby';
 import Layout from '../components/Layout/Layout';
 
-const StuffTemplate = ({
-  data,
-}) => {
-  const { allMdx } = data;
-  const { frontmatter } = allMdx;
+const StuffTemplate = (props) => {
+  const {
+    data: {
+      mdx,
+    },
+  } = props;
+
+  const {
+    body,
+    frontmatter: { title } = {},
+  } = mdx || {};
+
   return (
     <Layout>
-      <h1>{frontmatter.title}</h1>
-      <h2>{frontmatter.date}</h2>
-      <MDXRenderer>{data.body}</MDXRenderer>
+      {body && title
+        ? (
+          <>
+            <h1>{title}</h1>
+            <MDXRenderer>{body}</MDXRenderer>
+          </>
+        )
+        : (
+          <div>
+            Something is seriously wrong.
+            {console.warn('StuffTemplate', mdx)}
+          </div>
+        )}
     </Layout>
   );
 };
@@ -32,7 +49,8 @@ query StuffPostBySlug($slug: String!) {
     frontmatter {
       slug
       title
-      date
+      tags
+      description
     }
   }
 }

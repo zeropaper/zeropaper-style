@@ -13,6 +13,8 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
         title
         slug
         date
+        tags
+        description
       }
       parent {
         ... on File {
@@ -41,6 +43,9 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
           path: `blog/${frontmatter.slug}`,
           component: blogPostLayout,
           context: {
+            date: '2020-12-06',
+            description: '',
+            tags: [],
             pageType: sourceInstanceName,
             ...frontmatter,
           },
@@ -52,6 +57,9 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
           path: `stuff/${frontmatter.slug}`,
           component: stuffPostLayout,
           context: {
+            date: '2020-12-06',
+            description: '',
+            tags: [],
             pageType: sourceInstanceName,
             ...frontmatter,
           },

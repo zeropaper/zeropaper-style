@@ -50,7 +50,7 @@ query BlogPostBySlug($slug: String!) {
     frontmatter {
       slug
       title
-      date
+      tags
     }
   }
 }
