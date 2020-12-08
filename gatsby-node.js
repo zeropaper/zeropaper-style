@@ -5,9 +5,11 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
 
   const blogPostLayout = resolve('src/blog/BlogTemplate.jsx');
   const stuffPostLayout = resolve('src/stuff/StuffTemplate.jsx');
+  // const DefaultTemplate = resolve('src/components/DefaultTemplate.jsx');
+  const LinksListTemplate = resolve('src/components/LinksListTemplate.jsx');
 
   const result = await graphql(`query mdxPagesQuery {
-  allMdx {
+  allMdx(sort: {fields: frontmatter___date, order: DESC}) {
     nodes {
       frontmatter {
         title
@@ -31,22 +33,35 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
     return;
   }
 
+  const allPageTypes = {};
+  const allTags = {};
+
   result.data.allMdx.nodes.forEach(({
     frontmatter,
     parent: {
-      sourceInstanceName,
+      sourceInstanceName: pageType,
     },
   }) => {
-    switch (sourceInstanceName) {
+    const path = `${pageType}/${frontmatter.slug}`;
+
+    if (!allPageTypes[pageType]) allPageTypes[pageType] = [];
+    allPageTypes[pageType].push({ ...frontmatter, to: `/${path}` });
+
+    (frontmatter.tags || []).forEach((tag) => {
+      if (!allTags[tag]) allTags[tag] = [];
+      allTags[tag].push({ ...frontmatter, to: `/${path}` });
+    });
+
+    switch (pageType) {
       case 'blog':
         createPage({
-          path: `blog/${frontmatter.slug}`,
+          path,
           component: blogPostLayout,
           context: {
             date: '2020-12-06',
             description: '',
             tags: [],
-            pageType: sourceInstanceName,
+            pageType,
             ...frontmatter,
           },
         });
@@ -54,13 +69,13 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
 
       case 'stuff':
         createPage({
-          path: `stuff/${frontmatter.slug}`,
+          path,
           component: stuffPostLayout,
           context: {
             date: '2020-12-06',
             description: '',
             tags: [],
-            pageType: sourceInstanceName,
+            pageType,
             ...frontmatter,
           },
         });
@@ -69,5 +84,41 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
       default:
         break;
     }
+  });
+
+  Object.keys(allPageTypes).forEach((pageType) => {
+    createPage({
+      path: pageType,
+      component: LinksListTemplate,
+      context: {
+        list: 'pages',
+        pageTitle: `All "${pageType}" content`,
+        pageType: `${pageType}List`,
+        pages: allPageTypes[pageType],
+      },
+    });
+  });
+
+  Object.keys(allTags).forEach((tag) => {
+    createPage({
+      path: `tags/${tag}`,
+      component: LinksListTemplate,
+      context: {
+        pageTitle: `All content tagged with "${tag}"`,
+        list: 'pages',
+        tag,
+        pages: allTags[tag],
+      },
+    });
+  });
+
+  createPage({
+    path: 'tags',
+    component: LinksListTemplate,
+    context: {
+      pageTitle: 'All tags',
+      list: 'allTags',
+      allTags,
+    },
   });
 };

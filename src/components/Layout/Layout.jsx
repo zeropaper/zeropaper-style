@@ -93,6 +93,7 @@ const Layout = ({
   ...props
 }) => {
   const classes = useStyles(props);
+  const { component: Comp } = props;
 
   return (
     <>
@@ -111,9 +112,9 @@ const Layout = ({
           const contentClass = classNames(classes.content, passedClasses.content);
           return (
             <main className={mainClass}>
-              <div className={contentClass}>
+              <Comp className={contentClass}>
                 {children}
-              </div>
+              </Comp>
             </main>
           );
         }}
@@ -125,6 +126,7 @@ const Layout = ({
 };
 
 Layout.propTypes = {
+  component: PropTypes.elementType,
   children: PropTypes.node.isRequired,
   classes: PropTypes.shape({
     header: PropTypes.string,
@@ -132,10 +134,13 @@ Layout.propTypes = {
     main: PropTypes.string,
     content: PropTypes.string,
   }),
+  contentType: PropTypes.string,
 };
 
 Layout.defaultProps = {
+  component: 'div',
   classes: {},
+  contentType: null,
 };
 
 export default Layout;

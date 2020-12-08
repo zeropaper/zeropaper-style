@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { MDXRenderer } from 'gatsby-plugin-mdx';
 import { graphql } from 'gatsby';
 import Layout from '../components/Layout/Layout';
+import Link from '../components/Link/Link';
 
 const BlogTemplate = (props) => {
   const {
@@ -13,16 +14,28 @@ const BlogTemplate = (props) => {
 
   const {
     body,
-    frontmatter: { title, date } = {},
+    frontmatter: { title, date, tags = [] } = {},
   } = mdx || {};
 
   return (
-    <Layout>
+    <Layout component="article" contentType="text">
       {body && title && date
         ? (
           <>
-            <h1>{title}</h1>
-            <h2>{date}</h2>
+            <header>
+              <h1>{title}</h1>
+              <h2>{date}</h2>
+              <nav>
+                <ul>
+                  {tags.map((tag) => (
+                    <li key={tag}>
+                      <Link to={`/tags/${tag}`}>{tag}</Link>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
+            </header>
+
             <MDXRenderer>{body}</MDXRenderer>
           </>
         )
@@ -51,6 +64,7 @@ query BlogPostBySlug($slug: String!) {
       slug
       title
       tags
+      date(formatString: "MMMM Do, YYYY")
     }
   }
 }

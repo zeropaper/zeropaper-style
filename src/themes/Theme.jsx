@@ -96,6 +96,12 @@ const CustomTheme = ({ children }) => {
           marginBottom: '1.618em',
           fontSize: 'max(2rem, 5vw)',
         },
+        '& header': {
+          marginBottom: '1.618em',
+        },
+        '& header > h1': {
+          marginBottom: 0,
+        },
         '& code': {
           fontSize: '0.9em',
         },
