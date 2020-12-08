@@ -9,9 +9,10 @@ const useStyles = createUseStyles(({
   background: {
     shades,
   },
+  spacing,
 }) => ({
   root: {
-    padding: 10,
+    padding: spacing(),
     display: 'flex',
     justifyContent: 'space-around',
     position: 'fixed',
@@ -20,12 +21,24 @@ const useStyles = createUseStyles(({
     width: '100%',
     fontSize: '0.85rem',
     background: shades[0],
+    '@media (max-width: 768px)': {
+      fontSize: '1rem',
+      flexDirection: 'column',
+      alignItems: 'center',
+    },
   },
   column: {
     width: '33%',
+    '@media (max-width: 768px)': {
+      textAlign: 'center',
+    },
   },
   menu: {
     width: '34%',
+    '@media (max-width: 768px)': {
+      marginTop: spacing(),
+      marginBottom: spacing(),
+    },
   },
   menuList: {
     margin: 'auto',
@@ -46,7 +59,6 @@ const Footer = (props) => {
         to="/no-cookies"
       >
         No Cookies
-
       </Link>
 
       <Menu

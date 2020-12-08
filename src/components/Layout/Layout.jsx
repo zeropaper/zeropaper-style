@@ -14,6 +14,7 @@ import Header from './Header';
 import Footer from './Footer';
 
 const useStyles = createUseStyles(({
+  spacing,
   typography: {
     fontSize,
     fontFamily,
@@ -41,7 +42,13 @@ const useStyles = createUseStyles(({
     '#___gatsby, #gatsby-focus-wrapper, .tl-edges, .tl-wrapper': {
       width: '100%',
       height: '100%',
+    },
+    '#gatsby-focus-wrapper': {
+      // paddingBottom: 40,
       overflow: 'auto',
+      '@media (max-width: 768px)': {
+        paddingBottom: `calc(${spacing(6)}px + 3ch)`,
+      },
     },
     '#gatsby-focus-wrapper, .tl-wrapper': {
       display: 'flex',
