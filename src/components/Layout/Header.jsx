@@ -34,6 +34,7 @@ const useStyles = createUseStyles({
     display: 'flex',
     alignItems: 'center',
     textDecoration: 'none',
+    borderBottom: 'none',
 
     '&:hover $logo path': {
       animationName: '$drawStroke',

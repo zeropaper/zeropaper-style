@@ -74,6 +74,10 @@ const useStyles = createUseStyles(({
       fontFamily: 'Bungee inline',
       fontWeight: 'normal',
     },
+    'h1 a': {
+      textDecoration: 'none',
+      borderBottom: '2px solid currentColor',
+    },
   },
   header: {},
   menu: {},
