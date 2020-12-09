@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { createUseStyles } from 'react-jss';
 
-import { ReactComponent as Twitter } from '../../assets/icons/twitter.svg';
-import { ReactComponent as StackExchange } from '../../assets/icons/stackexchange.svg';
-import { ReactComponent as LinkedIn } from '../../assets/icons/linkedin.svg';
-import { ReactComponent as GitHub } from '../../assets/icons/github.svg';
+import { ReactComponent as Twitter } from '../../assets/twitter.svg';
+import { ReactComponent as StackExchange } from '../../assets/stackexchange.svg';
+import { ReactComponent as LinkedIn } from '../../assets/linkedin.svg';
+import { ReactComponent as GitHub } from '../../assets/github.svg';
 import { ExternalLink } from '../Link/Link';
 
 const useStyles = createUseStyles(({ mixins: { inlineListClasses } }) => ({
