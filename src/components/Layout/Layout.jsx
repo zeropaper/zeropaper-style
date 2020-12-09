@@ -14,7 +14,7 @@ import Header from './Header';
 import Footer from './Footer';
 
 const useStyles = createUseStyles(({
-  spacing,
+  // spacing,
   typography: {
     fontSize,
     fontFamily,
@@ -24,8 +24,12 @@ const useStyles = createUseStyles(({
     color: backgroundColor,
   },
   mixins: {
+    textMain,
     textContent,
   },
+  // mediaQueries: {
+  //   mobilePortrait,
+  // },
 }) => ({
   '@global': {
     html: {
@@ -43,13 +47,13 @@ const useStyles = createUseStyles(({
       width: '100%',
       height: '100%',
     },
-    '#gatsby-focus-wrapper': {
-      // paddingBottom: 40,
-      overflow: 'auto',
-      '@media (max-width: 768px)': {
-        paddingBottom: `calc(${spacing(6)}px + 3ch)`,
-      },
-    },
+    // '#gatsby-focus-wrapper': {
+    //   // paddingBottom: 40,
+    //   overflow: 'auto',
+    //   [mobilePortrait]: {
+    //     paddingBottom: `calc(${spacing(6)}px + 3ch)`,
+    //   },
+    // },
     '#gatsby-focus-wrapper, .tl-wrapper': {
       display: 'flex',
       flexDirection: 'column',
@@ -63,15 +67,19 @@ const useStyles = createUseStyles(({
     },
     '.tl-wrapper-status--entering > main': {
       transform: 'translateX(-100vw)',
+      overflow: 'hidden',
     },
     '.tl-wrapper-status--entered > main': {
       transform: 'translateX(0vw)',
+      overflow: 'auto',
     },
     '.tl-wrapper-status--exiting > main': {
       transform: 'translateX(100vw)',
+      overflow: 'hidden',
     },
     '.tl-wrapper-status--exited > main': {
       transform: 'translateX(100vw)',
+      overflow: 'hidden',
     },
 
     a: {
@@ -91,11 +99,16 @@ const useStyles = createUseStyles(({
   main: ({ contentType }) => {
     const base = {
       flexGrow: 1,
+      overflow: 'auto',
     };
+    if (contentType === 'text') return { ...base, ...textMain };
+    return base;
+  },
+  content: ({ contentType }) => {
+    const base = {};
     if (contentType === 'text') return { ...base, ...textContent };
     return base;
   },
-  content: {},
 }), { name: 'Layout' });
 
 const Layout = ({
@@ -131,7 +144,7 @@ const Layout = ({
         }}
       </TransitionState>
 
-      <Footer />
+      <Footer className={classNames(classes.footer, passedClasses.footer)} />
     </>
   );
 };
@@ -144,6 +157,7 @@ Layout.propTypes = {
     menu: PropTypes.string,
     main: PropTypes.string,
     content: PropTypes.string,
+    footer: PropTypes.string,
   }),
   contentType: PropTypes.string,
 };

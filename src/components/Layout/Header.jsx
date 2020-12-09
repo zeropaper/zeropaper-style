@@ -4,7 +4,11 @@ import { createUseStyles, useTheme } from 'react-jss';
 import Link from '../Link/Link';
 import Logo from '../Logo/Logo';
 
-const useStyles = createUseStyles({
+const useStyles = createUseStyles(({
+  typography: {
+    shades,
+  },
+}) => ({
   '@keyframes drawStroke': {
     '0%': {
       strokeDasharray: '200%',
@@ -24,10 +28,11 @@ const useStyles = createUseStyles({
       left: 10,
       right: 10,
     },
+    borderBottom: `1px solid ${shades[7]}`,
   },
   title: {
     fontWeight: 300,
-    fontSize: 'min(32px, 5vw)',
+    fontSize: 'min(32px, 7vw)',
     fontFamily: 'Roboto',
   },
   titleLink: {
@@ -63,7 +68,7 @@ const useStyles = createUseStyles({
     cursor: 'pointer',
     color: 'inherit',
   },
-}, {
+}), {
   name: 'LayoutHeader',
 });
 

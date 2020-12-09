@@ -80,11 +80,18 @@ const CustomTheme = ({ children }) => {
       ].map((val) => tinycolor(backgroundColor).setAlpha(val).toHex8String()),
     },
 
+    mediaQueries: {
+      mobilePortrait: '@media (max-width: 550px)',
+      mobileLandscape: '@media (max-width: 768px)',
+    },
+
     mixins: {
-      textContent: {
+      textMain: {
         padding: spacing(2),
-        marginTop: '13vw',
-        marginBottom: '3vw',
+        paddingTop: '13vw',
+        paddingBottom: '3vw',
+      },
+      textContent: {
         width: '100%',
         maxWidth: 800,
         margin: 'auto',

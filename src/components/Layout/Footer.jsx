@@ -6,22 +6,29 @@ import Menu from './Menu';
 import SocialNetworks from './SocialNetworks';
 
 const useStyles = createUseStyles(({
-  background: {
+  // background: {
+  //   shades,
+  // },
+  spacing,
+  mediaQueries: {
+    mobilePortrait,
+  },
+  typography: {
     shades,
   },
-  spacing,
 }) => ({
   root: {
     padding: spacing(),
     display: 'flex',
     justifyContent: 'space-around',
-    position: 'fixed',
-    bottom: 0,
-    zIndex: 1000,
     width: '100%',
-    fontSize: '0.85rem',
-    background: shades[0],
-    '@media (max-width: 768px)': {
+    borderTop: `1px solid ${shades[7]}`,
+    // position: 'fixed',
+    // bottom: 0,
+    // zIndex: 1000,
+    // fontSize: '0.85rem',
+    // background: shades[0],
+    [mobilePortrait]: {
       fontSize: '1rem',
       flexDirection: 'column',
       alignItems: 'center',
@@ -29,13 +36,13 @@ const useStyles = createUseStyles(({
   },
   column: {
     width: '33%',
-    '@media (max-width: 768px)': {
+    [mobilePortrait]: {
       textAlign: 'center',
     },
   },
   menu: {
     width: '34%',
-    '@media (max-width: 768px)': {
+    [mobilePortrait]: {
       marginTop: spacing(),
       marginBottom: spacing(),
     },
