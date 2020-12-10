@@ -1,4 +1,5 @@
 const theme = require('./src/themes/data');
+const appIcons = require('./src/assets/app-icons');
 
 module.exports = {
   siteMetadata: {
@@ -116,9 +117,10 @@ module.exports = {
         start_url: '/',
         background_color: theme.backgroundColor,
         theme_color: theme.color,
-        display: 'minimal-ui',
+        display: 'standalone',
         // This path is relative to the root of the site.
         icon: 'src/assets/zeropaper.svg',
+        icons: appIcons,
       },
     },
 
