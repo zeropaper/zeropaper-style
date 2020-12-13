@@ -3,10 +3,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { createUseStyles } from 'react-jss';
-import { TransitionState } from 'gatsby-plugin-transition-link';
 
 import 'modern-css-reset';
-// import 'typeface-bungee-hairline';
 import 'typeface-bungee-inline';
 import 'typeface-roboto';
 
@@ -14,7 +12,6 @@ import Header from './Header';
 import Footer from './Footer';
 
 const useStyles = createUseStyles(({
-  // spacing,
   typography: {
     fontSize,
     fontFamily,
@@ -27,9 +24,6 @@ const useStyles = createUseStyles(({
     textMain,
     textContent,
   },
-  // mediaQueries: {
-  //   mobilePortrait,
-  // },
 }) => ({
   '@global': {
     html: {
@@ -47,13 +41,6 @@ const useStyles = createUseStyles(({
       width: '100%',
       height: '100%',
     },
-    // '#gatsby-focus-wrapper': {
-    //   // paddingBottom: 40,
-    //   overflow: 'auto',
-    //   [mobilePortrait]: {
-    //     paddingBottom: `calc(${spacing(6)}px + 3ch)`,
-    //   },
-    // },
     '#gatsby-focus-wrapper, .tl-wrapper': {
       display: 'flex',
       flexDirection: 'column',
@@ -100,12 +87,17 @@ const useStyles = createUseStyles(({
     const base = {
       flexGrow: 1,
       overflow: 'auto',
+      display: 'flex',
+      flexDirection: 'column',
+      position: 'relative',
     };
     if (contentType === 'text') return { ...base, ...textMain };
     return base;
   },
   content: ({ contentType }) => {
-    const base = {};
+    const base = {
+      flexGrow: 1,
+    };
     if (contentType === 'text') return { ...base, ...textContent };
     return base;
   },
@@ -119,30 +111,17 @@ const Layout = ({
   const classes = useStyles(props);
   const { component: Comp } = props;
 
+  const mainClass = classNames(classes.main, classes.main, passedClasses.main);
+  const contentClass = classNames(classes.content, passedClasses.content);
   return (
     <>
       <Header className={classNames(classes.header, passedClasses.header)} />
 
-      <TransitionState>
-        {({
-          /* eslint-disable no-unused-vars */
-          transitionStatus,
-          exit,
-          entry,
-          mount,
-          /* eslint-enable no-unused-vars */
-        }) => {
-          const mainClass = classNames(classes.main, classes.main, passedClasses.main);
-          const contentClass = classNames(classes.content, passedClasses.content);
-          return (
-            <main className={mainClass}>
-              <Comp className={contentClass}>
-                {children}
-              </Comp>
-            </main>
-          );
-        }}
-      </TransitionState>
+      <main className={mainClass}>
+        <Comp className={contentClass}>
+          {children}
+        </Comp>
+      </main>
 
       <Footer className={classNames(classes.footer, passedClasses.footer)} />
     </>
