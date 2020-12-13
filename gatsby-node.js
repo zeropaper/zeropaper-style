@@ -17,6 +17,8 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
         date
         tags
         description
+        iframe
+        source
       }
       parent {
         ... on File {
