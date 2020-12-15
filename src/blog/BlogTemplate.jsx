@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { MDXRenderer } from 'gatsby-plugin-mdx';
 import { graphql } from 'gatsby';
 import Layout from '../components/Layout/Layout';
-import Link from '../components/Link/Link';
+import TagsList from '../components/TagsList/TagsList';
 
 const BlogTemplate = (props) => {
   const {
@@ -14,7 +14,11 @@ const BlogTemplate = (props) => {
 
   const {
     body,
-    frontmatter: { title, date, tags = [] } = {},
+    frontmatter: {
+      title,
+      date,
+      tags,
+    } = {},
   } = mdx || {};
 
   return (
@@ -25,15 +29,7 @@ const BlogTemplate = (props) => {
             <header>
               <h1>{title}</h1>
               <h2>{date}</h2>
-              <nav>
-                <ul>
-                  {tags.map((tag) => (
-                    <li key={tag}>
-                      <Link to={`/tags/${tag}`}>{tag}</Link>
-                    </li>
-                  ))}
-                </ul>
-              </nav>
+              <TagsList tags={tags} />
             </header>
 
             <MDXRenderer>{body}</MDXRenderer>

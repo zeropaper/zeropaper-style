@@ -20,7 +20,7 @@ const StuffTemplate = (props) => {
 
   const {
     body,
-    frontmatter: { title } = {},
+    frontmatter: { title, tags } = {},
   } = mdx || {};
 
   let content = null;
@@ -31,6 +31,8 @@ const StuffTemplate = (props) => {
         src={iframe}
         description={description}
         source={source}
+        mdx={body}
+        tags={tags}
       />
     );
   } else if (body && title) {

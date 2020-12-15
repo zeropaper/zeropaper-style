@@ -106,12 +106,12 @@ const IndexPage = () => {
       <div className={classes.contentWrapper}>
         {'This page is '}
         <a
-          title="Project on GitHub"
+          title="90's were so cool. Project on GitHub"
           href="https://github.com/zeropaper/zeropaper-style/projects/1"
         >
           under construction
         </a>
-        .
+        {' (and will always be).'}
         <br />
         {'Have a look at '}
         <a
@@ -121,6 +121,34 @@ const IndexPage = () => {
           its source
         </a>
         .
+      </div>
+
+      <div className={classes.contentWrapper}>
+        <h1>
+          <Link
+            title="The thing which was cool before Twitter and Facebook"
+            to="/blog"
+            className={classes.helloLink}
+          >
+            Blog
+          </Link>
+          {', '}
+          <Link
+            title="Not the vandal thing"
+            to="/tags"
+            className={classes.helloLink}
+          >
+            tags
+          </Link>
+          {' & '}
+          <Link
+            title="Ya know"
+            to="/stuff"
+            className={classes.helloLink}
+          >
+            S... tuff
+          </Link>
+        </h1>
       </div>
     </Layout>
   );
