@@ -28,6 +28,36 @@ const Header = ({ className, classes: passedClasses, ...props }) => {
 
         <li className={classes.item}>
           <Link
+            to="/blog"
+            className={classes.link}
+            activeClassName={classes.linkActive}
+          >
+            Blog
+          </Link>
+        </li>
+
+        <li className={classes.item}>
+          <Link
+            to="/tags"
+            className={classes.link}
+            activeClassName={classes.linkActive}
+          >
+            Tags
+          </Link>
+        </li>
+
+        <li className={classes.item}>
+          <Link
+            to="/stuff"
+            className={classes.link}
+            activeClassName={classes.linkActive}
+          >
+            Stuff
+          </Link>
+        </li>
+
+        <li className={classes.item}>
+          <Link
             to="/contact"
             className={classes.link}
             activeClassName={classes.linkActive}
