@@ -13,58 +13,29 @@ const useStyles = createUseStyles(({ mixins: { inlineListClasses } }) => ({
 
 const Header = ({ className, classes: passedClasses, ...props }) => {
   const classes = useStyles(props);
+
+  const links = [
+    ['/hello', 'Hello'],
+    ['/blog', 'Blog'],
+    ['/tags', 'Tags'],
+    ['/stuff', 'Stuff'],
+    ['/contact', 'Contact'],
+  ];
+
   return (
     <nav className={classNames(classes.root, passedClasses?.root, className)}>
       <ul className={classNames(classes.list, passedClasses?.list)}>
-        <li className={classes.item}>
-          <Link
-            to="/hello"
-            className={classes.link}
-            activeClassName={classes.linkActive}
-          >
-            Hello
-          </Link>
-        </li>
-
-        <li className={classes.item}>
-          <Link
-            to="/blog"
-            className={classes.link}
-            activeClassName={classes.linkActive}
-          >
-            Blog
-          </Link>
-        </li>
-
-        <li className={classes.item}>
-          <Link
-            to="/tags"
-            className={classes.link}
-            activeClassName={classes.linkActive}
-          >
-            Tags
-          </Link>
-        </li>
-
-        <li className={classes.item}>
-          <Link
-            to="/stuff"
-            className={classes.link}
-            activeClassName={classes.linkActive}
-          >
-            Stuff
-          </Link>
-        </li>
-
-        <li className={classes.item}>
-          <Link
-            to="/contact"
-            className={classes.link}
-            activeClassName={classes.linkActive}
-          >
-            Contact
-          </Link>
-        </li>
+        {links.map((item) => (
+          <li key={item[0]} className={classes.item}>
+            <Link
+              to={item[0]}
+              className={classes.link}
+              activeClassName={classes.linkActive}
+            >
+              {item[1]}
+            </Link>
+          </li>
+        ))}
       </ul>
     </nav>
   );
