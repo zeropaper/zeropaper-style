@@ -11,7 +11,7 @@ const useStyles = createUseStyles(({ mixins: { inlineListClasses } }) => ({
   name: 'LayoutMenu',
 });
 
-const Header = ({ className, classes: passedClasses, ...props }) => {
+const Menu = ({ className, classes: passedClasses, ...props }) => {
   const classes = useStyles(props);
 
   const links = [
@@ -19,7 +19,7 @@ const Header = ({ className, classes: passedClasses, ...props }) => {
     ['/blog', 'Blog'],
     ['/tags', 'Tags'],
     ['/stuff', 'Stuff'],
-    ['/contact', 'Contact'],
+    // ['/contact', 'Contact'],
   ];
 
   return (
@@ -41,14 +41,14 @@ const Header = ({ className, classes: passedClasses, ...props }) => {
   );
 };
 
-Header.propTypes = {
+Menu.propTypes = {
   className: PropTypes.string,
   classes: PropTypes.objectOf(PropTypes.string),
 };
 
-Header.defaultProps = {
+Menu.defaultProps = {
   className: null,
   classes: null,
 };
 
-export default Header;
+export default Menu;
