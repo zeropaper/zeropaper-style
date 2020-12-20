@@ -8,6 +8,10 @@ import TagsList from '../TagsList/TagsList';
 
 const useStyles = createUseStyles(({
   spacing,
+  mediaQueries: {
+    mobilePortrait,
+    mobileLandscape,
+  },
   background: {
     shades: backgroundShades,
   },
@@ -38,55 +42,51 @@ const useStyles = createUseStyles(({
   main: {
     ...textContent,
   },
+  scrollable: {
+    overflow: 'auto',
+    padding: spacing(3),
+    maxHeight: '100%',
+  },
   aside: ({ open }) => ({
     position: 'absolute',
     top: 0,
     bottom: 0,
-    width: '35vw',
     zIndex: 100,
     background: backgroundShades[0],
     transition: 'right 218ms ease-in',
-    right: open ? 0 : '-35vw',
     borderLeft: open ? `1px solid ${shades[5]}` : '1px solid transparent',
-    padding: spacing(1),
+    width: '35vw',
+    right: open ? 0 : '-35vw',
+    [mobileLandscape]: {
+      width: '55vw',
+      right: open ? 0 : '-55vw',
+    },
+    [mobilePortrait]: {
+      width: '250px',
+      right: open ? 0 : '-250px',
+    },
   }),
   toggleButtonHolder: {
     position: 'absolute',
     right: '100%',
     top: '50%',
-    // padding: {
-    //   top: 10,
-    //   left: 10,
-    //   bottom: 10,
-    // },
-  },
-  svg: ({ holderRef: { current } }) => {
-    if (!current) {
-      return {
-        display: 'none',
-      };
-    }
-    console.info(current.clientHeight);
-    return {
-      position: 'absolute',
-      zIndex: 1,
-      left: 0,
-      top: 0,
-    };
-  },
-  svgPath: {
-    fill: backgroundShades[0],
   },
   toggleButton: {
     position: 'relative',
     zIndex: 1,
-    borderRadius: 0,
+    borderRadius: `${spacing(1)}px 0 0 ${spacing(1)}px`,
+    borderColor: shades[5],
+    borderWidth: '1px 0 1px 1px',
     cursor: 'pointer',
-    padding: spacing(1),
-    background: 'none',
-    border: 'none',
+    padding: {
+      top: spacing(1),
+      bottom: spacing(1),
+      left: spacing(2),
+      right: spacing(2),
+    },
+    background: backgroundShades[0],
     color: 'inherit',
-    // background: 'lime',
+    outline: 'none',
   },
 }), {
   name: 'IFrame',
@@ -101,28 +101,15 @@ const IFrame = (props) => {
     mdx,
     tags,
   } = props;
-  const holderRef = React.useRef(null);
   const [open, setOpen] = React.useState(false);
-  const classes = useStyles({ ...props, open, holderRef });
+  const classes = useStyles({ ...props, open });
 
   const handleToggle = () => setOpen((val) => !val);
 
   return (
     <div className={classes.root}>
       <aside className={classes.aside}>
-        <div
-          ref={holderRef}
-          className={classes.toggleButtonHolder}
-        >
-          <svg
-            className={classes.svg}
-            viewBox="0 0 120 40"
-            width="120"
-            height="40"
-          >
-            <path className={classes.svgPath} d="M 120,0 V 40 H 10 L 0,30 V 10 L 10,0 Z" />
-          </svg>
-
+        <div className={classes.toggleButtonHolder}>
           <button
             className={classes.toggleButton}
             type="button"
@@ -132,23 +119,25 @@ const IFrame = (props) => {
           </button>
         </div>
 
-        <header>
-          <h1>{title}</h1>
-          {source && (
-            <Link href={source}>Source</Link>
-          )}
-          <TagsList tags={tags} />
-        </header>
+        <div className={classes.scrollable}>
+          <header>
+            <h1>{title}</h1>
+            {source && (
+              <Link href={source}>Source</Link>
+            )}
+            <TagsList tags={tags} />
+          </header>
 
-        {(mdx && (
-          <main className={classes.main}>
-            <MDXRenderer>{mdx}</MDXRenderer>
-          </main>
-        )) || (description && (
-          <main className={classes.main}>{description}</main>
-        ))}
-
+          {(mdx && (
+            <main className={classes.main}>
+              <MDXRenderer>{mdx}</MDXRenderer>
+            </main>
+          )) || (description && (
+            <main className={classes.main}>{description}</main>
+          ))}
+        </div>
       </aside>
+
       <iframe className={classes.iframe} title={title} src={src} />
     </div>
   );

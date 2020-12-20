@@ -66,8 +66,15 @@ const LinksListTemplate = (props) => {
 };
 
 LinksListTemplate.propTypes = {
-  // eslint-disable-next-line react/forbid-prop-types
-  pageContext: PropTypes.object.isRequired,
+  pageContext: PropTypes.shape({
+    list: PropTypes.string.isRequired,
+    pageTitle: PropTypes.string.isRequired,
+    pageType: PropTypes.string,
+    // pages: PropTypes.arrayOf(PropTypes.shape({
+    //   to: PropTypes.string.isRequired,
+    //   title: PropTypes.string.isRequired,
+    // })),
+  }).isRequired,
 };
 
 export default LinksListTemplate;
