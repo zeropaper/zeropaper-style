@@ -12,6 +12,7 @@ const useStyles = createUseStyles(({
   spacing,
   mediaQueries: {
     mobilePortrait,
+    mobileLandscape,
   },
   typography: {
     shades,
@@ -23,11 +24,6 @@ const useStyles = createUseStyles(({
     justifyContent: 'space-around',
     width: '100%',
     borderTop: `1px solid ${shades[7]}`,
-    // position: 'fixed',
-    // bottom: 0,
-    // zIndex: 1000,
-    // fontSize: '0.85rem',
-    // background: shades[0],
     [mobilePortrait]: {
       fontSize: '1rem',
       flexDirection: 'column',
@@ -42,7 +38,12 @@ const useStyles = createUseStyles(({
   },
   menu: {
     width: '34%',
+    display: 'none',
+    [mobileLandscape]: {
+      display: 'block',
+    },
     [mobilePortrait]: {
+      display: 'block',
       marginTop: spacing(),
       marginBottom: spacing(),
     },
