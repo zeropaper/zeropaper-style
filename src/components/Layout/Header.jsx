@@ -4,8 +4,11 @@ import { createUseStyles, useTheme } from 'react-jss';
 import Link from '../Link/Link';
 import Logo from '../Logo/Logo';
 import Menu from './Menu';
+import { ReactComponent as LightMode } from '../../assets/light-mode.svg';
+import { ReactComponent as DarkMode } from '../../assets/dark-mode.svg';
 
 const useStyles = createUseStyles(({
+  spacing,
   typography: {
     shades,
   },
@@ -28,8 +31,8 @@ const useStyles = createUseStyles(({
     display: 'flex',
     alignItems: 'center',
     padding: {
-      left: 10,
-      right: 10,
+      left: spacing(2),
+      right: spacing(2),
     },
     borderBottom: `1px solid ${shades[7]}`,
     [mobileLandscape]: {
@@ -56,7 +59,7 @@ const useStyles = createUseStyles(({
     },
   },
   logo: {
-    marginRight: 10,
+    marginRight: spacing(1),
     maxHeight: '1em',
     maxWidth: '1em',
     '& path': {
@@ -92,6 +95,15 @@ const useStyles = createUseStyles(({
     font: 'inherit',
     cursor: 'pointer',
     color: 'inherit',
+    display: 'inline-flex',
+    alignItems: 'baseline',
+    padding: spacing(),
+    marginRight: spacing(-1),
+  },
+  themeModeIcon: {
+    '& path': {
+      fill: 'currentColor',
+    },
   },
 }), {
   name: 'LayoutHeader',
@@ -121,7 +133,13 @@ const Header = (props) => {
           onClick={toggleMode}
           className={classes.themeToggle}
         >
-          {`${mode === 'dark' ? 'light' : 'dark'} theme`}
+          {mode === 'dark'
+            ? (
+              <LightMode className={classes.themeModeIcon} />
+            )
+            : (
+              <DarkMode className={classes.themeModeIcon} />
+            )}
         </button>
       </div>
     </header>
