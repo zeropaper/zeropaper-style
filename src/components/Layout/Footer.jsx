@@ -31,13 +31,14 @@ const useStyles = createUseStyles(({
     },
   },
   column: {
-    width: '33%',
+    [mobileLandscape]: {
+      width: '33%',
+    },
     [mobilePortrait]: {
       textAlign: 'center',
     },
   },
   menu: {
-    width: '34%',
     display: 'none',
     [mobileLandscape]: {
       display: 'block',
