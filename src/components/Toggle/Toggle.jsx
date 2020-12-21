@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { createUseStyles } from 'react-jss';
 
-const useStyles = createUseStyles({
+const useStyles = createUseStyles(() => ({
   root: ({ focused }) => ({
     cursor: 'pointer',
     display: 'inline-block',
@@ -34,7 +34,7 @@ const useStyles = createUseStyles({
     borderColor: 'currentColor',
     backgroundColor: checked ? 'lightblue' : 'blue',
   }),
-}, {
+}), {
   name: 'Toggle',
 });
 
