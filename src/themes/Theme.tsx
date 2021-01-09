@@ -1,27 +1,33 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { ThemeProvider } from 'react-jss';
 import tinycolor from 'tinycolor2';
 
 import data from './data';
+import { CustomThemeProps, DefaultTheme } from './Theme.d';
+
+export { CustomThemeProps, DefaultTheme };
 
 const spacing = (val = 1) => val * data.spacingBase;
 
 const mediaQueryMatch = typeof window !== 'undefined'
   && window.matchMedia('(prefers-color-scheme: dark)');
-const defaultDark = typeof localStorage !== 'undefined' && localStorage.getItem('darkMode') !== null
+const defaultDark = typeof localStorage !== 'undefined'
+  && localStorage.getItem('darkMode') !== null
   ? !!localStorage.getItem('darkMode')
   : mediaQueryMatch?.matches;
 
-const CustomTheme = ({ children }) => {
+const CustomTheme = ({ children }: CustomThemeProps): React.ReactElement => {
   const [dark, setDarkMode] = React.useState(defaultDark);
 
-  const toggleDarkMode = React.useCallback(() => setDarkMode((val) => {
-    if (typeof localStorage !== 'undefined') {
-      localStorage.setItem('darkMode', val ? '' : 'true');
-    }
-    return !val;
-  }), [setDarkMode]);
+  const toggleDarkMode = React.useCallback(
+    () => setDarkMode((val) => {
+      if (typeof localStorage !== 'undefined') {
+        localStorage.setItem('darkMode', val ? '' : 'true');
+      }
+      return !val;
+    }),
+    [setDarkMode],
+  );
 
   React.useEffect(() => {
     const queryListener = (e) => {
@@ -41,7 +47,7 @@ const CustomTheme = ({ children }) => {
     spacing,
 
     mode: dark ? 'dark' : 'light',
-    toggleMode: () => toggleDarkMode(!dark),
+    toggleMode: () => toggleDarkMode(),
 
     palette: {
       common: {
@@ -57,7 +63,7 @@ const CustomTheme = ({ children }) => {
       color: textColor,
       shades: [
         0.92,
-        0.80,
+        0.8,
         0.68,
         0.56,
         0.48,
@@ -70,7 +76,7 @@ const CustomTheme = ({ children }) => {
       color: backgroundColor,
       shades: [
         0.92,
-        0.80,
+        0.8,
         0.68,
         0.56,
         0.48,
@@ -144,15 +150,7 @@ const CustomTheme = ({ children }) => {
     },
   };
 
-  return (
-    <ThemeProvider theme={theme}>
-      {children}
-    </ThemeProvider>
-  );
-};
-
-CustomTheme.propTypes = {
-  children: PropTypes.node.isRequired,
+  return <ThemeProvider theme={theme}>{children}</ThemeProvider>;
 };
 
 export default CustomTheme;

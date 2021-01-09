@@ -1,17 +1,35 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
 import classNames from 'classnames';
 // import GatsbyLink from 'gatsby-link';
 import TransitionLink from 'gatsby-plugin-transition-link';
 import { createUseStyles } from 'react-jss';
 
-const useStyles = createUseStyles({}, { name: 'Link' });
+type LinkClasses = {
+  root: string;
+  active: string;
+};
+
+const useStyles = createUseStyles(
+  {
+    root: {},
+    active: {},
+  },
+  { name: 'Link' },
+);
+
+interface ExternalLinkProps {
+  children: React.ReactNode;
+  href: string;
+  title?: string;
+  className?: string;
+  activeClassName?: string;
+}
 
 export const ExternalLink = ({
   href,
   children,
   ...rest
-}) => (
+}: ExternalLinkProps): React.ReactElement => (
   <a
     target="_blank"
     rel="noreferrer"
@@ -23,18 +41,28 @@ export const ExternalLink = ({
   </a>
 );
 
-ExternalLink.propTypes = {
-  href: PropTypes.string.isRequired,
-  children: PropTypes.node.isRequired,
+ExternalLink.defaultProps = {
+  className: null,
+  activeClassName: null,
+  title: null,
 };
+
+interface LinkProps {
+  children: React.ReactNode;
+  className?: string;
+  activeClassName?: string;
+  to?: string;
+  href?: string;
+  title?: string;
+}
 
 const Link = ({
   children,
   className,
   activeClassName,
   ...props
-}) => {
-  const classes = useStyles(props);
+}: LinkProps): React.ReactElement => {
+  const classes: LinkClasses = useStyles(props);
   const { to, href, ...rest } = props;
 
   if (href) {
@@ -53,7 +81,7 @@ const Link = ({
 
     return (
       <a
-          // eslint-disable-next-line react/jsx-props-no-spreading
+        // eslint-disable-next-line react/jsx-props-no-spreading
         {...rest}
         className={classNames(className, classes.root)}
         href={href}
@@ -83,19 +111,12 @@ const Link = ({
   );
 };
 
-Link.propTypes = {
-  children: PropTypes.node.isRequired,
-  href: PropTypes.string,
-  to: PropTypes.string,
-  className: PropTypes.string,
-  activeClassName: PropTypes.string,
-};
-
 Link.defaultProps = {
   className: null,
+  activeClassName: null,
   href: null,
   to: null,
-  activeClassName: null,
+  title: null,
 };
 
 export default Link;

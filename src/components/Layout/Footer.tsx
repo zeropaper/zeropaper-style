@@ -1,14 +1,12 @@
-import React from 'react';
+import * as React from 'react';
 import { createUseStyles } from 'react-jss';
+import { DefaultTheme } from '../../themes/Theme';
 import Link from '../Link/Link';
 
 import Menu from './Menu';
 import SocialNetworks from './SocialNetworks';
 
 const useStyles = createUseStyles(({
-  // background: {
-  //   shades,
-  // },
   spacing,
   mediaQueries: {
     mobilePortrait,
@@ -17,7 +15,7 @@ const useStyles = createUseStyles(({
   typography: {
     shades,
   },
-}) => ({
+}: DefaultTheme) => ({
   root: {
     padding: spacing(),
     display: 'flex',

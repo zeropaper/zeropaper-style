@@ -1,17 +1,37 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
 import classNames from 'classnames';
 import { createUseStyles } from 'react-jss';
 
 import Link from '../Link/Link';
+import { DefaultTheme } from '../../themes/Theme';
 
-const useStyles = createUseStyles(({ mixins: { inlineListClasses } }) => ({
-  ...inlineListClasses,
-}), {
-  name: 'LayoutMenu',
-});
+type MenuClassNames = {
+  root?: string;
+  list?: string;
+  item?: string;
+  link?: string;
+  linkActive?: string;
+}
 
-const Menu = ({ className, classes: passedClasses, ...props }) => {
+interface MenuProps {
+  className?: string;
+  classes?: MenuClassNames
+}
+
+const useStyles = createUseStyles<DefaultTheme, string>(
+  ({ mixins: { inlineListClasses } }) => ({
+    ...inlineListClasses,
+  }),
+  {
+    name: 'LayoutMenu',
+  },
+);
+
+const Menu = ({
+  className,
+  classes: passedClasses,
+  ...props
+}: MenuProps): React.ReactElement => {
   const classes = useStyles(props);
 
   const links = [
@@ -39,11 +59,6 @@ const Menu = ({ className, classes: passedClasses, ...props }) => {
       </ul>
     </nav>
   );
-};
-
-Menu.propTypes = {
-  className: PropTypes.string,
-  classes: PropTypes.objectOf(PropTypes.string),
 };
 
 Menu.defaultProps = {

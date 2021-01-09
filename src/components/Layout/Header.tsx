@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { createUseStyles, useTheme } from 'react-jss';
 
 import Link from '../Link/Link';
@@ -6,8 +6,9 @@ import Logo from '../Logo/Logo';
 import Menu from './Menu';
 import { ReactComponent as LightMode } from '../../assets/light-mode.svg';
 import { ReactComponent as DarkMode } from '../../assets/dark-mode.svg';
+import { DefaultTheme } from '../../themes/Theme';
 
-const useStyles = createUseStyles(({
+const useStyles = createUseStyles<DefaultTheme, string>(({
   spacing,
   typography: {
     shades,
@@ -110,7 +111,7 @@ const useStyles = createUseStyles(({
 });
 
 const Header = (props) => {
-  const { toggleMode, mode } = useTheme();
+  const { toggleMode, mode }: DefaultTheme = useTheme();
   const classes = useStyles(props);
   return (
     <header className={classes.root}>

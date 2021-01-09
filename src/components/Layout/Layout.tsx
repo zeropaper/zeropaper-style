@@ -1,6 +1,5 @@
 /* eslint-disable max-len */
-import React from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
 import classNames from 'classnames';
 import { createUseStyles } from 'react-jss';
 
@@ -10,8 +9,23 @@ import 'typeface-roboto';
 
 import Header from './Header';
 import Footer from './Footer';
+import { DefaultTheme } from '../../themes/Theme';
 
-const useStyles = createUseStyles(({
+interface LayoutClassNames {
+  main?: string;
+  content?: string;
+  header?: string;
+  footer?: string;
+}
+
+export interface PageProps {
+  children: React.ReactNode,
+  component?: React.ComponentType<{ className?: string }>;
+  classes?: LayoutClassNames;
+  className?: string;
+}
+
+const useStyles = createUseStyles<DefaultTheme, string>(({
   typography: {
     fontSize,
     fontFamily,
@@ -107,11 +121,11 @@ const Layout = ({
   children,
   classes: passedClasses,
   ...props
-}) => {
+}: PageProps) => {
   const classes = useStyles(props);
   const { component: Comp } = props;
 
-  const mainClass = classNames(classes.main, classes.main, passedClasses.main);
+  const mainClass = classNames(classes.main, passedClasses.main);
   const contentClass = classNames(classes.content, passedClasses.content);
   return (
     <>
@@ -126,19 +140,6 @@ const Layout = ({
       <Footer className={classNames(classes.footer, passedClasses.footer)} />
     </>
   );
-};
-
-Layout.propTypes = {
-  component: PropTypes.elementType,
-  children: PropTypes.node.isRequired,
-  classes: PropTypes.shape({
-    header: PropTypes.string,
-    menu: PropTypes.string,
-    main: PropTypes.string,
-    content: PropTypes.string,
-    footer: PropTypes.string,
-  }),
-  contentType: PropTypes.string,
 };
 
 Layout.defaultProps = {

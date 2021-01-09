@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
-import { graphql } from 'gatsby';
+import { graphql, PageProps } from 'gatsby';
 import { createUseStyles } from 'react-jss';
 
 import Layout from '../components/Layout/Layout';
@@ -75,9 +75,10 @@ const useStyles = createUseStyles({
   helloLink: {
     fontSize: 'max(2rem, 5vw)',
   },
-}, { name: 'IndexPage' });
+},
+{ name: 'IndexPage' });
 
-const IndexPage = () => {
+const IndexPage: React.FC<PageProps> = () => {
   const classes = useStyles();
   return (
     <Layout
@@ -85,7 +86,7 @@ const IndexPage = () => {
         main: classes.layoutMain,
       }}
     >
-      <SEO title="Personal web page of Valentin &quot;zeropaper&quot; Vago" />
+      <SEO title='Personal web page of Valentin "zeropaper" Vago' />
 
       <div className={classes.contentWrapper}>
         <Logo slim className={classes.logo} />
@@ -141,12 +142,8 @@ const IndexPage = () => {
             tags
           </Link>
           {' & '}
-          <Link
-            title="Ya know"
-            to="/stuff"
-            className={classes.helloLink}
-          >
-            S... tuff
+          <Link title="Ya know" to="/stuff" className={classes.helloLink}>
+            S… tuff
           </Link>
         </h1>
       </div>
@@ -154,13 +151,15 @@ const IndexPage = () => {
   );
 };
 
-export const query = graphql`{
-  site {
-    siteMetadata {
-      title
-      description
+export const query = graphql`
+  {
+    site {
+      siteMetadata {
+        title
+        description
+      }
     }
   }
-}`;
+`;
 
 export default IndexPage;

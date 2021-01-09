@@ -1,12 +1,22 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import classNames from 'classnames';
 import { createUseStyles } from 'react-jss';
 import { MDXRenderer } from 'gatsby-plugin-mdx';
 
 import Link from '../Link/Link';
 import TagsList from '../TagsList/TagsList';
+import { DefaultTheme } from '../../themes/Theme';
 
-const useStyles = createUseStyles(({
+interface IFrameProps {
+  src: string;
+  title: string;
+  description?: string;
+  source?: string;
+  mdx?: string;
+  tags?: string[];
+}
+
+const useStyles = createUseStyles<DefaultTheme, string>(({
   spacing,
   mediaQueries: {
     mobilePortrait,
@@ -47,25 +57,29 @@ const useStyles = createUseStyles(({
     padding: spacing(3),
     maxHeight: '100%',
   },
-  aside: ({ open }) => ({
+  aside: {
     position: 'absolute',
     top: 0,
     bottom: 0,
     zIndex: 100,
     background: backgroundShades[0],
     transition: 'right 218ms ease-in',
-    borderLeft: open ? `1px solid ${shades[5]}` : '1px solid transparent',
+    borderLeft: '1px solid transparent',
     width: '35vw',
-    right: open ? 0 : '-35vw',
-    [mobileLandscape]: {
-      width: '55vw',
-      right: open ? 0 : '-55vw',
-    },
+    right: '-35vw',
     [mobilePortrait]: {
       width: '250px',
-      right: open ? 0 : '-250px',
+      right: '-250px',
     },
-  }),
+    [mobileLandscape]: {
+      width: '55vw',
+      right: '-55vw',
+    },
+  },
+  asideOpen: {
+    borderLeft: `1px solid ${shades[5]}`,
+    right: 0,
+  },
   toggleButtonHolder: {
     position: 'absolute',
     right: '100%',
@@ -92,7 +106,7 @@ const useStyles = createUseStyles(({
   name: 'IFrame',
 });
 
-const IFrame = (props) => {
+const IFrame = (props: IFrameProps) => {
   const {
     src,
     title,
@@ -102,13 +116,18 @@ const IFrame = (props) => {
     tags,
   } = props;
   const [open, setOpen] = React.useState(false);
-  const classes = useStyles({ ...props, open });
+  const classes = useStyles(props);
 
   const handleToggle = () => setOpen((val) => !val);
 
   return (
     <div className={classes.root}>
-      <aside className={classes.aside}>
+      <aside
+        className={classNames({
+          [classes.aside]: true,
+          [classes.asideOpen]: open,
+        })}
+      >
         <div className={classes.toggleButtonHolder}>
           <button
             className={classes.toggleButton}
@@ -138,18 +157,15 @@ const IFrame = (props) => {
         </div>
       </aside>
 
-      <iframe className={classes.iframe} title={title} src={src} />
+      <iframe
+        className={classes.iframe}
+        title={title}
+        src={src}
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowFullScreen
+      />
     </div>
   );
-};
-
-IFrame.propTypes = {
-  src: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
-  description: PropTypes.string,
-  source: PropTypes.string,
-  mdx: PropTypes.string,
-  tags: PropTypes.arrayOf(PropTypes.string),
 };
 
 IFrame.defaultProps = {

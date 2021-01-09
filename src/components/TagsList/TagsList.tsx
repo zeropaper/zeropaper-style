@@ -1,10 +1,14 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { createUseStyles } from 'react-jss';
 
 import Link from '../Link/Link';
+import { DefaultTheme } from '../../themes/Theme';
 
-const useStyles = createUseStyles(({
+interface TagsListProps {
+  tags?: string[];
+}
+
+const useStyles = createUseStyles<DefaultTheme, string>(({
   spacing,
 }) => ({
   root: {},
@@ -31,7 +35,7 @@ const useStyles = createUseStyles(({
   name: 'TagsList',
 });
 
-const TagsList = (props) => {
+const TagsList = (props: TagsListProps): React.ReactElement => {
   const { tags } = props;
   const classes = useStyles(props);
   return (tags && (
@@ -50,10 +54,6 @@ const TagsList = (props) => {
       </ul>
     </nav>
   ));
-};
-
-TagsList.propTypes = {
-  tags: PropTypes.arrayOf(PropTypes.string),
 };
 
 TagsList.defaultProps = {

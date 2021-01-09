@@ -2,6 +2,11 @@ const theme = require('./src/themes/data');
 const appIcons = require('./src/assets/app-icons');
 
 module.exports = {
+  flags: {
+    QUERY_ON_DEMAND: true,
+    LAZY_IMAGES: true,
+    DEV_SSR: true,
+  },
   siteMetadata: {
     title: 'Valentin Vago',
     description: 'Personal web page of Valentin Vago aka zeropaper.',
