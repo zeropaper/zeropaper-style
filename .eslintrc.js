@@ -20,7 +20,7 @@ module.exports = {
     es2020: true,
     node: true,
   },
-  parser: 'babel-eslint',
+  parser: '@babel/eslint-parser',
   parserOptions: {
     sourceType: 'module',
     ecmaFeatures: {
@@ -32,6 +32,7 @@ module.exports = {
     'graphql',
   ],
   rules: {
+    'no-undef': 'warn',
     'react/jsx-filename-extension': [1, { extensions: ['.tsx', '.jsx'] }],
     'no-console': ['warn', { allow: ['warn', 'error'] }],
     'import/extensions': ['error', 'always', {

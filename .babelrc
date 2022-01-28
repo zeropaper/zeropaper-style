@@ -3,6 +3,7 @@
     "@babel/plugin-proposal-class-properties"
   ],
   "presets": [
-    "babel-preset-gatsby"
+    "babel-preset-gatsby",
+    "@babel/preset-typescript"
   ] // only if you're using Gatsby
 }
