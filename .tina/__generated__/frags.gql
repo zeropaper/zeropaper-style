@@ -1,0 +1,15 @@
+fragment PageParts on Page {
+  title
+  seo {
+    __typename
+    title
+    description
+  }
+}
+
+fragment PostParts on Post {
+  title
+  excerpt
+  date
+  body
+}

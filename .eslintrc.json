@@ -1,0 +1,20 @@
+{
+  "extends": "next/core-web-vitals",
+  "overrides": [
+    {
+      "files": "**/*.test.{ts,tsx}",
+      "plugins": ["jest"],
+      "env": {
+        "jest/globals": true
+      },
+      "extends": ["plugin:jest/all"],
+      "rules": {
+        "jest/prefer-lowercase-title": "off"
+      }
+    },
+    {
+      "files": "**/*.stories.tsx",
+      "extends": ["plugin:storybook/recommended"]
+    }
+  ]
+}
