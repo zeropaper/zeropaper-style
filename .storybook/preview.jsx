@@ -1,9 +1,23 @@
 import React from 'react';
 import ThemeProvider from '../src/themes/Theme';
 
-/* eslint-disable import/prefer-default-export */
 export const parameters = {
-  actions: { argTypesRegex: '^on[A-Z].*' },
+  actions: { argTypesRegex: '^on[A-Z].+' },
+  layout: 'centered',
+  controls: {
+    // expanded: true
+    // matchers: {
+    //   color: /(background|color)$/i,
+    //   date: /Date$/
+    // }
+  },
+  options: {
+    storySort: {
+      method: 'alphabetical',
+      // order: ['Introduction', 'Atoms', 'Molecules', 'Organisms', 'Templates'],
+      locales: ['en-US']
+    }
+  }
 };
 
 export const decorators = [
