@@ -36,6 +36,7 @@ const SocialNetworks = ({ className, classes: passedClasses, ...props }) => {
         <li className={classes.item}>
           <ExternalLink
             className={classes.link}
+            rel="me"
             href="https://twitter.com/zeropaper"
           >
             <Twitter />
@@ -44,6 +45,7 @@ const SocialNetworks = ({ className, classes: passedClasses, ...props }) => {
         <li className={classes.item}>
           <ExternalLink
             className={classes.link}
+            rel="me"
             href="https://github.com/zeropaper"
           >
             <GitHub />
@@ -60,6 +62,7 @@ const SocialNetworks = ({ className, classes: passedClasses, ...props }) => {
         <li className={classes.item}>
           <ExternalLink
             className={classes.link}
+            rel="me"
             href="https://www.linkedin.com/in/vvago"
           >
             <LinkedIn />
