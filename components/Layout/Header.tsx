@@ -1,147 +1,152 @@
 import * as React from 'react';
-import { createUseStyles, useTheme } from 'react-jss';
+import { createStyles as createUseStyles, useMantineColorScheme, keyframes } from '@mantine/core';
 
 import Link from '../Link/Link';
 import Logo from '../Logo/Logo';
 import Menu from './Menu';
-import { ReactComponent as LightMode } from '../../assets/light-mode.svg';
-import { ReactComponent as DarkMode } from '../../assets/dark-mode.svg';
-import { DefaultTheme } from '../../themes/Theme';
+import LightMode from './assets/light-mode.svg';
+import DarkMode from './assets/dark-mode.svg';
 
-const useStyles = createUseStyles<DefaultTheme, string>(({
-  spacing,
-  typography: {
-    shades,
+const drawStroke = keyframes({
+  '0%': {
+    strokeDasharray: '200%',
+    strokeDashoffset: '0%',
   },
-  mediaQueries: {
-    mobileLandscape,
+  '100%': {
+    strokeDasharray: '200%',
+    strokeDashoffset: '400%',
   },
-}) => ({
-  '@keyframes drawStroke': {
-    '0%': {
-      strokeDasharray: '200%',
-      strokeDashoffset: '0%',
-    },
-    '100%': {
-      strokeDasharray: '200%',
-      strokeDashoffset: '400%',
-    },
-  },
+})
 
-  root: {
-    display: 'flex',
-    alignItems: 'center',
-    padding: {
-      left: spacing(2),
-      right: spacing(2),
+const useStyles = createUseStyles(({
+  spacing
+}, _params, getRef) => {
+  const logo = getRef('logo');
+  return ({
+    root: {
+      // display: 'flex',
+      // alignItems: 'center',
+      // paddingRight: spacing.sm,
+      // paddingLeft: spacing.sm,
     },
-    borderBottom: `1px solid ${shades[7]}`,
-    [mobileLandscape]: {
-      justifyContent: 'space-between',
+    inner: {
+      display: 'flex',
+      alignItems: 'center',
+      // flexGrow: 1
     },
-  },
-  title: {
-    fontWeight: 300,
-    fontSize: 'min(32px, 7vw)',
-    fontFamily: 'Roboto',
-    width: '33%',
-    [mobileLandscape]: {
-      width: 'auto',
+    title: {
+      fontWeight: 300,
+      fontSize: 'min(32px, 7vw)',
+      width: '33%',
     },
-  },
-  titleLink: {
-    display: 'flex',
-    alignItems: 'center',
-    textDecoration: 'none',
-    borderBottom: 'none',
+    titleLink: {
+      display: 'flex',
+      alignItems: 'center',
+      textDecoration: 'none',
+      borderBottom: 'none',
 
-    '&:hover $logo path': {
-      animationName: '$drawStroke',
+      [`&:hover .${logo} path`]: {
+        animationName: drawStroke,
+      },
     },
-  },
-  logo: {
-    marginRight: spacing(1),
-    maxHeight: '1em',
-    maxWidth: '1em',
-    '& path': {
-      stroke: 'currentColor',
-      strokeWidth: 40,
-      fill: 'none',
-      animationDuration: '2s',
-      // animationIterationCount: 'infinite',
-      animationFillMode: 'forwards',
-      animationTimingFunction: 'linear',
+    logo: {
+      ref: logo,
+      marginRight: spacing.sm,
+      maxHeight: '1em',
+      maxWidth: '1em',
+      '& path': {
+        stroke: 'currentColor',
+        strokeWidth: 40,
+        fill: 'none',
+        animationDuration: '2s',
+        // animationIterationCount: 'infinite',
+        animationFillMode: 'forwards',
+        animationTimingFunction: 'linear',
+      },
     },
-  },
-  linkText: {},
-  menu: {
-    width: '34%',
-    display: 'block',
-    textAlign: 'center',
-    [mobileLandscape]: {
-      display: 'none',
+    linkText: {},
+    menu: {
+      width: '34%',
+      display: 'block',
+      textAlign: 'center',
+      // [mobileLandscape]: {
+      //   display: 'none',
+      // },
     },
-  },
-  themeToggleWrapper: {
-    width: '33%',
-    textAlign: 'right',
-    [mobileLandscape]: {
-      width: 'auto',
+    themeToggleWrapper: {
+      width: '33%',
+      textAlign: 'right',
+      // [mobileLandscape]: {
+      //   width: 'auto',
+      // },
     },
-  },
-  themeToggle: {
-    background: 'none',
-    border: 'none',
-    textDecoration: 'underline',
-    font: 'inherit',
-    cursor: 'pointer',
-    color: 'inherit',
-    display: 'inline-flex',
-    alignItems: 'baseline',
-    padding: spacing(),
-    marginRight: spacing(-1),
-  },
-  themeModeIcon: {
-    '& path': {
-      fill: 'currentColor',
+    themeToggle: {
+      background: 'none',
+      border: 'none',
+      textDecoration: 'underline',
+      font: 'inherit',
+      cursor: 'pointer',
+      color: 'inherit',
+      display: 'inline-flex',
+      alignItems: 'baseline',
+      // padding: spacing(),
+      // marginRight: spacing(-1),
     },
-  },
-}), {
-  name: 'LayoutHeader',
+    themeModeIcon: {
+      '& path': {
+        fill: 'currentColor',
+      },
+    },
+  })
 });
 
-const Header = (props) => {
-  const { toggleMode, mode }: DefaultTheme = useTheme();
-  const classes = useStyles(props);
+const ThemeModeToggle = () => {
+  const { colorScheme, toggleColorScheme } = useMantineColorScheme();
+  const toggleMode = React.useCallback(() => toggleColorScheme(), [toggleColorScheme])
+  const { classes, cx } = useStyles();
   return (
-    <header className={classes.root}>
-      <h1 className={classes.title} title="Valentin “zeropaper” Vago">
-        <Link to="/" className={classes.titleLink}>
-          <Logo slim className={classes.logo} />
+    <button
+      type="button"
+      title="Toggle the page styling theme"
+      onClick={toggleMode}
+      className={classes.themeToggle}
+    >
+      {
+        colorScheme === 'dark'
+        ? (
+          <LightMode className={classes.themeModeIcon} />
+        )
+        : (
+          <DarkMode className={classes.themeModeIcon} />
+        )}
+    </button>
+  )
+}
 
-          <span>
-            zeropaper
-          </span>
-        </Link>
-      </h1>
+export type PropTypes = React.Attributes & React.HTMLAttributes<HTMLDivElement> & {
+  classes?: ClassNames<typeof useStyles>;
+};
 
-      <Menu classes={{ root: classes.menu }} />
+const Header = ({ classes: passedClasses, className }: PropTypes) => {
+  const {classes, cx} = useStyles();
+  return (
+    <header className={cx(className, classes.root, passedClasses?.root)}>
+      <div className={cx(classes.inner, passedClasses?.inner)}>
+        <h1 className={cx(classes.title, passedClasses?.title)} title="Valentin “zeropaper” Vago">
+          <Link className={cx(classes.titleLink, passedClasses?.titleLink)} component="a" href="/">
+            <Logo slim className={cx(classes.logo, passedClasses?.logo)} />
 
-      <div className={classes.themeToggleWrapper}>
-        <button
-          type="button"
-          title="Toggle the page styling theme"
-          onClick={toggleMode}
-          className={classes.themeToggle}
-        >
-          {mode === 'dark'
-            ? (
-              <LightMode className={classes.themeModeIcon} />
-            )
-            : (
-              <DarkMode className={classes.themeModeIcon} />
-            )}
-        </button>
+            <span>
+              zeropaper
+            </span>
+          </Link>
+        </h1>
+
+        <Menu classes={{ root: classes.menu }} />
+
+        <div className={cx(classes.themeToggleWrapper, passedClasses?.themeToggleWrapper)}>
+          <ThemeModeToggle />
+        </div>
       </div>
     </header>
   );

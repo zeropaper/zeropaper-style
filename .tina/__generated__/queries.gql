@@ -1,3 +1,42 @@
+query getLandingPageDocument($relativePath: String!) {
+  getLandingPageDocument(relativePath: $relativePath) {
+    sys {
+      filename
+      basename
+      breadcrumbs
+      path
+      relativePath
+      extension
+    }
+    id
+    data {
+      ...LandingPageParts
+    }
+  }
+}
+
+query getLandingPageList {
+  getLandingPageList {
+    totalCount
+    edges {
+      node {
+        id
+        sys {
+          filename
+          basename
+          breadcrumbs
+          path
+          relativePath
+          extension
+        }
+        data {
+          ...LandingPageParts
+        }
+      }
+    }
+  }
+}
+
 query getPageDocument($relativePath: String!) {
   getPageDocument(relativePath: $relativePath) {
     sys {
@@ -31,6 +70,84 @@ query getPageList {
         }
         data {
           ...PageParts
+        }
+      }
+    }
+  }
+}
+
+query getTagDocument($relativePath: String!) {
+  getTagDocument(relativePath: $relativePath) {
+    sys {
+      filename
+      basename
+      breadcrumbs
+      path
+      relativePath
+      extension
+    }
+    id
+    data {
+      ...TagParts
+    }
+  }
+}
+
+query getTagList {
+  getTagList {
+    totalCount
+    edges {
+      node {
+        id
+        sys {
+          filename
+          basename
+          breadcrumbs
+          path
+          relativePath
+          extension
+        }
+        data {
+          ...TagParts
+        }
+      }
+    }
+  }
+}
+
+query getStuffDocument($relativePath: String!) {
+  getStuffDocument(relativePath: $relativePath) {
+    sys {
+      filename
+      basename
+      breadcrumbs
+      path
+      relativePath
+      extension
+    }
+    id
+    data {
+      ...StuffParts
+    }
+  }
+}
+
+query getStuffList {
+  getStuffList {
+    totalCount
+    edges {
+      node {
+        id
+        sys {
+          filename
+          basename
+          breadcrumbs
+          path
+          relativePath
+          extension
+        }
+        data {
+          ...StuffParts
         }
       }
     }

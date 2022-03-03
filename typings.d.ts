@@ -27,6 +27,41 @@ declare module '*.csv' {
   export default content
 }
 
+type PageMDBody = any
+
+type PageMDXBody = any
+
+export type PageBlock = {
+  id: string
+  wrapper: PageBlockWrapper
+  component: string | ElementType
+  props: any
+  // preset: string
+}
+
+export type PageBlocks = PageBlock[]
+
+// export type PageBody = PageBlocks | PageMDBody | PageMDXBody
+
+export type Tag = {
+  name: string
+  description: string
+  slug: string
+}
+
+export type PageProps = {
+  path: string
+  title: string
+  description: string
+  // body: PageBody
+  blocks: PageBlocks
+  keywords?: string[]
+  image?: string
+  canonical?: string
+  // tags?: Tag[]
+  template?: string
+}
+
 declare type AsyncReturnType<T extends (...args: any) => Promise<any>> =
   T extends (...args: any) => Promise<infer R> ? R : any
 

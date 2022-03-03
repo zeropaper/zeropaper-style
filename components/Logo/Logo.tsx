@@ -1,36 +1,28 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { createUseStyles } from 'react-jss';
+import { createStyles as createUseStyles } from '@mantine/core';
 
-import { ReactComponent as Slim } from '../../assets/images/zeropaper-slim.svg';
-import { ReactComponent as Fat } from '../../assets/images/zeropaper-fat.svg';
+import Slim from './assets/zeropaper-slim.svg';
+import Fat from './assets/zeropaper-fat.svg';
+
+type LogoProps = {
+  slim?: boolean,
+  fill?: string
+  stroke?: string
+  strokeWidth?: number
+  className?: string
+}
 
 const useStyles = createUseStyles({
-  root: ({
-    slim,
-    fill = 'none',
-    stroke = 'currentColor',
-    strokeWidth = 0,
-  }) => ({
-    '& path': !slim ? {
-      fill,
-      stroke,
-      strokeWidth: strokeWidth || 25,
-    } : {
-      stroke: fill,
-      fill: stroke,
-      strokeWidth,
-    },
-  }),
-}, {
-  name: 'Logo',
+  root: {},
 });
 
-const Logo = (props) => {
+const Logo = (props: LogoProps) => {
   const { slim, className } = props;
   const Comp = slim ? Slim : Fat;
-  const classes = useStyles(props);
+  const styles = useStyles();
+  const { classes } = styles;
   return <Comp className={classNames(classes.root, className)} />;
 };
 

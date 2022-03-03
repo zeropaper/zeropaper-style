@@ -48,8 +48,14 @@ type Query {
   getDocument(collection: String, relativePath: String): DocumentNode!
   getDocumentList(before: String, after: String, first: Float, last: Float): DocumentConnection!
   getDocumentFields: JSON!
+  getLandingPageDocument(relativePath: String): LandingPageDocument!
+  getLandingPageList(before: String, after: String, first: Float, last: Float): LandingPageConnection!
   getPageDocument(relativePath: String): PageDocument!
   getPageList(before: String, after: String, first: Float, last: Float): PageConnection!
+  getTagDocument(relativePath: String): TagDocument!
+  getTagList(before: String, after: String, first: Float, last: Float): TagConnection!
+  getStuffDocument(relativePath: String): StuffDocument!
+  getStuffList(before: String, after: String, first: Float, last: Float): StuffConnection!
   getPostDocument(relativePath: String): PostDocument!
   getPostList(before: String, after: String, first: Float, last: Float): PostConnection!
 }
@@ -77,16 +83,96 @@ type Collection {
   documents(before: String, after: String, first: Float, last: Float): DocumentConnection!
 }
 
-union DocumentNode = PageDocument | PostDocument
+union DocumentNode = LandingPageDocument | PageDocument | TagDocument | StuffDocument | PostDocument
+
+type LandingPageSeo {
+  title: String
+  description: String
+}
+
+type LandingPageBlocksHero {
+  href: String
+  title: String
+  description: String
+}
+
+type LandingPageBlocksFeature {
+  href: String
+  title: String
+  description: String
+}
+
+type LandingPageBlocksFeaturesItemsFeature {
+  href: String
+  title: String
+  description: String
+}
+
+union LandingPageBlocksFeaturesItems = LandingPageBlocksFeaturesItemsFeature
+
+type LandingPageBlocksFeatures {
+  headline: String
+  subline: String
+  items: [LandingPageBlocksFeaturesItems]
+}
+
+type LandingPageBlocksFlyingActions {
+  label: String
+  icon: String
+  variant: String
+  url: String
+}
+
+type LandingPageBlocksFlyingItems {
+  headline: String
+  subline: String
+  cli: Boolean
+}
+
+type LandingPageBlocksFlying {
+  headline: String
+  subline: String
+  actions: [LandingPageBlocksFlyingActions]
+  items: [LandingPageBlocksFlyingItems]
+}
+
+union LandingPageBlocks = LandingPageBlocksHero | LandingPageBlocksFeature | LandingPageBlocksFeatures | LandingPageBlocksFlying
+
+type LandingPage {
+  title: String
+  seo: LandingPageSeo
+  blocks: [LandingPageBlocks]
+}
+
+type LandingPageDocument implements Node & Document {
+  id: ID!
+  sys: SystemInfo!
+  data: LandingPage!
+  form: JSON!
+  values: JSON!
+  dataJSON: JSON!
+}
+
+type LandingPageConnectionEdges {
+  cursor: String
+  node: LandingPageDocument
+}
+
+type LandingPageConnection implements Connection {
+  pageInfo: PageInfo
+  totalCount: Float!
+  edges: [LandingPageConnectionEdges]
+}
 
 type PageSeo {
-  title: String
   description: String
 }
 
 type Page {
   title: String
   seo: PageSeo
+  excerpt: String
+  body: JSON
 }
 
 type PageDocument implements Node & Document {
@@ -109,9 +195,73 @@ type PageConnection implements Connection {
   edges: [PageConnectionEdges]
 }
 
+type Tag {
+  name: String
+  slug: String
+  description: String
+}
+
+type TagDocument implements Node & Document {
+  id: ID!
+  sys: SystemInfo!
+  data: Tag!
+  form: JSON!
+  values: JSON!
+  dataJSON: JSON!
+}
+
+type TagConnectionEdges {
+  cursor: String
+  node: TagDocument
+}
+
+type TagConnection implements Connection {
+  pageInfo: PageInfo
+  totalCount: Float!
+  edges: [TagConnectionEdges]
+}
+
+type StuffSeo {
+  title: String
+  description: String
+}
+
+type Stuff {
+  title: String
+  description: String
+  slug: String
+  date: String
+  seo: StuffSeo
+  tags: [String]
+  iframe: String
+  body: JSON
+}
+
+type StuffDocument implements Node & Document {
+  id: ID!
+  sys: SystemInfo!
+  data: Stuff!
+  form: JSON!
+  values: JSON!
+  dataJSON: JSON!
+}
+
+type StuffConnectionEdges {
+  cursor: String
+  node: StuffDocument
+}
+
+type StuffConnection implements Connection {
+  pageInfo: PageInfo
+  totalCount: Float!
+  edges: [StuffConnectionEdges]
+}
+
 type Post {
   title: String
+  slug: String
   excerpt: String
+  tags: [String]
   date: String
   body: JSON
 }
@@ -140,30 +290,130 @@ type Mutation {
   addPendingDocument(collection: String!, relativePath: String!, template: String): DocumentNode!
   updateDocument(collection: String, relativePath: String!, params: DocumentMutation!): DocumentNode!
   createDocument(collection: String, relativePath: String!, params: DocumentMutation!): DocumentNode!
+  updateLandingPageDocument(relativePath: String!, params: LandingPageMutation!): LandingPageDocument!
+  createLandingPageDocument(relativePath: String!, params: LandingPageMutation!): LandingPageDocument!
   updatePageDocument(relativePath: String!, params: PageMutation!): PageDocument!
   createPageDocument(relativePath: String!, params: PageMutation!): PageDocument!
+  updateTagDocument(relativePath: String!, params: TagMutation!): TagDocument!
+  createTagDocument(relativePath: String!, params: TagMutation!): TagDocument!
+  updateStuffDocument(relativePath: String!, params: StuffMutation!): StuffDocument!
+  createStuffDocument(relativePath: String!, params: StuffMutation!): StuffDocument!
   updatePostDocument(relativePath: String!, params: PostMutation!): PostDocument!
   createPostDocument(relativePath: String!, params: PostMutation!): PostDocument!
 }
 
 input DocumentMutation {
+  landingPage: LandingPageMutation
   page: PageMutation
+  tag: TagMutation
+  stuff: StuffMutation
   post: PostMutation
 }
 
-input PageSeoMutation {
+input LandingPageSeoMutation {
   title: String
+  description: String
+}
+
+input LandingPageBlocksHeroMutation {
+  href: String
+  title: String
+  description: String
+}
+
+input LandingPageBlocksFeatureMutation {
+  href: String
+  title: String
+  description: String
+}
+
+input LandingPageBlocksFeaturesItemsFeatureMutation {
+  href: String
+  title: String
+  description: String
+}
+
+input LandingPageBlocksFeaturesItemsMutation {
+  feature: LandingPageBlocksFeaturesItemsFeatureMutation
+}
+
+input LandingPageBlocksFeaturesMutation {
+  headline: String
+  subline: String
+  items: [LandingPageBlocksFeaturesItemsMutation]
+}
+
+input LandingPageBlocksFlyingActionsMutation {
+  label: String
+  icon: String
+  variant: String
+  url: String
+}
+
+input LandingPageBlocksFlyingItemsMutation {
+  headline: String
+  subline: String
+  cli: Boolean
+}
+
+input LandingPageBlocksFlyingMutation {
+  headline: String
+  subline: String
+  actions: [LandingPageBlocksFlyingActionsMutation]
+  items: [LandingPageBlocksFlyingItemsMutation]
+}
+
+input LandingPageBlocksMutation {
+  hero: LandingPageBlocksHeroMutation
+  feature: LandingPageBlocksFeatureMutation
+  features: LandingPageBlocksFeaturesMutation
+  flying: LandingPageBlocksFlyingMutation
+}
+
+input LandingPageMutation {
+  title: String
+  seo: LandingPageSeoMutation
+  blocks: [LandingPageBlocksMutation]
+}
+
+input PageSeoMutation {
   description: String
 }
 
 input PageMutation {
   title: String
   seo: PageSeoMutation
+  excerpt: String
+  body: JSON
+}
+
+input TagMutation {
+  name: String
+  slug: String
+  description: String
+}
+
+input StuffSeoMutation {
+  title: String
+  description: String
+}
+
+input StuffMutation {
+  title: String
+  description: String
+  slug: String
+  date: String
+  seo: StuffSeoMutation
+  tags: [String]
+  iframe: String
+  body: JSON
 }
 
 input PostMutation {
   title: String
+  slug: String
   excerpt: String
+  tags: [String]
   date: String
   body: JSON
 }

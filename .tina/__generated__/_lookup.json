@@ -3,7 +3,10 @@
     "type": "DocumentConnection",
     "resolveType": "multiCollectionDocumentList",
     "collections": [
+      "landingPage",
       "page",
+      "tag",
+      "stuff",
       "post"
     ]
   },
@@ -17,6 +20,35 @@
     "createDocument": "create",
     "updateDocument": "update"
   },
+  "LandingPageBlocksFeaturesItems": {
+    "type": "LandingPageBlocksFeaturesItems",
+    "resolveType": "unionData",
+    "typeMap": {
+      "feature": "LandingPageBlocksFeaturesItemsFeature"
+    }
+  },
+  "LandingPageBlocks": {
+    "type": "LandingPageBlocks",
+    "resolveType": "unionData",
+    "typeMap": {
+      "hero": "LandingPageBlocksHero",
+      "feature": "LandingPageBlocksFeature",
+      "features": "LandingPageBlocksFeatures",
+      "flying": "LandingPageBlocksFlying"
+    }
+  },
+  "LandingPageDocument": {
+    "type": "LandingPageDocument",
+    "resolveType": "collectionDocument",
+    "collection": "landingPage",
+    "createLandingPageDocument": "create",
+    "updateLandingPageDocument": "update"
+  },
+  "LandingPageConnection": {
+    "type": "LandingPageConnection",
+    "resolveType": "collectionDocumentList",
+    "collection": "landingPage"
+  },
   "PageDocument": {
     "type": "PageDocument",
     "resolveType": "collectionDocument",
@@ -28,6 +60,30 @@
     "type": "PageConnection",
     "resolveType": "collectionDocumentList",
     "collection": "page"
+  },
+  "TagDocument": {
+    "type": "TagDocument",
+    "resolveType": "collectionDocument",
+    "collection": "tag",
+    "createTagDocument": "create",
+    "updateTagDocument": "update"
+  },
+  "TagConnection": {
+    "type": "TagConnection",
+    "resolveType": "collectionDocumentList",
+    "collection": "tag"
+  },
+  "StuffDocument": {
+    "type": "StuffDocument",
+    "resolveType": "collectionDocument",
+    "collection": "stuff",
+    "createStuffDocument": "create",
+    "updateStuffDocument": "update"
+  },
+  "StuffConnection": {
+    "type": "StuffConnection",
+    "resolveType": "collectionDocumentList",
+    "collection": "stuff"
   },
   "PostDocument": {
     "type": "PostDocument",

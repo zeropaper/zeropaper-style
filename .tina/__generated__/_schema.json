@@ -8,10 +8,396 @@
   "meta": {},
   "collections": [
     {
+      "label": "Landing Pages",
+      "name": "landingPage",
+      "path": "content/landing",
+      "format": "json",
+      "match": "*.json",
+      "fields": [
+        {
+          "type": "string",
+          "name": "title",
+          "namespace": [
+            "landingPage",
+            "title"
+          ]
+        },
+        {
+          "type": "object",
+          "name": "seo",
+          "label": "SEO",
+          "fields": [
+            {
+              "type": "string",
+              "name": "title",
+              "namespace": [
+                "landingPage",
+                "seo",
+                "title"
+              ]
+            },
+            {
+              "type": "string",
+              "name": "description",
+              "namespace": [
+                "landingPage",
+                "seo",
+                "description"
+              ]
+            }
+          ],
+          "namespace": [
+            "landingPage",
+            "seo"
+          ]
+        },
+        {
+          "label": "Blocks",
+          "name": "blocks",
+          "type": "object",
+          "list": true,
+          "templates": [
+            {
+              "label": "Hero",
+              "name": "hero",
+              "fields": [
+                {
+                  "name": "href",
+                  "label": "HREF",
+                  "type": "string",
+                  "namespace": [
+                    "landingPage",
+                    "blocks",
+                    "hero",
+                    "href"
+                  ]
+                },
+                {
+                  "name": "title",
+                  "label": "Title",
+                  "type": "string",
+                  "namespace": [
+                    "landingPage",
+                    "blocks",
+                    "hero",
+                    "title"
+                  ]
+                },
+                {
+                  "name": "description",
+                  "label": "Description",
+                  "type": "string",
+                  "namespace": [
+                    "landingPage",
+                    "blocks",
+                    "hero",
+                    "description"
+                  ]
+                }
+              ],
+              "namespace": [
+                "landingPage",
+                "blocks",
+                "hero"
+              ]
+            },
+            {
+              "label": "Feature",
+              "name": "feature",
+              "fields": [
+                {
+                  "name": "href",
+                  "label": "HREF",
+                  "type": "string",
+                  "namespace": [
+                    "landingPage",
+                    "blocks",
+                    "feature",
+                    "href"
+                  ]
+                },
+                {
+                  "name": "title",
+                  "label": "Title",
+                  "type": "string",
+                  "namespace": [
+                    "landingPage",
+                    "blocks",
+                    "feature",
+                    "title"
+                  ]
+                },
+                {
+                  "name": "description",
+                  "label": "Description",
+                  "type": "string",
+                  "namespace": [
+                    "landingPage",
+                    "blocks",
+                    "feature",
+                    "description"
+                  ]
+                }
+              ],
+              "namespace": [
+                "landingPage",
+                "blocks",
+                "feature"
+              ]
+            },
+            {
+              "label": "Features",
+              "name": "features",
+              "fields": [
+                {
+                  "name": "headline",
+                  "label": "Headline",
+                  "type": "string",
+                  "namespace": [
+                    "landingPage",
+                    "blocks",
+                    "features",
+                    "headline"
+                  ]
+                },
+                {
+                  "name": "subline",
+                  "label": "Subline",
+                  "type": "string",
+                  "namespace": [
+                    "landingPage",
+                    "blocks",
+                    "features",
+                    "subline"
+                  ]
+                },
+                {
+                  "name": "items",
+                  "label": "Items",
+                  "type": "object",
+                  "list": true,
+                  "templates": [
+                    {
+                      "label": "Feature",
+                      "name": "feature",
+                      "fields": [
+                        {
+                          "name": "href",
+                          "label": "HREF",
+                          "type": "string",
+                          "namespace": [
+                            "landingPage",
+                            "blocks",
+                            "features",
+                            "items",
+                            "feature",
+                            "href"
+                          ]
+                        },
+                        {
+                          "name": "title",
+                          "label": "Title",
+                          "type": "string",
+                          "namespace": [
+                            "landingPage",
+                            "blocks",
+                            "features",
+                            "items",
+                            "feature",
+                            "title"
+                          ]
+                        },
+                        {
+                          "name": "description",
+                          "label": "Description",
+                          "type": "string",
+                          "namespace": [
+                            "landingPage",
+                            "blocks",
+                            "features",
+                            "items",
+                            "feature",
+                            "description"
+                          ]
+                        }
+                      ],
+                      "namespace": [
+                        "landingPage",
+                        "blocks",
+                        "features",
+                        "items",
+                        "feature"
+                      ]
+                    }
+                  ],
+                  "namespace": [
+                    "landingPage",
+                    "blocks",
+                    "features",
+                    "items"
+                  ]
+                }
+              ],
+              "namespace": [
+                "landingPage",
+                "blocks",
+                "features"
+              ]
+            },
+            {
+              "name": "flying",
+              "label": "Flying",
+              "fields": [
+                {
+                  "name": "headline",
+                  "type": "string",
+                  "namespace": [
+                    "landingPage",
+                    "blocks",
+                    "flying",
+                    "headline"
+                  ]
+                },
+                {
+                  "name": "subline",
+                  "type": "string",
+                  "namespace": [
+                    "landingPage",
+                    "blocks",
+                    "flying",
+                    "subline"
+                  ]
+                },
+                {
+                  "name": "actions",
+                  "type": "object",
+                  "list": true,
+                  "fields": [
+                    {
+                      "name": "label",
+                      "type": "string",
+                      "namespace": [
+                        "landingPage",
+                        "blocks",
+                        "flying",
+                        "actions",
+                        "label"
+                      ]
+                    },
+                    {
+                      "name": "icon",
+                      "type": "string",
+                      "namespace": [
+                        "landingPage",
+                        "blocks",
+                        "flying",
+                        "actions",
+                        "icon"
+                      ]
+                    },
+                    {
+                      "name": "variant",
+                      "type": "string",
+                      "namespace": [
+                        "landingPage",
+                        "blocks",
+                        "flying",
+                        "actions",
+                        "variant"
+                      ]
+                    },
+                    {
+                      "name": "url",
+                      "type": "string",
+                      "namespace": [
+                        "landingPage",
+                        "blocks",
+                        "flying",
+                        "actions",
+                        "url"
+                      ]
+                    }
+                  ],
+                  "namespace": [
+                    "landingPage",
+                    "blocks",
+                    "flying",
+                    "actions"
+                  ]
+                },
+                {
+                  "name": "items",
+                  "type": "object",
+                  "list": true,
+                  "fields": [
+                    {
+                      "name": "headline",
+                      "type": "string",
+                      "namespace": [
+                        "landingPage",
+                        "blocks",
+                        "flying",
+                        "items",
+                        "headline"
+                      ]
+                    },
+                    {
+                      "name": "subline",
+                      "type": "string",
+                      "namespace": [
+                        "landingPage",
+                        "blocks",
+                        "flying",
+                        "items",
+                        "subline"
+                      ]
+                    },
+                    {
+                      "name": "cli",
+                      "type": "boolean",
+                      "ui": {
+                        "defaultValue": false
+                      },
+                      "namespace": [
+                        "landingPage",
+                        "blocks",
+                        "flying",
+                        "items",
+                        "cli"
+                      ]
+                    }
+                  ],
+                  "namespace": [
+                    "landingPage",
+                    "blocks",
+                    "flying",
+                    "items"
+                  ]
+                }
+              ],
+              "namespace": [
+                "landingPage",
+                "blocks",
+                "flying"
+              ]
+            }
+          ],
+          "namespace": [
+            "landingPage",
+            "blocks"
+          ]
+        }
+      ],
+      "namespace": [
+        "landingPage"
+      ]
+    },
+    {
       "label": "Pages",
       "name": "page",
       "path": "content/pages",
-      "format": "json",
+      "match": "*.mdx",
+      "format": "mdx",
       "fields": [
         {
           "type": "string",
@@ -28,15 +414,6 @@
           "fields": [
             {
               "type": "string",
-              "name": "title",
-              "namespace": [
-                "page",
-                "seo",
-                "title"
-              ]
-            },
-            {
-              "type": "string",
               "name": "description",
               "namespace": [
                 "page",
@@ -49,6 +426,25 @@
             "page",
             "seo"
           ]
+        },
+        {
+          "type": "string",
+          "label": "Excerpt",
+          "name": "excerpt",
+          "namespace": [
+            "page",
+            "excerpt"
+          ]
+        },
+        {
+          "type": "rich-text",
+          "label": "Body",
+          "name": "body",
+          "isBody": true,
+          "namespace": [
+            "page",
+            "body"
+          ]
         }
       ],
       "namespace": [
@@ -56,9 +452,155 @@
       ]
     },
     {
+      "label": "Tags",
+      "name": "tag",
+      "path": "content/tags",
+      "format": "json",
+      "match": "*.json",
+      "fields": [
+        {
+          "type": "string",
+          "name": "name",
+          "namespace": [
+            "tag",
+            "name"
+          ]
+        },
+        {
+          "type": "string",
+          "name": "slug",
+          "namespace": [
+            "tag",
+            "slug"
+          ]
+        },
+        {
+          "type": "string",
+          "name": "description",
+          "namespace": [
+            "tag",
+            "description"
+          ]
+        }
+      ],
+      "namespace": [
+        "tag"
+      ]
+    },
+    {
+      "label": "Stuff",
+      "name": "stuff",
+      "path": "content/stuff",
+      "match": "**/*.mdx",
+      "format": "mdx",
+      "fields": [
+        {
+          "type": "string",
+          "name": "title",
+          "namespace": [
+            "stuff",
+            "title"
+          ]
+        },
+        {
+          "type": "string",
+          "name": "description",
+          "namespace": [
+            "stuff",
+            "description"
+          ]
+        },
+        {
+          "type": "string",
+          "label": "Slug",
+          "name": "slug",
+          "namespace": [
+            "stuff",
+            "slug"
+          ]
+        },
+        {
+          "label": "Date",
+          "name": "date",
+          "type": "datetime",
+          "ui": {
+            "dateFormat": "YYYY-MM-DD"
+          },
+          "namespace": [
+            "stuff",
+            "date"
+          ]
+        },
+        {
+          "type": "object",
+          "name": "seo",
+          "label": "SEO",
+          "fields": [
+            {
+              "type": "string",
+              "name": "title",
+              "namespace": [
+                "stuff",
+                "seo",
+                "title"
+              ]
+            },
+            {
+              "type": "string",
+              "name": "description",
+              "namespace": [
+                "stuff",
+                "seo",
+                "description"
+              ]
+            }
+          ],
+          "namespace": [
+            "stuff",
+            "seo"
+          ]
+        },
+        {
+          "label": "Tags",
+          "name": "tags",
+          "type": "string",
+          "list": true,
+          "ui": {
+            "component": "tags"
+          },
+          "namespace": [
+            "stuff",
+            "tags"
+          ]
+        },
+        {
+          "type": "string",
+          "label": "iframe",
+          "name": "iframe",
+          "namespace": [
+            "stuff",
+            "iframe"
+          ]
+        },
+        {
+          "type": "rich-text",
+          "label": "Body",
+          "name": "body",
+          "isBody": true,
+          "namespace": [
+            "stuff",
+            "body"
+          ]
+        }
+      ],
+      "namespace": [
+        "stuff"
+      ]
+    },
+    {
       "label": "Blog Posts",
       "name": "post",
-      "path": "content/posts",
+      "path": "content/blog",
       "format": "mdx",
       "fields": [
         {
@@ -72,6 +614,15 @@
         },
         {
           "type": "string",
+          "label": "Slug",
+          "name": "slug",
+          "namespace": [
+            "post",
+            "slug"
+          ]
+        },
+        {
+          "type": "string",
           "label": "Excerpt",
           "name": "excerpt",
           "namespace": [
@@ -80,9 +631,25 @@
           ]
         },
         {
+          "label": "Tags",
+          "name": "tags",
           "type": "string",
+          "list": true,
+          "ui": {
+            "component": "tags"
+          },
+          "namespace": [
+            "post",
+            "tags"
+          ]
+        },
+        {
           "label": "Date",
           "name": "date",
+          "type": "datetime",
+          "ui": {
+            "dateFormat": "YYYY-MM-DD"
+          },
           "namespace": [
             "post",
             "date"
