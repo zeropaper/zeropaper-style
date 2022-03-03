@@ -1,12 +1,12 @@
 import styles from '../../styles/Home.module.css'
-import React from 'react'
+import React, { ComponentProps } from 'react'
 
 import { Blocks } from '../Blocks/Blocks'
 
-const Grid = (props: any) => {
+const Grid = (props: ComponentProps<typeof Blocks>) => {
   return (
     <div className={styles.grid}>
-      <Blocks blocks={props.blocks || []} tinafield={props.tinafield} />
+      <Blocks blocks={props.blocks || []} tinaField={props.tinaField} />
     </div>
   )
 }

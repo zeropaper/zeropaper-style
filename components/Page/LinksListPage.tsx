@@ -56,7 +56,7 @@ const LinksListTemplate = (props: any) => {
   const {classes} = useStyles(props);
 
   return (
-    <Layout contentType="text" className={classes.root}>
+    <Layout className={classes.root}>
       <header>
         <h1>{pageContext.pageTitle}</h1>
       </header>
