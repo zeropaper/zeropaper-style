@@ -11,7 +11,7 @@ const env = {
   api_key: process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY,
   api_secret: process.env.CLOUDINARY_API_SECRET
 }
-console.info(env)
+// console.info(env)
 export default createMediaHandler({
   ...env,
   // @ts-ignore

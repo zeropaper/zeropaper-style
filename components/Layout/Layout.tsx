@@ -1,151 +1,82 @@
-/* eslint-disable max-len */
-import * as React from 'react';
-import classNames from 'classnames';
-import { createUseStyles } from 'react-jss';
-
-import 'modern-css-reset';
-import 'typeface-bungee-inline';
-import 'typeface-roboto';
+import { createStyles as createUseStyles } from '@mantine/core';
 
 import Header from './Header';
 import Footer from './Footer';
-import { DefaultTheme } from '../../themes/Theme';
 
-interface LayoutClassNames {
-  main?: string;
-  content?: string;
-  header?: string;
-  footer?: string;
-}
+const useStyles = createUseStyles(({ spacing }) => {
+  const root = {
+    paddingRight: spacing.sm,
+    paddingLeft: spacing.sm,
+    overflow: 'hidden',
+  }
+  const inner = {
+    margin: '0 auto',
+    maxWidth: 850,
+    overflow: 'hidden',
+  }
 
-export interface PageProps {
+  return ({
+    root,
+    inner,
+    pageContentLink: {
+      display: 'none',
+      height: 0,
+      margin: 0,
+    },
+    header: {},
+    main: {
+      flexGrow: 1
+    },
+    content: {},
+    footer: {},
+  })
+});
+
+export interface PropTypes {
   children: React.ReactNode,
-  component?: React.ComponentType<{ className?: string }>;
-  classes?: LayoutClassNames;
+  component?: React.ComponentType<{ className?: string }> | string;
+  classes?: ClassNames<typeof useStyles>;
   className?: string;
 }
-
-const useStyles = createUseStyles<DefaultTheme, string>(({
-  typography: {
-    fontSize,
-    fontFamily,
-    color,
-  },
-  background: {
-    color: backgroundColor,
-  },
-  mixins: {
-    textMain,
-    textContent,
-  },
-}) => ({
-  '@global': {
-    html: {
-      fontSize,
-      height: '100%',
-    },
-    body: {
-      fontSize,
-      fontFamily,
-      color,
-      backgroundColor,
-      height: '100%',
-    },
-    '#___gatsby, #gatsby-focus-wrapper, .tl-edges, .tl-wrapper': {
-      width: '100%',
-      height: '100%',
-    },
-    '#gatsby-focus-wrapper, .tl-wrapper': {
-      display: 'flex',
-      flexDirection: 'column',
-    },
-
-    '.tl-wrapper': {
-      overflowX: 'hidden',
-    },
-    '.tl-wrapper > main': {
-      transition: 'transform 1s',
-    },
-    '.tl-wrapper-status--entering > main': {
-      transform: 'translateX(-100vw)',
-      overflow: 'hidden',
-    },
-    '.tl-wrapper-status--entered > main': {
-      transform: 'translateX(0vw)',
-      overflow: 'auto',
-    },
-    '.tl-wrapper-status--exiting > main': {
-      transform: 'translateX(100vw)',
-      overflow: 'hidden',
-    },
-    '.tl-wrapper-status--exited > main': {
-      transform: 'translateX(100vw)',
-      overflow: 'hidden',
-    },
-
-    a: {
-      color: 'inherit',
-    },
-    h1: {
-      fontFamily: 'Bungee inline',
-      fontWeight: 'normal',
-    },
-    'h1 a': {
-      textDecoration: 'none',
-      borderBottom: '2px solid currentColor',
-    },
-  },
-  header: {},
-  menu: {},
-  main: ({ contentType }) => {
-    const base = {
-      flexGrow: 1,
-      overflow: 'auto',
-      display: 'flex',
-      flexDirection: 'column',
-      position: 'relative',
-    };
-    if (contentType === 'text') return { ...base, ...textMain };
-    return base;
-  },
-  content: ({ contentType }) => {
-    const base = {
-      flexGrow: 1,
-    };
-    if (contentType === 'text') return { ...base, ...textContent };
-    return base;
-  },
-}), { name: 'Layout' });
 
 const Layout = ({
   children,
   classes: passedClasses,
-  ...props
-}: PageProps) => {
-  const classes = useStyles(props);
-  const { component: Comp } = props;
+  component: Comp
+}: PropTypes) => {
+  const {classes, cx} = useStyles();
+  const mainClass = cx(classes.root, classes.main, passedClasses?.main);
+  const contentClass = cx(classes.inner, classes.content, passedClasses?.content);
+  const commonClasses = {
+    root: classes.root,
+    inner: classes.inner,
+  }
 
-  const mainClass = classNames(classes.main, passedClasses.main);
-  const contentClass = classNames(classes.content, passedClasses.content);
+  const content = Comp ? (
+    <main data-testid="content" id="page-content" className={mainClass}>
+      <Comp className={contentClass}>
+        {children}
+      </Comp>
+    </main>
+  ) : children;
+
   return (
     <>
-      <Header className={classNames(classes.header, passedClasses.header)} />
+      <a className={classes.pageContentLink} href="#page-content">Skip to content</a>
 
-      <main className={mainClass}>
-        <Comp className={contentClass}>
-          {children}
-        </Comp>
-      </main>
+      <Header
+        classes={commonClasses}
+        className={cx(classes.header, passedClasses?.header)}
+      />
 
-      <Footer className={classNames(classes.footer, passedClasses.footer)} />
+      {content}
+
+      <Footer
+        classes={commonClasses}
+        className={cx(classes.footer, passedClasses?.footer)}
+      />
     </>
   );
-};
-
-Layout.defaultProps = {
-  component: 'div',
-  classes: {},
-  contentType: null,
 };
 
 export default Layout;

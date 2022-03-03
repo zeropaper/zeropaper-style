@@ -1,15 +1,90 @@
-fragment PageParts on Page {
+fragment LandingPageParts on LandingPage {
   title
   seo {
     __typename
     title
     description
   }
+  blocks {
+    __typename
+    ... on LandingPageBlocksHero {
+      href
+      title
+      description
+    }
+    ... on LandingPageBlocksFeature {
+      href
+      title
+      description
+    }
+    ... on LandingPageBlocksFeatures {
+      headline
+      subline
+      items {
+        __typename
+        ... on LandingPageBlocksFeaturesItemsFeature {
+          href
+          title
+          description
+        }
+      }
+    }
+    ... on LandingPageBlocksFlying {
+      headline
+      subline
+      actions {
+        __typename
+        label
+        icon
+        variant
+        url
+      }
+      items {
+        __typename
+        headline
+        subline
+        cli
+      }
+    }
+  }
+}
+
+fragment PageParts on Page {
+  title
+  seo {
+    __typename
+    description
+  }
+  excerpt
+  body
+}
+
+fragment TagParts on Tag {
+  name
+  slug
+  description
+}
+
+fragment StuffParts on Stuff {
+  title
+  description
+  slug
+  date
+  seo {
+    __typename
+    title
+    description
+  }
+  tags
+  iframe
+  body
 }
 
 fragment PostParts on Post {
   title
+  slug
   excerpt
+  tags
   date
   body
 }

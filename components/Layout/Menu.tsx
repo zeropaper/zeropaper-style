@@ -1,43 +1,46 @@
 import * as React from 'react';
 import classNames from 'classnames';
-import { createUseStyles } from 'react-jss';
+import { createStyles as createUseStyles } from '@mantine/core';
 
 import Link from '../Link/Link';
-import { DefaultTheme } from '../../themes/Theme';
 
-type MenuClassNames = {
-  root?: string;
-  list?: string;
-  item?: string;
-  link?: string;
-  linkActive?: string;
-}
-
-interface MenuProps {
-  className?: string;
-  classes?: MenuClassNames
-}
-
-const useStyles = createUseStyles<DefaultTheme, string>(
-  ({ mixins: { inlineListClasses } }) => ({
-    ...inlineListClasses,
-  }),
+const useStyles = createUseStyles(
   {
-    name: 'LayoutMenu',
-  },
+    root: {},
+    list: {
+      listStyle: 'none',
+      display: 'flex',
+    },
+    item: {
+      margin: '0 0.5em',
+      '&:first-of-type': {
+        marginLeft: 0,
+      },
+      '&:last-of-type': {
+        marginRight: 0,
+      }
+    },
+    link: {
+      display: 'flex',
+    },
+  }
 );
+
+interface PropTypes {
+  className?: string;
+  classes?: ClassNames<typeof useStyles>;
+}
 
 const Menu = ({
   className,
   classes: passedClasses,
-  ...props
-}: MenuProps): React.ReactElement => {
-  const classes = useStyles(props);
+}: PropTypes): React.ReactElement => {
+  const {classes} = useStyles();
 
   const links = [
     ['/hello', 'Hello'],
     ['/blog', 'Blog'],
-    ['/tags', 'Tags'],
+    // ['/tags', 'Tags'],
     ['/stuff', 'Stuff'],
     // ['/contact', 'Contact'],
   ];
@@ -48,9 +51,8 @@ const Menu = ({
         {links.map((item) => (
           <li key={item[0]} className={classes.item}>
             <Link
-              to={item[0]}
+              href={item[0]}
               className={classes.link}
-              activeClassName={classes.linkActive}
             >
               {item[1]}
             </Link>
@@ -59,11 +61,6 @@ const Menu = ({
       </ul>
     </nav>
   );
-};
-
-Menu.defaultProps = {
-  className: null,
-  classes: null,
 };
 
 export default Menu;

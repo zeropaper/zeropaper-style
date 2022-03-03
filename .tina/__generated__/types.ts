@@ -67,8 +67,14 @@ export type Query = {
   getDocument: DocumentNode;
   getDocumentList: DocumentConnection;
   getDocumentFields: Scalars['JSON'];
+  getLandingPageDocument: LandingPageDocument;
+  getLandingPageList: LandingPageConnection;
   getPageDocument: PageDocument;
   getPageList: PageConnection;
+  getTagDocument: TagDocument;
+  getTagList: TagConnection;
+  getStuffDocument: StuffDocument;
+  getStuffList: StuffConnection;
   getPostDocument: PostDocument;
   getPostList: PostConnection;
 };
@@ -98,12 +104,51 @@ export type QueryGetDocumentListArgs = {
 };
 
 
+export type QueryGetLandingPageDocumentArgs = {
+  relativePath?: InputMaybe<Scalars['String']>;
+};
+
+
+export type QueryGetLandingPageListArgs = {
+  before?: InputMaybe<Scalars['String']>;
+  after?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Float']>;
+  last?: InputMaybe<Scalars['Float']>;
+};
+
+
 export type QueryGetPageDocumentArgs = {
   relativePath?: InputMaybe<Scalars['String']>;
 };
 
 
 export type QueryGetPageListArgs = {
+  before?: InputMaybe<Scalars['String']>;
+  after?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Float']>;
+  last?: InputMaybe<Scalars['Float']>;
+};
+
+
+export type QueryGetTagDocumentArgs = {
+  relativePath?: InputMaybe<Scalars['String']>;
+};
+
+
+export type QueryGetTagListArgs = {
+  before?: InputMaybe<Scalars['String']>;
+  after?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Float']>;
+  last?: InputMaybe<Scalars['Float']>;
+};
+
+
+export type QueryGetStuffDocumentArgs = {
+  relativePath?: InputMaybe<Scalars['String']>;
+};
+
+
+export type QueryGetStuffListArgs = {
   before?: InputMaybe<Scalars['String']>;
   after?: InputMaybe<Scalars['String']>;
   first?: InputMaybe<Scalars['Float']>;
@@ -157,11 +202,101 @@ export type CollectionDocumentsArgs = {
   last?: InputMaybe<Scalars['Float']>;
 };
 
-export type DocumentNode = PageDocument | PostDocument;
+export type DocumentNode = LandingPageDocument | PageDocument | TagDocument | StuffDocument | PostDocument;
+
+export type LandingPageSeo = {
+  __typename?: 'LandingPageSeo';
+  title?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars['String']>;
+};
+
+export type LandingPageBlocksHero = {
+  __typename?: 'LandingPageBlocksHero';
+  href?: Maybe<Scalars['String']>;
+  title?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars['String']>;
+};
+
+export type LandingPageBlocksFeature = {
+  __typename?: 'LandingPageBlocksFeature';
+  href?: Maybe<Scalars['String']>;
+  title?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars['String']>;
+};
+
+export type LandingPageBlocksFeaturesItemsFeature = {
+  __typename?: 'LandingPageBlocksFeaturesItemsFeature';
+  href?: Maybe<Scalars['String']>;
+  title?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars['String']>;
+};
+
+export type LandingPageBlocksFeaturesItems = LandingPageBlocksFeaturesItemsFeature;
+
+export type LandingPageBlocksFeatures = {
+  __typename?: 'LandingPageBlocksFeatures';
+  headline?: Maybe<Scalars['String']>;
+  subline?: Maybe<Scalars['String']>;
+  items?: Maybe<Array<Maybe<LandingPageBlocksFeaturesItems>>>;
+};
+
+export type LandingPageBlocksFlyingActions = {
+  __typename?: 'LandingPageBlocksFlyingActions';
+  label?: Maybe<Scalars['String']>;
+  icon?: Maybe<Scalars['String']>;
+  variant?: Maybe<Scalars['String']>;
+  url?: Maybe<Scalars['String']>;
+};
+
+export type LandingPageBlocksFlyingItems = {
+  __typename?: 'LandingPageBlocksFlyingItems';
+  headline?: Maybe<Scalars['String']>;
+  subline?: Maybe<Scalars['String']>;
+  cli?: Maybe<Scalars['Boolean']>;
+};
+
+export type LandingPageBlocksFlying = {
+  __typename?: 'LandingPageBlocksFlying';
+  headline?: Maybe<Scalars['String']>;
+  subline?: Maybe<Scalars['String']>;
+  actions?: Maybe<Array<Maybe<LandingPageBlocksFlyingActions>>>;
+  items?: Maybe<Array<Maybe<LandingPageBlocksFlyingItems>>>;
+};
+
+export type LandingPageBlocks = LandingPageBlocksHero | LandingPageBlocksFeature | LandingPageBlocksFeatures | LandingPageBlocksFlying;
+
+export type LandingPage = {
+  __typename?: 'LandingPage';
+  title?: Maybe<Scalars['String']>;
+  seo?: Maybe<LandingPageSeo>;
+  blocks?: Maybe<Array<Maybe<LandingPageBlocks>>>;
+};
+
+export type LandingPageDocument = Node & Document & {
+  __typename?: 'LandingPageDocument';
+  id: Scalars['ID'];
+  sys: SystemInfo;
+  data: LandingPage;
+  form: Scalars['JSON'];
+  values: Scalars['JSON'];
+  dataJSON: Scalars['JSON'];
+};
+
+export type LandingPageConnectionEdges = {
+  __typename?: 'LandingPageConnectionEdges';
+  cursor?: Maybe<Scalars['String']>;
+  node?: Maybe<LandingPageDocument>;
+};
+
+export type LandingPageConnection = Connection & {
+  __typename?: 'LandingPageConnection';
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Float'];
+  edges?: Maybe<Array<Maybe<LandingPageConnectionEdges>>>;
+};
 
 export type PageSeo = {
   __typename?: 'PageSeo';
-  title?: Maybe<Scalars['String']>;
   description?: Maybe<Scalars['String']>;
 };
 
@@ -169,6 +304,8 @@ export type Page = {
   __typename?: 'Page';
   title?: Maybe<Scalars['String']>;
   seo?: Maybe<PageSeo>;
+  excerpt?: Maybe<Scalars['String']>;
+  body?: Maybe<Scalars['JSON']>;
 };
 
 export type PageDocument = Node & Document & {
@@ -194,10 +331,83 @@ export type PageConnection = Connection & {
   edges?: Maybe<Array<Maybe<PageConnectionEdges>>>;
 };
 
+export type Tag = {
+  __typename?: 'Tag';
+  name?: Maybe<Scalars['String']>;
+  slug?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars['String']>;
+};
+
+export type TagDocument = Node & Document & {
+  __typename?: 'TagDocument';
+  id: Scalars['ID'];
+  sys: SystemInfo;
+  data: Tag;
+  form: Scalars['JSON'];
+  values: Scalars['JSON'];
+  dataJSON: Scalars['JSON'];
+};
+
+export type TagConnectionEdges = {
+  __typename?: 'TagConnectionEdges';
+  cursor?: Maybe<Scalars['String']>;
+  node?: Maybe<TagDocument>;
+};
+
+export type TagConnection = Connection & {
+  __typename?: 'TagConnection';
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Float'];
+  edges?: Maybe<Array<Maybe<TagConnectionEdges>>>;
+};
+
+export type StuffSeo = {
+  __typename?: 'StuffSeo';
+  title?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars['String']>;
+};
+
+export type Stuff = {
+  __typename?: 'Stuff';
+  title?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars['String']>;
+  slug?: Maybe<Scalars['String']>;
+  date?: Maybe<Scalars['String']>;
+  seo?: Maybe<StuffSeo>;
+  tags?: Maybe<Array<Maybe<Scalars['String']>>>;
+  iframe?: Maybe<Scalars['String']>;
+  body?: Maybe<Scalars['JSON']>;
+};
+
+export type StuffDocument = Node & Document & {
+  __typename?: 'StuffDocument';
+  id: Scalars['ID'];
+  sys: SystemInfo;
+  data: Stuff;
+  form: Scalars['JSON'];
+  values: Scalars['JSON'];
+  dataJSON: Scalars['JSON'];
+};
+
+export type StuffConnectionEdges = {
+  __typename?: 'StuffConnectionEdges';
+  cursor?: Maybe<Scalars['String']>;
+  node?: Maybe<StuffDocument>;
+};
+
+export type StuffConnection = Connection & {
+  __typename?: 'StuffConnection';
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Float'];
+  edges?: Maybe<Array<Maybe<StuffConnectionEdges>>>;
+};
+
 export type Post = {
   __typename?: 'Post';
   title?: Maybe<Scalars['String']>;
+  slug?: Maybe<Scalars['String']>;
   excerpt?: Maybe<Scalars['String']>;
+  tags?: Maybe<Array<Maybe<Scalars['String']>>>;
   date?: Maybe<Scalars['String']>;
   body?: Maybe<Scalars['JSON']>;
 };
@@ -230,8 +440,14 @@ export type Mutation = {
   addPendingDocument: DocumentNode;
   updateDocument: DocumentNode;
   createDocument: DocumentNode;
+  updateLandingPageDocument: LandingPageDocument;
+  createLandingPageDocument: LandingPageDocument;
   updatePageDocument: PageDocument;
   createPageDocument: PageDocument;
+  updateTagDocument: TagDocument;
+  createTagDocument: TagDocument;
+  updateStuffDocument: StuffDocument;
+  createStuffDocument: StuffDocument;
   updatePostDocument: PostDocument;
   createPostDocument: PostDocument;
 };
@@ -258,6 +474,18 @@ export type MutationCreateDocumentArgs = {
 };
 
 
+export type MutationUpdateLandingPageDocumentArgs = {
+  relativePath: Scalars['String'];
+  params: LandingPageMutation;
+};
+
+
+export type MutationCreateLandingPageDocumentArgs = {
+  relativePath: Scalars['String'];
+  params: LandingPageMutation;
+};
+
+
 export type MutationUpdatePageDocumentArgs = {
   relativePath: Scalars['String'];
   params: PageMutation;
@@ -267,6 +495,30 @@ export type MutationUpdatePageDocumentArgs = {
 export type MutationCreatePageDocumentArgs = {
   relativePath: Scalars['String'];
   params: PageMutation;
+};
+
+
+export type MutationUpdateTagDocumentArgs = {
+  relativePath: Scalars['String'];
+  params: TagMutation;
+};
+
+
+export type MutationCreateTagDocumentArgs = {
+  relativePath: Scalars['String'];
+  params: TagMutation;
+};
+
+
+export type MutationUpdateStuffDocumentArgs = {
+  relativePath: Scalars['String'];
+  params: StuffMutation;
+};
+
+
+export type MutationCreateStuffDocumentArgs = {
+  relativePath: Scalars['String'];
+  params: StuffMutation;
 };
 
 
@@ -282,73 +534,328 @@ export type MutationCreatePostDocumentArgs = {
 };
 
 export type DocumentMutation = {
+  landingPage?: InputMaybe<LandingPageMutation>;
   page?: InputMaybe<PageMutation>;
+  tag?: InputMaybe<TagMutation>;
+  stuff?: InputMaybe<StuffMutation>;
   post?: InputMaybe<PostMutation>;
 };
 
-export type PageSeoMutation = {
+export type LandingPageSeoMutation = {
   title?: InputMaybe<Scalars['String']>;
+  description?: InputMaybe<Scalars['String']>;
+};
+
+export type LandingPageBlocksHeroMutation = {
+  href?: InputMaybe<Scalars['String']>;
+  title?: InputMaybe<Scalars['String']>;
+  description?: InputMaybe<Scalars['String']>;
+};
+
+export type LandingPageBlocksFeatureMutation = {
+  href?: InputMaybe<Scalars['String']>;
+  title?: InputMaybe<Scalars['String']>;
+  description?: InputMaybe<Scalars['String']>;
+};
+
+export type LandingPageBlocksFeaturesItemsFeatureMutation = {
+  href?: InputMaybe<Scalars['String']>;
+  title?: InputMaybe<Scalars['String']>;
+  description?: InputMaybe<Scalars['String']>;
+};
+
+export type LandingPageBlocksFeaturesItemsMutation = {
+  feature?: InputMaybe<LandingPageBlocksFeaturesItemsFeatureMutation>;
+};
+
+export type LandingPageBlocksFeaturesMutation = {
+  headline?: InputMaybe<Scalars['String']>;
+  subline?: InputMaybe<Scalars['String']>;
+  items?: InputMaybe<Array<InputMaybe<LandingPageBlocksFeaturesItemsMutation>>>;
+};
+
+export type LandingPageBlocksFlyingActionsMutation = {
+  label?: InputMaybe<Scalars['String']>;
+  icon?: InputMaybe<Scalars['String']>;
+  variant?: InputMaybe<Scalars['String']>;
+  url?: InputMaybe<Scalars['String']>;
+};
+
+export type LandingPageBlocksFlyingItemsMutation = {
+  headline?: InputMaybe<Scalars['String']>;
+  subline?: InputMaybe<Scalars['String']>;
+  cli?: InputMaybe<Scalars['Boolean']>;
+};
+
+export type LandingPageBlocksFlyingMutation = {
+  headline?: InputMaybe<Scalars['String']>;
+  subline?: InputMaybe<Scalars['String']>;
+  actions?: InputMaybe<Array<InputMaybe<LandingPageBlocksFlyingActionsMutation>>>;
+  items?: InputMaybe<Array<InputMaybe<LandingPageBlocksFlyingItemsMutation>>>;
+};
+
+export type LandingPageBlocksMutation = {
+  hero?: InputMaybe<LandingPageBlocksHeroMutation>;
+  feature?: InputMaybe<LandingPageBlocksFeatureMutation>;
+  features?: InputMaybe<LandingPageBlocksFeaturesMutation>;
+  flying?: InputMaybe<LandingPageBlocksFlyingMutation>;
+};
+
+export type LandingPageMutation = {
+  title?: InputMaybe<Scalars['String']>;
+  seo?: InputMaybe<LandingPageSeoMutation>;
+  blocks?: InputMaybe<Array<InputMaybe<LandingPageBlocksMutation>>>;
+};
+
+export type PageSeoMutation = {
   description?: InputMaybe<Scalars['String']>;
 };
 
 export type PageMutation = {
   title?: InputMaybe<Scalars['String']>;
   seo?: InputMaybe<PageSeoMutation>;
+  excerpt?: InputMaybe<Scalars['String']>;
+  body?: InputMaybe<Scalars['JSON']>;
+};
+
+export type TagMutation = {
+  name?: InputMaybe<Scalars['String']>;
+  slug?: InputMaybe<Scalars['String']>;
+  description?: InputMaybe<Scalars['String']>;
+};
+
+export type StuffSeoMutation = {
+  title?: InputMaybe<Scalars['String']>;
+  description?: InputMaybe<Scalars['String']>;
+};
+
+export type StuffMutation = {
+  title?: InputMaybe<Scalars['String']>;
+  description?: InputMaybe<Scalars['String']>;
+  slug?: InputMaybe<Scalars['String']>;
+  date?: InputMaybe<Scalars['String']>;
+  seo?: InputMaybe<StuffSeoMutation>;
+  tags?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  iframe?: InputMaybe<Scalars['String']>;
+  body?: InputMaybe<Scalars['JSON']>;
 };
 
 export type PostMutation = {
   title?: InputMaybe<Scalars['String']>;
+  slug?: InputMaybe<Scalars['String']>;
   excerpt?: InputMaybe<Scalars['String']>;
+  tags?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   date?: InputMaybe<Scalars['String']>;
   body?: InputMaybe<Scalars['JSON']>;
 };
 
-export type PagePartsFragment = { __typename?: 'Page', title?: string | null, seo?: { __typename: 'PageSeo', title?: string | null, description?: string | null } | null };
+export type LandingPagePartsFragment = { __typename?: 'LandingPage', title?: string | null, seo?: { __typename: 'LandingPageSeo', title?: string | null, description?: string | null } | null, blocks?: Array<{ __typename: 'LandingPageBlocksHero', href?: string | null, title?: string | null, description?: string | null } | { __typename: 'LandingPageBlocksFeature', href?: string | null, title?: string | null, description?: string | null } | { __typename: 'LandingPageBlocksFeatures', headline?: string | null, subline?: string | null, items?: Array<{ __typename: 'LandingPageBlocksFeaturesItemsFeature', href?: string | null, title?: string | null, description?: string | null } | null> | null } | { __typename: 'LandingPageBlocksFlying', headline?: string | null, subline?: string | null, actions?: Array<{ __typename: 'LandingPageBlocksFlyingActions', label?: string | null, icon?: string | null, variant?: string | null, url?: string | null } | null> | null, items?: Array<{ __typename: 'LandingPageBlocksFlyingItems', headline?: string | null, subline?: string | null, cli?: boolean | null } | null> | null } | null> | null };
 
-export type PostPartsFragment = { __typename?: 'Post', title?: string | null, excerpt?: string | null, date?: string | null, body?: any | null };
+export type PagePartsFragment = { __typename?: 'Page', title?: string | null, excerpt?: string | null, body?: any | null, seo?: { __typename: 'PageSeo', description?: string | null } | null };
+
+export type TagPartsFragment = { __typename?: 'Tag', name?: string | null, slug?: string | null, description?: string | null };
+
+export type StuffPartsFragment = { __typename?: 'Stuff', title?: string | null, description?: string | null, slug?: string | null, date?: string | null, tags?: Array<string | null> | null, iframe?: string | null, body?: any | null, seo?: { __typename: 'StuffSeo', title?: string | null, description?: string | null } | null };
+
+export type PostPartsFragment = { __typename?: 'Post', title?: string | null, slug?: string | null, excerpt?: string | null, tags?: Array<string | null> | null, date?: string | null, body?: any | null };
+
+export type GetLandingPageDocumentQueryVariables = Exact<{
+  relativePath: Scalars['String'];
+}>;
+
+
+export type GetLandingPageDocumentQuery = { __typename?: 'Query', getLandingPageDocument: { __typename?: 'LandingPageDocument', id: string, sys: { __typename?: 'SystemInfo', filename: string, basename: string, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, data: { __typename?: 'LandingPage', title?: string | null, seo?: { __typename: 'LandingPageSeo', title?: string | null, description?: string | null } | null, blocks?: Array<{ __typename: 'LandingPageBlocksHero', href?: string | null, title?: string | null, description?: string | null } | { __typename: 'LandingPageBlocksFeature', href?: string | null, title?: string | null, description?: string | null } | { __typename: 'LandingPageBlocksFeatures', headline?: string | null, subline?: string | null, items?: Array<{ __typename: 'LandingPageBlocksFeaturesItemsFeature', href?: string | null, title?: string | null, description?: string | null } | null> | null } | { __typename: 'LandingPageBlocksFlying', headline?: string | null, subline?: string | null, actions?: Array<{ __typename: 'LandingPageBlocksFlyingActions', label?: string | null, icon?: string | null, variant?: string | null, url?: string | null } | null> | null, items?: Array<{ __typename: 'LandingPageBlocksFlyingItems', headline?: string | null, subline?: string | null, cli?: boolean | null } | null> | null } | null> | null } } };
+
+export type GetLandingPageListQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetLandingPageListQuery = { __typename?: 'Query', getLandingPageList: { __typename?: 'LandingPageConnection', totalCount: number, edges?: Array<{ __typename?: 'LandingPageConnectionEdges', node?: { __typename?: 'LandingPageDocument', id: string, sys: { __typename?: 'SystemInfo', filename: string, basename: string, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, data: { __typename?: 'LandingPage', title?: string | null, seo?: { __typename: 'LandingPageSeo', title?: string | null, description?: string | null } | null, blocks?: Array<{ __typename: 'LandingPageBlocksHero', href?: string | null, title?: string | null, description?: string | null } | { __typename: 'LandingPageBlocksFeature', href?: string | null, title?: string | null, description?: string | null } | { __typename: 'LandingPageBlocksFeatures', headline?: string | null, subline?: string | null, items?: Array<{ __typename: 'LandingPageBlocksFeaturesItemsFeature', href?: string | null, title?: string | null, description?: string | null } | null> | null } | { __typename: 'LandingPageBlocksFlying', headline?: string | null, subline?: string | null, actions?: Array<{ __typename: 'LandingPageBlocksFlyingActions', label?: string | null, icon?: string | null, variant?: string | null, url?: string | null } | null> | null, items?: Array<{ __typename: 'LandingPageBlocksFlyingItems', headline?: string | null, subline?: string | null, cli?: boolean | null } | null> | null } | null> | null } } | null } | null> | null } };
 
 export type GetPageDocumentQueryVariables = Exact<{
   relativePath: Scalars['String'];
 }>;
 
 
-export type GetPageDocumentQuery = { __typename?: 'Query', getPageDocument: { __typename?: 'PageDocument', id: string, sys: { __typename?: 'SystemInfo', filename: string, basename: string, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, data: { __typename?: 'Page', title?: string | null, seo?: { __typename: 'PageSeo', title?: string | null, description?: string | null } | null } } };
+export type GetPageDocumentQuery = { __typename?: 'Query', getPageDocument: { __typename?: 'PageDocument', id: string, sys: { __typename?: 'SystemInfo', filename: string, basename: string, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, data: { __typename?: 'Page', title?: string | null, excerpt?: string | null, body?: any | null, seo?: { __typename: 'PageSeo', description?: string | null } | null } } };
 
 export type GetPageListQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetPageListQuery = { __typename?: 'Query', getPageList: { __typename?: 'PageConnection', totalCount: number, edges?: Array<{ __typename?: 'PageConnectionEdges', node?: { __typename?: 'PageDocument', id: string, sys: { __typename?: 'SystemInfo', filename: string, basename: string, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, data: { __typename?: 'Page', title?: string | null, seo?: { __typename: 'PageSeo', title?: string | null, description?: string | null } | null } } | null } | null> | null } };
+export type GetPageListQuery = { __typename?: 'Query', getPageList: { __typename?: 'PageConnection', totalCount: number, edges?: Array<{ __typename?: 'PageConnectionEdges', node?: { __typename?: 'PageDocument', id: string, sys: { __typename?: 'SystemInfo', filename: string, basename: string, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, data: { __typename?: 'Page', title?: string | null, excerpt?: string | null, body?: any | null, seo?: { __typename: 'PageSeo', description?: string | null } | null } } | null } | null> | null } };
+
+export type GetTagDocumentQueryVariables = Exact<{
+  relativePath: Scalars['String'];
+}>;
+
+
+export type GetTagDocumentQuery = { __typename?: 'Query', getTagDocument: { __typename?: 'TagDocument', id: string, sys: { __typename?: 'SystemInfo', filename: string, basename: string, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, data: { __typename?: 'Tag', name?: string | null, slug?: string | null, description?: string | null } } };
+
+export type GetTagListQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetTagListQuery = { __typename?: 'Query', getTagList: { __typename?: 'TagConnection', totalCount: number, edges?: Array<{ __typename?: 'TagConnectionEdges', node?: { __typename?: 'TagDocument', id: string, sys: { __typename?: 'SystemInfo', filename: string, basename: string, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, data: { __typename?: 'Tag', name?: string | null, slug?: string | null, description?: string | null } } | null } | null> | null } };
+
+export type GetStuffDocumentQueryVariables = Exact<{
+  relativePath: Scalars['String'];
+}>;
+
+
+export type GetStuffDocumentQuery = { __typename?: 'Query', getStuffDocument: { __typename?: 'StuffDocument', id: string, sys: { __typename?: 'SystemInfo', filename: string, basename: string, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, data: { __typename?: 'Stuff', title?: string | null, description?: string | null, slug?: string | null, date?: string | null, tags?: Array<string | null> | null, iframe?: string | null, body?: any | null, seo?: { __typename: 'StuffSeo', title?: string | null, description?: string | null } | null } } };
+
+export type GetStuffListQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetStuffListQuery = { __typename?: 'Query', getStuffList: { __typename?: 'StuffConnection', totalCount: number, edges?: Array<{ __typename?: 'StuffConnectionEdges', node?: { __typename?: 'StuffDocument', id: string, sys: { __typename?: 'SystemInfo', filename: string, basename: string, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, data: { __typename?: 'Stuff', title?: string | null, description?: string | null, slug?: string | null, date?: string | null, tags?: Array<string | null> | null, iframe?: string | null, body?: any | null, seo?: { __typename: 'StuffSeo', title?: string | null, description?: string | null } | null } } | null } | null> | null } };
 
 export type GetPostDocumentQueryVariables = Exact<{
   relativePath: Scalars['String'];
 }>;
 
 
-export type GetPostDocumentQuery = { __typename?: 'Query', getPostDocument: { __typename?: 'PostDocument', id: string, sys: { __typename?: 'SystemInfo', filename: string, basename: string, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, data: { __typename?: 'Post', title?: string | null, excerpt?: string | null, date?: string | null, body?: any | null } } };
+export type GetPostDocumentQuery = { __typename?: 'Query', getPostDocument: { __typename?: 'PostDocument', id: string, sys: { __typename?: 'SystemInfo', filename: string, basename: string, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, data: { __typename?: 'Post', title?: string | null, slug?: string | null, excerpt?: string | null, tags?: Array<string | null> | null, date?: string | null, body?: any | null } } };
 
 export type GetPostListQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetPostListQuery = { __typename?: 'Query', getPostList: { __typename?: 'PostConnection', totalCount: number, edges?: Array<{ __typename?: 'PostConnectionEdges', node?: { __typename?: 'PostDocument', id: string, sys: { __typename?: 'SystemInfo', filename: string, basename: string, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, data: { __typename?: 'Post', title?: string | null, excerpt?: string | null, date?: string | null, body?: any | null } } | null } | null> | null } };
+export type GetPostListQuery = { __typename?: 'Query', getPostList: { __typename?: 'PostConnection', totalCount: number, edges?: Array<{ __typename?: 'PostConnectionEdges', node?: { __typename?: 'PostDocument', id: string, sys: { __typename?: 'SystemInfo', filename: string, basename: string, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, data: { __typename?: 'Post', title?: string | null, slug?: string | null, excerpt?: string | null, tags?: Array<string | null> | null, date?: string | null, body?: any | null } } | null } | null> | null } };
 
-export const PagePartsFragmentDoc = gql`
-    fragment PageParts on Page {
+export const LandingPagePartsFragmentDoc = gql`
+    fragment LandingPageParts on LandingPage {
   title
   seo {
     __typename
     title
     description
   }
+  blocks {
+    __typename
+    ... on LandingPageBlocksHero {
+      href
+      title
+      description
+    }
+    ... on LandingPageBlocksFeature {
+      href
+      title
+      description
+    }
+    ... on LandingPageBlocksFeatures {
+      headline
+      subline
+      items {
+        __typename
+        ... on LandingPageBlocksFeaturesItemsFeature {
+          href
+          title
+          description
+        }
+      }
+    }
+    ... on LandingPageBlocksFlying {
+      headline
+      subline
+      actions {
+        __typename
+        label
+        icon
+        variant
+        url
+      }
+      items {
+        __typename
+        headline
+        subline
+        cli
+      }
+    }
+  }
+}
+    `;
+export const PagePartsFragmentDoc = gql`
+    fragment PageParts on Page {
+  title
+  seo {
+    __typename
+    description
+  }
+  excerpt
+  body
+}
+    `;
+export const TagPartsFragmentDoc = gql`
+    fragment TagParts on Tag {
+  name
+  slug
+  description
+}
+    `;
+export const StuffPartsFragmentDoc = gql`
+    fragment StuffParts on Stuff {
+  title
+  description
+  slug
+  date
+  seo {
+    __typename
+    title
+    description
+  }
+  tags
+  iframe
+  body
 }
     `;
 export const PostPartsFragmentDoc = gql`
     fragment PostParts on Post {
   title
+  slug
   excerpt
+  tags
   date
   body
 }
     `;
+export const GetLandingPageDocumentDocument = gql`
+    query getLandingPageDocument($relativePath: String!) {
+  getLandingPageDocument(relativePath: $relativePath) {
+    sys {
+      filename
+      basename
+      breadcrumbs
+      path
+      relativePath
+      extension
+    }
+    id
+    data {
+      ...LandingPageParts
+    }
+  }
+}
+    ${LandingPagePartsFragmentDoc}`;
+export const GetLandingPageListDocument = gql`
+    query getLandingPageList {
+  getLandingPageList {
+    totalCount
+    edges {
+      node {
+        id
+        sys {
+          filename
+          basename
+          breadcrumbs
+          path
+          relativePath
+          extension
+        }
+        data {
+          ...LandingPageParts
+        }
+      }
+    }
+  }
+}
+    ${LandingPagePartsFragmentDoc}`;
 export const GetPageDocumentDocument = gql`
     query getPageDocument($relativePath: String!) {
   getPageDocument(relativePath: $relativePath) {
@@ -390,6 +897,88 @@ export const GetPageListDocument = gql`
   }
 }
     ${PagePartsFragmentDoc}`;
+export const GetTagDocumentDocument = gql`
+    query getTagDocument($relativePath: String!) {
+  getTagDocument(relativePath: $relativePath) {
+    sys {
+      filename
+      basename
+      breadcrumbs
+      path
+      relativePath
+      extension
+    }
+    id
+    data {
+      ...TagParts
+    }
+  }
+}
+    ${TagPartsFragmentDoc}`;
+export const GetTagListDocument = gql`
+    query getTagList {
+  getTagList {
+    totalCount
+    edges {
+      node {
+        id
+        sys {
+          filename
+          basename
+          breadcrumbs
+          path
+          relativePath
+          extension
+        }
+        data {
+          ...TagParts
+        }
+      }
+    }
+  }
+}
+    ${TagPartsFragmentDoc}`;
+export const GetStuffDocumentDocument = gql`
+    query getStuffDocument($relativePath: String!) {
+  getStuffDocument(relativePath: $relativePath) {
+    sys {
+      filename
+      basename
+      breadcrumbs
+      path
+      relativePath
+      extension
+    }
+    id
+    data {
+      ...StuffParts
+    }
+  }
+}
+    ${StuffPartsFragmentDoc}`;
+export const GetStuffListDocument = gql`
+    query getStuffList {
+  getStuffList {
+    totalCount
+    edges {
+      node {
+        id
+        sys {
+          filename
+          basename
+          breadcrumbs
+          path
+          relativePath
+          extension
+        }
+        data {
+          ...StuffParts
+        }
+      }
+    }
+  }
+}
+    ${StuffPartsFragmentDoc}`;
 export const GetPostDocumentDocument = gql`
     query getPostDocument($relativePath: String!) {
   getPostDocument(relativePath: $relativePath) {
@@ -434,11 +1023,29 @@ export const GetPostListDocument = gql`
 export type Requester<C= {}> = <R, V>(doc: DocumentNode, vars?: V, options?: C) => Promise<R>
   export function getSdk<C>(requester: Requester<C>) {
     return {
-      getPageDocument(variables: GetPageDocumentQueryVariables, options?: C): Promise<{data: GetPageDocumentQuery, variables: GetPageDocumentQueryVariables, query: string}> {
+      getLandingPageDocument(variables: GetLandingPageDocumentQueryVariables, options?: C): Promise<{data: GetLandingPageDocumentQuery, variables: GetLandingPageDocumentQueryVariables, query: string}> {
+        return requester<{data: GetLandingPageDocumentQuery, variables: GetLandingPageDocumentQueryVariables, query: string}, GetLandingPageDocumentQueryVariables>(GetLandingPageDocumentDocument, variables, options);
+      },
+    getLandingPageList(variables?: GetLandingPageListQueryVariables, options?: C): Promise<{data: GetLandingPageListQuery, variables: GetLandingPageListQueryVariables, query: string}> {
+        return requester<{data: GetLandingPageListQuery, variables: GetLandingPageListQueryVariables, query: string}, GetLandingPageListQueryVariables>(GetLandingPageListDocument, variables, options);
+      },
+    getPageDocument(variables: GetPageDocumentQueryVariables, options?: C): Promise<{data: GetPageDocumentQuery, variables: GetPageDocumentQueryVariables, query: string}> {
         return requester<{data: GetPageDocumentQuery, variables: GetPageDocumentQueryVariables, query: string}, GetPageDocumentQueryVariables>(GetPageDocumentDocument, variables, options);
       },
     getPageList(variables?: GetPageListQueryVariables, options?: C): Promise<{data: GetPageListQuery, variables: GetPageListQueryVariables, query: string}> {
         return requester<{data: GetPageListQuery, variables: GetPageListQueryVariables, query: string}, GetPageListQueryVariables>(GetPageListDocument, variables, options);
+      },
+    getTagDocument(variables: GetTagDocumentQueryVariables, options?: C): Promise<{data: GetTagDocumentQuery, variables: GetTagDocumentQueryVariables, query: string}> {
+        return requester<{data: GetTagDocumentQuery, variables: GetTagDocumentQueryVariables, query: string}, GetTagDocumentQueryVariables>(GetTagDocumentDocument, variables, options);
+      },
+    getTagList(variables?: GetTagListQueryVariables, options?: C): Promise<{data: GetTagListQuery, variables: GetTagListQueryVariables, query: string}> {
+        return requester<{data: GetTagListQuery, variables: GetTagListQueryVariables, query: string}, GetTagListQueryVariables>(GetTagListDocument, variables, options);
+      },
+    getStuffDocument(variables: GetStuffDocumentQueryVariables, options?: C): Promise<{data: GetStuffDocumentQuery, variables: GetStuffDocumentQueryVariables, query: string}> {
+        return requester<{data: GetStuffDocumentQuery, variables: GetStuffDocumentQueryVariables, query: string}, GetStuffDocumentQueryVariables>(GetStuffDocumentDocument, variables, options);
+      },
+    getStuffList(variables?: GetStuffListQueryVariables, options?: C): Promise<{data: GetStuffListQuery, variables: GetStuffListQueryVariables, query: string}> {
+        return requester<{data: GetStuffListQuery, variables: GetStuffListQueryVariables, query: string}, GetStuffListQueryVariables>(GetStuffListDocument, variables, options);
       },
     getPostDocument(variables: GetPostDocumentQueryVariables, options?: C): Promise<{data: GetPostDocumentQuery, variables: GetPostDocumentQueryVariables, query: string}> {
         return requester<{data: GetPostDocumentQuery, variables: GetPostDocumentQueryVariables, query: string}, GetPostDocumentQueryVariables>(GetPostDocumentDocument, variables, options);

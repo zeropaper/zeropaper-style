@@ -1,35 +1,54 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { createUseStyles } from 'react-jss';
+import { createStyles as createUseStyles } from '@mantine/core';
 
-import { ReactComponent as Twitter } from '../../assets/twitter.svg';
-import { ReactComponent as StackExchange } from '../../assets/stackexchange.svg';
-import { ReactComponent as LinkedIn } from '../../assets/linkedin.svg';
-import { ReactComponent as GitHub } from '../../assets/github.svg';
-import { ExternalLink } from '../Link/Link';
+import Twitter from './assets/twitter.svg';
+import StackExchange from './assets/stackexchange.svg';
+import LinkedIn from './assets/linkedin.svg';
+import GitHub from './assets/github.svg';
+import ExternalLink from '../Link/Link';
+
+type SocialNetworksProps = {
+  className?: string;
+  classes?: { [k: string]: string };
+}
 
 const useStyles = createUseStyles(
-  ({ mixins: { inlineListClasses } }) => ({
-    ...inlineListClasses,
-    link: {
-      ...inlineListClasses.link,
-      '& svg': {
-        maxHeight: '1em',
-      },
-      '& svg path': {
-        fill: 'currentColor',
-      },
-      // '&:hover svg path': {},
-    },
-  }),
   {
-    name: 'SocialNetworks',
-  },
+    root: {
+      overflow: 'hidden',
+    },
+    list: {
+      margin: 0,
+      listStyle: 'none',
+      display: 'flex',
+    },
+    item: {
+      margin: '0 0.5em',
+      '&:first-of-type': {
+        marginLeft: 0,
+      },
+      '&:last-child': {
+        marginRight: 0,
+      }
+    },
+    link: {
+      display: 'flex',
+    },
+    icon: {
+      width: '1.25em',
+      height: '1.25em',
+      '& path': {
+        fill: 'currentColor',
+      }
+    },
+  }
 );
 
-const SocialNetworks = ({ className, classes: passedClasses, ...props }) => {
-  const classes = useStyles(props);
+const SocialNetworks = ({ className, classes: passedClasses, ...props }: SocialNetworksProps) => {
+  const { classes } = useStyles();
+
   return (
     <nav className={classNames(classes.root, passedClasses?.root, className)}>
       <ul className={classNames(classes.list, passedClasses?.list)}>
@@ -39,7 +58,7 @@ const SocialNetworks = ({ className, classes: passedClasses, ...props }) => {
             rel="me"
             href="https://twitter.com/zeropaper"
           >
-            <Twitter />
+            <Twitter className={classes.icon} />
           </ExternalLink>
         </li>
         <li className={classes.item}>
@@ -48,7 +67,7 @@ const SocialNetworks = ({ className, classes: passedClasses, ...props }) => {
             rel="me"
             href="https://github.com/zeropaper"
           >
-            <GitHub />
+            <GitHub className={classes.icon} />
           </ExternalLink>
         </li>
         <li className={classes.item}>
@@ -56,7 +75,7 @@ const SocialNetworks = ({ className, classes: passedClasses, ...props }) => {
             className={classes.link}
             href="https://stackoverflow.com/users/story/662964"
           >
-            <StackExchange />
+            <StackExchange className={classes.icon} />
           </ExternalLink>
         </li>
         <li className={classes.item}>
@@ -65,7 +84,7 @@ const SocialNetworks = ({ className, classes: passedClasses, ...props }) => {
             rel="me"
             href="https://www.linkedin.com/in/vvago"
           >
-            <LinkedIn />
+            <LinkedIn className={classes.icon} />
           </ExternalLink>
         </li>
       </ul>

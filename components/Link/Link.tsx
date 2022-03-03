@@ -1,122 +1,50 @@
-import * as React from 'react';
-import classNames from 'classnames';
-// import GatsbyLink from 'gatsby-link';
-import TransitionLink from 'gatsby-plugin-transition-link';
-import { createUseStyles } from 'react-jss';
+import NextLink, { LinkProps as NextLinkProps } from 'next/link';
+import { Button, ButtonProps } from '@mantine/core';
+import { ComponentType, PropsWithChildren } from 'react';
 
-type LinkClasses = {
-  root: string;
-  active: string;
-};
+export * from 'next/link';
 
-const useStyles = createUseStyles(
-  {
-    root: {},
-    active: {},
-  },
-  { name: 'Link' },
-);
-
-interface ExternalLinkProps {
-  children: React.ReactNode;
-  href: string;
-  title?: string;
+type LinkProps = NextLinkProps & {
   className?: string;
-  activeClassName?: string;
+  component?: ComponentType<{ className?: string }> | string;
+  [k: string]: any;
 }
 
-export const ExternalLink = ({
-  href,
-  children,
-  ...rest
-}: ExternalLinkProps): React.ReactElement => (
-  <a
-    target="_blank"
-    rel="noreferrer"
-    // eslint-disable-next-line react/jsx-props-no-spreading
-    {...rest}
-    href={href}
-  >
-    {children}
-  </a>
-);
-
-ExternalLink.defaultProps = {
-  className: null,
-  activeClassName: null,
-  title: null,
-};
-
-interface LinkProps {
-  children: React.ReactNode;
-  className?: string;
-  activeClassName?: string;
-  to?: string;
-  href?: string;
-  title?: string;
-}
-
-const Link = ({
-  children,
+export const Link = ({
+  // children,
   className,
-  activeClassName,
-  ...props
-}: LinkProps): React.ReactElement => {
-  const classes: LinkClasses = useStyles(props);
-  const { to, href, ...rest } = props;
+  component: Component = 'a',
 
-  if (href) {
-    if (href.startsWith('http')) {
-      return (
-        <ExternalLink
-          // eslint-disable-next-line react/jsx-props-no-spreading
-          {...rest}
-          className={classNames(className, classes.root)}
-          href={href}
-        >
-          {children}
-        </ExternalLink>
-      );
-    }
+  // Next Link Props
+  href,
+  as,
+  replace,
+  scroll,
+  shallow,
+  passHref,
+  prefetch,
+  locale,
 
-    return (
-      <a
-        // eslint-disable-next-line react/jsx-props-no-spreading
-        {...rest}
-        className={classNames(className, classes.root)}
-        href={href}
-      >
-        {children}
-      </a>
-    );
+  // 
+  ...rest
+}: PropsWithChildren<LinkProps>) => {
+  const linkProps: NextLinkProps = {
+    href,
+    as,
+    replace,
+    scroll,
+    shallow,
+    passHref,
+    prefetch,
+    locale,
   }
-
   return (
-    <TransitionLink
-      exit={{
-        length: 0.5,
-      }}
-      entry={{
-        length: 0,
-        delay: 0.5,
-      }}
-      className={classNames(className, classes.root)}
-      activeClassName={activeClassName || classes.active}
-      // eslint-disable-next-line react/jsx-props-no-spreading
-      {...rest}
-      to={to}
-    >
-      {children}
-    </TransitionLink>
+    <NextLink {...linkProps}>
+      <Component {...rest} className={className} />
+    </NextLink>
   );
-};
+}
 
-Link.defaultProps = {
-  className: null,
-  activeClassName: null,
-  href: null,
-  to: null,
-  title: null,
-};
+export const ButtonLink = (props: LinkProps) => <Link {...props} component={Button} />;
 
 export default Link;
