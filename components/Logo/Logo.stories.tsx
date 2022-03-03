@@ -11,8 +11,8 @@ export default {
   },
 };
 
-export const Slim = (args) => (<Logo {...args} />);
+export const Slim = (args: any) => (<Logo {...args} />);
 Slim.args = { slim: true };
 
-export const Fat = (args) => (<Logo {...args} />);
+export const Fat = (args: any) => (<Logo {...args} />);
 Fat.args = {};

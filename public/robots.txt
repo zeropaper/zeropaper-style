@@ -1,1 +1,9 @@
+# *
 User-agent: *
+Allow: /
+
+# Host
+Host: https://www.ory.sh
+
+# Sitemaps
+Sitemap: https://www.ory.sh/sitemap.xml

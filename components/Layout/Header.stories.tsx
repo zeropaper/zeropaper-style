@@ -10,6 +10,6 @@ export default {
   argTypes: {},
 };
 
-export const Base = (args) => (<Header {...args} />);
+export const Base = (args: any) => (<Header {...args} />);
 Base.args = {};
 Base.argTypes = {};

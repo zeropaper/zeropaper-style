@@ -18,12 +18,12 @@ export default {
   },
 };
 
-export const Basic = (args) => (<Toggle {...args} />);
+export const Basic = (args: any) => (<Toggle {...args} />);
 Basic.args = {
   checked: false,
 };
 
-export const ThemeMode = (args) => (<Basic {...args} />);
+export const ThemeMode = (args: any) => (<Basic {...args} />);
 ThemeMode.args = {
   ...Basic.args,
 };
