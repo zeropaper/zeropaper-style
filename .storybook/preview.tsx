@@ -1,15 +1,14 @@
 import React from 'react';
-import ThemeProvider from '../src/themes/Theme';
+import ThemeProvider from '../themes/Theme';
 
 export const parameters = {
-  actions: { argTypesRegex: '^on[A-Z].+' },
   layout: 'centered',
+  actions: { argTypesRegex: "^on[A-Z].*" },
   controls: {
-    // expanded: true
-    // matchers: {
-    //   color: /(background|color)$/i,
-    //   date: /Date$/
-    // }
+    matchers: {
+      color: /(background|color)$/i,
+      date: /Date$/,
+    },
   },
   options: {
     storySort: {
