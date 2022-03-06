@@ -1,7 +1,6 @@
 /** @type {import('next-sitemap').IConfig} */
-
 module.exports = {
-  siteUrl: process.env.SITE_URL || 'https://www.ory.sh',
-  generateRobotsTxt: true // (optional)
+  siteUrl: process.env.SITE_URL || 'https://zeropaper.style',
+  generateRobotsTxt: true, // (optional)
   // ...other options
-}
+};
