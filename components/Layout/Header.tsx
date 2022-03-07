@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { createStyles as createUseStyles, useMantineColorScheme, keyframes } from '@mantine/core';
 
-import Link from '../Link/Link';
+import Link, { useStyles as useLinkStyles } from '../Link/Link';
 import Logo from '../Logo/Logo';
 import Menu from './Menu';
 import LightMode from './assets/light-mode.svg';
@@ -19,25 +19,33 @@ const drawStroke = keyframes({
 })
 
 const useStyles = createUseStyles(({
-  spacing
+  spacing,
+  fn,
+  colorScheme,
+  colors,
+  white
 }, _params, getRef) => {
   const logo = getRef('logo');
   return ({
     root: {
-      // display: 'flex',
-      // alignItems: 'center',
-      // paddingRight: spacing.sm,
-      // paddingLeft: spacing.sm,
+    backgroundColor: colorScheme === 'light' ? white : colors.dark[7],
+      position: 'sticky',
+      top: 0,
     },
     inner: {
       display: 'flex',
       alignItems: 'center',
-      // flexGrow: 1
+      paddingTop: spacing.sm,
+      paddingBottom: spacing.sm,
     },
     title: {
       fontWeight: 300,
       fontSize: 'min(32px, 7vw)',
-      width: '33%',
+      flexGrow: 1,
+      margin: 0,
+      [fn.smallerThan('md')]: {
+        width: '25%',
+      },
     },
     titleLink: {
       display: 'flex',
@@ -64,21 +72,31 @@ const useStyles = createUseStyles(({
         animationTimingFunction: 'linear',
       },
     },
-    linkText: {},
+    linkText: {
+      [fn.smallerThan('sm')]: {
+        display: 'none',
+      }
+    },
     menu: {
-      width: '34%',
-      display: 'block',
-      textAlign: 'center',
-      // [mobileLandscape]: {
-      //   display: 'none',
-      // },
+      flexGrow: 1,
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      [fn.smallerThan('md')]: {
+        width: '50%',
+        // flexGrow: 2,
+      },
     },
     themeToggleWrapper: {
       width: '33%',
       textAlign: 'right',
-      // [mobileLandscape]: {
-      //   width: 'auto',
-      // },
+      display: 'flex',
+      justifyContent: 'flex-end',
+      alignItems: 'center',
+      [fn.smallerThan('md')]: {
+        // width: '25%',
+        // flexGrow: 1,
+      },
     },
     themeToggle: {
       background: 'none',
@@ -89,8 +107,8 @@ const useStyles = createUseStyles(({
       color: 'inherit',
       display: 'inline-flex',
       alignItems: 'baseline',
-      // padding: spacing(),
-      // marginRight: spacing(-1),
+      margin: 0,
+      padding: 0,
     },
     themeModeIcon: {
       '& path': {
@@ -103,13 +121,14 @@ const useStyles = createUseStyles(({
 const ThemeModeToggle = () => {
   const { colorScheme, toggleColorScheme } = useMantineColorScheme();
   const toggleMode = React.useCallback(() => toggleColorScheme(), [toggleColorScheme])
+  const {classes: linkClasses} = useLinkStyles();
   const { classes, cx } = useStyles();
   return (
     <button
       type="button"
       title="Toggle the page styling theme"
       onClick={toggleMode}
-      className={classes.themeToggle}
+      className={cx(classes.themeToggle, linkClasses.root)}
     >
       {
         colorScheme === 'dark'
@@ -132,11 +151,11 @@ const Header = ({ classes: passedClasses, className }: PropTypes) => {
   return (
     <header className={cx(className, classes.root, passedClasses?.root)}>
       <div className={cx(classes.inner, passedClasses?.inner)}>
-        <h1 className={cx(classes.title, passedClasses?.title)} title="Valentin “zeropaper” Vago">
-          <Link className={cx(classes.titleLink, passedClasses?.titleLink)} component="a" href="/">
+        <h1 className={cx(classes.title, passedClasses?.title)}>
+          <Link className={cx(classes.titleLink, passedClasses?.titleLink)} title="Valentin “zeropaper” Vago" component="a" href="/">
             <Logo slim className={cx(classes.logo, passedClasses?.logo)} />
 
-            <span>
+            <span className={classes.linkText}>
               zeropaper
             </span>
           </Link>

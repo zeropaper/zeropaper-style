@@ -8,6 +8,8 @@ const useStyles = createUseStyles(
   {
     root: {},
     list: {
+      margin: 0,
+      padding: 0,
       listStyle: 'none',
       display: 'flex',
     },

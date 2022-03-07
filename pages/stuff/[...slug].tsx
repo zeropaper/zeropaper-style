@@ -24,14 +24,15 @@ export default function Stuff(props: AsyncReturnType<typeof getStaticProps>['pro
   if (!data) {
     return <ErrorPage statusCode={500} />
   }
+  const stuff = data?.getStuffDocument?.data || {}
   const {
     date,
     title,
     body,
     description,
     iframe: iframeSrc,
-  } =
-    data?.getStuffDocument?.data || {}
+    source,
+  } = stuff
   return (
     <>
       <Head>
@@ -40,9 +41,11 @@ export default function Stuff(props: AsyncReturnType<typeof getStaticProps>['pro
       </Head>
 
       {iframeSrc ? <IFrame
-        src={iframeSrc}
         title={title || ''}
+        src={iframeSrc}
+        source={source}
         description={description || ''}
+        tags={stuff.tags as string[] || []}
       /> :
         <MDXRenderer
           data-tinafield="body"

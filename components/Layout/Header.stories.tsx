@@ -1,5 +1,5 @@
-/* eslint-disable react/jsx-props-no-spreading */
-import * as React from 'react';
+import React from 'react';
+import { ComponentStory, ComponentMeta } from '@storybook/react';
 
 import Header from './Header';
 
@@ -8,8 +8,10 @@ export default {
   component: Header,
   args: {},
   argTypes: {},
-};
+} as ComponentMeta<typeof Header>;
 
-export const Base = (args: any) => (<Header {...args} />);
+const Template: ComponentStory<typeof Header> = (args) => <Header {...args} />;
+
+export const Base = Template.bind({});
 Base.args = {};
 Base.argTypes = {};

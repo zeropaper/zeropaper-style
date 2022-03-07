@@ -21,10 +21,12 @@ const useStyles = createUseStyles(
     },
     list: {
       margin: 0,
+      padding: 0,
       listStyle: 'none',
       display: 'flex',
     },
     item: {
+      padding: 0,
       margin: '0 0.5em',
       '&:first-of-type': {
         marginLeft: 0,

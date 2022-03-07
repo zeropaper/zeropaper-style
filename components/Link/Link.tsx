@@ -1,5 +1,5 @@
 import NextLink, { LinkProps as NextLinkProps } from 'next/link';
-import { Button, ButtonProps } from '@mantine/core';
+import { Button, createStyles } from '@mantine/core';
 import { ComponentType, PropsWithChildren } from 'react';
 
 export * from 'next/link';
@@ -9,6 +9,17 @@ type LinkProps = NextLinkProps & {
   component?: ComponentType<{ className?: string }> | string;
   [k: string]: any;
 }
+
+export const useStyles = createStyles(({ fn, colors, colorScheme, primaryColor }) => ({
+  root: {
+    ...fn.focusStyles(),
+    color: colors?.[primaryColor][7],
+    transition: 'color 162ms ease-in-out',
+    '&:hover,&:focus': {
+      color: colors[primaryColor][colorScheme === 'dark' ? 5 : 9],
+    },
+  }
+}))
 
 export const Link = ({
   // children,
@@ -28,6 +39,8 @@ export const Link = ({
   // 
   ...rest
 }: PropsWithChildren<LinkProps>) => {
+  const {classes, cx} = useStyles();
+
   const linkProps: NextLinkProps = {
     href,
     as,
@@ -38,9 +51,10 @@ export const Link = ({
     prefetch,
     locale,
   }
+
   return (
     <NextLink {...linkProps}>
-      <Component {...rest} className={className} />
+      <Component {...rest} className={cx(className, classes.root)} />
     </NextLink>
   );
 }
