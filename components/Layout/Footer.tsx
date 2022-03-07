@@ -1,58 +1,34 @@
 import * as React from 'react';
 import { createStyles as createUseStyles } from '@mantine/core';
-// import { DefaultTheme } from '../../themes/Theme';
 import Link from '../Link/Link';
 
-import Menu from './Menu';
 import SocialNetworks from './SocialNetworks';
 
 const useStyles = createUseStyles(({
+  fn,
   spacing,
-  // mediaQueries: {
-  //   mobilePortrait,
-  //   mobileLandscape,
-  // },
-  // typography: {
-  //   shades,
-  // },
+  colorScheme,
+  white,
+  colors,
 }) => ({
   root: {
-    // padding: spacing(),
-    // width: '100%',
-    // borderTop: `1px solid ${shades[7]}`,
-    // [mobilePortrait]: {
-    //   fontSize: '1rem',
-    //   flexDirection: 'column',
-    //   alignItems: 'center',
-    // },
+    position: 'sticky',
+    bottom: 0,
+    backgroundColor: colorScheme === 'light' ? white : colors.dark[7],
+    [fn.smallerThan('xs')]: {
+      fontSize: '1rem',
+      flexDirection: 'column',
+      alignItems: 'center',
+    },
   },
   inner: {
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'space-around',
+    justifyContent: 'space-between',
+    paddingTop: spacing.xs,
+    paddingBottom: spacing.xs,
   },
-  column: {
-    // [mobileLandscape]: {
-    //   width: '33%',
-    // },
-    // [mobilePortrait]: {
-    //   textAlign: 'center',
-    // },
-  },
-  menu: {
-    display: 'none',
-    // [mobileLandscape]: {
-    //   display: 'block',
-    // },
-    // [mobilePortrait]: {
-    //   display: 'block',
-    //   marginTop: spacing(),
-    //   marginBottom: spacing(),
-    // },
-  },
-  menuList: {
-    margin: 'auto',
-  },
+  column: {},
   snList: {
     marginLeft: 'auto',
   },
@@ -74,13 +50,6 @@ const Footer = ({ classes: passedClasses, className }: PropTypes) => {
         >
           No Cookies
         </Link>
-{/* 
-        <Menu
-          classes={{
-            root: classes.menu,
-            list: classes.menuList,
-          }}
-        /> */}
 
         <SocialNetworks
           className={cx(classes.column, passedClasses?.column)}

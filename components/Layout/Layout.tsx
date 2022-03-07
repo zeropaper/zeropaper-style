@@ -3,16 +3,18 @@ import { createStyles as createUseStyles } from '@mantine/core';
 import Header from './Header';
 import Footer from './Footer';
 
-const useStyles = createUseStyles(({ spacing }) => {
+const useStyles = createUseStyles(({ spacing, breakpoints, fn }) => {
   const root = {
-    paddingRight: spacing.sm,
-    paddingLeft: spacing.sm,
     overflow: 'hidden',
   }
   const inner = {
     margin: '0 auto',
-    maxWidth: 850,
+    maxWidth: breakpoints.md - (spacing.md * 2),
     overflow: 'hidden',
+    [fn.smallerThan('md')]: {
+      paddingLeft: spacing.md,
+      paddingRight: spacing.md,
+    }
   }
 
   return ({
