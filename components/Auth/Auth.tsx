@@ -1,6 +1,7 @@
-import styles from '../styles/Home.module.css'
-
 import { useOryKratos } from '../../contexts/Ory'
+
+// import styles from '../styles/Home.module.css'
+const styles: any = {};
 
 export const SignedOut = () => (
   <>

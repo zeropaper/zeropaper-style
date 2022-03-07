@@ -1,7 +1,8 @@
 import React from 'react'
 import Link from '../Link/Link'
 
-import styles from '../../styles/Home.module.css'
+// import styles from '../../styles/Home.module.css'
+const styles: any = {};
 
 const LinkCard = (props: any) => {
   const { href, title, description, tinafield } = props || {}

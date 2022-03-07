@@ -4,7 +4,6 @@ import dynamic from 'next/dynamic'
 import { TinaEditProvider } from 'tinacms/dist/edit-state'
 import Layout from '../components/Layout/Layout'
 
-import '../styles/globals.css'
 import ThemeProvider from '../themes/Theme'
 
 const TinaCMS = dynamic(() => import('tinacms'), { ssr: false })
