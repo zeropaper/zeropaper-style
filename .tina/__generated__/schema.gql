@@ -102,41 +102,7 @@ type LandingPageBlocksFeature {
   description: String
 }
 
-type LandingPageBlocksFeaturesItemsFeature {
-  href: String
-  title: String
-  description: String
-}
-
-union LandingPageBlocksFeaturesItems = LandingPageBlocksFeaturesItemsFeature
-
-type LandingPageBlocksFeatures {
-  headline: String
-  subline: String
-  items: [LandingPageBlocksFeaturesItems]
-}
-
-type LandingPageBlocksFlyingActions {
-  label: String
-  icon: String
-  variant: String
-  url: String
-}
-
-type LandingPageBlocksFlyingItems {
-  headline: String
-  subline: String
-  cli: Boolean
-}
-
-type LandingPageBlocksFlying {
-  headline: String
-  subline: String
-  actions: [LandingPageBlocksFlyingActions]
-  items: [LandingPageBlocksFlyingItems]
-}
-
-union LandingPageBlocks = LandingPageBlocksHero | LandingPageBlocksFeature | LandingPageBlocksFeatures | LandingPageBlocksFlying
+union LandingPageBlocks = LandingPageBlocksHero | LandingPageBlocksFeature
 
 type LandingPage {
   title: String
@@ -234,6 +200,7 @@ type Stuff {
   seo: StuffSeo
   tags: [String]
   iframe: String
+  source: String
   body: JSON
 }
 
@@ -327,47 +294,9 @@ input LandingPageBlocksFeatureMutation {
   description: String
 }
 
-input LandingPageBlocksFeaturesItemsFeatureMutation {
-  href: String
-  title: String
-  description: String
-}
-
-input LandingPageBlocksFeaturesItemsMutation {
-  feature: LandingPageBlocksFeaturesItemsFeatureMutation
-}
-
-input LandingPageBlocksFeaturesMutation {
-  headline: String
-  subline: String
-  items: [LandingPageBlocksFeaturesItemsMutation]
-}
-
-input LandingPageBlocksFlyingActionsMutation {
-  label: String
-  icon: String
-  variant: String
-  url: String
-}
-
-input LandingPageBlocksFlyingItemsMutation {
-  headline: String
-  subline: String
-  cli: Boolean
-}
-
-input LandingPageBlocksFlyingMutation {
-  headline: String
-  subline: String
-  actions: [LandingPageBlocksFlyingActionsMutation]
-  items: [LandingPageBlocksFlyingItemsMutation]
-}
-
 input LandingPageBlocksMutation {
   hero: LandingPageBlocksHeroMutation
   feature: LandingPageBlocksFeatureMutation
-  features: LandingPageBlocksFeaturesMutation
-  flying: LandingPageBlocksFlyingMutation
 }
 
 input LandingPageMutation {
@@ -406,6 +335,7 @@ input StuffMutation {
   seo: StuffSeoMutation
   tags: [String]
   iframe: String
+  source: String
   body: JSON
 }
 

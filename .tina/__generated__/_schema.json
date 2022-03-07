@@ -144,242 +144,6 @@
                 "blocks",
                 "feature"
               ]
-            },
-            {
-              "label": "Features",
-              "name": "features",
-              "fields": [
-                {
-                  "name": "headline",
-                  "label": "Headline",
-                  "type": "string",
-                  "namespace": [
-                    "landingPage",
-                    "blocks",
-                    "features",
-                    "headline"
-                  ]
-                },
-                {
-                  "name": "subline",
-                  "label": "Subline",
-                  "type": "string",
-                  "namespace": [
-                    "landingPage",
-                    "blocks",
-                    "features",
-                    "subline"
-                  ]
-                },
-                {
-                  "name": "items",
-                  "label": "Items",
-                  "type": "object",
-                  "list": true,
-                  "templates": [
-                    {
-                      "label": "Feature",
-                      "name": "feature",
-                      "fields": [
-                        {
-                          "name": "href",
-                          "label": "HREF",
-                          "type": "string",
-                          "namespace": [
-                            "landingPage",
-                            "blocks",
-                            "features",
-                            "items",
-                            "feature",
-                            "href"
-                          ]
-                        },
-                        {
-                          "name": "title",
-                          "label": "Title",
-                          "type": "string",
-                          "namespace": [
-                            "landingPage",
-                            "blocks",
-                            "features",
-                            "items",
-                            "feature",
-                            "title"
-                          ]
-                        },
-                        {
-                          "name": "description",
-                          "label": "Description",
-                          "type": "string",
-                          "namespace": [
-                            "landingPage",
-                            "blocks",
-                            "features",
-                            "items",
-                            "feature",
-                            "description"
-                          ]
-                        }
-                      ],
-                      "namespace": [
-                        "landingPage",
-                        "blocks",
-                        "features",
-                        "items",
-                        "feature"
-                      ]
-                    }
-                  ],
-                  "namespace": [
-                    "landingPage",
-                    "blocks",
-                    "features",
-                    "items"
-                  ]
-                }
-              ],
-              "namespace": [
-                "landingPage",
-                "blocks",
-                "features"
-              ]
-            },
-            {
-              "name": "flying",
-              "label": "Flying",
-              "fields": [
-                {
-                  "name": "headline",
-                  "type": "string",
-                  "namespace": [
-                    "landingPage",
-                    "blocks",
-                    "flying",
-                    "headline"
-                  ]
-                },
-                {
-                  "name": "subline",
-                  "type": "string",
-                  "namespace": [
-                    "landingPage",
-                    "blocks",
-                    "flying",
-                    "subline"
-                  ]
-                },
-                {
-                  "name": "actions",
-                  "type": "object",
-                  "list": true,
-                  "fields": [
-                    {
-                      "name": "label",
-                      "type": "string",
-                      "namespace": [
-                        "landingPage",
-                        "blocks",
-                        "flying",
-                        "actions",
-                        "label"
-                      ]
-                    },
-                    {
-                      "name": "icon",
-                      "type": "string",
-                      "namespace": [
-                        "landingPage",
-                        "blocks",
-                        "flying",
-                        "actions",
-                        "icon"
-                      ]
-                    },
-                    {
-                      "name": "variant",
-                      "type": "string",
-                      "namespace": [
-                        "landingPage",
-                        "blocks",
-                        "flying",
-                        "actions",
-                        "variant"
-                      ]
-                    },
-                    {
-                      "name": "url",
-                      "type": "string",
-                      "namespace": [
-                        "landingPage",
-                        "blocks",
-                        "flying",
-                        "actions",
-                        "url"
-                      ]
-                    }
-                  ],
-                  "namespace": [
-                    "landingPage",
-                    "blocks",
-                    "flying",
-                    "actions"
-                  ]
-                },
-                {
-                  "name": "items",
-                  "type": "object",
-                  "list": true,
-                  "fields": [
-                    {
-                      "name": "headline",
-                      "type": "string",
-                      "namespace": [
-                        "landingPage",
-                        "blocks",
-                        "flying",
-                        "items",
-                        "headline"
-                      ]
-                    },
-                    {
-                      "name": "subline",
-                      "type": "string",
-                      "namespace": [
-                        "landingPage",
-                        "blocks",
-                        "flying",
-                        "items",
-                        "subline"
-                      ]
-                    },
-                    {
-                      "name": "cli",
-                      "type": "boolean",
-                      "ui": {
-                        "defaultValue": false
-                      },
-                      "namespace": [
-                        "landingPage",
-                        "blocks",
-                        "flying",
-                        "items",
-                        "cli"
-                      ]
-                    }
-                  ],
-                  "namespace": [
-                    "landingPage",
-                    "blocks",
-                    "flying",
-                    "items"
-                  ]
-                }
-              ],
-              "namespace": [
-                "landingPage",
-                "blocks",
-                "flying"
-              ]
             }
           ],
           "namespace": [
@@ -440,6 +204,7 @@
           "type": "rich-text",
           "label": "Body",
           "name": "body",
+          "templates": [],
           "isBody": true,
           "namespace": [
             "page",
@@ -583,9 +348,19 @@
           ]
         },
         {
+          "type": "string",
+          "label": "Source",
+          "name": "source",
+          "namespace": [
+            "stuff",
+            "source"
+          ]
+        },
+        {
           "type": "rich-text",
           "label": "Body",
           "name": "body",
+          "templates": [],
           "isBody": true,
           "namespace": [
             "stuff",
@@ -659,6 +434,7 @@
           "type": "rich-text",
           "label": "Body",
           "name": "body",
+          "templates": [],
           "isBody": true,
           "namespace": [
             "post",

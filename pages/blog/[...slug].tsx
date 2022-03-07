@@ -10,14 +10,8 @@ import getBlogContext from '../../lib/getBlogContext'
 const client = ExperimentalGetTinaClient()
 
 export default function Post(props: AsyncReturnType<typeof getStaticProps>['props']) {
-  const { data: initialData, slug, query, variables } = props
+  const { data, slug } = props
   const router = useRouter()
-
-  const { data } = useTina({
-    query,
-    variables,
-    data: initialData
-  })
 
   if (!router.isFallback && !slug) {
     return <ErrorPage statusCode={404} />

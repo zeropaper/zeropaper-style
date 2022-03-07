@@ -1,17 +1,21 @@
-import { defineSchema } from '@tinacms/cli'
+import { defineSchema, TinaField, TinaTemplate } from '@tinacms/cli'
 
-type Field = Parameters<typeof defineSchema>[0]['collections'][0]['fields'][0]
-
-const ACTIONS: Field = {
-  name: 'actions' as const,
-  type: 'object' as const,
+const ACTIONS: TinaField = {
+  name: 'actions',
+  type: 'object',
   list: true,
   fields: [
-    { name: 'label', type: 'string' as const },
-    { name: 'icon', type: 'string' as const },
-    { name: 'variant', type: 'string' as const },
-    { name: 'url', type: 'string' as const },
+    { name: 'label', type: 'string' },
+    { name: 'icon', type: 'string' },
+    { name: 'variant', type: 'string' },
+    { name: 'url', type: 'string' },
   ],
+}
+
+const defaultFeature = {
+  href: 'https://zeropaper.style',
+  title: "Here's Another Feature",
+  description: "This is where you might talk about the feature, if this wasn't just filler text.",
 }
 
 const feature = {
@@ -24,7 +28,7 @@ const feature = {
   ],
 }
 
-const dateField: Field = {
+const dateField: TinaField = {
   label: "Date",
   name: "date",
   type: "datetime",
@@ -33,7 +37,7 @@ const dateField: Field = {
   }
 }
 
-const tagsField: Field = {
+const tagsField: TinaField = {
   label: "Tags",
   name: "tags",
   // type: "reference",
@@ -43,6 +47,84 @@ const tagsField: Field = {
   ui: {
     component: 'tags'
   }
+}
+
+type MdxTemplate = TinaTemplate & { inline?: boolean }
+
+const mdxDateTime: MdxTemplate = {
+  name: "DateTime",
+  label: "Date & Time",
+  inline: true,
+  fields: [
+    {
+      name: "format",
+      label: "Format",
+      type: "string",
+      options: ["utc", "iso", "local"],
+    },
+  ],
+}
+
+const mdxBlockQuote: MdxTemplate = {
+  name: "BlockQuote",
+  label: "Block Quote",
+  fields: [
+    {
+      name: "children",
+      label: "Quote",
+      type: "rich-text",
+    },
+    {
+      name: "authorName",
+      label: "Author",
+      type: "string",
+    },
+  ],
+}
+
+const mdxNewsletterSignup: MdxTemplate = {
+  name: "NewsletterSignup",
+  label: "Newsletter Sign Up",
+  fields: [
+    {
+      name: "children",
+      label: "CTA",
+      type: "rich-text",
+    },
+    {
+      name: "placeholder",
+      label: "Placeholder",
+      type: "string",
+    },
+    {
+      name: "buttonText",
+      label: "Button Text",
+      type: "string",
+    },
+    {
+      name: "disclaimer",
+      label: "Disclaimer",
+      type: "rich-text",
+    },
+  ],
+  ui: {
+    defaultItem: {
+      placeholder: "Enter your email",
+      buttonText: "Notify Me",
+    },
+  },
+}
+
+const mdxBodyField: TinaField = {
+  type: "rich-text",
+  label: "Body",
+  name: "body",
+  templates: [
+    // mdxDatTime,
+    // mdxBlockQuote,
+    // mdxNewsletterSignup,
+  ],
+  isBody: true,
 }
 
 export default defineSchema({
@@ -80,38 +162,38 @@ export default defineSchema({
               ],
             },
             feature,
-            {
-              label: 'Features',
-              name: 'features',
-              fields: [
-                { name: 'headline', label: 'Headline', type: 'string' },
-                { name: 'subline', label: 'Subline', type: 'string' },
-                { name: 'items', label: 'Items', type: 'object', list: true, templates: [feature] },
-              ],
-            },
-            {
-              name: 'flying',
-              label: 'Flying',
-              fields: [
-                { name: 'headline', type: 'string' },
-                { name: 'subline', type: 'string' },
-                ACTIONS,
-                {
-                  name: 'items',
-                  type: 'object',
-                  list: true,
-                  fields: [
-                    { name: 'headline', type: 'string' },
-                    { name: 'subline', type: 'string' },
-                    {
-                      name: 'cli',
-                      type: 'boolean',
-                      ui: { defaultValue: false },
-                    },
-                  ],
-                },
-              ],
-            },
+            // {
+            //   label: 'Features',
+            //   name: 'features',
+            //   fields: [
+            //     { name: 'headline', label: 'Headline', type: 'string' },
+            //     { name: 'subline', label: 'Subline', type: 'string' },
+            //     { name: 'items', label: 'Items', type: 'object', list: true, templates: [feature] },
+            //   ],
+            // },
+            // {
+            //   name: 'flying',
+            //   label: 'Flying',
+            //   fields: [
+            //     { name: 'headline', type: 'string' },
+            //     { name: 'subline', type: 'string' },
+            //     ACTIONS,
+            //     {
+            //       name: 'items',
+            //       type: 'object',
+            //       list: true,
+            //       fields: [
+            //         { name: 'headline', type: 'string' },
+            //         { name: 'subline', type: 'string' },
+            //         {
+            //           name: 'cli',
+            //           type: 'boolean',
+            //           ui: { defaultValue: false },
+            //         },
+            //       ],
+            //     },
+            //   ],
+            // },
           ],
         },
       ],
@@ -143,12 +225,7 @@ export default defineSchema({
         //   label: 'Image',
         //   name: 'ogImage',
         // },
-        {
-          type: 'rich-text',
-          label: 'Body',
-          name: 'body',
-          isBody: true,
-        },
+        mdxBodyField,
       ],
     },
     {
@@ -194,11 +271,11 @@ export default defineSchema({
           name: 'iframe',
         },
         {
-          type: 'rich-text',
-          label: 'Body',
-          name: 'body',
-          isBody: true,
+          type: 'string',
+          label: 'Source',
+          name: 'source',
         },
+        mdxBodyField,
       ],
     },
     {
@@ -260,12 +337,7 @@ export default defineSchema({
         //     },
         //   ],
         // },
-        {
-          type: 'rich-text',
-          label: 'Body',
-          name: 'body',
-          isBody: true,
-        },
+        mdxBodyField,
       ],
     },
   ],
