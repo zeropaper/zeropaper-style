@@ -1,13 +1,11 @@
 import Head from 'next/head'
-import { useTina } from 'tinacms/dist/edit-state'
 
 import { ExperimentalGetTinaClient } from '../.tina/__generated__/types'
 import Grid from '../components/Grid/Grid'
 import { getPageContext } from "../lib/getPageContext"
 
-const Home = ({pageContext, ...props}: AsyncReturnType<typeof getStaticProps>['props']) => {
-  const tinaData = useTina(props)
-  const data = tinaData.data?.getLandingPageDocument?.data || {}
+const Home = ({ pageContext, ...props }: AsyncReturnType<typeof getStaticProps>['props']) => {
+  const data = props.data?.getLandingPageDocument?.data || {}
 
   return (
     <>

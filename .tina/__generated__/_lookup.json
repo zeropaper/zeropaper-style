@@ -20,21 +20,12 @@
     "createDocument": "create",
     "updateDocument": "update"
   },
-  "LandingPageBlocksFeaturesItems": {
-    "type": "LandingPageBlocksFeaturesItems",
-    "resolveType": "unionData",
-    "typeMap": {
-      "feature": "LandingPageBlocksFeaturesItemsFeature"
-    }
-  },
   "LandingPageBlocks": {
     "type": "LandingPageBlocks",
     "resolveType": "unionData",
     "typeMap": {
       "hero": "LandingPageBlocksHero",
-      "feature": "LandingPageBlocksFeature",
-      "features": "LandingPageBlocksFeatures",
-      "flying": "LandingPageBlocksFlying"
+      "feature": "LandingPageBlocksFeature"
     }
   },
   "LandingPageDocument": {

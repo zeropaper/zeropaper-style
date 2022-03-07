@@ -17,35 +17,6 @@ fragment LandingPageParts on LandingPage {
       title
       description
     }
-    ... on LandingPageBlocksFeatures {
-      headline
-      subline
-      items {
-        __typename
-        ... on LandingPageBlocksFeaturesItemsFeature {
-          href
-          title
-          description
-        }
-      }
-    }
-    ... on LandingPageBlocksFlying {
-      headline
-      subline
-      actions {
-        __typename
-        label
-        icon
-        variant
-        url
-      }
-      items {
-        __typename
-        headline
-        subline
-        cli
-      }
-    }
   }
 }
 
@@ -77,6 +48,7 @@ fragment StuffParts on Stuff {
   }
   tags
   iframe
+  source
   body
 }
 

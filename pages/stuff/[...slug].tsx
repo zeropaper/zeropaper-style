@@ -1,7 +1,6 @@
 import ErrorPage from 'next/error'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import { useTina } from 'tinacms/dist/edit-state'
 import { MDXRenderer } from '../../components/MDXRenderer/MDXRenderer'
 import { ExperimentalGetTinaClient } from '../../.tina/__generated__/types'
 
@@ -9,14 +8,8 @@ import getStuffContext from '../../lib/getStuffContext'
 import IFrame from '../../components/IFrame/Iframe'
 
 export default function Stuff(props: AsyncReturnType<typeof getStaticProps>['props']) {
-  const { data: initialData, slug, query, variables } = props
+  const { data, slug, query, variables } = props
   const router = useRouter()
-
-  const { data } = useTina({
-    query,
-    variables,
-    data: initialData
-  })
 
   if (!router.isFallback && !slug) {
     return <ErrorPage statusCode={404} />
@@ -43,7 +36,7 @@ export default function Stuff(props: AsyncReturnType<typeof getStaticProps>['pro
       {iframeSrc ? <IFrame
         title={title || ''}
         src={iframeSrc}
-        source={source}
+        source={source || ''}
         description={description || ''}
         tags={stuff.tags as string[] || []}
       /> :
