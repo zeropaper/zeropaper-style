@@ -1,4 +1,4 @@
-import { createStyles as createUseStyles } from '@mantine/core';
+import { createStyles as createUseStyles, Global, MantineTheme, CSSObject } from '@mantine/core';
 
 import Header from './Header';
 import Footer from './Footer';
@@ -41,6 +41,20 @@ export interface PropTypes {
   className?: string;
 }
 
+export const getGlobalStyles: (theme: MantineTheme) => CSSObject = (theme) => ({
+  'html,body,#__next,#root': {
+    padding: 0,
+    margin: 0,
+    minHeight: '100vh',
+  },
+
+  '#__next,#root': {
+    display: 'flex',
+    flexDirection: 'column',
+    position: 'relative',
+  }
+})
+
 const Layout = ({
   children,
   classes: passedClasses,
@@ -64,6 +78,8 @@ const Layout = ({
 
   return (
     <>
+      <Global styles={getGlobalStyles} />
+
       <a className={classes.pageContentLink} href="#page-content">Skip to content</a>
 
       <Header

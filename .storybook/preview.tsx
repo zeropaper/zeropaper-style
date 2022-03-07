@@ -21,7 +21,10 @@ export const parameters = {
 
 export const decorators = [
   (Story) => (
-    <ThemeProvider>
+    <ThemeProvider
+      withGlobalStyles
+      withNormalizeCSS
+    >
       <Story />
     </ThemeProvider>
   ),

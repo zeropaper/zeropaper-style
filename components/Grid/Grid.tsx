@@ -1,5 +1,7 @@
-import styles from '../../styles/Home.module.css'
 import React, { ComponentProps } from 'react'
+
+// import styles from '../../styles/Home.module.css'
+const styles: any = {};
 
 import { Blocks } from '../Blocks/Blocks'
 
