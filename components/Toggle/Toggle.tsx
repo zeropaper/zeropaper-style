@@ -1,5 +1,4 @@
 import React, { ChangeEventHandler, KeyboardEventHandler } from 'react';
-import classNames from 'classnames';
 import { createStyles as createUseStyles } from '@mantine/core';
 
 const useStyles = createUseStyles({
@@ -23,7 +22,7 @@ const Toggle = ({
   };
   
   const [checked, setChecked] = React.useState<boolean>(props.checked);
-  const {classes} = useStyles();
+  const {classes, cx} = useStyles();
 
   const toggleChecked = () => setChecked((chckd) => {
     const updated = !chckd;
@@ -37,7 +36,7 @@ const Toggle = ({
 
   return (
     <span
-      className={classNames(classes.root, passedClasses?.root)}
+      className={cx(classes.root, passedClasses?.root)}
       onClick={toggleChecked}
       onFocus={handleFocus}
       onBlur={handleBlur}
@@ -55,7 +54,7 @@ const Toggle = ({
       />
 
       <span
-        className={classNames(classes.dot, passedClasses?.dot, {
+        className={cx(classes.dot, passedClasses?.dot, {
           [passedClasses?.dotChecked]: checked,
         })}
       />
