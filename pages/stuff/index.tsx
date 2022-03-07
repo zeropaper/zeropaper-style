@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import Link from 'next/link'
+import Link from '../../components/Link/Link'
 import getStuffContext from '../../lib/getStuffContext'
 
 const Stuff = (props: AsyncReturnType<typeof getStaticProps>['props']) => {
