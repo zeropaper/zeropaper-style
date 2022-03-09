@@ -2,13 +2,13 @@ import type { AppProps } from 'next/app'
 import Head from 'next/head';
 import dynamic from 'next/dynamic'
 import { TinaEditProvider } from 'tinacms/dist/edit-state'
-import Layout from '../components/Layout/Layout'
 
+import Layout from '../components/Layout/Layout'
 import ThemeProvider from '../themes/Theme'
 
 const TinaCMS = dynamic(() => import('tinacms'), { ssr: false })
 
-const branch = process.env.NEXT_PUBLIC_EDIT_BRANCH || 'master'
+const branch = process.env.NEXT_PUBLIC_EDIT_BRANCH || 'next'
 const apiURL =
   process.env.NODE_ENV !== 'production' ||
   !process.env.NEXT_PUBLIC_TINA_CLIENT_ID
