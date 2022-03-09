@@ -2,6 +2,7 @@ import { createStyles as createUseStyles, Global, MantineTheme, CSSObject } from
 
 import Header from './Header';
 import Footer from './Footer';
+import { PropsWithChildren } from 'react';
 
 const useStyles = createUseStyles(({ spacing, breakpoints, fn }) => {
   const root = {
@@ -55,6 +56,23 @@ export const getGlobalStyles: (theme: MantineTheme) => CSSObject = (theme) => ({
   }
 })
 
+export const LayoutContentWrapper = ({
+  children,
+  classes: passedClasses = {},
+  ...props
+}: PropsWithChildren<{ classes?: Partial<ReturnType<typeof useStyles>['classes']> }>) => {
+  const {classes, cx} = useStyles();
+  const mainClass = cx(classes.root, classes.main, passedClasses?.main);
+  const contentClass = cx(classes.inner, classes.content, passedClasses?.content);
+  return (
+    <main {...props} id="page-content" className={mainClass}>
+      <div className={contentClass}>
+        {children}
+      </div>
+    </main>
+  )
+}
+
 const Layout = ({
   children,
   classes: passedClasses,
@@ -69,7 +87,7 @@ const Layout = ({
   }
 
   const content = Comp ? (
-    <main data-testid="content" id="page-content" className={mainClass}>
+    <main id="page-content" className={mainClass}>
       <Comp className={contentClass}>
         {children}
       </Comp>
