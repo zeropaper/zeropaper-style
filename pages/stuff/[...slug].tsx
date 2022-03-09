@@ -8,7 +8,7 @@ import getStuffContext from '../../lib/getStuffContext'
 import IFrame from '../../components/IFrame/Iframe'
 
 export default function Stuff(props: AsyncReturnType<typeof getStaticProps>['props']) {
-  const { data, slug, query, variables } = props
+  const { data, slug } = props
   const router = useRouter()
 
   if (!router.isFallback && !slug) {
@@ -35,10 +35,11 @@ export default function Stuff(props: AsyncReturnType<typeof getStaticProps>['pro
 
       {iframeSrc ? <IFrame
         title={title || ''}
-        src={iframeSrc}
+        iframe={iframeSrc}
         source={source || ''}
         description={description || ''}
         tags={stuff.tags as string[] || []}
+        mdx={body}
       /> :
         <MDXRenderer
           data-tinafield="body"
