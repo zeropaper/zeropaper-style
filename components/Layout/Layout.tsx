@@ -53,6 +53,13 @@ export const getGlobalStyles: (theme: MantineTheme) => CSSObject = (theme) => ({
     display: 'flex',
     flexDirection: 'column',
     position: 'relative',
+  },
+
+  // for Tina edit mode
+  '#__next>div:not([class])': {
+    display: 'flex',
+    flexDirection: 'column',
+    flexGrow: 1,
   }
 })
 
