@@ -26,7 +26,7 @@ export const StuffPage = (props: any) => {
     content = (
       <IFrame
         title={title}
-        src={iframe}
+        iframe={iframe}
         description={description}
         source={source}
         mdx={body}

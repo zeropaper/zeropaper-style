@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropsWithChildren } from 'react';
 import classNames from 'classnames';
 import { createStyles as createUseStyles } from '@mantine/core';
 import { useResizeObserver } from '@mantine/hooks';
@@ -9,7 +9,7 @@ import { MDXRenderer } from '../MDXRenderer/MDXRenderer';
 import { TinaMarkdownContent } from 'tinacms/dist/rich-text';
 
 export interface PropTypes {
-  src: string;
+  iframe: string;
   title: string;
   description?: string;
   source?: string;
@@ -37,6 +37,20 @@ const useStyles = createUseStyles(({
     flexDirection: 'column',
   },
   iframeWrapper: {
+    '&:before': {
+      pointerEvents: 'none',
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      content: '""',
+      display: 'block',
+      zIndex: 2,
+      boxShadow: `0 0 7px 0 transparent inset`,
+      transition: 'all 218ms ease-in',
+      // background: 'lime'
+    },
     overflow: 'hidden',
     border: 'none',
     margin: 0,
@@ -46,13 +60,16 @@ const useStyles = createUseStyles(({
     display: 'flex',
     flexDirection: 'column',
     flexGrow: 1,
-    boxShadow: `0 0 30px 0 transparent inset`,
+    position: 'relative',
+    zIndex: 1,
     transition: 'all 218ms ease-in',
     // transform: 'scale(1, 1)',
     // transformOrigin: 'center',
   },
   iframeWrapperShadow: {
-    boxShadow: `0 0 30px 15px ${fn.rgba(colorScheme === 'dark' ? colors.gray[1] : colors.dark[7], 0.15)} inset`,
+    '&:before': {
+      boxShadow: `0 0 7px 3px ${fn.rgba(colorScheme === 'dark' ? colors.gray[1] : colors.dark[7], 0.15)} inset`,
+    }
     // transform: 'scale(0.98, 0.98)',
   },
   iframe: {
@@ -63,7 +80,7 @@ const useStyles = createUseStyles(({
     height: '100%',
     flexGrow: 1,
     position: 'relative',
-    zIndex: -1,
+    zIndex: 0,
   },
   main: {},
   scrollable: {
@@ -72,6 +89,8 @@ const useStyles = createUseStyles(({
     background: colorScheme === 'light' ? white : colors.dark[7],
     maxHeight: '100%',
     minHeight: '100%',
+    position: 'relative',
+    zIndex: 1,
   },
   aside: {
     position: 'absolute',
@@ -129,23 +148,19 @@ const useStyles = createUseStyles(({
     background: colorScheme === 'light' ? white : colors.dark[7],
     color: 'inherit',
     outline: 'none',
-    boxShadow: `0 0 30px 0 transparent`,
+    boxShadow: `0 0 7px 0 transparent`,
     transition: 'all 218ms ease-in',
     '&:hover': {
-      boxShadow: `0 0 30px 15px ${fn.rgba(colorScheme === 'dark' ? colors.gray[1] : colors.dark[7], 0.15)}`,
+      boxShadow: `0 0 7px 3px ${fn.rgba(colorScheme === 'dark' ? colors.gray[1] : colors.dark[7], 0.15)}`,
     }
   },
 }));
 
-const IFrame = (props: PropTypes) => {
-  const {
-    src,
-    title,
-    description,
-    source,
-    mdx,
-    tags,
-  } = props;
+const IFrameWrapper = ({
+  children,
+  title,
+  src
+}: PropsWithChildren<{ src: string; title: string }>) => {
   const [open, setOpen] = React.useState(false);
   const [hover, setHover] = React.useState(false);
   const {classes, cx} = useStyles();
@@ -153,7 +168,7 @@ const IFrame = (props: PropTypes) => {
   const handleToggle = () => setOpen((val) => !val);
   const [outerRef, outerRect] = useResizeObserver();
   const [innerRef, innerRect] = useResizeObserver();
-
+  
   return (
     <div className={classes.root} ref={outerRef}>
       <aside
@@ -179,21 +194,7 @@ const IFrame = (props: PropTypes) => {
         </div>
 
         <div className={classes.scrollable}>
-          <header>
-            <h1>{title}</h1>
-            {source && (
-              <Link href={source}>Source</Link>
-            )}
-            <TagsList tags={tags} />
-          </header>
-
-          {(mdx && (
-            <main className={classes.main}>
-              <MDXRenderer content={mdx} />
-            </main>
-          )) || (description && (
-            <main className={classes.main}>{description}</main>
-          ))}
+          {children}
         </div>
       </aside>
 
@@ -204,7 +205,7 @@ const IFrame = (props: PropTypes) => {
           className={classes.iframe}
           style={{
             width: outerRect?.width || '100%',
-            height: outerRect?.height || '100%',
+            // height: outerRect?.height || '100%',
           }}
           title={title}
           src={src}
@@ -214,6 +215,42 @@ const IFrame = (props: PropTypes) => {
       </div>
     </div>
   );
+}
+
+const IFrame = (props: PropTypes) => {
+  const {
+    iframe: src,
+    title,
+    description,
+    source,
+    mdx,
+    tags,
+  } = props;
+  const { classes } = useStyles();
+  
+  const content = (
+    <>
+      <header>
+        <h1>{title}</h1>
+        {source && (
+          <Link href={source}>Source</Link>
+        )}
+        <TagsList tags={tags} />
+      </header>
+
+      {(mdx && (
+        <main className={classes.main}>
+          <MDXRenderer content={mdx} />
+        </main>
+      )) || (description && (
+        <main className={classes.main}>{description}</main>
+      ))}
+    </>
+  )
+
+  if (!src) return content
+
+  return <IFrameWrapper src={src} title={title}>{content}</IFrameWrapper>
 };
 
 export default IFrame;
