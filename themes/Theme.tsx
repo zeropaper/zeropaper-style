@@ -17,7 +17,14 @@ export const ThemeProvider = ({ children, ...props }: MantineProviderProps) => {
 
   return (
     <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
-      <MantineProvider {...props} theme={{ colorScheme }} emotionOptions={{ key: 'zps', prepend: true }}>
+      <MantineProvider
+        {...props}
+        theme={{
+          colorScheme,
+          primaryColor: colorScheme === 'dark' ? 'gray' : 'dark'
+        }}
+        emotionOptions={{ key: 'zps', prepend: true }}
+      >
         {children}
       </MantineProvider>
     </ColorSchemeProvider>
