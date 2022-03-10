@@ -3,10 +3,10 @@ module.exports = {
   testEnvironment: 'jsdom',
   extensionsToTreatAsEsm: ['.ts', '.tsx'],
   transform: {
-    '^.+\\.[jt]sx?$': '@swc/jest'
+    '^.+\\.[jt]sx?$': '@swc/jest',
   },
-  moduleNameMapper: {
-    '^.+\\.css$': '<rootDir>/utils/jest/css-module-stub.js'
-  },
-  setupFilesAfterEnv: ['<rootDir>/utils/jest/setup.js']
-}
+  // moduleNameMapper: {
+  //   '^.+\\.css$': '<rootDir>/utils/jest/css-module-stub.js'
+  // },
+  // setupFilesAfterEnv: ['<rootDir>/utils/jest/setup.js']
+};
