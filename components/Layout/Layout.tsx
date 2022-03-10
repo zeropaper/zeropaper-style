@@ -1,39 +1,12 @@
-import { createStyles as createUseStyles, Global, MantineTheme, CSSObject } from '@mantine/core';
+import { Global, MantineTheme, CSSObject } from '@mantine/core';
 
 import Header from './Header';
 import Footer from './Footer';
 import { PropsWithChildren } from 'react';
+import useStyles from './Layout.styles';
+import { TypographyStylesProvider } from '@mantine/core'
 
-const useStyles = createUseStyles(({ spacing, breakpoints, fn }) => {
-  const root = {
-    overflow: 'hidden',
-  }
-  const inner = {
-    margin: '0 auto',
-    maxWidth: breakpoints.md - (spacing.md * 2),
-    overflow: 'hidden',
-    [fn.smallerThan('md')]: {
-      paddingLeft: spacing.md,
-      paddingRight: spacing.md,
-    }
-  }
-
-  return ({
-    root,
-    inner,
-    pageContentLink: {
-      display: 'none',
-      height: 0,
-      margin: 0,
-    },
-    header: {},
-    main: {
-      flexGrow: 1
-    },
-    content: {},
-    footer: {},
-  })
-});
+export { useStyles }
 
 export interface PropTypes {
   children: React.ReactNode,
@@ -73,9 +46,9 @@ export const LayoutContentWrapper = ({
   const contentClass = cx(classes.inner, classes.content, passedClasses?.content);
   return (
     <main {...props} id="page-content" className={mainClass}>
-      <div className={contentClass}>
+      <TypographyStylesProvider className={contentClass}>
         {children}
-      </div>
+      </TypographyStylesProvider>
     </main>
   )
 }
