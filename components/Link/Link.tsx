@@ -13,10 +13,10 @@ type LinkProps = NextLinkProps & {
 export const useStyles = createStyles(({ fn, colors, colorScheme, primaryColor }) => ({
   root: {
     ...fn.focusStyles(),
-    color: colors?.[primaryColor][7],
+    color: colors?.[primaryColor][5],
     transition: 'color 162ms ease-in-out',
     '&:hover,&:focus': {
-      color: colors[primaryColor][colorScheme === 'dark' ? 5 : 9],
+      color: colors[primaryColor][3],
     },
   }
 }))
