@@ -1,5 +1,4 @@
 import React, { PropsWithChildren } from 'react';
-import classNames from 'classnames';
 import { createStyles as createUseStyles, CSSObject } from '@mantine/core';
 import { useResizeObserver } from '@mantine/hooks';
 
@@ -170,7 +169,7 @@ const IFrameWrapper = (props: PropsWithChildren<{ src: string; title: string; op
     <div className={classes.root} ref={outerRef}>
       <aside
         ref={innerRef}
-        className={classNames({
+        className={cx({
           [classes.aside]: true,
           [classes.asideOpen]: open,
           asideOpen: open,
