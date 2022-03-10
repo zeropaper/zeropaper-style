@@ -1,6 +1,5 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
 import { createStyles as createUseStyles } from '@mantine/core';
 
 import Twitter from './assets/twitter.svg';
@@ -49,11 +48,11 @@ const useStyles = createUseStyles(
 );
 
 const SocialNetworks = ({ className, classes: passedClasses, ...props }: SocialNetworksProps) => {
-  const { classes } = useStyles();
+  const { classes, cx } = useStyles();
 
   return (
-    <nav className={classNames(classes.root, passedClasses?.root, className)}>
-      <ul className={classNames(classes.list, passedClasses?.list)}>
+    <nav className={cx(classes.root, passedClasses?.root, className)}>
+      <ul className={cx(classes.list, passedClasses?.list)}>
         <li className={classes.item}>
           <ExternalLink
             className={classes.link}
