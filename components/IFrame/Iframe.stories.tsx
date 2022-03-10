@@ -37,25 +37,24 @@ export default {
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
 const Template: ComponentStory<typeof IFrame> = (args) => <IFrame {...args} />;
 
-export const Primary = Template.bind({});
+export const VisualFihaYouTube = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
-Primary.args = {
+VisualFihaYouTube.args = {
   iframe: 'https://www.youtube-nocookie.com/embed/a36y_8bSPus',
   description: 'A description of the video',
   title: 'Some title',
-  mdx: exampleMdx
+  mdx: exampleMdx,
+  open: true,
 };
 
-export const Secondary = Template.bind({});
-Secondary.args = {
-  ...Primary.args,
+export const ZeropaperV2 = Template.bind({});
+ZeropaperV2.args = {
+  ...VisualFihaYouTube.args,
   iframe: 'https://zeropaper.github.io/',
 };
 
-export const Large = Template.bind({});
-Large.args = {
-};
-
-export const Small = Template.bind({});
-Small.args = {
+export const DommguyFace = Template.bind({});
+DommguyFace.args = {
+  ...VisualFihaYouTube.args,
+  iframe: 'https://zeropaper.github.io/x-ts-doomface'
 };
