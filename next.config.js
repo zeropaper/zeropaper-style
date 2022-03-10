@@ -40,7 +40,15 @@ module.exports = {
       //   source: '/docs/',
       //   destination: '/docs/getting-started',
       //   permanent: false
-      // }
+      // },
+    ];
+  },
+  rewrites: async () => {
+    return [
+      {
+        source: '/sb/',
+        destination: '/sb/index.html',
+      },
     ];
   },
   trailingSlash: true,

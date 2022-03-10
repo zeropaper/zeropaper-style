@@ -7,11 +7,11 @@
   },
   "scripts": {
     "dev": "run-p dev:*",
-    "build": "run-p build:*",
+    "build": "run-s build:storybook build:tina",
     "start": "run-p start:*",
     "lint": "next lint",
     "start:storybook": "start-storybook -p 6006 --no-open",
-    "build:storybook": "build-storybook",
+    "build:storybook": "build-storybook -o public/sb",
     "test": "run-p test:*",
     "test:unit": "jest --passWithNoTests",
     "format": "prettier --write ${npm_package_config_prettierTarget}",
