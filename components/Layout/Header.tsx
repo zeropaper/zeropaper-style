@@ -21,17 +21,10 @@ const drawStroke = keyframes({
 const useStyles = createUseStyles(({
   spacing,
   fn,
-  colorScheme,
-  colors,
-  white
 }, _params, getRef) => {
   const logo = getRef('logo');
   return ({
-    root: {
-    backgroundColor: colorScheme === 'light' ? white : colors.dark[7],
-      position: 'sticky',
-      top: 0,
-    },
+    root: {},
     inner: {
       display: 'flex',
       alignItems: 'center',

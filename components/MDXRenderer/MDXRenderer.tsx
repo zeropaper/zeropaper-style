@@ -2,7 +2,6 @@ import { useMemo } from 'react'
 import { TinaMarkdown, TinaMarkdownContent, Components } from 'tinacms/dist/rich-text'
 import Link from '../Link/Link'
 import Image from 'next/image'
-import { TypographyStylesProvider } from '@mantine/core'
 
 const mdComponents: Components<{
   BlockQuote: {
@@ -102,14 +101,11 @@ export type MDXRendererProps = {
 }
 
 export const MDXRenderer = ({ content, tinaField }: MDXRendererProps) => {
-  console.info(JSON.stringify(content, null, 2))
   return (
-    <TypographyStylesProvider>
-      <TinaMarkdown
-        data-tinafield={tinaField}
-        components={mdComponents}
-        content={content}
-      />
-    </TypographyStylesProvider>
+    <TinaMarkdown
+      data-tinafield={tinaField}
+      components={mdComponents}
+      content={content}
+    />
   )
 }
