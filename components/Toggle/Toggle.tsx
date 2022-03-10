@@ -1,11 +1,5 @@
 import React, { ChangeEventHandler, KeyboardEventHandler } from 'react';
-import { createStyles as createUseStyles } from '@mantine/core';
-
-const useStyles = createUseStyles({
-  root: {},
-  checkbox: {},
-  dot: {},
-});
+import useStyles from './Toggle.styles';
 
 const Toggle = ({
   onChange,
