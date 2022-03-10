@@ -1,5 +1,4 @@
 import * as React from 'react';
-import classNames from 'classnames';
 import { createStyles as createUseStyles } from '@mantine/core';
 
 import Link from '../Link/Link';
@@ -37,7 +36,7 @@ const Menu = ({
   className,
   classes: passedClasses,
 }: PropTypes): React.ReactElement => {
-  const {classes} = useStyles();
+  const {classes, cx} = useStyles();
 
   const links = [
     ['/hello', 'Hello'],
@@ -48,8 +47,8 @@ const Menu = ({
   ];
 
   return (
-    <nav className={classNames(classes.root, passedClasses?.root, className)}>
-      <ul className={classNames(classes.list, passedClasses?.list)}>
+    <nav className={cx(classes.root, passedClasses?.root, className)}>
+      <ul className={cx(classes.list, passedClasses?.list)}>
         {links.map((item) => (
           <li key={item[0]} className={classes.item}>
             <Link
