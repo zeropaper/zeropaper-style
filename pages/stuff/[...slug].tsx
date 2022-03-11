@@ -5,7 +5,7 @@ import { MDXRenderer } from '../../components/MDXRenderer/MDXRenderer'
 import { ExperimentalGetTinaClient } from '../../.tina/__generated__/types'
 
 import getStuffContext from '../../lib/getStuffContext'
-import IFrame from '../../components/IFrame/Iframe'
+import IFrame from '../../components/IFrame/IFrame'
 
 export default function Stuff(props: AsyncReturnType<typeof getStaticProps>['props']) {
   const { data, slug } = props

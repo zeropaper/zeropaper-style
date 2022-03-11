@@ -1,7 +1,7 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
-import IFrame from './Iframe';
+import IFrame from './IFrame';
 import { withLayout } from '../Layout/Layout.stories';
 import type { TinaMarkdownContent } from 'tinacms/dist/rich-text';
 
