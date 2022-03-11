@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Layout from '../Layout/Layout';
-import IFrame from '../IFrame/Iframe';
+import IFrame from '../IFrame/IFrame';
 import { MDXRenderer } from '../MDXRenderer/MDXRenderer';
 
 export const StuffPage = (props: any) => {
