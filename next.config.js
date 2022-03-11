@@ -46,7 +46,7 @@ module.exports = {
   rewrites: async () => {
     return [
       {
-        source: '/sb/',
+        source: '/sb/:path*',
         destination: '/sb/index.html',
       },
     ];
