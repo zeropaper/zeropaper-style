@@ -7,7 +7,7 @@
   },
   "scripts": {
     "dev": "run-p dev:*",
-    "build": "run-s build:storybook build:tina",
+    "build": "run-s build:tina build:storybook",
     "start": "run-p start:*",
     "lint": "next lint",
     "start:storybook": "start-storybook -p 6006 --no-open",
