@@ -24,7 +24,7 @@ module.exports = ({ config }) => {
     if (testStr.includes('svg')) {
       config.module.rules[r] = {
         ...rule,
-        test: new RegExp(testStr.replaceAll('|svg', '').replaceAll('svg|', '')),
+        test: new RegExp(testStr.split('|svg').join('').split('svg|').join('')),
       };
     }
   });
