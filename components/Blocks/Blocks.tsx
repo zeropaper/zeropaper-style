@@ -1,10 +1,6 @@
 import React from 'react'
 
-import type {
-  LandingPage,
-  LandingPageBlocksFeatures,
-  LandingPageBlocksHero
-} from '../../.tina/__generated__/types'
+import type { LandingPage } from '../../.tina/__generated__/types'
 
 import LinkCard from '../LinkCard/LinkCard'
 import Wrapper from '../PageBlockWrapper/PageBlockWrapper'
@@ -42,7 +38,7 @@ export const Blocks = (props: LandingPage & { tinaField?: string }) => {
             return (
               <React.Fragment key={i + type}>
                 <Hero
-                  {...(block as LandingPageBlocksHero)}
+                  {...block}
                   tinaField={[tinaField, i]
                     .filter((v) => typeof v !== undefined && v !== null)
                     .join('.')}
@@ -51,12 +47,10 @@ export const Blocks = (props: LandingPage & { tinaField?: string }) => {
             )
           case 'LandingPageBlocksFeature':
           case 'PageBlocksFeature':
-          case 'LandingPageBlocksFeatures':
-          case 'PageBlocksFeatures':
             return (
               <Wrapper {...(block.deco || {})} key={i + type}>
                 <Features
-                  {...(block as LandingPageBlocksFeatures)}
+                  {...block}
                   tinaField={[tinaField, i]
                     .filter((v) => typeof v !== undefined && v !== null)
                     .join('.')}
