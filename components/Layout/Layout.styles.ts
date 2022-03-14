@@ -7,6 +7,12 @@ export default createStyles(({
   colorScheme,
   white,
   colors,
+  other: {
+    colorSchemeSwitch: {
+      transitionDuration,
+      transitionTimingFunction,
+    }
+  }
 }) => {
   const root = {
     margin: 0,
@@ -22,7 +28,8 @@ export default createStyles(({
       paddingRight: spacing.md,
     }
   };
-
+  const backgroundColor = colorScheme === 'light' ? white : colors.dark[7];
+  const transition = `background-color ${transitionDuration} ${transitionTimingFunction}`;
   return ({
     root,
     inner,
@@ -32,20 +39,23 @@ export default createStyles(({
       margin: 0,
     },
     header: {
-      backgroundColor: colorScheme === 'light' ? white : colors.dark[7],
+      backgroundColor,
+      transition,
       position: 'sticky',
       top: 0,
       zIndex: 900,
     },
     main: {
-      backgroundColor: colorScheme === 'light' ? white : colors.dark[7],
+      backgroundColor,
+      transition,
       flexGrow: 1,
       zIndex: 500,
     },
     content: {
     },
     footer: {
-      backgroundColor: colorScheme === 'light' ? white : colors.dark[7],
+      backgroundColor,
+      transition,
       position: 'sticky',
       bottom: 0,
       zIndex: 100,
