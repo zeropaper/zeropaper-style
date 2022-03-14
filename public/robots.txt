@@ -3,7 +3,7 @@ User-agent: *
 Allow: /
 
 # Host
-Host: https://www.ory.sh
+Host: https://zeropaper.style
 
 # Sitemaps
-Sitemap: https://www.ory.sh/sitemap.xml
+Sitemap: https://zeropaper.style/sitemap.xml
