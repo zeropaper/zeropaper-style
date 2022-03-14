@@ -3,11 +3,17 @@ import { createStyles, CSSObject } from '@mantine/core';
 // https://mantine.dev/theming/mantine-provider/#normalizecss-and-global-styles
 export default createStyles(({
   fn, white, colors, colorScheme, spacing, primaryColor,
+  other: {
+    colorSchemeSwitch: {
+      transitionDuration,
+      transitionTimingFunction,
+    }
+  }
 }) => {
   const transitionBase: CSSObject = {
     transition: 'all',
-    transitionDuration: '324ms',
-    transitionTimingFunction: 'ease-in-out',
+    transitionDuration,
+    transitionTimingFunction,
   };
   const clearSpace: CSSObject = {
     margin: 0,
@@ -86,7 +92,6 @@ export default createStyles(({
       transition: 'right',
       width: '35vw',
       right: '-35vw',
-      // borderLeft: `1px solid transparent`,
       [fn.smallerThan('xs')]: {
         // TODO: should be stacked below the iframe
         width: '250px',
@@ -102,7 +107,6 @@ export default createStyles(({
     },
     asideOpen: {
       right: 0,
-      // borderLeft: `1px solid currentColor`,
     },
     toggleButtonHolder: {
       position: 'absolute',
@@ -115,8 +119,6 @@ export default createStyles(({
       transformOrigin: 'bottom center',
       transform: `translate(calc(50% + 1px), calc(((${spacing.xs}px * 2) + 1rem) * -1)) rotate(-90deg)`,
       border: 'none',
-      // border: `1px solid currentColor`,
-      // borderBottom: `1px solid ${backgroundColor}`,
       cursor: 'pointer',
       paddingTop: spacing.xs,
       paddingBottom: spacing.xs,
@@ -127,8 +129,6 @@ export default createStyles(({
       outline: 'none',
       ...transitionBase,
       fontSize: '1.25em',
-
-      // boxShadow: `0 0 7px 0 transparent`,
       boxShadow: `0 0 7px 0px ${fn.rgba(colorScheme === 'dark' ? colors.gray[1] : colors.dark[7], 0.15)}`,
       '&:hover': {
         boxShadow: `0 0 7px 3px ${fn.rgba(colorScheme === 'dark' ? colors.gray[1] : colors.dark[7], 0.15)}`,

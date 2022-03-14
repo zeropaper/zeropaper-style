@@ -15,11 +15,15 @@ export interface PropTypes {
   className?: string;
 }
 
-export const getGlobalStyles: (theme: MantineTheme) => CSSObject = (theme) => ({
+export const getGlobalStyles: (theme: MantineTheme) => CSSObject = ({ other: { colorSchemeSwitch: {
+  transitionDuration,
+  transitionTimingFunction,
+} } }) => ({
   'html,body,#__next,#root': {
     padding: 0,
     margin: 0,
     minHeight: '100vh',
+    transition: `background-color, color ${transitionDuration} ${transitionTimingFunction}`,
   },
 
   '#__next,#root': {

@@ -20,6 +20,12 @@ export const ThemeProvider = ({ children, ...props }: MantineProviderProps) => {
       <MantineProvider
         {...props}
         theme={{
+          other: {
+            colorSchemeSwitch: {
+              transitionDuration: '324ms',
+              transitionTimingFunction: 'ease-in-out',
+            },
+          },
           colorScheme,
           primaryColor: colorScheme === 'dark' ? 'gray' : 'dark'
         }}
