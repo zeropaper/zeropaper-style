@@ -26,7 +26,9 @@ const getPageData = (pageProps: any): any => (
   || pageProps?.data?.getLandingPageDocument
   )?.data
 
-const App = ({ Component, pageProps }: AppProps) => {
+const App = (props: AppProps) => {
+  const { Component, pageProps } = props
+  const { relativePath } = pageProps?.variables || {}
   const pageData = getPageData(pageProps)
 
   const editMode = (
@@ -126,7 +128,7 @@ const App = ({ Component, pageProps }: AppProps) => {
         withGlobalStyles
         withNormalizeCSS
       >
-        <Layout component={pageData?.iframe ? undefined : 'div'}>
+        <Layout component={pageData?.iframe || relativePath === 'home.json' ? undefined : 'div'}>
           <TinaEditProvider
             // showEditButton
             editMode={editMode}
