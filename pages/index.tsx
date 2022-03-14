@@ -1,10 +1,12 @@
 import Head from 'next/head'
 
 import { ExperimentalGetTinaClient } from '../.tina/__generated__/types'
-import Grid from '../components/Grid/Grid'
+import Blocks from '../components/Blocks/Blocks'
+import { useStyles as useLayoutStyles } from '../components/Layout/Layout';
 import { getPageContext } from "../lib/getPageContext"
 
 const Home = ({ pageContext, ...props }: AsyncReturnType<typeof getStaticProps>['props']) => {
+  const { classes: { main } } = useLayoutStyles()
   const data = props.data?.getLandingPageDocument?.data || {}
 
   return (
@@ -15,7 +17,9 @@ const Home = ({ pageContext, ...props }: AsyncReturnType<typeof getStaticProps>[
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Grid blocks={data.blocks || []} />
+      <div className={main}>
+        <Blocks blocks={data.blocks || []} />
+      </div>
     </>
   )
 }
