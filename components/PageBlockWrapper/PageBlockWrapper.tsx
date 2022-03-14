@@ -8,7 +8,9 @@ export interface PropTypes {
   children: React.ReactNode
   background?: MantineColor
   className?: string
+  outerComponent?: React.ElementType
   innerClassName?: string
+  innerComponent?: React.ElementType
   classes?: ClassNames<typeof useStyles>
   slant?: boolean
 }
@@ -20,6 +22,8 @@ export const Wrapper = ({
   children,
   classes: passedClasses = {},
   slant,
+  outerComponent: OuterComponent = 'div',
+  innerComponent: InnerComponent = 'div',
   ...props
 }: PropTypes) => {
   const { classes, cx } = useStyles()
@@ -41,9 +45,9 @@ export const Wrapper = ({
     innerClassName
   )
   return (
-    <section className={outerClasses} {...props}>
-      <div className={innerClasses}>{children}</div>
-    </section>
+    <OuterComponent className={outerClasses} {...props}>
+      <InnerComponent className={innerClasses}>{children}</InnerComponent>
+    </OuterComponent>
   )
 }
 

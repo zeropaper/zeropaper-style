@@ -32,7 +32,7 @@ export default createStyles(({
       }
     },
     decoSlant: {
-      margin: `calc(${size}px - 1px) auto`,
+      margin: `calc(${size}px - 3px) auto`,
       zIndex: 1,
       '&::before,&::after': {
         content: '""',
@@ -46,11 +46,11 @@ export default createStyles(({
       },
       '&::before': {
         clipPath: top,
-        bottom: '100%'
+        bottom: 'calc(100% - 1px)'
       },
       '&::after': {
         clipPath: bottom,
-        top: '100%'
+        top: 'calc(100% - 1px)'
       },
       '& + $root:not($decoSlant)': {
         marginTop: `calc(-1 * ${size}px)`,
