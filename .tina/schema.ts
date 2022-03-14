@@ -25,6 +25,12 @@ const feature = {
     { name: 'href', label: 'HREF', type: 'string' as const },
     { name: 'title', label: 'Title', type: 'string' as const },
     { name: 'description', label: 'Description', type: 'string' as const },
+    {
+      name: 'deco', label: 'Deco', type: 'object' as const, fields: [
+        { name: 'slant', label: 'Slant', type: 'boolean' as const },
+        { name: 'background', label: 'Background', type: 'string' as const, options: ['red', 'blue', 'green', 'yellow'] }
+      ]
+    },
   ],
 }
 
