@@ -16,6 +16,11 @@ fragment LandingPageParts on LandingPage {
       href
       title
       description
+      deco {
+        __typename
+        slant
+        background
+      }
     }
   }
 }

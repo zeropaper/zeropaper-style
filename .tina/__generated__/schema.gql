@@ -96,10 +96,16 @@ type LandingPageBlocksHero {
   description: String
 }
 
+type LandingPageBlocksFeatureDeco {
+  slant: Boolean
+  background: String
+}
+
 type LandingPageBlocksFeature {
   href: String
   title: String
   description: String
+  deco: LandingPageBlocksFeatureDeco
 }
 
 union LandingPageBlocks = LandingPageBlocksHero | LandingPageBlocksFeature
@@ -288,10 +294,16 @@ input LandingPageBlocksHeroMutation {
   description: String
 }
 
+input LandingPageBlocksFeatureDecoMutation {
+  slant: Boolean
+  background: String
+}
+
 input LandingPageBlocksFeatureMutation {
   href: String
   title: String
   description: String
+  deco: LandingPageBlocksFeatureDecoMutation
 }
 
 input LandingPageBlocksMutation {

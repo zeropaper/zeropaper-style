@@ -137,6 +137,49 @@
                     "feature",
                     "description"
                   ]
+                },
+                {
+                  "name": "deco",
+                  "label": "Deco",
+                  "type": "object",
+                  "fields": [
+                    {
+                      "name": "slant",
+                      "label": "Slant",
+                      "type": "boolean",
+                      "namespace": [
+                        "landingPage",
+                        "blocks",
+                        "feature",
+                        "deco",
+                        "slant"
+                      ]
+                    },
+                    {
+                      "name": "background",
+                      "label": "Background",
+                      "type": "string",
+                      "options": [
+                        "red",
+                        "blue",
+                        "green",
+                        "yellow"
+                      ],
+                      "namespace": [
+                        "landingPage",
+                        "blocks",
+                        "feature",
+                        "deco",
+                        "background"
+                      ]
+                    }
+                  ],
+                  "namespace": [
+                    "landingPage",
+                    "blocks",
+                    "feature",
+                    "deco"
+                  ]
                 }
               ],
               "namespace": [
