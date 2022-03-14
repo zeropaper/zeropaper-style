@@ -217,11 +217,18 @@ export type LandingPageBlocksHero = {
   description?: Maybe<Scalars['String']>;
 };
 
+export type LandingPageBlocksFeatureDeco = {
+  __typename?: 'LandingPageBlocksFeatureDeco';
+  slant?: Maybe<Scalars['Boolean']>;
+  background?: Maybe<Scalars['String']>;
+};
+
 export type LandingPageBlocksFeature = {
   __typename?: 'LandingPageBlocksFeature';
   href?: Maybe<Scalars['String']>;
   title?: Maybe<Scalars['String']>;
   description?: Maybe<Scalars['String']>;
+  deco?: Maybe<LandingPageBlocksFeatureDeco>;
 };
 
 export type LandingPageBlocks = LandingPageBlocksHero | LandingPageBlocksFeature;
@@ -514,10 +521,16 @@ export type LandingPageBlocksHeroMutation = {
   description?: InputMaybe<Scalars['String']>;
 };
 
+export type LandingPageBlocksFeatureDecoMutation = {
+  slant?: InputMaybe<Scalars['Boolean']>;
+  background?: InputMaybe<Scalars['String']>;
+};
+
 export type LandingPageBlocksFeatureMutation = {
   href?: InputMaybe<Scalars['String']>;
   title?: InputMaybe<Scalars['String']>;
   description?: InputMaybe<Scalars['String']>;
+  deco?: InputMaybe<LandingPageBlocksFeatureDecoMutation>;
 };
 
 export type LandingPageBlocksMutation = {
@@ -574,7 +587,7 @@ export type PostMutation = {
   body?: InputMaybe<Scalars['JSON']>;
 };
 
-export type LandingPagePartsFragment = { __typename?: 'LandingPage', title?: string | null, seo?: { __typename: 'LandingPageSeo', title?: string | null, description?: string | null } | null, blocks?: Array<{ __typename: 'LandingPageBlocksHero', href?: string | null, title?: string | null, description?: string | null } | { __typename: 'LandingPageBlocksFeature', href?: string | null, title?: string | null, description?: string | null } | null> | null };
+export type LandingPagePartsFragment = { __typename?: 'LandingPage', title?: string | null, seo?: { __typename: 'LandingPageSeo', title?: string | null, description?: string | null } | null, blocks?: Array<{ __typename: 'LandingPageBlocksHero', href?: string | null, title?: string | null, description?: string | null } | { __typename: 'LandingPageBlocksFeature', href?: string | null, title?: string | null, description?: string | null, deco?: { __typename: 'LandingPageBlocksFeatureDeco', slant?: boolean | null, background?: string | null } | null } | null> | null };
 
 export type PagePartsFragment = { __typename?: 'Page', title?: string | null, excerpt?: string | null, body?: any | null, seo?: { __typename: 'PageSeo', description?: string | null } | null };
 
@@ -589,12 +602,12 @@ export type GetLandingPageDocumentQueryVariables = Exact<{
 }>;
 
 
-export type GetLandingPageDocumentQuery = { __typename?: 'Query', getLandingPageDocument: { __typename?: 'LandingPageDocument', id: string, sys: { __typename?: 'SystemInfo', filename: string, basename: string, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, data: { __typename?: 'LandingPage', title?: string | null, seo?: { __typename: 'LandingPageSeo', title?: string | null, description?: string | null } | null, blocks?: Array<{ __typename: 'LandingPageBlocksHero', href?: string | null, title?: string | null, description?: string | null } | { __typename: 'LandingPageBlocksFeature', href?: string | null, title?: string | null, description?: string | null } | null> | null } } };
+export type GetLandingPageDocumentQuery = { __typename?: 'Query', getLandingPageDocument: { __typename?: 'LandingPageDocument', id: string, sys: { __typename?: 'SystemInfo', filename: string, basename: string, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, data: { __typename?: 'LandingPage', title?: string | null, seo?: { __typename: 'LandingPageSeo', title?: string | null, description?: string | null } | null, blocks?: Array<{ __typename: 'LandingPageBlocksHero', href?: string | null, title?: string | null, description?: string | null } | { __typename: 'LandingPageBlocksFeature', href?: string | null, title?: string | null, description?: string | null, deco?: { __typename: 'LandingPageBlocksFeatureDeco', slant?: boolean | null, background?: string | null } | null } | null> | null } } };
 
 export type GetLandingPageListQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetLandingPageListQuery = { __typename?: 'Query', getLandingPageList: { __typename?: 'LandingPageConnection', totalCount: number, edges?: Array<{ __typename?: 'LandingPageConnectionEdges', node?: { __typename?: 'LandingPageDocument', id: string, sys: { __typename?: 'SystemInfo', filename: string, basename: string, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, data: { __typename?: 'LandingPage', title?: string | null, seo?: { __typename: 'LandingPageSeo', title?: string | null, description?: string | null } | null, blocks?: Array<{ __typename: 'LandingPageBlocksHero', href?: string | null, title?: string | null, description?: string | null } | { __typename: 'LandingPageBlocksFeature', href?: string | null, title?: string | null, description?: string | null } | null> | null } } | null } | null> | null } };
+export type GetLandingPageListQuery = { __typename?: 'Query', getLandingPageList: { __typename?: 'LandingPageConnection', totalCount: number, edges?: Array<{ __typename?: 'LandingPageConnectionEdges', node?: { __typename?: 'LandingPageDocument', id: string, sys: { __typename?: 'SystemInfo', filename: string, basename: string, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, data: { __typename?: 'LandingPage', title?: string | null, seo?: { __typename: 'LandingPageSeo', title?: string | null, description?: string | null } | null, blocks?: Array<{ __typename: 'LandingPageBlocksHero', href?: string | null, title?: string | null, description?: string | null } | { __typename: 'LandingPageBlocksFeature', href?: string | null, title?: string | null, description?: string | null, deco?: { __typename: 'LandingPageBlocksFeatureDeco', slant?: boolean | null, background?: string | null } | null } | null> | null } } | null } | null> | null } };
 
 export type GetPageDocumentQueryVariables = Exact<{
   relativePath: Scalars['String'];
@@ -663,6 +676,11 @@ export const LandingPagePartsFragmentDoc = gql`
       href
       title
       description
+      deco {
+        __typename
+        slant
+        background
+      }
     }
   }
 }
