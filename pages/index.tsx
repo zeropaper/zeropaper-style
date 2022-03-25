@@ -1,13 +1,19 @@
-import Head from 'next/head'
+import Head from 'next/head';
+import Image from 'next/image';
 
-import { ExperimentalGetTinaClient } from '../.tina/__generated__/types'
-import Blocks from '../components/Blocks/Blocks'
+import { ExperimentalGetTinaClient } from '../.tina/__generated__/types';
+import Blocks from '../components/Blocks/Blocks';
 import { useStyles as useLayoutStyles } from '../components/Layout/Layout';
-import { getPageContext } from "../lib/getPageContext"
+import { getPageContext } from '../lib/getPageContext';
 
-const Home = ({ pageContext, ...props }: AsyncReturnType<typeof getStaticProps>['props']) => {
-  const { classes: { main } } = useLayoutStyles()
-  const data = props.data?.getLandingPageDocument?.data || {}
+const Home = ({
+  pageContext,
+  ...props
+}: AsyncReturnType<typeof getStaticProps>['props']) => {
+  const {
+    classes: { main },
+  } = useLayoutStyles();
+  const data = props.data?.getLandingPageDocument?.data || {};
 
   return (
     <>
@@ -17,23 +23,46 @@ const Home = ({ pageContext, ...props }: AsyncReturnType<typeof getStaticProps>[
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div className={main}>
-        <Blocks blocks={data.blocks || []} />
+      <div
+        className={main}
+        style={{
+          flexGrow: 1,
+          display: 'flex',
+          flexDirection: 'column',
+          alignContent: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        <div
+          style={{
+            display: 'flex',
+            alignContent: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <Image
+            src="/assets/under-construction.gif"
+            alt="under construction"
+            width={400}
+            height={125}
+          />
+        </div>
+        {/* <Blocks blocks={data.blocks || []} /> */}
       </div>
     </>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;
 
 // Data Fetching
 export const getStaticProps = async function () {
-  const client = ExperimentalGetTinaClient()
-  const vars = { relativePath: 'home.json' }
+  const client = ExperimentalGetTinaClient();
+  const vars = { relativePath: 'home.json' };
   return {
     props: {
       pageContext: await getPageContext(),
-      ...(await client.getLandingPageDocument(vars))
-    }
-  }
-}
+      ...(await client.getLandingPageDocument(vars)),
+    },
+  };
+};
