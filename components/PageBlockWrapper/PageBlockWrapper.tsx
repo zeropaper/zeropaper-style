@@ -1,8 +1,6 @@
 import React from 'react'
 
-import useStyles from './PageBlockWrapper.styles'
-import useLayoutStyles from '../Layout/Layout.styles'
-import { MantineColor } from '@mantine/core'
+import { ClassNames } from '../../typings';
 
 export interface PropTypes {
   children: React.ReactNode

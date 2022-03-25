@@ -6,6 +6,7 @@ import Logo from '../Logo/Logo';
 import Menu from './Menu';
 import LightMode from './assets/light-mode.svg';
 import DarkMode from './assets/dark-mode.svg';
+import { ClassNames } from '../../typings';
 
 const drawStroke = keyframes({
   '0%': {

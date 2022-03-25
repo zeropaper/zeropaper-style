@@ -2,10 +2,7 @@ import ErrorPage from 'next/error'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 
-import { ExperimentalGetTinaClient } from '../.tina/__generated__/types'
-import Grid from '../components/Grid/Grid'
-import { MDXRenderer } from '../components/MDXRenderer/MDXRenderer'
-import { getPageContext } from '../lib/getPageContext'
+import { AsyncReturnType } from '../typings';
 
 export default function Page(props: AsyncReturnType<typeof getStaticProps>['props']) {
   const { data, slug } = props
