@@ -1,8 +1,10 @@
+import Head from 'next/head';
+import Link from '../../components/Link/Link';
+import getStuffContext from '../../lib/getStuffContext';
 import { AsyncReturnType } from '../../typings';
 
 const Stuff = (props: AsyncReturnType<typeof getStaticProps>['props']) => {
   return (
-    
     <div>
       <Head>
         <title>Create Next App</title>
@@ -17,27 +19,25 @@ const Stuff = (props: AsyncReturnType<typeof getStaticProps>['props']) => {
           <ul>
             {props.data.posts.map((post) => (
               <li key={post.href}>
-                <Link href={post.href}>
-                  {post.title}
-                </Link>
+                <Link href={post.href}>{post.title}</Link>
               </li>
             ))}
           </ul>
         </section>
       </main>
     </div>
-  )
-}
+  );
+};
 
-export default Stuff
+export default Stuff;
 
 export const getStaticProps = async function () {
-  const postsListData = await getStuffContext()
+  const postsListData = await getStuffContext();
   return {
     props: {
       data: {
         posts: Object.values(postsListData),
       },
-    }
-  }
-}
+    },
+  };
+};
