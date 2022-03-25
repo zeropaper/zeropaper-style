@@ -8,7 +8,9 @@ import {
   WebGLRenderer,
   PerspectiveCamera,
   OrthographicCamera,
-  CameraHelper
+  CameraHelper,
+  PCFSoftShadowMap,
+  PCFShadowMap,
 } from 'three'
 
 import { useScene } from './hooks'
@@ -31,7 +33,12 @@ const Renderer = ({
   onContextChange?: (ctx: RendererCtx) => void,
 } & Partial<Pick<RendererCtx, 'heightPrct' | 'leftPrct' | 'topPrct' | 'widthPrct'>>>) => {
   const scene = useScene()
-  const renderer = useRef(new WebGLRenderer({ alpha: true }))
+  const renderer = useMemo<WebGLRenderer>(() => {
+    const instance = new WebGLRenderer({ alpha: true })
+    instance.shadowMap.enabled = true;
+    instance.shadowMap.type = PCFSoftShadowMap;
+    return instance
+  }, [])
   const camera: PerspectiveCamera | OrthographicCamera = useMemo(() => {
     let instance;
     if (id === 'camera') {
@@ -56,15 +63,15 @@ const Renderer = ({
     render: () => {
       if (!scene) return;
       // cameraHelper.update()
-      renderer.current?.render(scene, camera)
+      renderer.render(scene, camera)
     },
-    renderer: renderer.current,
-    camera: camera,
+    renderer,
+    camera,
     widthPrct,
     heightPrct,
     leftPrct,
     topPrct,
-  }), [id, camera, widthPrct, heightPrct, leftPrct, topPrct, scene])
+  }), [id, renderer, camera, widthPrct, heightPrct, leftPrct, topPrct, scene])
 
   useEffect(() => {
     scene.add(camera)
