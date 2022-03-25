@@ -1,19 +1,26 @@
-import ErrorPage from 'next/error'
-import Head from 'next/head'
-import { useRouter } from 'next/router'
+import ErrorPage from 'next/error';
+import Head from 'next/head';
+import { useRouter } from 'next/router';
 
+import { ExperimentalGetTinaClient } from '../.tina/__generated__/types';
+import Grid from '../components/Grid/Grid';
+import { MDXRenderer } from '../components/MDXRenderer/MDXRenderer';
+import { getPageContext } from '../lib/getPageContext';
 import { AsyncReturnType } from '../typings';
 
-export default function Page(props: AsyncReturnType<typeof getStaticProps>['props']) {
-  const { data, slug } = props
-  const router = useRouter()
+export default function Page(
+  props: AsyncReturnType<typeof getStaticProps>['props']
+) {
+  const { data, slug } = props;
+  const router = useRouter();
 
   if (!router.isFallback && !slug) {
-    return <ErrorPage statusCode={404} />
+    return <ErrorPage statusCode={404} />;
   }
-  
-  // @ts-ignore
-  const { title, seo, blocks, body } = (data?.getPageDocument || data?.getLandingPageDocument)?.data || {}
+
+  const { title, seo, blocks, body } =
+    // @ts-ignore
+    (data?.getPageDocument || data?.getLandingPageDocument)?.data || {};
   return (
     <>
       <Head>
@@ -23,50 +30,53 @@ export default function Page(props: AsyncReturnType<typeof getStaticProps>['prop
 
       <h1 data-tinafield="title">{title}</h1>
 
-      {body ? <MDXRenderer
-        tinaField="body"
-        content={body || ''}
-      /> : <Grid blocks={blocks || []} />}
+      {body ? (
+        <MDXRenderer tinaField="body" content={body || ''} />
+      ) : (
+        <Grid blocks={blocks || []} />
+      )}
     </>
-  )
+  );
 }
 
 export const getStaticProps = async ({ params }: { params: any }) => {
-  const client = ExperimentalGetTinaClient()
-  const { slug } = params
-  const pageContext = await getPageContext()
+  const client = ExperimentalGetTinaClient();
+  const { slug } = params;
+  const pageContext = await getPageContext();
 
   try {
     const page = await client.getPageDocument({ relativePath: `${slug}.mdx` });
-    if (Object.keys(page.data).length === 0) throw new Error('No data')
+    if (Object.keys(page.data).length === 0) throw new Error('No data');
     return {
       props: {
         pageContext,
         slug,
-        ...page
-      }
-    }
+        ...page,
+      },
+    };
   } catch (e) {
-    const landingPage = await client.getLandingPageDocument({ relativePath: `${slug}.json` });
-    
+    const landingPage = await client.getLandingPageDocument({
+      relativePath: `${slug}.json`,
+    });
+
     return {
       props: {
         pageContext,
         slug,
-        ...landingPage
-      }
-    }
+        ...landingPage,
+      },
+    };
   }
-}
+};
 
 export async function getStaticPaths() {
   try {
-    const res = await getPageContext()
+    const res = await getPageContext();
     return {
-      paths: Object.keys(res).map(slug => `/${slug}`),
-      fallback: false
-    }
+      paths: Object.keys(res).map((slug) => `/${slug}`),
+      fallback: false,
+    };
   } catch (e) {
-    return { paths: [], fallback: true }
+    return { paths: [], fallback: true };
   }
 }

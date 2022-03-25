@@ -1,5 +1,9 @@
 import * as React from 'react';
-import { createStyles as createUseStyles, useMantineColorScheme, keyframes } from '@mantine/core';
+import {
+  createStyles as createUseStyles,
+  useMantineColorScheme,
+  keyframes,
+} from '@mantine/core';
 
 import Link, { useStyles as useLinkStyles } from '../Link/Link';
 import Logo from '../Logo/Logo';
@@ -17,14 +21,11 @@ const drawStroke = keyframes({
     strokeDasharray: '200%',
     strokeDashoffset: '400%',
   },
-})
+});
 
-const useStyles = createUseStyles(({
-  spacing,
-  fn,
-}, _params, getRef) => {
+const useStyles = createUseStyles(({ spacing, fn }, _params, getRef) => {
   const logo = getRef('logo');
-  return ({
+  return {
     root: {},
     inner: {
       display: 'flex',
@@ -69,7 +70,7 @@ const useStyles = createUseStyles(({
     linkText: {
       [fn.smallerThan('sm')]: {
         display: 'none',
-      }
+      },
     },
     menu: {
       flexGrow: 1,
@@ -109,13 +110,16 @@ const useStyles = createUseStyles(({
         fill: 'currentColor',
       },
     },
-  })
+  };
 });
 
 const ThemeModeToggle = () => {
   const { colorScheme, toggleColorScheme } = useMantineColorScheme();
-  const toggleMode = React.useCallback(() => toggleColorScheme(), [toggleColorScheme])
-  const {classes: linkClasses} = useLinkStyles();
+  const toggleMode = React.useCallback(
+    () => toggleColorScheme(),
+    [toggleColorScheme]
+  );
+  const { classes: linkClasses } = useLinkStyles();
   const { classes, cx } = useStyles();
   return (
     <button
@@ -124,40 +128,46 @@ const ThemeModeToggle = () => {
       onClick={toggleMode}
       className={cx(classes.themeToggle, linkClasses.root)}
     >
-      {
-        colorScheme === 'dark'
-        ? (
-          <LightMode className={classes.themeModeIcon} />
-        )
-        : (
-          <DarkMode className={classes.themeModeIcon} />
-        )}
+      {colorScheme === 'dark' ? (
+        <LightMode className={classes.themeModeIcon} />
+      ) : (
+        <DarkMode className={classes.themeModeIcon} />
+      )}
     </button>
-  )
-}
-
-export type PropTypes = React.Attributes & React.HTMLAttributes<HTMLDivElement> & {
-  classes?: ClassNames<typeof useStyles>;
+  );
 };
 
+export type PropTypes = React.Attributes &
+  React.HTMLAttributes<HTMLDivElement> & {
+    classes?: ClassNames<typeof useStyles>;
+  };
+
 const Header = ({ classes: passedClasses, className }: PropTypes) => {
-  const {classes, cx} = useStyles();
+  const { classes, cx } = useStyles();
   return (
     <header className={cx(className, classes.root, passedClasses?.root)}>
       <div className={cx(classes.inner, passedClasses?.inner)}>
         <h1 className={cx(classes.title, passedClasses?.title)}>
-          <Link className={cx(classes.titleLink, passedClasses?.titleLink)} title="Valentin “zeropaper” Vago" component="a" href="/">
+          <Link
+            className={cx(classes.titleLink, passedClasses?.titleLink)}
+            title="Valentin “zeropaper” Vago"
+            component="a"
+            href="/"
+          >
             <Logo slim className={cx(classes.logo, passedClasses?.logo)} />
 
-            <span className={classes.linkText}>
-              zeropaper
-            </span>
+            <span className={classes.linkText}>zeropaper</span>
           </Link>
         </h1>
 
         <Menu classes={{ root: classes.menu }} />
 
-        <div className={cx(classes.themeToggleWrapper, passedClasses?.themeToggleWrapper)}>
+        <div
+          className={cx(
+            classes.themeToggleWrapper,
+            passedClasses?.themeToggleWrapper
+          )}
+        >
           <ThemeModeToggle />
         </div>
       </div>

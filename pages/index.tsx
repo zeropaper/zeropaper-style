@@ -2,7 +2,7 @@ import Head from 'next/head';
 import Image from 'next/image';
 
 import { ExperimentalGetTinaClient } from '../.tina/__generated__/types';
-import Blocks from '../components/Blocks/Blocks';
+// import Blocks from '../components/Blocks/Blocks';
 import { useStyles as useLayoutStyles } from '../components/Layout/Layout';
 import { getPageContext } from '../lib/getPageContext';
 import { AsyncReturnType } from '../typings';
