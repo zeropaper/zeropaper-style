@@ -5,7 +5,7 @@ import { useTina } from 'tinacms/dist/edit-state'
 import { MDXRenderer } from '../../components/MDXRenderer/MDXRenderer'
 import { ExperimentalGetTinaClient } from '../../.tina/__generated__/types'
 
-import getBlogContext from '../../lib/getBlogContext'
+import { AsyncReturnType } from '../../typings';
 
 const client = ExperimentalGetTinaClient()
 

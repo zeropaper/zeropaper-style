@@ -1,6 +1,4 @@
-import Head from 'next/head'
-import Link from '../../components/Link/Link'
-import getBlogContext from '../../lib/getBlogContext'
+import { AsyncReturnType } from '../../typings';
 
 const Blog = (props: AsyncReturnType<typeof getStaticProps>['props']) => {
   return (

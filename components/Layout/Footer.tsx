@@ -3,6 +3,7 @@ import { createStyles as createUseStyles } from '@mantine/core';
 import Link from '../Link/Link';
 
 import SocialNetworks from './SocialNetworks';
+import { ClassNames } from '../../typings';
 
 const useStyles = createUseStyles(({
   fn,

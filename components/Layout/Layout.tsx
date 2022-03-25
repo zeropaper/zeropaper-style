@@ -4,7 +4,7 @@ import Header from './Header';
 import Footer from './Footer';
 import { PropsWithChildren } from 'react';
 import useStyles from './Layout.styles';
-import { TypographyStylesProvider } from '@mantine/core'
+import { ClassNames } from '../../typings';
 
 export { useStyles }
 

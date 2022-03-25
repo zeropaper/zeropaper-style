@@ -2,6 +2,7 @@ import * as React from 'react';
 import { createStyles as createUseStyles } from '@mantine/core';
 
 import Link from '../Link/Link';
+import { ClassNames } from '../../typings';
 
 const useStyles = createUseStyles(
   {
