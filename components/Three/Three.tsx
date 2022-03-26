@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component, useMemo } from 'react';
 
 import {
   useRef,
@@ -30,7 +30,7 @@ const useStyles = createStyles(() => ({
   root: {
     width: '100%',
     height: '100%',
-    flexGrow: 4,
+    flexGrow: 1,
     display: 'flex',
     alignItems: 'stretch',
     justifyContent: 'center',
@@ -63,14 +63,12 @@ export const RuntimeComponent = ({
 
   useEffect(() => {
     if (canvas.current) {
-      // console.info('Three resize destination canvas', width, height)
       canvas.current.width = width;
       canvas.current.height = height;
     }
   }, [width, height, canvas]);
 
   useEffect(() => {
-    // console.info('Three resize')
     contexts?.current.forEach((ctx) => {
       const { renderer, camera } = ctx;
       const w = Math.round(width * ctx.widthPrct * 0.01);
@@ -82,7 +80,6 @@ export const RuntimeComponent = ({
       }
 
       if (camera instanceof PerspectiveCamera) {
-        // console.info('Three camera perspective', camera, w, width, h, height)
         camera.aspect = w / h;
       } else if (camera instanceof OrthographicCamera) {
         camera.left = -w / orthoZoom;
@@ -96,7 +93,6 @@ export const RuntimeComponent = ({
   }, [width, height, contexts]);
 
   useEffect(() => {
-    console.info('Three mount');
     clock.stop();
     if (onMount) onMount({ scene, clock });
     clock.start();
@@ -106,7 +102,6 @@ export const RuntimeComponent = ({
     const { renderer } = ctx;
 
     contexts.current.push(ctx);
-    // console.info('Three handleRendererMount', container, renderer, contexts.current.length)
   }, []);
   const handleRendererUnmount = useCallback((ctx: RendererCtx) => {
     const { renderer } = ctx;
@@ -115,7 +110,6 @@ export const RuntimeComponent = ({
       contexts.current.findIndex((c) => c.id === ctx.id),
       1
     );
-    // console.info('Three handleRendererUnmount', container, renderer, contexts.current.length)
   }, []);
 
   useAnimationFrame((deltaTime) => {
@@ -148,36 +142,97 @@ export const RuntimeComponent = ({
     });
   });
 
+  const ratio = width / height;
+  let canvases = [
+    <Renderer
+      destinationCanvasRef={canvas}
+      key="camera"
+      id="camera"
+      onMount={handleRendererMount}
+      onUnmount={handleRendererUnmount}
+    />,
+  ];
+
+  // wide
+  if (ratio > 1.5) {
+    canvases = [
+      <Renderer
+        destinationCanvasRef={canvas}
+        key="wide-top"
+        id="top"
+        heightPrct={100}
+        leftPrct={0}
+        topPrct={0}
+        widthPrct={25}
+        onMount={handleRendererMount}
+        onUnmount={handleRendererUnmount}
+      />,
+      <Renderer
+        destinationCanvasRef={canvas}
+        key="wide-side"
+        id="side"
+        heightPrct={100}
+        leftPrct={75}
+        topPrct={0}
+        widthPrct={25}
+        onMount={handleRendererMount}
+        onUnmount={handleRendererUnmount}
+      />,
+      <Renderer
+        destinationCanvasRef={canvas}
+        key="wide-camera"
+        id="camera"
+        heightPrct={100}
+        leftPrct={25}
+        topPrct={0}
+        widthPrct={50}
+        onMount={handleRendererMount}
+        onUnmount={handleRendererUnmount}
+      />,
+    ];
+    // tall
+  } else if (ratio < 0.75) {
+    canvases = [
+      <Renderer
+        destinationCanvasRef={canvas}
+        key="tall-top"
+        id="top"
+        heightPrct={50}
+        leftPrct={0}
+        topPrct={50}
+        widthPrct={50}
+        onMount={handleRendererMount}
+        onUnmount={handleRendererUnmount}
+      />,
+      <Renderer
+        destinationCanvasRef={canvas}
+        key="tall-side"
+        id="side"
+        heightPrct={50}
+        leftPrct={50}
+        topPrct={50}
+        widthPrct={50}
+        onMount={handleRendererMount}
+        onUnmount={handleRendererUnmount}
+      />,
+      <Renderer
+        destinationCanvasRef={canvas}
+        key="tall-camera"
+        id="camera"
+        heightPrct={50}
+        leftPrct={0}
+        topPrct={0}
+        widthPrct={100}
+        onMount={handleRendererMount}
+        onUnmount={handleRendererUnmount}
+      />,
+    ];
+  }
+
   return (
     <>
       <canvas ref={canvas} width={width} height={height} />
-      {[
-        <Renderer
-          key="top"
-          id="top"
-          widthPrct={25}
-          heightPrct={50}
-          onMount={handleRendererMount}
-          onUnmount={handleRendererUnmount}
-        />,
-        <Renderer
-          key="side"
-          id="side"
-          widthPrct={25}
-          heightPrct={50}
-          topPrct={50}
-          onMount={handleRendererMount}
-          onUnmount={handleRendererUnmount}
-        />,
-        <Renderer
-          key="camera"
-          id="camera"
-          widthPrct={75}
-          leftPrct={25}
-          onMount={handleRendererMount}
-          onUnmount={handleRendererUnmount}
-        />,
-      ]}
+      {canvases}
     </>
   );
 };
@@ -193,7 +248,6 @@ export const Three = ({ onMount, onRender }: PropTypes) => {
           <RuntimeComponent
             onMount={onMount || scripts.onMount}
             onRender={onRender || scripts.onRender}
-            // container={ref}
             width={Math.floor(rect.width)}
             height={Math.floor(rect.height)}
           />
