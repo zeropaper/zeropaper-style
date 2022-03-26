@@ -1,30 +1,13 @@
 import { SceneCtx } from './SceneCtx';
 import * as THREE from 'three';
 
-const {
-  DirectionalLight,
-  DirectionalLightHelper,
-  Group,
-  GridHelper,
-  AxesHelper,
-  TorusKnotGeometry,
-  // MeshBasicMaterial,
-  MeshStandardMaterial,
-  Mesh,
-  PlaneGeometry,
-} = THREE
-
 function updateCamera(scene: SceneCtx['scene']) {
   const camera = scene.getObjectByName('camera');
 
   if (!camera) return;
-  camera.position.x = 100;
-  camera.position.y = 50;
-  camera.position.z = 100;
-  // const now = Date.now() * 0.001;
-  // camera.position.x = Math.sin(now) * 100;
-  // camera.position.z = Math.cos(now) * 100;
-  // camera.position.y = (Math.cos(now) * 10) + 25;
+  camera.position.x = camera.position.x || -2;
+  camera.position.y = camera.position.y || 4;
+  camera.position.z = camera.position.z || 2;
   camera.lookAt(scene.position);
   // camera.updateMatrix()
   return camera
@@ -36,9 +19,10 @@ function updateCameraSide(scene: SceneCtx['scene']) {
   if (!camera) return;
   camera.position.x = 0;
   camera.position.y = 0;
-  camera.position.z = 50;
-  camera.near = 0.1
-  camera.far = 100
+  camera.position.z = 20;
+  camera.zoom = camera.position.z * 0.75;
+  camera.near = 0.001
+  camera.far = camera.position.z * 2
   camera.lookAt(scene.position);
   camera.updateProjectionMatrix();
   return camera
@@ -49,10 +33,11 @@ function updateCameraTop(scene: SceneCtx['scene']) {
 
   if (!camera) return;
   camera.position.x = 0;
-  camera.position.y = 50;
+  camera.position.y = 20;
   camera.position.z = 0;
-  camera.near = 0.1
-  camera.far = 100
+  camera.zoom = camera.position.y * 0.75;
+  camera.near = 0.001
+  camera.far = camera.position.y * 2
   camera.lookAt(scene.position);
   camera.updateProjectionMatrix();
   return camera
@@ -60,7 +45,7 @@ function updateCameraTop(scene: SceneCtx['scene']) {
 
 // ------------------------------------------------------------
 
-function ensure(name: string, creator: (lib: typeof THREE) => THREE.Object3D, object: THREE.Object3D, recreate = false) {
+function ensure(name: string, creator: (_THREE: typeof THREE) => THREE.Object3D, object: THREE.Object3D, recreate = false) {
   const found = object.getObjectByName(name);
   if (found) {
     if (!recreate) return found;
@@ -73,18 +58,99 @@ function ensure(name: string, creator: (lib: typeof THREE) => THREE.Object3D, ob
   return created
 }
 
-// function clear(name: string, object: THREE.Object3D) {
-//   const found = object.getObjectByName(name);
-//   if (!found) return;
-//   object.remove(found);
-// }
+// ------------------------------------------------------------
+
+const degToRad = (deg: number) => deg * Math.PI / 180
+
+let fraction = 1;
+let unfold = (f = fraction) => { }
+const ensureOtherCube = (scene: SceneCtx['scene'], recreate = false) => {
+  return ensure('other-cube', (_THREE) => {
+    const group = new THREE.Group();
+
+    const distance = degToRad(180)
+
+    const geometry = new THREE.BoxGeometry(1, 0.01, 1);
+    const material = new THREE.MeshStandardMaterial({
+      color: 0x222222,
+      roughness: 0.75,
+      metalness: 0.25
+    });
+
+    const bottom = new THREE.Mesh(geometry, material);
+
+    const leftStart = degToRad(-90)
+    const left = new THREE.Mesh(geometry.clone(), material);
+    left.geometry.translate(0, 0, -0.5);
+    left.position.z = -0.5;
+
+    const rightStart = degToRad(-90)
+    const right = new THREE.Mesh(geometry.clone(), material);
+    right.geometry.translate(0, 0, -0.5);
+    right.position.z = 0.5;
+
+    const frontStart = degToRad(-180)
+    const front = new THREE.Mesh(geometry.clone(), material);
+    front.geometry.translate(0, 0, -0.5);
+    front.position.x = -0.5;
+
+    const backGroupStart = degToRad(-90)
+    const backGroup = new THREE.Group();
+    backGroup.position.x = 0.5;
+
+    const back = new THREE.Mesh(geometry.clone(), material);
+    back.position.x = 0.5;
+
+    const topStart = degToRad(-90)
+    const top = new THREE.Mesh(geometry.clone(), material);
+    top.position.x = 1;
+    top.geometry.translate(0.5, 0, 0);
+
+    backGroup.add(back)
+    backGroup.add(top)
+
+    group.add(bottom);
+    group.add(left);
+    group.add(right);
+    group.add(front);
+    group.add(backGroup);
+
+    top.castShadow = true;
+    bottom.castShadow = true;
+    left.castShadow = true;
+    right.castShadow = true;
+    front.castShadow = true;
+    back.castShadow = true;
+    top.receiveShadow = true;
+    bottom.receiveShadow = true;
+    left.receiveShadow = true;
+    right.receiveShadow = true;
+    front.receiveShadow = true;
+    back.receiveShadow = true;
+
+    group.translateY(1 - fraction);
+
+    unfold = (f = fraction) => {
+      left.rotation.set(leftStart + (distance * f), 0, 0)
+      right.rotation.set(rightStart - (distance * f), 0, 0)
+      front.rotation.set(degToRad(90), frontStart - (distance * f), degToRad(90))
+      backGroup.rotation.set(0, 0, backGroupStart + (distance * f))
+      top.rotation.set(0, 0, topStart + (distance * f))
+
+      group.position.set(0, 0, 0)
+      group.translateY((1 - f) - 0.5);
+    }
+    unfold(0)
+    return group;
+  }, scene, recreate);
+}
 
 // ------------------------------------------------------------
 
 const ensureSceneHelper = (scene: SceneCtx['scene'], recreate = false) => {
-  return ensure('scene-helper', (lib) => {
-    const group = new lib.Group()
-    const grid = new lib.GridHelper(100, 10);
+  return ensure('scene-helper', (_THREE) => {
+    const group = new THREE.Group()
+    const grid = new THREE.GridHelper(5, 10);
     group.add(grid)
     const gridX = grid.clone()
     gridX.rotateX(Math.PI / 2)
@@ -92,55 +158,50 @@ const ensureSceneHelper = (scene: SceneCtx['scene'], recreate = false) => {
     const gridZ = grid.clone()
     gridZ.rotateZ(Math.PI / 2)
     group.add(gridZ)
-    group.add(new lib.AxesHelper(10))
+    group.add(new THREE.AxesHelper(3))
     return group;
   }, scene, recreate)
 }
 
 const ensureSpotLight = (scene: SceneCtx['scene'], recreate = false) => {
-  return ensure('spot-light', (lib) => {
-    const instance = new lib.SpotLight(0xffffff, 1);
+  return ensure('spot-light', (_THREE) => {
+    const instance = new THREE.SpotLight(0xffffff, 0.7);
+    // let helper = scene.getObjectByName('spot-light-helper') as THREE.SpotLightHelper | undefined
+    // if (helper) scene.remove(helper)
+    // helper = new THREE.SpotLightHelper(instance, 0x0000aa);
+    // helper.name = 'spot-light-helper'
+    // scene.add(helper)
+    // helper.update()
     instance.castShadow = true;
-    instance.shadow.mapSize.width = 512 * 4;
-    instance.shadow.mapSize.height = 512 * 4;
-    instance.shadow.camera.near = 0.5;
-    instance.shadow.camera.far = 2000;
+    instance.shadow.mapSize.width = 1024;
+    instance.shadow.mapSize.height = 1024;
+    instance.shadow.camera.near = 1;
+    instance.shadow.camera.far = 50;
     instance.shadow.focus = 0.1;
     instance.lookAt(scene.position);
     return instance
   }, scene, recreate);
 }
 
-const ensureTorus = (scene: SceneCtx['scene'], recreate = false) => {
-  return ensure('torus', (lib) => {
-    const geometry = new lib.TorusKnotGeometry(10, 3, 100, 16);
-    const material = new lib.MeshStandardMaterial({ color: 0xffffff, wireframe: false });
-    const instance = new lib.Mesh(geometry, material)
-    instance.castShadow = true; //default is false
-    instance.receiveShadow = true; //default
-    return instance
-  }, scene, recreate);
-}
-
 const ensureShadowCaster = (scene: SceneCtx['scene'], recreate = false) => {
-  return ensure('shadow-caster', (lib) => {
-    const geometry = new lib.PlaneGeometry(500, 500, 10, 10);
-    const material = new lib.ShadowMaterial()
+  return ensure('shadow-caster', (_THREE) => {
+    const geometry = new THREE.PlaneGeometry(500, 500, 10, 10);
+    const material = new THREE.ShadowMaterial()
     material.opacity = 0.5
 
-    // const material = new lib.MeshStandardMaterial({ color: 0x666666, wireframe: false });
-
-    const instance = new lib.Mesh(geometry, material)
+    const instance = new THREE.Mesh(geometry, material)
     instance.receiveShadow = true;
-    instance.position.y = -20
-    instance.rotation.x = -90 * (Math.PI / 180)
+    instance.position.y = -2
+    instance.rotation.x = degToRad(-90)
     return instance
   }, scene, recreate);
 }
 
 const ensureAmbientLight = (scene: SceneCtx['scene'], recreate = false) => {
-  return ensure('ambient-light', (lib) => {
-    const instance = new lib.AmbientLight(0x111111, 1);
+  return ensure('ambient-light', (_THREE) => {
+    const instance = new THREE.AmbientLight(0x999999, 1);
+    // instance.castShadow = true;
+    instance.position.set(10, 10, 10);
     return instance
   }, scene, recreate);
 }
@@ -154,70 +215,53 @@ const ensureAmbientLight = (scene: SceneCtx['scene'], recreate = false) => {
 // }
 
 export const onMount = ({ scene, clock }: SceneCtx) => {
-  console.info('Three: onMount')
   // @ts-ignore
   window.__scene = scene
   // @ts-ignore
   window.__clock = clock
 
-  ensureSceneHelper(scene, true);
-  ensureShadowCaster(scene, true);
+  updateCamera(scene);
 
+  // ensureSceneHelper(scene, true);
+  ensureShadowCaster(scene, true);
   ensureAmbientLight(scene, true);
+  ensureSpotLight(scene, true);
+
+  ensureOtherCube(scene, true);
 };
 
-let frameCounter = 0;
-let shift = 0
-export const onRender = ({ scene, clock }: SceneCtx) => {
+// let frameCounter = 0;
+let prevNow = 0
+export const onRender = (ctx: SceneCtx) => {
+  const { scene, clock, world } = ctx;
   // @ts-ignore
   if (!!window?.__recreateScene) {
-    onMount({ scene, clock });
+    onMount(ctx);
     // @ts-ignore
     window.__recreateScene = false;
   }
 
+  updateCameraSide(scene);
+  updateCameraTop(scene);
+
+  // const deltaTime = clock.getDelta()
   const now = clock.elapsedTime
+  const deltaTime = now - prevNow
 
-  const camera = updateCamera(scene);
-  const side = updateCameraSide(scene);
-  const top = updateCameraTop(scene);
-  const helpers = ensureSceneHelper(scene);
-  const torus = ensureTorus(scene);
+  const spotLight = ensureSpotLight(scene) as THREE.SpotLight;
+  spotLight.position.y = 20
+  spotLight.position.x = (Math.cos(now * 0.1) * 5) + 5;
+  spotLight.position.z = (Math.sin(now * 0.1) * 5) + 2.5;
+  spotLight.lookAt(scene.position);
 
-  torus.rotation.y = now;
+  (scene.getObjectByName('spot-light-helper') as THREE.SpotLightHelper | undefined)?.update();
 
-  helpers.position.x = 0
-  helpers.position.y = 0
-  helpers.position.z = 0
+  unfold(1 - ((now * 0.1) % 1))
 
-  // helpers.position.x = shift
-  // helpers.position.y = shift
-  // helpers.position.z = shift
-  // if (Math.random() > 0.8) {
-  //   shift = shift ? 0 : Math.random() * 10
+  // if (frameCounter >= 60) {
+  //   frameCounter = 0;
+  //   // debugger
   // }
-  // helpers.visible = Math.random() > 0.9
-
-  if (top) {
-    top.lookAt(torus.position);
-  }
-  if (side) {
-    side.position.y = torus.position.y;
-    side.lookAt(torus.position);
-  }
-  if (camera) {
-    camera.lookAt(torus.position);
-  }
-
-  const spotLight = ensureSpotLight(scene);
-  spotLight.position.x = -50;
-  spotLight.position.y = 150;
-  spotLight.position.z = 50;
-  spotLight.lookAt(torus.position);
-
-  if (frameCounter >= 60) {
-    frameCounter = 0;
-    console.info('Three render', now)
-  }
-  frameCounter += 1;
+  // frameCounter += 1;
+  prevNow = now
 };
