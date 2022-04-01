@@ -233,7 +233,7 @@ export const onMount = ({ scene, clock }: SceneCtx) => {
 // let frameCounter = 0;
 let prevNow = 0
 export const onRender = (ctx: SceneCtx) => {
-  const { scene, clock, world } = ctx;
+  const { scene, clock } = ctx;
   // @ts-ignore
   if (!!window?.__recreateScene) {
     onMount(ctx);
