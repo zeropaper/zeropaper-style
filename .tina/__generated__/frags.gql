@@ -1,10 +1,7 @@
 fragment LandingPageParts on LandingPage {
   title
-  seo {
-    __typename
-    title
-    description
-  }
+  description
+  published
   blocks {
     __typename
     ... on LandingPageBlocksHero {
@@ -27,11 +24,8 @@ fragment LandingPageParts on LandingPage {
 
 fragment PageParts on Page {
   title
-  seo {
-    __typename
-    description
-  }
-  excerpt
+  description
+  published
   body
 }
 
@@ -44,13 +38,9 @@ fragment TagParts on Tag {
 fragment StuffParts on Stuff {
   title
   description
+  published
   slug
   date
-  seo {
-    __typename
-    title
-    description
-  }
   tags
   iframe
   source
@@ -59,8 +49,9 @@ fragment StuffParts on Stuff {
 
 fragment PostParts on Post {
   title
+  description
+  published
   slug
-  excerpt
   tags
   date
   body
