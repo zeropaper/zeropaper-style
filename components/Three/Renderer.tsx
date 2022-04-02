@@ -69,9 +69,11 @@ const Renderer = ({
         ctrls.minDistance = 1;
         ctrls.maxDistance = 12;
 
-        ctrls.rotateSpeed = 0.1;
-        ctrls.panSpeed = 0.1;
-        ctrls.zoomSpeed = 0.1;
+        const controlSpeed =
+          'ontouchstart' in window || navigator.maxTouchPoints ? 1 : 0.1;
+        ctrls.rotateSpeed = controlSpeed;
+        ctrls.panSpeed = controlSpeed;
+        ctrls.zoomSpeed = controlSpeed;
 
         ctrls.maxPolarAngle = Math.PI / 2;
       }
