@@ -42,22 +42,23 @@ interface Connection {
 }
 
 type Query {
+  getOptimizedQuery(queryString: String!): String
   getCollection(collection: String): Collection!
   getCollections: [Collection!]!
   node(id: String): Node!
   getDocument(collection: String, relativePath: String): DocumentNode!
-  getDocumentList(before: String, after: String, first: Float, last: Float): DocumentConnection!
+  getDocumentList(before: String, after: String, first: Float, last: Float, sort: String): DocumentConnection!
   getDocumentFields: JSON!
   getLandingPageDocument(relativePath: String): LandingPageDocument!
-  getLandingPageList(before: String, after: String, first: Float, last: Float): LandingPageConnection!
+  getLandingPageList(before: String, after: String, first: Float, last: Float, sort: String): LandingPageConnection!
   getPageDocument(relativePath: String): PageDocument!
-  getPageList(before: String, after: String, first: Float, last: Float): PageConnection!
+  getPageList(before: String, after: String, first: Float, last: Float, sort: String): PageConnection!
   getTagDocument(relativePath: String): TagDocument!
-  getTagList(before: String, after: String, first: Float, last: Float): TagConnection!
+  getTagList(before: String, after: String, first: Float, last: Float, sort: String): TagConnection!
   getStuffDocument(relativePath: String): StuffDocument!
-  getStuffList(before: String, after: String, first: Float, last: Float): StuffConnection!
+  getStuffList(before: String, after: String, first: Float, last: Float, sort: String): StuffConnection!
   getPostDocument(relativePath: String): PostDocument!
-  getPostList(before: String, after: String, first: Float, last: Float): PostConnection!
+  getPostList(before: String, after: String, first: Float, last: Float, sort: String): PostConnection!
 }
 
 type DocumentConnectionEdges {
@@ -80,15 +81,10 @@ type Collection {
   matches: String
   templates: [JSON]
   fields: [JSON]
-  documents(before: String, after: String, first: Float, last: Float): DocumentConnection!
+  documents(before: String, after: String, first: Float, last: Float, sort: String): DocumentConnection!
 }
 
 union DocumentNode = LandingPageDocument | PageDocument | TagDocument | StuffDocument | PostDocument
-
-type LandingPageSeo {
-  title: String
-  description: String
-}
 
 type LandingPageBlocksHero {
   href: String
@@ -112,7 +108,8 @@ union LandingPageBlocks = LandingPageBlocksHero | LandingPageBlocksFeature
 
 type LandingPage {
   title: String
-  seo: LandingPageSeo
+  description: String
+  published: Boolean
   blocks: [LandingPageBlocks]
 }
 
@@ -136,14 +133,10 @@ type LandingPageConnection implements Connection {
   edges: [LandingPageConnectionEdges]
 }
 
-type PageSeo {
-  description: String
-}
-
 type Page {
   title: String
-  seo: PageSeo
-  excerpt: String
+  description: String
+  published: Boolean
   body: JSON
 }
 
@@ -193,17 +186,12 @@ type TagConnection implements Connection {
   edges: [TagConnectionEdges]
 }
 
-type StuffSeo {
-  title: String
-  description: String
-}
-
 type Stuff {
   title: String
   description: String
+  published: Boolean
   slug: String
   date: String
-  seo: StuffSeo
   tags: [String]
   iframe: String
   source: String
@@ -232,8 +220,9 @@ type StuffConnection implements Connection {
 
 type Post {
   title: String
+  description: String
+  published: Boolean
   slug: String
-  excerpt: String
   tags: [String]
   date: String
   body: JSON
@@ -283,11 +272,6 @@ input DocumentMutation {
   post: PostMutation
 }
 
-input LandingPageSeoMutation {
-  title: String
-  description: String
-}
-
 input LandingPageBlocksHeroMutation {
   href: String
   title: String
@@ -313,18 +297,15 @@ input LandingPageBlocksMutation {
 
 input LandingPageMutation {
   title: String
-  seo: LandingPageSeoMutation
-  blocks: [LandingPageBlocksMutation]
-}
-
-input PageSeoMutation {
   description: String
+  published: Boolean
+  blocks: [LandingPageBlocksMutation]
 }
 
 input PageMutation {
   title: String
-  seo: PageSeoMutation
-  excerpt: String
+  description: String
+  published: Boolean
   body: JSON
 }
 
@@ -334,17 +315,12 @@ input TagMutation {
   description: String
 }
 
-input StuffSeoMutation {
-  title: String
-  description: String
-}
-
 input StuffMutation {
   title: String
   description: String
+  published: Boolean
   slug: String
   date: String
-  seo: StuffSeoMutation
   tags: [String]
   iframe: String
   source: String
@@ -353,8 +329,9 @@ input StuffMutation {
 
 input PostMutation {
   title: String
+  description: String
+  published: Boolean
   slug: String
-  excerpt: String
   tags: [String]
   date: String
   body: JSON

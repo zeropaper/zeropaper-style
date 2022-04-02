@@ -1,9 +1,9 @@
 {
   "version": {
-    "fullVersion": "0.59.7",
+    "fullVersion": "0.59.10",
     "major": "0",
     "minor": "59",
-    "patch": "7"
+    "patch": "10"
   },
   "meta": {},
   "collections": [
@@ -17,38 +17,28 @@
         {
           "type": "string",
           "name": "title",
+          "label": "Title",
           "namespace": [
             "landingPage",
             "title"
           ]
         },
         {
-          "type": "object",
-          "name": "seo",
-          "label": "SEO",
-          "fields": [
-            {
-              "type": "string",
-              "name": "title",
-              "namespace": [
-                "landingPage",
-                "seo",
-                "title"
-              ]
-            },
-            {
-              "type": "string",
-              "name": "description",
-              "namespace": [
-                "landingPage",
-                "seo",
-                "description"
-              ]
-            }
-          ],
+          "type": "string",
+          "name": "description",
+          "label": "Description",
           "namespace": [
             "landingPage",
-            "seo"
+            "description"
+          ]
+        },
+        {
+          "type": "boolean",
+          "name": "published",
+          "label": "Published",
+          "namespace": [
+            "landingPage",
+            "published"
           ]
         },
         {
@@ -209,45 +199,34 @@
         {
           "type": "string",
           "name": "title",
+          "label": "Title",
           "namespace": [
             "page",
             "title"
           ]
         },
         {
-          "type": "object",
-          "name": "seo",
-          "label": "SEO",
-          "fields": [
-            {
-              "type": "string",
-              "name": "description",
-              "namespace": [
-                "page",
-                "seo",
-                "description"
-              ]
-            }
-          ],
+          "type": "string",
+          "name": "description",
+          "label": "Description",
           "namespace": [
             "page",
-            "seo"
+            "description"
           ]
         },
         {
-          "type": "string",
-          "label": "Excerpt",
-          "name": "excerpt",
+          "type": "boolean",
+          "name": "published",
+          "label": "Published",
           "namespace": [
             "page",
-            "excerpt"
+            "published"
           ]
         },
         {
           "type": "rich-text",
           "label": "Body",
           "name": "body",
-          "templates": [],
           "isBody": true,
           "namespace": [
             "page",
@@ -305,6 +284,7 @@
         {
           "type": "string",
           "name": "title",
+          "label": "Title",
           "namespace": [
             "stuff",
             "title"
@@ -313,9 +293,19 @@
         {
           "type": "string",
           "name": "description",
+          "label": "Description",
           "namespace": [
             "stuff",
             "description"
+          ]
+        },
+        {
+          "type": "boolean",
+          "name": "published",
+          "label": "Published",
+          "namespace": [
+            "stuff",
+            "published"
           ]
         },
         {
@@ -337,35 +327,6 @@
           "namespace": [
             "stuff",
             "date"
-          ]
-        },
-        {
-          "type": "object",
-          "name": "seo",
-          "label": "SEO",
-          "fields": [
-            {
-              "type": "string",
-              "name": "title",
-              "namespace": [
-                "stuff",
-                "seo",
-                "title"
-              ]
-            },
-            {
-              "type": "string",
-              "name": "description",
-              "namespace": [
-                "stuff",
-                "seo",
-                "description"
-              ]
-            }
-          ],
-          "namespace": [
-            "stuff",
-            "seo"
           ]
         },
         {
@@ -403,7 +364,6 @@
           "type": "rich-text",
           "label": "Body",
           "name": "body",
-          "templates": [],
           "isBody": true,
           "namespace": [
             "stuff",
@@ -423,11 +383,29 @@
       "fields": [
         {
           "type": "string",
-          "label": "Title",
           "name": "title",
+          "label": "Title",
           "namespace": [
             "post",
             "title"
+          ]
+        },
+        {
+          "type": "string",
+          "name": "description",
+          "label": "Description",
+          "namespace": [
+            "post",
+            "description"
+          ]
+        },
+        {
+          "type": "boolean",
+          "name": "published",
+          "label": "Published",
+          "namespace": [
+            "post",
+            "published"
           ]
         },
         {
@@ -437,15 +415,6 @@
           "namespace": [
             "post",
             "slug"
-          ]
-        },
-        {
-          "type": "string",
-          "label": "Excerpt",
-          "name": "excerpt",
-          "namespace": [
-            "post",
-            "excerpt"
           ]
         },
         {
@@ -477,7 +446,6 @@
           "type": "rich-text",
           "label": "Body",
           "name": "body",
-          "templates": [],
           "isBody": true,
           "namespace": [
             "post",
