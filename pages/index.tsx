@@ -42,30 +42,8 @@ const Home = ({
   const { classes, cx } = useStyles();
   const data = props.data?.getLandingPageDocument?.data || {};
 
-  // const [{
-  //   onMount,
-  //   onRender,
-  // }, setScripts] = useState<{
-  //   onMount?: (scene: any) => void
-  //   onRender?: (scene: any) => void
-  // }>({})
-
-  // useEffect(() => {
-  //   import('../components/Three/Three.scripts').then(({ onMount, onRender }) => {
-  //     console.info('Three scripts sets')
-  //     setScripts({ onMount, onRender })
-  //   })
-  // }, [])
-
   return (
     <main className={cx(main, classes.root)}>
-      {/* 
-      {onMount && onRender ? (<Three
-        onMount={onMount}
-        onRender={onRender}
-      />) : <></>}
-      */}
-
       <Three />
     </main>
   );
