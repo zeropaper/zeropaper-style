@@ -8,16 +8,28 @@ import { getPageContext } from '../lib/getPageContext';
 import { AsyncReturnType } from '../typings';
 import { createStyles } from '@mantine/core';
 
-const Three = dynamic(() => import('../components/Three/Three'), {
-  ssr: false,
-});
-
 const useStyles = createStyles({
   root: {
     display: 'flex',
     flexDirection: 'column',
     flexGrow: 1,
   },
+  loader: {
+    display: 'flex',
+    flexGrow: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});
+
+const Loader = () => {
+  const { classes } = useStyles();
+  return <div className={classes.loader}>Loading</div>;
+};
+
+const Three = dynamic(() => import('../components/Three/Three'), {
+  ssr: false,
+  loading: Loader,
 });
 
 const Home = ({
