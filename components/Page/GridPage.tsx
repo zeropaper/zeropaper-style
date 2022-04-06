@@ -1,11 +1,11 @@
-import Head from 'next/head'
+import Head from 'next/head';
 
-import Grid from '../Grid/Grid'
+import Grid from '../Grid/Grid';
 
 export type PropTypes = {
   title: string;
   blocks?: any[];
-}
+};
 
 export const GridPage = ({ title, blocks }: PropTypes) => (
   <>
@@ -17,6 +17,6 @@ export const GridPage = ({ title, blocks }: PropTypes) => (
 
     <Grid blocks={blocks || []} />
   </>
-)
-  
-export default GridPage
+);
+
+export default GridPage;
