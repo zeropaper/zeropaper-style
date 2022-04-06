@@ -44,6 +44,11 @@ const mdxBodyField: TinaField = {
   isBody: true,
 }
 
+const publishedField: TinaField = {
+  type: 'boolean',
+  name: 'published',
+  label: 'Published',
+}
 const titleField: TinaField = {
   type: 'string',
   name: 'title',
@@ -68,6 +73,7 @@ const seoFields: TinaField = {
 const pageFields: TinaField[] = [
   titleField,
   descriptionField,
+  publishedField,
 ]
 
 export default defineSchema({

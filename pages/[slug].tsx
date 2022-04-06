@@ -6,6 +6,7 @@ import { ExperimentalGetTinaClient } from '../.tina/__generated__/types';
 import Grid from '../components/Grid/Grid';
 import { LayoutContentWrapper } from '../components/Layout/Layout';
 import { MDXRenderer } from '../components/MDXRenderer/MDXRenderer';
+import filterUnpublished from '../lib/filterUnpublished';
 import { getPageContext } from '../lib/getPageContext';
 import { AsyncReturnType } from '../typings';
 
@@ -74,7 +75,7 @@ export async function getStaticPaths() {
   try {
     const res = await getPageContext();
     return {
-      paths: Object.keys(res).map((slug) => `/${slug}`),
+      paths: filterUnpublished(Object.keys(res)).map((slug) => `/${slug}`),
       fallback: false,
     };
   } catch (e) {

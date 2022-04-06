@@ -7,6 +7,7 @@ type Post = {
   id: string;
   relativePath: string;
   slug: string;
+  published?: boolean;
   date: string | null;
 };
 export const getBlogContext = async (): Promise<{ [k: string]: Post }> => {
@@ -21,7 +22,8 @@ export const getBlogContext = async (): Promise<{ [k: string]: Post }> => {
           title = null,
           excerpt = null,
           date = null,
-          slug: postSlug = null
+          slug: postSlug = null,
+          published = false,
         }
       }
     }: any) => ({
@@ -31,6 +33,7 @@ export const getBlogContext = async (): Promise<{ [k: string]: Post }> => {
         excerpt,
         date,
         id,
+        published,
         relativePath: id.replace('content/blog/', ''),
         slug: postSlug || id,
         href: `/blog/${postSlug || id}`
