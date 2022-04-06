@@ -6,20 +6,12 @@ import { MDXRenderer } from '../MDXRenderer/MDXRenderer';
 
 export const StuffPage = (props: any) => {
   const {
-    data: {
-      mdx,
-    },
-    pageContext: {
-      iframe,
-      description,
-      source,
-    },
+    data: { mdx },
+    pageContext: { iframe, description, source },
   } = props;
 
-  const {
-    body,
-    frontmatter: { title, tags } = { title: '', tags: [] },
-  } = mdx || {};
+  const { body, frontmatter: { title, tags } = { title: '', tags: [] } } =
+    mdx || {};
 
   let content = null;
   if (iframe) {
@@ -37,7 +29,7 @@ export const StuffPage = (props: any) => {
     content = (
       <>
         <h1>{title}</h1>
-        <MDXRenderer content={body} />
+        <MDXRenderer tinaField="body" content={body} />
       </>
     );
   } else {
@@ -49,10 +41,6 @@ export const StuffPage = (props: any) => {
     );
   }
 
-  return (
-    <Layout>
-      {content}
-    </Layout>
-  );
+  return <Layout>{content}</Layout>;
 };
-export default StuffPage
+export default StuffPage;

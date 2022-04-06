@@ -18,20 +18,18 @@ export interface PropTypes {
   open?: boolean;
 }
 
-const IFrameWrapper = (props: PropsWithChildren<{ src: string; title: string; open?: boolean }>) => {
-  const {
-    children,
-    title,
-    src
-  } = props
+const IFrameWrapper = (
+  props: PropsWithChildren<{ src: string; title: string; open?: boolean }>
+) => {
+  const { children, title, src } = props;
   const [open, setOpen] = React.useState(props.open || false);
   const [hover, setHover] = React.useState(false);
-  const {classes, cx} = useStyles();
+  const { classes, cx } = useStyles();
 
   const handleToggle = () => setOpen((val) => !val);
   const [outerRef, outerRect] = useResizeObserver();
   const [innerRef, innerRect] = useResizeObserver();
-  
+
   return (
     <div className={classes.root} ref={outerRef}>
       <aside
@@ -45,7 +43,9 @@ const IFrameWrapper = (props: PropsWithChildren<{ src: string; title: string; op
       >
         <div className={classes.toggleButtonHolder}>
           <button
-            style={{ width: (innerRect?.height && innerRect?.height * 0.25) || 'auto' }}
+            style={{
+              width: (innerRect?.height && innerRect?.height * 0.25) || 'auto',
+            }}
             className={classes.toggleButton}
             type="button"
             onClick={handleToggle}
@@ -56,14 +56,18 @@ const IFrameWrapper = (props: PropsWithChildren<{ src: string; title: string; op
           </button>
         </div>
 
-        <div className={classes.scrollable}>
-          {children}
-        </div>
+        <div className={classes.scrollable}>{children}</div>
       </aside>
 
-      <div className={cx(classes.iframeWrapper, (hover || open) && classes.iframeWrapperShadow)} style={{
-        width: (outerRect?.width - (open ? innerRect?.width : 0)) || '100%',
-      }}>
+      <div
+        className={cx(
+          classes.iframeWrapper,
+          (hover || open) && classes.iframeWrapperShadow
+        )}
+        style={{
+          width: outerRect?.width - (open ? innerRect?.width : 0) || '100%',
+        }}
+      >
         <iframe
           className={classes.iframe}
           style={{
@@ -78,49 +82,36 @@ const IFrameWrapper = (props: PropsWithChildren<{ src: string; title: string; op
       </div>
     </div>
   );
-}
+};
 
 const IFrame = (props: PropTypes) => {
-  const {
-    iframe: src,
-    title,
-    description,
-    source,
-    mdx,
-    tags,
-    open,
-  } = props;
+  const { iframe: src, title, description, source, mdx, tags, open } = props;
   const { classes } = useStyles();
-  
+
   const content = (
     <>
       <header>
         <h1>{title}</h1>
-        {source && (
-          <Link href={source}>Source</Link>
-        )}
+        {source && <Link href={source}>Source</Link>}
         <TagsList tags={tags} />
       </header>
 
       {(mdx && (
         <main className={classes.main}>
-          <MDXRenderer content={mdx} />
+          <MDXRenderer tinaField="body" content={mdx} />
         </main>
-      )) || (description && (
-        <main className={classes.main}>{description}</main>
-      ))}
+      )) ||
+        (description && <main className={classes.main}>{description}</main>)}
     </>
-  )
+  );
 
-  if (!src) return content
+  if (!src) return content;
 
-  return <IFrameWrapper
-    src={src}
-    title={title}
-    open={open}
-  >
-    {content}
-  </IFrameWrapper>
+  return (
+    <IFrameWrapper src={src} title={title} open={open}>
+      {content}
+    </IFrameWrapper>
+  );
 };
 
 export default IFrame;
