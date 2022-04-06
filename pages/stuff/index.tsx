@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import { LayoutContentWrapper } from '../../components/Layout/Layout';
-import Link from '../../components/Link/Link';
+import { DraftLink as Link } from '../../components/Link/Link';
 import filterUnpublished from '../../lib/filterUnpublished';
 import getStuffContext from '../../lib/getStuffContext';
 import { AsyncReturnType } from '../../typings';
@@ -17,7 +17,9 @@ const Stuff = (props: AsyncReturnType<typeof getStaticProps>['props']) => {
       <ul>
         {props.data.posts.map((post) => (
           <li key={post.href}>
-            <Link href={post.href}>{post.title}</Link>
+            <Link unpublished={!post?.published} href={post.href}>
+              {post.title}
+            </Link>
           </li>
         ))}
       </ul>
