@@ -1,41 +1,41 @@
-import type { AppProps } from 'next/app'
+import type { AppProps } from 'next/app';
 import Head from 'next/head';
-import dynamic from 'next/dynamic'
-import { TinaEditProvider } from 'tinacms/dist/edit-state'
+import dynamic from 'next/dynamic';
+import { TinaEditProvider } from 'tinacms/dist/edit-state';
 
-import Layout from '../components/Layout/Layout'
-import ThemeProvider from '../themes/Theme'
+import Layout from '../components/Layout/Layout';
+import ThemeProvider from '../themes/Theme';
 
-const TinaCMS = dynamic(() => import('tinacms'), { ssr: false })
+const TinaCMS = dynamic(() => import('tinacms'), { ssr: false });
 
-const branch = process.env.NEXT_PUBLIC_EDIT_BRANCH || 'next'
+const branch = process.env.NEXT_PUBLIC_EDIT_BRANCH || 'next';
 const apiURL =
   process.env.NODE_ENV !== 'production' ||
   !process.env.NEXT_PUBLIC_TINA_CLIENT_ID
     ? 'http://localhost:4001/graphql'
-    : `https://content.tinajs.io/content/${process.env.NEXT_PUBLIC_TINA_CLIENT_ID}/github/${branch}`
-
+    : `https://content.tinajs.io/content/${process.env.NEXT_PUBLIC_TINA_CLIENT_ID}/github/${branch}`;
 
 // console.info('Tina API URL', apiURL)
 
-const getPageData = (pageProps: any): any => (
-  pageProps?.data?.getStuffDocument
-  || pageProps?.data?.getPostDocument
-  || pageProps?.data?.getTagDocument
-  || pageProps?.data?.getPageDocument
-  || pageProps?.data?.getLandingPageDocument
-  )?.data
+const getPageData = (pageProps: any): any =>
+  (
+    pageProps?.data?.getStuffDocument ||
+    pageProps?.data?.getPostDocument ||
+    pageProps?.data?.getTagDocument ||
+    pageProps?.data?.getPageDocument ||
+    pageProps?.data?.getLandingPageDocument
+  )?.data;
 
 const App = (props: AppProps) => {
-  const { Component, pageProps } = props
-  const { relativePath } = pageProps?.variables || {}
-  const pageData = getPageData(pageProps)
+  const { Component, pageProps } = props;
+  const { relativePath } = pageProps?.variables || {};
+  const pageData = getPageData(pageProps);
 
   const editMode = (
     <TinaCMS
       apiURL={apiURL}
       mediaStore={async () => {
-        const pack = await import("next-tinacms-cloudinary");
+        const pack = await import('next-tinacms-cloudinary');
         return pack.TinaCloudCloudinaryMediaStore;
       }}
       cmsCallback={(cms) => {
@@ -45,30 +45,30 @@ const App = (props: AppProps) => {
         /**
          * Enables the Tina Admin Experience
          */
-        cms.flags.set("tina-admin", true);
+        cms.flags.set('tina-admin', true);
         /**
          * Enables the Branch Switcher
          */
-        cms.flags.set("branch-switcher", true);
+        cms.flags.set('branch-switcher', true);
         /**
          * Plugins
          */
-        import("tinacms").then(({ RouteMappingPlugin }) => {
+        import('tinacms').then(({ RouteMappingPlugin }) => {
           const RouteMapping = new RouteMappingPlugin(
             (collection, document) => {
-              if (["authors", "global"].includes(collection.name)) {
+              if (['authors', 'global'].includes(collection.name)) {
                 return undefined;
               }
 
-              if (["pages"].includes(collection.name)) {
-                if (document.sys.filename === "home") {
+              if (['pages'].includes(collection.name)) {
+                if (document.sys.filename === 'home') {
                   return `/`;
                 }
 
-                if (document.sys.filename === "hello") {
+                if (document.sys.filename === 'hello') {
                   return `/hello`;
                 }
-                if (document.sys.filename === "no-cookies") {
+                if (document.sys.filename === 'no-cookies') {
                   return `/no-cookies`;
                 }
 
@@ -80,7 +80,7 @@ const App = (props: AppProps) => {
           );
           cms.plugins.add(RouteMapping);
         });
-        import("react-tinacms-editor").then(({ MarkdownFieldPlugin }) => {
+        import('react-tinacms-editor').then(({ MarkdownFieldPlugin }) => {
           cms.plugins.add(MarkdownFieldPlugin);
         });
       }}
@@ -89,33 +89,29 @@ const App = (props: AppProps) => {
          * After a new document is created, redirect to its location
          */
         onNewDocument: ({ collection: { slug }, breadcrumbs }) => {
-          const relativeUrl = `/${slug}/${breadcrumbs.join("/")}`;
+          const relativeUrl = `/${slug}/${breadcrumbs.join('/')}`;
           return (window.location.href = relativeUrl);
         },
         /**
          * Only allows documents to be created to the `Blog Posts` Collection
          */
         filterCollections: (options) => {
-          return options.filter(
-            (option) => option.label === "Blog Posts"
-          );
+          return options.filter((option) => option.label === 'Blog Posts');
         },
       }}
       formifyCallback={({ formConfig, createForm, createGlobalForm }) => {
-        if (formConfig.id === "getGlobalDocument") {
+        if (formConfig.id === 'getGlobalDocument') {
           //@ts-ignore
-          return createGlobalForm(formConfig, { layout: "fullscreen" });
+          return createGlobalForm(formConfig, { layout: 'fullscreen' });
         }
 
         return createForm(formConfig);
       }}
       {...pageProps}
     >
-      {(livePageProps) => (
-        <Component {...livePageProps} />
-      )}
+      {(livePageProps) => <Component {...livePageProps} />}
     </TinaCMS>
-  )
+  );
 
   return (
     <>
@@ -139,7 +135,7 @@ const App = (props: AppProps) => {
         </Layout>
       </ThemeProvider>
     </>
-  )
-}
+  );
+};
 
-export default App
+export default App;
