@@ -67,7 +67,7 @@ const Renderer = ({
         ctrls.screenSpacePanning = false;
 
         ctrls.minDistance = 1;
-        ctrls.maxDistance = 12;
+        ctrls.maxDistance = 60;
 
         const controlSpeed =
           'ontouchstart' in window || navigator.maxTouchPoints ? 1 : 0.1;
