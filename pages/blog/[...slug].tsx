@@ -7,6 +7,7 @@ import { ExperimentalGetTinaClient } from '../../.tina/__generated__/types';
 import getBlogContext from '../../lib/getBlogContext';
 import { AsyncReturnType } from '../../typings';
 import { LayoutContentWrapper } from '../../components/Layout/Layout';
+import filterUnpublished from '../../lib/filterUnpublished';
 
 const client = ExperimentalGetTinaClient();
 
@@ -53,9 +54,9 @@ type GetStaticPropsCtx = {
 
 export const getStaticProps = async (props: GetStaticPropsCtx) => {
   const slug = props.params.slug.join('/');
-  const itemFromContext = Object.values(await getBlogContext()).find(
-    (item) => item.slug === slug
-  );
+  const itemFromContext = filterUnpublished(
+    Object.values(await getBlogContext())
+  ).find((item) => item.slug === slug);
   const doc = await client.getPostDocument({
     relativePath: itemFromContext?.relativePath || '',
   });
@@ -71,7 +72,7 @@ export const getStaticProps = async (props: GetStaticPropsCtx) => {
 export async function getStaticPaths() {
   const context = await getBlogContext();
   return {
-    paths: Object.values(context)
+    paths: filterUnpublished(Object.values(context))
       .map(({ slug }) => {
         if (slug) return { params: { slug: slug.split('/') } };
       })

@@ -1,6 +1,7 @@
 import Head from 'next/head';
 import { LayoutContentWrapper } from '../../components/Layout/Layout';
 import Link from '../../components/Link/Link';
+import filterUnpublished from '../../lib/filterUnpublished';
 import getStuffContext from '../../lib/getStuffContext';
 import { AsyncReturnType } from '../../typings';
 
@@ -31,7 +32,7 @@ export const getStaticProps = async function () {
   return {
     props: {
       data: {
-        posts: Object.values(postsListData),
+        posts: filterUnpublished(Object.values(postsListData)),
       },
     },
   };

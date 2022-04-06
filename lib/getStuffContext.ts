@@ -7,6 +7,7 @@ type Stuff = {
   id: string;
   relativePath: string;
   slug: string;
+  published?: boolean;
   date: string | null;
 };
 export const getStuffContext = async (): Promise<{ [k: string]: Stuff }> => {

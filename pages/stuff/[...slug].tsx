@@ -8,6 +8,7 @@ import getStuffContext from '../../lib/getStuffContext';
 import IFrame from '../../components/IFrame/IFrame';
 import { AsyncReturnType } from '../../typings';
 import { LayoutContentWrapper } from '../../components/Layout/Layout';
+import filterUnpublished from '../../lib/filterUnpublished';
 
 export default function Stuff(
   props: AsyncReturnType<typeof getStaticProps>['props']
@@ -75,7 +76,7 @@ export const getStaticProps = async (props: { params: any }) => {
 export async function getStaticPaths() {
   const context = await getStuffContext();
   return {
-    paths: Object.values(context)
+    paths: filterUnpublished(Object.values(context))
       .map(({ slug, id, date }) => {
         if (slug) return { params: { slug: slug.split('/') } };
       })
