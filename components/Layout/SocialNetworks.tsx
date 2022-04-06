@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { createStyles as createUseStyles } from '@mantine/core';
 
 import Twitter from './assets/twitter.svg';
-import StackExchange from './assets/stackexchange.svg';
 import LinkedIn from './assets/linkedin.svg';
 import GitHub from './assets/github.svg';
 import ExternalLink from '../Link/Link';
@@ -11,43 +10,45 @@ import ExternalLink from '../Link/Link';
 type SocialNetworksProps = {
   className?: string;
   classes?: { [k: string]: string };
-}
+};
 
-const useStyles = createUseStyles(
-  {
-    root: {
-      overflow: 'hidden',
+const useStyles = createUseStyles({
+  root: {
+    overflow: 'hidden',
+  },
+  list: {
+    margin: 0,
+    padding: 0,
+    listStyle: 'none',
+    display: 'flex',
+  },
+  item: {
+    padding: 0,
+    margin: '0 0.5em',
+    '&:first-of-type': {
+      marginLeft: 0,
     },
-    list: {
-      margin: 0,
-      padding: 0,
-      listStyle: 'none',
-      display: 'flex',
+    '&:last-child': {
+      marginRight: 0,
     },
-    item: {
-      padding: 0,
-      margin: '0 0.5em',
-      '&:first-of-type': {
-        marginLeft: 0,
-      },
-      '&:last-child': {
-        marginRight: 0,
-      }
+  },
+  link: {
+    display: 'flex',
+  },
+  icon: {
+    width: '1.25em',
+    height: '1.25em',
+    '& path': {
+      fill: 'currentColor',
     },
-    link: {
-      display: 'flex',
-    },
-    icon: {
-      width: '1.25em',
-      height: '1.25em',
-      '& path': {
-        fill: 'currentColor',
-      }
-    },
-  }
-);
+  },
+});
 
-const SocialNetworks = ({ className, classes: passedClasses, ...props }: SocialNetworksProps) => {
+const SocialNetworks = ({
+  className,
+  classes: passedClasses,
+  ...props
+}: SocialNetworksProps) => {
   const { classes, cx } = useStyles();
 
   return (
@@ -69,14 +70,6 @@ const SocialNetworks = ({ className, classes: passedClasses, ...props }: SocialN
             href="https://github.com/zeropaper"
           >
             <GitHub className={classes.icon} />
-          </ExternalLink>
-        </li>
-        <li className={classes.item}>
-          <ExternalLink
-            className={classes.link}
-            href="https://stackoverflow.com/users/story/662964"
-          >
-            <StackExchange className={classes.icon} />
           </ExternalLink>
         </li>
         <li className={classes.item}>
