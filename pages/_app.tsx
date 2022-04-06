@@ -124,11 +124,8 @@ const App = (props: AppProps) => {
         <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width" />
       </Head>
 
-      <ThemeProvider
-        withGlobalStyles
-        withNormalizeCSS
-      >
-        <Layout component={pageData?.iframe || relativePath === 'home.json' ? undefined : 'div'}>
+      <ThemeProvider withGlobalStyles withNormalizeCSS>
+        <Layout>
           <TinaEditProvider
             // showEditButton
             editMode={editMode}

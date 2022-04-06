@@ -11,7 +11,6 @@ export { useStyles };
 
 export interface PropTypes {
   children: React.ReactNode;
-  component?: React.ComponentType<{ className?: string }> | string;
   classes?: ClassNames<typeof useStyles>;
   className?: string;
 }
@@ -44,13 +43,20 @@ export const getGlobalStyles: (theme: MantineTheme) => CSSObject = ({
 
 export const LayoutContentWrapper = ({
   children,
+  className,
   classes: passedClasses = {},
   ...props
 }: PropsWithChildren<{
+  className?: string;
   classes?: Partial<ReturnType<typeof useStyles>['classes']>;
 }>) => {
   const { classes, cx } = useStyles();
-  const mainClass = cx(classes.root, classes.main, passedClasses?.main);
+  const mainClass = cx(
+    classes.root,
+    classes.main,
+    passedClasses?.main,
+    className
+  );
   const contentClass = cx(
     classes.inner,
     classes.content,
@@ -68,8 +74,8 @@ export const LayoutContentWrapper = ({
 const Layout = ({
   children,
   classes: passedClasses,
-  component: Comp,
-}: PropTypes) => {
+}: // component: Comp,
+PropTypes) => {
   const { classes, cx } = useStyles();
   const mainClass = cx(classes.root, classes.main, passedClasses?.main);
   const contentClass = cx(
@@ -82,13 +88,13 @@ const Layout = ({
     inner: classes.inner,
   };
 
-  const content = Comp ? (
-    <main id="page-content" className={mainClass}>
-      <Comp className={contentClass}>{children}</Comp>
-    </main>
-  ) : (
-    children
-  );
+  // const content = Comp ? (
+  //   <main id="page-content" data-wrapped className={mainClass}>
+  //     <Comp className={contentClass}>{children}</Comp>
+  //   </main>
+  // ) : (
+  //   children
+  // );
 
   return (
     <>
@@ -103,7 +109,8 @@ const Layout = ({
         className={cx(classes.header, passedClasses?.header)}
       />
 
-      {content}
+      {/* {content} */}
+      {children}
 
       <Footer
         classes={commonClasses}
