@@ -44,6 +44,11 @@ const mdxBodyField: TinaField = {
   isBody: true,
 }
 
+const slugField: TinaField = {
+  type: 'string',
+  label: 'Slug',
+  name: 'slug',
+}
 const publishedField: TinaField = {
   type: 'boolean',
   name: 'published',
@@ -137,11 +142,7 @@ export default defineSchema({
       format: 'mdx',
       fields: [
         ...pageFields,
-        {
-          type: 'string',
-          label: 'Slug',
-          name: 'slug',
-        },
+        slugField,
         dateField,
         // seoFields,
         tagsField,
@@ -165,11 +166,7 @@ export default defineSchema({
       format: 'mdx',
       fields: [
         ...pageFields,
-        {
-          type: 'string',
-          label: 'Slug',
-          name: 'slug',
-        },
+        slugField,
         tagsField,
         dateField,
         mdxBodyField,
