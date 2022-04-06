@@ -26,7 +26,11 @@ export default function Stuff(
   return (
     <>
       <Head>
-        <title>{title} | Next.js Stuff Example</title>
+        <title>{title}</title>
+        <meta
+          name="description"
+          content={description || 'Stuff by zeropaper'}
+        />
         {/* <meta property="og:image" content={ogImage?.url} /> */}
       </Head>
 
@@ -40,7 +44,9 @@ export default function Stuff(
           mdx={body}
         />
       ) : (
-        <MDXRenderer data-tinafield="body" content={body} />
+        <LayoutContentWrapper>
+          <MDXRenderer data-tinafield="body" content={body} />
+        </LayoutContentWrapper>
       )}
     </>
   );
