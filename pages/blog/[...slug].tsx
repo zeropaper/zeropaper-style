@@ -40,7 +40,7 @@ export default function Post(
       <h1 data-tinafield="title">{title}</h1>
 
       <MDXRenderer data-tinafield="body" content={body} />
-    </article>
+    </LayoutContentWrapper>
   );
 }
 

@@ -7,6 +7,7 @@ import { ExperimentalGetTinaClient } from '../../.tina/__generated__/types';
 import getStuffContext from '../../lib/getStuffContext';
 import IFrame from '../../components/IFrame/IFrame';
 import { AsyncReturnType } from '../../typings';
+import { LayoutContentWrapper } from '../../components/Layout/Layout';
 
 export default function Stuff(
   props: AsyncReturnType<typeof getStaticProps>['props']

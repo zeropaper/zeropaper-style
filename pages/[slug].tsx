@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 
 import { ExperimentalGetTinaClient } from '../.tina/__generated__/types';
 import Grid from '../components/Grid/Grid';
+import { LayoutContentWrapper } from '../components/Layout/Layout';
 import { MDXRenderer } from '../components/MDXRenderer/MDXRenderer';
 import { getPageContext } from '../lib/getPageContext';
 import { AsyncReturnType } from '../typings';
@@ -22,9 +23,9 @@ export default function Page(
     // @ts-ignore
     (data?.getPageDocument || data?.getLandingPageDocument)?.data || {};
   return (
-    <>
+    <LayoutContentWrapper>
       <Head>
-        <title>{title} | Next.js Blog Example</title>
+        <title>{title}</title>
         {/* <meta property="og:image" content={ogImage?.url} /> */}
       </Head>
 
@@ -35,7 +36,7 @@ export default function Page(
       ) : (
         <Grid blocks={blocks || []} />
       )}
-    </>
+    </LayoutContentWrapper>
   );
 }
 
