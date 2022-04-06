@@ -7,6 +7,7 @@ import { ExperimentalGetTinaClient } from '../../.tina/__generated__/types';
 
 import getBlogContext from '../../lib/getBlogContext';
 import { AsyncReturnType } from '../../typings';
+import { LayoutContentWrapper } from '../../components/Layout/Layout';
 
 const client = ExperimentalGetTinaClient();
 
@@ -31,9 +32,10 @@ export default function Post(
     body,
   } = data?.getPostDocument?.data || {};
   return (
-    <article>
+    <LayoutContentWrapper>
       <Head>
-        <title>{title} | Next.js Blog Example</title>
+        <title>{title}</title>
+        <meta name="description" content={'A blog post by zeropaper'} />
         {/* <meta property="og:image" content={ogImage?.url} /> */}
       </Head>
 
