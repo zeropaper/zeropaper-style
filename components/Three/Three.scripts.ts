@@ -322,7 +322,6 @@ export const onRender = (ctx: SceneCtx) => {
   cubes.forEach((layer, a) => {
     layer.forEach((row, b) => {
       row.forEach((cube, c) => {
-        console.info('...', cube.name, a, b, c)
         cube.unfold(fraction)
       })
     })
