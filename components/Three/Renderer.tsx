@@ -11,6 +11,17 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { useScene } from './hooks';
 import { RendererCtx, RendererContext } from './RendererCtx';
 
+const ensureProxy = (original: HTMLElement): HTMLElement => {
+  let proxy =
+    original.parentElement?.querySelector<HTMLElement>('[data-proxy]');
+  if (!proxy) {
+    proxy = document.createElement('div');
+    proxy.setAttribute('data-proxy', 'true');
+    original.parentElement?.insertBefore(proxy, original);
+  }
+  return proxy;
+};
+
 const Renderer = ({
   id,
   destinationCanvasRef,
@@ -53,11 +64,23 @@ const Renderer = ({
       const found = scene.getObjectByName('camera') as PerspectiveCamera | null;
       instance = found || new PerspectiveCamera();
       instance.name = 'camera';
-      if (
-        destinationCanvasRef.current?.width &&
-        destinationCanvasRef.current?.height
-      ) {
-        ctrls = new OrbitControls(instance, destinationCanvasRef.current);
+      const destCanvas = destinationCanvasRef.current;
+      if (destCanvas?.width && destCanvas?.height) {
+        requestAnimationFrame(() => {
+          const proxy = ensureProxy(destCanvas);
+          proxy.style.top = `${(destCanvas?.height || 0) * (topPrct * 0.01)}px`;
+          proxy.style.left = `${
+            (destCanvas?.width || 0) * (leftPrct * 0.01)
+          }px`;
+          proxy.style.height = `${renderer.domElement?.height}px`;
+          proxy.style.width = `${renderer.domElement?.width}px`;
+          proxy.style.position = 'absolute';
+          proxy.style.zIndex = '100';
+          // proxy.style.background = 'lime';
+          // proxy.style.opacity = '0.5';
+        });
+
+        ctrls = new OrbitControls(instance, ensureProxy(destCanvas));
         // @ts-ignore
         ctrls.listenToKeyEvents(window); // optional
 
@@ -146,6 +169,7 @@ const Renderer = ({
     return () => {
       if (onUnmount) onUnmount(context);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
