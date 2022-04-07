@@ -270,7 +270,7 @@ export const onMount = ({ scene, clock }: SceneCtx) => {
 
   updateCamera(scene);
 
-  ensureSceneHelper(scene, true);
+  // ensureSceneHelper(scene, true);
   ensureShadowCaster(scene, true);
   ensureAmbientLight(scene, true);
   ensureSpotLight(scene, true);
