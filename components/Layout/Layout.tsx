@@ -39,6 +39,17 @@ export const getGlobalStyles: (theme: MantineTheme) => CSSObject = ({
     flexDirection: 'column',
     flexGrow: 1,
   },
+
+  '.skip-to-content-link': {
+    display: 'none',
+    height: 0,
+    margin: 0,
+  },
+
+  '.site-logo': {
+    maxHeight: '1em',
+    maxWidth: '1em',
+  },
 });
 
 export const LayoutContentWrapper = ({
@@ -100,7 +111,10 @@ PropTypes) => {
     <>
       <Global styles={getGlobalStyles} />
 
-      <a className={classes.pageContentLink} href="#page-content">
+      <a
+        className={`${classes.pageContentLink} skip-to-content-link`}
+        href="#page-content"
+      >
         Skip to content
       </a>
 
