@@ -5,9 +5,9 @@ function updateCamera(scene: SceneCtx['scene']) {
   const camera = scene.getObjectByName('camera');
 
   if (!camera) return;
-  camera.position.x = camera.position.x || -2;
-  camera.position.y = camera.position.y || 4;
-  camera.position.z = camera.position.z || 2;
+  camera.position.x = camera.position.x || -15;
+  camera.position.y = camera.position.y || 15;
+  camera.position.z = camera.position.z || -15;
   camera.lookAt(scene.position);
   // camera.updateMatrix()
   return camera
