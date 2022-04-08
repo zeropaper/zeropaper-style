@@ -1,7 +1,3 @@
-import { GetServerSidePropsContext } from 'next';
-import { useState } from 'react';
-import { getCookie, setCookies } from 'cookies-next';
-import { ColorScheme } from '@mantine/core';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import dynamic from 'next/dynamic';
@@ -30,22 +26,10 @@ const getPageData = (pageProps: any): any =>
     pageProps?.data?.getLandingPageDocument
   )?.data;
 
-const App = (props: AppProps & { colorScheme: ColorScheme }) => {
+const App = (props: AppProps) => {
   const { Component, pageProps } = props;
   const { relativePath } = pageProps?.variables || {};
   const pageData = getPageData(pageProps);
-  const [colorScheme, setColorScheme] = useState<ColorScheme>(
-    props.colorScheme
-  );
-
-  const toggleColorScheme = (value?: ColorScheme) => {
-    const nextColorScheme =
-      value || (colorScheme === 'dark' ? 'light' : 'dark');
-    setColorScheme(nextColorScheme);
-    setCookies('mantine-color-scheme', nextColorScheme, {
-      maxAge: 60 * 60 * 24 * 30,
-    });
-  };
 
   const editMode = (
     <TinaCMS
@@ -140,12 +124,7 @@ const App = (props: AppProps & { colorScheme: ColorScheme }) => {
         />
       </Head>
 
-      <ThemeProvider
-        colorScheme={colorScheme}
-        onToggleScheme={() => toggleColorScheme()}
-        withGlobalStyles
-        withNormalizeCSS
-      >
+      <ThemeProvider withGlobalStyles withNormalizeCSS>
         <Layout>
           <TinaEditProvider
             // showEditButton
@@ -158,9 +137,5 @@ const App = (props: AppProps & { colorScheme: ColorScheme }) => {
     </>
   );
 };
-
-App.getInitialProps = ({ ctx }: { ctx: GetServerSidePropsContext }) => ({
-  colorScheme: getCookie('mantine-color-scheme', ctx) || 'light',
-});
 
 export default App;
