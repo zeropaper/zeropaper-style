@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   MantineProvider,
   ColorScheme,
@@ -12,23 +12,29 @@ import {
   useColorScheme,
 } from '@mantine/hooks';
 
-export const ThemeProvider = ({
-  onToggleScheme,
-  colorScheme = 'light',
-  children,
-  ...props
-}: MantineProviderProps & {
-  onToggleScheme?: (scheme: ColorScheme) => void;
-  colorScheme?: ColorScheme;
-}) => {
+export const ThemeProvider = ({ children, ...props }: MantineProviderProps) => {
   const preferredColorScheme = useColorScheme();
+  const [colorScheme, setColorScheme] = useState<ColorScheme>('light');
 
-  const toggleColorScheme = () => {
-    if (typeof onToggleScheme === 'function')
-      onToggleScheme(colorScheme === 'dark' ? 'light' : 'dark');
+  const [localColorScheme, setLocalColorScheme] =
+    useLocalStorageValue<ColorScheme>({
+      key: 'zps-color-scheme',
+      defaultValue: preferredColorScheme,
+    });
+
+  const toggleColorScheme = (value?: ColorScheme) => {
+    const next = value || (colorScheme === 'dark' ? 'light' : 'dark');
+    setColorScheme(next);
+    setLocalColorScheme(next);
   };
 
   useHotkeys([['mod+J', () => toggleColorScheme()]]);
+
+  useEffect(() => {
+    if (colorScheme !== localColorScheme) {
+      setColorScheme(localColorScheme);
+    }
+  }, [colorScheme, localColorScheme]);
 
   return (
     <ColorSchemeProvider
