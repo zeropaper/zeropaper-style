@@ -1,4 +1,4 @@
-import { Global, MantineTheme, CSSObject } from '@mantine/core';
+import { Global } from '@mantine/core';
 
 import Header from './Header';
 import Footer from './Footer';
@@ -14,43 +14,6 @@ export interface PropTypes {
   classes?: ClassNames<typeof useStyles>;
   className?: string;
 }
-
-export const getGlobalStyles: (theme: MantineTheme) => CSSObject = ({
-  other: {
-    colorSchemeSwitch: { transitionDuration, transitionTimingFunction },
-  },
-}) => ({
-  'html,body,#__next,#root': {
-    padding: 0,
-    margin: 0,
-    minHeight: '100vh',
-    transition: `background-color, color ${transitionDuration} ${transitionTimingFunction}`,
-  },
-
-  '#__next,#root': {
-    display: 'flex',
-    flexDirection: 'column',
-    position: 'relative',
-  },
-
-  // for Tina edit mode
-  '#__next>div:not([class])': {
-    display: 'flex',
-    flexDirection: 'column',
-    flexGrow: 1,
-  },
-
-  '.skip-to-content-link': {
-    display: 'none',
-    height: 0,
-    margin: 0,
-  },
-
-  '.site-logo': {
-    maxHeight: '1em',
-    maxWidth: '1em',
-  },
-});
 
 export const LayoutContentWrapper = ({
   children,
@@ -85,31 +48,51 @@ export const LayoutContentWrapper = ({
 const Layout = ({
   children,
   classes: passedClasses,
-}: // component: Comp,
-PropTypes) => {
+}: PropTypes) => {
   const { classes, cx } = useStyles();
-  const mainClass = cx(classes.root, classes.main, passedClasses?.main);
-  const contentClass = cx(
-    classes.inner,
-    classes.content,
-    passedClasses?.content
-  );
   const commonClasses = {
     root: classes.root,
     inner: classes.inner,
   };
 
-  // const content = Comp ? (
-  //   <main id="page-content" data-wrapped className={mainClass}>
-  //     <Comp className={contentClass}>{children}</Comp>
-  //   </main>
-  // ) : (
-  //   children
-  // );
-
   return (
     <>
-      <Global styles={getGlobalStyles} />
+      <Global styles={({
+        other: {
+          colorSchemeSwitch: { transitionDuration, transitionTimingFunction },
+        },
+      }) => ({
+        'html,body,#__next,#root': {
+          padding: 0,
+          margin: 0,
+          minHeight: '100vh',
+          transition: `background-color, color ${transitionDuration} ${transitionTimingFunction}`,
+        },
+
+        '#__next,#root': {
+          display: 'flex',
+          flexDirection: 'column',
+          position: 'relative',
+        },
+
+        // for Tina edit mode
+        '#__next>div:not([class])': {
+          display: 'flex',
+          flexDirection: 'column',
+          flexGrow: 1,
+        },
+
+        '.skip-to-content-link': {
+          display: 'none',
+          height: 0,
+          margin: 0,
+        },
+
+        '.site-logo': {
+          maxHeight: '1em',
+          maxWidth: '1em',
+        },
+      })} />
 
       <a
         className={`${classes.pageContentLink} skip-to-content-link`}
