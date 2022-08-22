@@ -53,7 +53,7 @@ export const ThemeProvider = ({ children, ...props }: MantineProviderProps) => {
           colorScheme,
           primaryColor: colorScheme === 'dark' ? 'gray' : 'dark',
         }}
-        emotionOptions={{ key: 'zps', prepend: true }}
+        emotionOptions={{ key: 'zps' }}
       >
         {children}
       </MantineProvider>
