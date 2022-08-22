@@ -6,7 +6,7 @@
     "prettierTarget": "{components,contexts,utils,pages,content,.storybook,.github}{/**/,/}*.{md,mdx,json,js,css,html,js,ts,tsx}"
   },
   "scripts": {
-    "dev": "run-p dev:*",
+    "dev": "run-p start:*",
     "build": "run-s build:tina build:storybook",
     "start": "run-p start:*",
     "lint": "next lint",
