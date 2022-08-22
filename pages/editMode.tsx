@@ -8,7 +8,7 @@ const GoToEditPage: React.FC = () => {
   useEffect(() => {
     setEdit(true);
     router.back();
-  }, []);
+  }, [router, setEdit]);
   return (
     <h2>Going into edit mode...</h2>
   );

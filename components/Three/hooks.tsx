@@ -1,7 +1,8 @@
 import {
   useContext,
   useRef,
-  useEffect
+  useEffect,
+  useCallback
 } from "react";
 import {
   Scene,
@@ -59,18 +60,18 @@ export const useAnimationFrame = (callback: (deltaTime: number) => void) => {
   const cancel = () => {
     if (requestRef?.current) cancelAnimationFrame(requestRef?.current);
   }
-  
-  const animate = (time: number = 0) => {
+
+  const animate = useCallback((time: number = 0) => {
     if (previousTimeRef?.current) {
       const deltaTime = time - (previousTimeRef?.current || 0);
       callback(deltaTime)
     }
     previousTimeRef.current = time;
     requestRef.current = requestAnimationFrame(animate);
-  }
-  
+  }, [callback])
+
   useEffect(() => {
     requestRef.current = requestAnimationFrame(animate);
     return cancel
-  }, []);
+  }, [animate]);
 }
