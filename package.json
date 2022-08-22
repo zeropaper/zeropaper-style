@@ -23,11 +23,12 @@
     "postbuild:tina": "next-sitemap"
   },
   "dependencies": {
-    "@mantine/core": "^4.1.2",
-    "@mantine/hooks": "^4.1.2",
-    "@mantine/next": "^4.1.2",
+    "@mantine/core": "5.2.3",
+    "@mantine/hooks": "5.2.3",
+    "@mantine/next": "5.2.3",
     "@ory/integrations": "0.2.2",
     "@ory/kratos-client": "0.8.0-alpha.2",
+    "@tabler/icons": "1.85.0",
     "@tinacms/auth": "^0.50.2",
     "@tinacms/cli": "^0.60.11",
     "next": "12.1.4",

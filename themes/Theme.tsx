@@ -5,19 +5,22 @@ import {
   ColorSchemeProvider,
   useMantineTheme,
   MantineProviderProps,
+  createEmotionCache,
 } from '@mantine/core';
 import {
   useHotkeys,
-  useLocalStorageValue,
+  useLocalStorage,
   useColorScheme,
 } from '@mantine/hooks';
+
+const emotionCache = createEmotionCache({ key: 'overqwil' });
 
 export const ThemeProvider = ({ children, ...props }: MantineProviderProps) => {
   const preferredColorScheme = useColorScheme();
   const [colorScheme, setColorScheme] = useState<ColorScheme>('light');
 
   const [localColorScheme, setLocalColorScheme] =
-    useLocalStorageValue<ColorScheme>({
+    useLocalStorage<ColorScheme>({
       key: 'zps-color-scheme',
       defaultValue: preferredColorScheme,
     });
@@ -43,6 +46,7 @@ export const ThemeProvider = ({ children, ...props }: MantineProviderProps) => {
     >
       <MantineProvider
         {...props}
+        emotionCache={emotionCache}
         theme={{
           other: {
             colorSchemeSwitch: {
@@ -53,7 +57,6 @@ export const ThemeProvider = ({ children, ...props }: MantineProviderProps) => {
           colorScheme,
           primaryColor: colorScheme === 'dark' ? 'gray' : 'dark',
         }}
-        emotionOptions={{ key: 'zps' }}
       >
         {children}
       </MantineProvider>
