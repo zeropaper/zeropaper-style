@@ -28,6 +28,7 @@ Base.args = {};
 Base.argTypes = {};
 
 
+// eslint-disable-next-line storybook/prefer-pascal-case
 export const withLayout: DecoratorFn = (Story) => (
   <Layout>
     <Story />
