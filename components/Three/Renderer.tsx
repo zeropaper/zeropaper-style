@@ -22,40 +22,22 @@ const ensureProxy = (original: HTMLElement): HTMLElement => {
   return proxy;
 };
 
-const Renderer = ({
+const useCamera = ({
   id,
+  scene,
+  renderer,
   destinationCanvasRef,
-  children,
-  onMount,
-  onUnmount,
-  onContextChange,
-  widthPrct = 100,
-  heightPrct = 100,
-  leftPrct = 0,
-  topPrct = 0,
-}: PropsWithChildren<
-  {
-    id: string;
-    destinationCanvasRef: React.MutableRefObject<HTMLCanvasElement | null>;
-    onMount: (ctx: RendererCtx) => void;
-    onUnmount: (ctx: RendererCtx) => void;
-    onContextChange?: (ctx: RendererCtx) => void;
-  } & Partial<
-    Pick<RendererCtx, 'heightPrct' | 'leftPrct' | 'topPrct' | 'widthPrct'>
-  >
->) => {
-  const scene = useScene();
-  const renderer = useMemo<WebGLRenderer>(() => {
-    const instance = new WebGLRenderer({ alpha: true });
-    instance.shadowMap.enabled = true;
-    // instance.shadowMap.autoUpdate = true;
-    instance.shadowMap.type = PCFSoftShadowMap;
-    // if (id === 'camera') {
-    // }
-    return instance;
-  }, []);
-
-  const [camera, controls] = useMemo<
+  topPrct,
+  leftPrct,
+}: {
+  id: string;
+  scene: THREE.Scene;
+  renderer: THREE.WebGLRenderer;
+  destinationCanvasRef: React.MutableRefObject<HTMLCanvasElement | null>;
+  topPrct: number;
+  leftPrct: number;
+}) =>
+  useMemo<
     [PerspectiveCamera | OrthographicCamera, OrbitControls | null]
   >(() => {
     let instance;
@@ -114,6 +96,48 @@ const Renderer = ({
     destinationCanvasRef.current?.width,
     destinationCanvasRef.current?.height,
   ]);
+
+const Renderer = ({
+  id,
+  destinationCanvasRef,
+  children,
+  onMount,
+  onUnmount,
+  onContextChange,
+  widthPrct = 100,
+  heightPrct = 100,
+  leftPrct = 0,
+  topPrct = 0,
+}: PropsWithChildren<
+  {
+    id: string;
+    destinationCanvasRef: React.MutableRefObject<HTMLCanvasElement | null>;
+    onMount: (ctx: RendererCtx) => void;
+    onUnmount: (ctx: RendererCtx) => void;
+    onContextChange?: (ctx: RendererCtx) => void;
+  } & Partial<
+    Pick<RendererCtx, 'heightPrct' | 'leftPrct' | 'topPrct' | 'widthPrct'>
+  >
+>) => {
+  const scene = useScene();
+  const renderer = useMemo<WebGLRenderer>(() => {
+    const instance = new WebGLRenderer({ alpha: true });
+    instance.shadowMap.enabled = true;
+    // instance.shadowMap.autoUpdate = true;
+    instance.shadowMap.type = PCFSoftShadowMap;
+    // if (id === 'camera') {
+    // }
+    return instance;
+  }, []);
+
+  const [camera, controls] = useCamera({
+    id,
+    scene,
+    renderer,
+    destinationCanvasRef,
+    topPrct,
+    leftPrct,
+  });
 
   const cameraHelper = useMemo<CameraHelper | null>(() => {
     if (id !== 'camera') return null;

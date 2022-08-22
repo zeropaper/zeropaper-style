@@ -1,5 +1,6 @@
 import { SceneCtx } from './SceneCtx';
 import * as THREE from 'three';
+import { MantineTheme } from '@mantine/core';
 
 function updateCamera(scene: SceneCtx['scene']) {
   const camera = scene.getObjectByName('camera');
@@ -61,6 +62,8 @@ function ensure(name: string, creator: (_THREE: typeof THREE) => THREE.Object3D,
 // ------------------------------------------------------------
 
 const degToRad = (deg: number) => deg * Math.PI / 180
+
+type MeshMaterial = THREE.MeshStandardMaterial | THREE.MeshBasicMaterial | THREE.MeshLambertMaterial
 
 class UnfoldingCube extends THREE.Group {
   constructor() {
@@ -180,6 +183,32 @@ class UnfoldingCube extends THREE.Group {
     group.position.set(0, 0, 0)
     group.translateY((1 - f) - 0.5);
   }
+
+  setColor = (color: number | string) => {
+    const {
+      left,
+      right,
+      top,
+      bottom,
+      front,
+      back,
+    } = this.faces;
+
+    const set = (m: THREE.Mesh['material']) => {
+      if (Array.isArray(m)) {
+        m.forEach(set)
+      } else {
+        (m as MeshMaterial).color.set(color)
+      }
+    }
+
+    set(left.material);
+    set(right.material);
+    set(top.material);
+    set(bottom.material);
+    set(front.material);
+    set(back.material);
+  }
 }
 
 let fraction = 1;
@@ -292,15 +321,25 @@ export const onMount = ({ scene, clock }: SceneCtx) => {
   })))
 };
 
-// let frameCounter = 0;
+let frameCounter = 0;
 let prevNow = 0
+let prevColor: any;
 export const onRender = (ctx: SceneCtx) => {
-  const { scene, clock } = ctx;
+  const { scene, clock, theme } = ctx;
+  if (!cubes?.length) return;
+
   // @ts-ignore
   if (!!window?.__recreateScene) {
     onMount(ctx);
     // @ts-ignore
     window.__recreateScene = false;
+  }
+  let changeColor = false
+  const themeColor = theme?.colors[theme?.primaryColor][2]
+  if (!prevColor || (prevColor !== themeColor)) {
+    console.info('change color', prevColor, themeColor)
+    prevColor = themeColor
+    changeColor = true
   }
 
   updateCameraSide(scene);
@@ -322,15 +361,17 @@ export const onRender = (ctx: SceneCtx) => {
   cubes.forEach((layer, a) => {
     layer.forEach((row, b) => {
       row.forEach((cube, c) => {
+        if (changeColor) cube.setColor(prevColor)
         cube.unfold(fraction)
       })
     })
   })
 
-  // if (frameCounter >= 60) {
-  //   frameCounter = 0;
-  //   // debugger
-  // }
-  // frameCounter += 1;
+  if (frameCounter >= 60) {
+    // console.info('theme?.primaryColor', theme?.primaryColor)
+    frameCounter = 0;
+    // debugger
+  }
+  frameCounter += 1;
   prevNow = now
 };
