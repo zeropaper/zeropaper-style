@@ -8,7 +8,7 @@ import {
   useCallback,
 } from 'react';
 import { useResizeObserver } from '@mantine/hooks';
-import { createStyles } from '@mantine/core';
+import { createStyles, MantineTheme, useMantineTheme } from '@mantine/core';
 import { PerspectiveCamera, OrthographicCamera } from 'three';
 
 import type { RendererCtx } from './RendererCtx';
@@ -20,6 +20,7 @@ import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
 // import onRender from './onRender';
 // import onMount from './onMount';
 import * as scripts from './Three.scripts';
+import { useTheme } from '../../themes/Theme';
 
 export type PropTypes = {
   onMount?: (ctx: SceneCtx) => void;
@@ -60,6 +61,15 @@ export const RuntimeComponent = ({
   const canvas = useRef<HTMLCanvasElement>(null);
   const scene = useScene();
   const clock = useClock();
+  const theme = useTheme();
+  function getTheme() {
+    return theme;
+  }
+  console.info(
+    'theme.colors[theme.primaryColor][2]',
+    theme.primaryColor,
+    theme.colors[theme.primaryColor][2]
+  );
 
   useEffect(() => {
     if (canvas.current) {
@@ -94,35 +104,33 @@ export const RuntimeComponent = ({
 
   useEffect(() => {
     clock.stop();
-    if (onMount) onMount({ scene, clock });
+    if (onMount) onMount({ scene, clock, theme });
     clock.start();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleRendererMount = useCallback((ctx: RendererCtx) => {
-    const { renderer } = ctx;
-
     contexts.current.push(ctx);
   }, []);
   const handleRendererUnmount = useCallback((ctx: RendererCtx) => {
-    const { renderer } = ctx;
-
     contexts.current.splice(
       contexts.current.findIndex((c) => c.id === ctx.id),
       1
     );
   }, []);
 
-  useAnimationFrame((deltaTime) => {
+  const renderFrame = (deltaTime: number) => {
     const destCtx = canvas.current?.getContext('2d');
     if (!canvas.current || !destCtx) return;
     if (clock) clock.getElapsedTime();
 
-    if (onRender) onRender({ scene, clock });
-    contexts.current.forEach((ctx) => ctx.render(deltaTime));
+    if (onRender) onRender({ scene, clock, theme });
 
     destCtx.clearRect(0, 0, destCtx.canvas.width, destCtx.canvas.height);
-    contexts.current.forEach(({ leftPrct, topPrct, renderer }) => {
+    contexts.current.forEach((ctx) => {
+      const { leftPrct, topPrct, renderer } = ctx;
       if (!renderer?.domElement || !canvas.current) return;
+      ctx.render(deltaTime);
 
       try {
         const { width: dw, height: dh } = canvas.current;
@@ -140,7 +148,8 @@ export const RuntimeComponent = ({
         );
       } catch (e) {}
     });
-  });
+  };
+  useAnimationFrame(renderFrame);
 
   const ratio = width / height;
   let canvases = [
