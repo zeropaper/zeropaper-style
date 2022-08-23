@@ -6,7 +6,6 @@ import { useStyles as useLayoutStyles } from '../components/Layout/Layout';
 import { getPageContext } from '../lib/getPageContext';
 import { AsyncReturnType } from '../typings';
 import Timeline from '../components/Timeline/Timeline';
-import { MDXRenderer } from '../components/MDXRenderer/MDXRenderer';
 
 const useStyles = createStyles({
   root: {
@@ -41,7 +40,7 @@ const Hello = ({
           <Title>Hello</Title>
         </Box>
         <Box component='main'>
-          My name&apos;s Valentin.I was born in the french speaking part of Switzerland in the early 80&apos;s.
+          My name&apos;s Valentin.I was born in the french speaking part of Switzerland in the early 80&apos;s. I speak fluently french, english and german.
           <br />
           Professionally, I consider myself a digital craftsman and personnally, a creative coder.
         </Box>
