@@ -1,5 +1,4 @@
-import { ThemeIcon, Text, Avatar, Timeline as MTimeline, Box, createStyles, Title, Paper } from '@mantine/core';
-import { IconSun, IconVideo } from '@tabler/icons';
+import { Text, Box, createStyles, Title, Paper } from '@mantine/core';
 
 export interface TechCategory {
   name: string;
@@ -30,6 +29,7 @@ export interface Experience {
   color?: string;
   stack?: (keyof Stack)[];
   // skills?: SkillSet[];
+  links?: string[];
 }
 
 export interface TimelineProps {
@@ -37,7 +37,7 @@ export interface TimelineProps {
   // items: Experience[];
 }
 
-const useTimelineItemStyles = createStyles(({ spacing, breakpoints }, params, getRef) => {
+const useTimelineItemStyles = createStyles(({ spacing, breakpoints, colors }, params, getRef) => {
   return {
     root: {
       display: 'flex',
@@ -45,9 +45,8 @@ const useTimelineItemStyles = createStyles(({ spacing, breakpoints }, params, ge
     },
     gutter: {
       position: 'relative',
-      width: spacing.md * 3,
+      width: spacing.md * 2,
       display: 'flex',
-      paddingRight: spacing.md,
 
       [`@media print`]: {
         display: 'none',
@@ -55,6 +54,8 @@ const useTimelineItemStyles = createStyles(({ spacing, breakpoints }, params, ge
 
       [`@media (min-width: ${breakpoints.xl}px)`]: {
         paddingLeft: spacing.md,
+        paddingRight: spacing.md,
+        width: spacing.md * 3,
       },
       '&::before,&::after': {
         position: 'absolute',
@@ -109,6 +110,7 @@ const useTimelineItemStyles = createStyles(({ spacing, breakpoints }, params, ge
     },
     stack: {
       marginBottom: spacing.md,
+      color: colors.gray[6],
     },
     stackItem: {}
   };
@@ -152,11 +154,19 @@ function ExperienceItem({
   );
 }
 
-const useTimelineStyles = createStyles<'root' | 'item', { reverseOrder?: boolean }>(({ spacing, breakpoints }, { reverseOrder }, getRef) => {
+const useTimelineStyles = createStyles<'root' | 'item', { reverseOrder?: boolean }>(({ spacing, breakpoints, fn }, { reverseOrder }, getRef) => {
   return {
     root: {
-      padding: spacing.md,
+      // padding: spacing.md,
       display: 'flex',
+      margin: '0 auto',
+      width: '100%',
+      maxWidth: breakpoints.md - (spacing.md * 2),
+      overflow: 'hidden',
+      [fn.smallerThan('md')]: {
+        paddingLeft: spacing.md,
+        paddingRight: spacing.md,
+      },
       flexDirection: reverseOrder ? 'column-reverse' : 'column',
       [`& > .${getRef('item')}:nth-of-type(odd)`]: {
         [`@media (min-width: ${breakpoints.xl}px)`]: {
@@ -166,6 +176,11 @@ const useTimelineStyles = createStyles<'root' | 'item', { reverseOrder?: boolean
           flexDirection: 'row',
         },
       },
+      [`& > .${getRef('item')}:${reverseOrder ? 'first' : 'last'}-of-type > div:nth-of-type(1)`]: {
+        '&::before,&::after': {
+          display: 'none',
+        }
+      }
     },
     item: {
       ref: getRef('item'),
@@ -175,14 +190,13 @@ const useTimelineStyles = createStyles<'root' | 'item', { reverseOrder?: boolean
         textAlign: 'right',
         marginRight: `calc(50% - (${spacing.md}px * 1.5))`,
         marginLeft: 'auto',
-        maxWidth: 450,
       },
     }
   };
 })
 
 export function Timeline({ reverseOrder }: { reverseOrder?: boolean }) {
-  const { classes } = useTimelineStyles({ reverseOrder });
+  const { classes, cx } = useTimelineStyles({ reverseOrder });
   return (
     <Box className={classes.root}>
       {/* <ExperienceItem
@@ -208,7 +222,7 @@ export function Timeline({ reverseOrder }: { reverseOrder?: boolean }) {
       <ExperienceItem
         className={classes.item}
         title="Web Developer"
-        text="Moved to Berlin and worked for several years as a freelance web developer. Mostly with PHP at first, focusing on Drupal after a while. Mundraub.org, reset.org and the Nitro Snowboards are among my favorite projects of that time. Although the period started on the back-end side, I gradually moved to the front-end side and started working with Sass (Compass), 96 grids and of course jQuery. And that I switched from SVN to GIT."
+        text="Moved to Berlin and worked for several years as a freelance web developer. Mostly with PHP at first, focusing on Drupal after a while. Mundraub.org, reset.org and Nitro Snowboards are among my favorite projects of that time. Although the period started on the back-end side, I gradually moved to the front-end side and started working with Sass (Compass), 96 grids and of course jQuery. And that I switched from SVN to GIT."
         from="2005"
         stack={['css', 'html5', 'javascript', 'sass', 'php', 'drupal', 'git', 'linux']}
       />
@@ -225,10 +239,15 @@ export function Timeline({ reverseOrder }: { reverseOrder?: boolean }) {
         className={classes.item}
         title="Core Developer"
         employer="Camunda"
-        text="Designing, developing and maintaining of UI of the Camunda BPM platform web‐apps, documentation and blog. The major part of my work was published under open‐source license."
+        text="Designing, developing and maintaining the UI of the Camunda BPM platform web‐apps, documentation and blog. The major part of my work was published under an open‐source license."
         from="2014-01"
         to="2017-03"
         stack={['gruntjs', 'requirejs', 'mocha', 'jenkins', 'angularjs', 'bootstrap', 'html5', 'protractor', 'git', 'linux']}
+        links={[
+          'https://docs.camunda.org/manual/7.4/webapps/tasklist/',
+          'https://docs.camunda.org/manual/7.4/webapps/cockpit/',
+          'https://github.com/camunda/camunda-commons-ui',
+        ]}
       />
 
       <ExperienceItem
@@ -243,13 +262,13 @@ export function Timeline({ reverseOrder }: { reverseOrder?: boolean }) {
         className={classes.item}
         title="Lecturer"
         employer="Devugees - DCI"
-        text="Teaching front‐end development fundamental, writing exercises and establishing the curriculum for the students."
+        text="Teaching front‐end development fundamentals, writing exercises and establishing the curriculum for the students."
         from="2017-07"
         to="2018-01"
         stack={['javascript', 'css', 'html5', 'travisci', 'react', 'sass', 'neutrino', 'webpack', 'git', 'linux']}
       />
 
-      <ExperienceItem
+      {/* <ExperienceItem
         className={classes.item}
         title="Senior Front-end Developer"
         employer="Aperto - IBMx"
@@ -257,7 +276,7 @@ export function Timeline({ reverseOrder }: { reverseOrder?: boolean }) {
         from="2018-01"
         to="2018-04"
         stack={['javascript', 'css', 'html5', 'drupal', 'webpack', 'git', 'macos']}
-      />
+      /> */}
       <ExperienceItem
         className={classes.item}
         title="Senior Front-end Developer"
@@ -291,7 +310,7 @@ export function Timeline({ reverseOrder }: { reverseOrder?: boolean }) {
         className={classes.item}
         title="Senior Front-end Developer"
         employer="GoStudent"
-        text="Caring for the code quality, harmonisation, automation, technical documentation and on‐boarding of new hires in a rapidly growing development team."
+        text="Caring for the code quality, harmonization, automation, technical documentation and on‐boarding of new hires in a rapidly growing development team."
         from="2021-08"
         to="2022-01"
         stack={['javascript', 'redux', 'react', 'nodejs', 'jest', 'eslint', 'typescript', 'testing-library', 'webpack', 'websockets', 'git', 'macos']}
