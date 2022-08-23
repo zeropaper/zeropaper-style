@@ -1,10 +1,8 @@
-# Ory Marketing Website
+# Zeropaper.style
 
-https://github.com/ory-corp/marketing/projects/10
+https://next.zeropaper.style/
 
-## Aim and goal
-
-Provide a website and CMS for the marketing purposes of Ory Corp.
+Valentin "zeropaper" Vago personal page.
 
 ## Architecture
 
