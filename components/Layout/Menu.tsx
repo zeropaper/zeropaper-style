@@ -39,7 +39,7 @@ const Menu = ({
 
   const links = [
     ['/hello', 'Hello'],
-    ['/blog', 'Blog'],
+    // ['/blog', 'Blog'],
     // ['/tags', 'Tags'],
     ['/stuff', 'Stuff'],
     // ['/contact', 'Contact'],
