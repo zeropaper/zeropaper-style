@@ -65,11 +65,6 @@ export const RuntimeComponent = ({
   function getTheme() {
     return theme;
   }
-  console.info(
-    'theme.colors[theme.primaryColor][2]',
-    theme.primaryColor,
-    theme.colors[theme.primaryColor][2]
-  );
 
   useEffect(() => {
     if (canvas.current) {
@@ -146,7 +141,7 @@ export const RuntimeComponent = ({
           sw,
           sh
         );
-      } catch (e) {}
+      } catch (e) { }
     });
   };
   useAnimationFrame(renderFrame);

@@ -51,13 +51,12 @@ const useCamera = ({
         requestAnimationFrame(() => {
           const proxy = ensureProxy(destCanvas);
           proxy.style.top = `${(destCanvas?.height || 0) * (topPrct * 0.01)}px`;
-          proxy.style.left = `${
-            (destCanvas?.width || 0) * (leftPrct * 0.01)
-          }px`;
+          proxy.style.left = `${(destCanvas?.width || 0) * (leftPrct * 0.01)
+            }px`;
           proxy.style.height = `${renderer.domElement?.height}px`;
           proxy.style.width = `${renderer.domElement?.width}px`;
           proxy.style.position = 'absolute';
-          proxy.style.zIndex = '100';
+          proxy.style.zIndex = '5';
           // proxy.style.background = 'lime';
           // proxy.style.opacity = '0.5';
         });
