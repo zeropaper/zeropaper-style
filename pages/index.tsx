@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 // import Head from 'next/head'
 import dynamic from 'next/dynamic';
 
@@ -6,25 +6,49 @@ import { ExperimentalGetTinaClient } from '../.tina/__generated__/types';
 import { useStyles as useLayoutStyles } from '../components/Layout/Layout';
 import { getPageContext } from '../lib/getPageContext';
 import { AsyncReturnType } from '../typings';
-import { createStyles } from '@mantine/core';
+import { ActionIcon, Box, createStyles, Paper, Text, Title } from '@mantine/core';
+import Link from '../components/Link/Link';
+import { IconX } from '@tabler/icons';
 
-const useStyles = createStyles({
+const useStyles = createStyles<string, {
+  overlayVisible?: boolean;
+}>((theme, { overlayVisible }) => ({
   root: {
     display: 'flex',
     flexDirection: 'column',
     flexGrow: 1,
+    position: 'relative',
   },
-  loader: {
+  three: {
+    zIndex: 1,
+  },
+  close: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    zIndex: 10,
+  },
+  paper: {
+    display: overlayVisible ? 'inline-block' : 'none',
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    zIndex: 9,
+    pointerEvents: 'all'
+  },
+  readMoreWrapper: {
+    textAlign: 'right',
+  },
+}));
+
+const Loader = () => {
+  return <Box sx={{
     display: 'flex',
     flexGrow: 1,
     alignItems: 'center',
     justifyContent: 'center',
-  },
-});
-
-const Loader = () => {
-  const { classes } = useStyles();
-  return <div className={classes.loader}>Loading</div>;
+  }}>Loading</Box>;
 };
 
 const Three = dynamic(() => import('../components/Three/Three'), {
@@ -39,13 +63,27 @@ const Home = ({
   const {
     classes: { main },
   } = useLayoutStyles();
-  const { classes, cx } = useStyles();
   const data = props.data?.getLandingPageDocument?.data || {};
+  const [overlayVisible, setOverlayVisible] = useState(true);
+  const { classes, cx } = useStyles({ overlayVisible });
 
   return (
-    <main className={cx(main, classes.root)}>
+    <Box component='main' className={cx(main, classes.root)}>
+      <Paper p="md" withBorder className={classes.paper}>
+        <ActionIcon title="Hide that message and show the pretty thing" className={classes.close} name="close" onClick={() => setOverlayVisible(false)}>
+          <IconX />
+        </ActionIcon>
+        <Title>Hello</Title>
+        <Text sx={{ maxWidth: 350 }}>
+          my name&apos;s Valentin and I craft code since the end of last century.
+        </Text>
+        <Box className={classes.readMoreWrapper}>
+          <Link href="/hello">Read more</Link>
+        </Box>
+      </Paper>
+
       <Three />
-    </main>
+    </Box>
   );
 };
 
