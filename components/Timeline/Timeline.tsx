@@ -48,6 +48,11 @@ const useTimelineItemStyles = createStyles(({ spacing, breakpoints }, params, ge
       width: spacing.md * 3,
       display: 'flex',
       paddingRight: spacing.md,
+
+      [`@media print`]: {
+        display: 'none',
+      },
+
       [`@media (min-width: ${breakpoints.xl}px)`]: {
         paddingLeft: spacing.md,
       },
@@ -84,6 +89,12 @@ const useTimelineItemStyles = createStyles(({ spacing, breakpoints }, params, ge
     },
     paperWrapper: {
       marginBottom: spacing.lg,
+      width: '100%',
+      [`@media print`]: {
+        breakInside: 'avoid',
+        pageBreakInside: 'avoid',
+        display: 'table',
+      },
     },
     paper: {},
     dates: {
@@ -91,8 +102,7 @@ const useTimelineItemStyles = createStyles(({ spacing, breakpoints }, params, ge
       lineHeight: 1,
     },
     employer: {},
-    title: {
-    },
+    title: {},
     text: {
       fontSize: '1.2rem',
       marginBottom: spacing.md,
@@ -100,8 +110,7 @@ const useTimelineItemStyles = createStyles(({ spacing, breakpoints }, params, ge
     stack: {
       marginBottom: spacing.md,
     },
-    stackItem: {
-    }
+    stackItem: {}
   };
 })
 
