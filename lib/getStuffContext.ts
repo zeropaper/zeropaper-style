@@ -19,6 +19,7 @@ export const getStuffContext = async (): Promise<{ [k: string]: Stuff }> => {
       node: {
         id,
         data: {
+          published = false,
           title = null,
           excerpt = null,
           date = null,
@@ -28,6 +29,7 @@ export const getStuffContext = async (): Promise<{ [k: string]: Stuff }> => {
     }: any) => ({
       ...obj,
       [id]: {
+        published,
         title,
         excerpt,
         date,

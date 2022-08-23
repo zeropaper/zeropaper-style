@@ -20,17 +20,20 @@ export const getPageContext = async () => {
     ...(landingPages?.data?.getLandingPageList?.edges || []),
     ...(pages?.data?.getPageList?.edges || [])
   ]
-    .reduce((obj: any, {
-      node: {
-        id,
-        data: {
-          title = null, excerpt = null
+    .reduce((obj: any, page: any) => {
+      const {
+        node: {
+          id,
+          data: {
+            published = false,
+            title = null,
+            excerpt = null
+          }
         }
-      }
-    }: any) => {
+      } = page;
       const slug = slugify(id);
       // faster than destructuring
-      obj[slug] = { title, excerpt, id, slug, href: `/${slug}/` };
+      obj[slug] = { title, excerpt, published, id, slug, href: `/${slug}/` };
       return obj;
       // return {
       //   ...obj,
@@ -43,6 +46,7 @@ export const getPageContext = async () => {
       href: string;
       title: string;
       excerpt?: string;
+      published: boolean;
     };
   };
 };
