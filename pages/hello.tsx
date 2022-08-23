@@ -20,6 +20,11 @@ const useStyles = createStyles({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  printHide: {
+    [`@media print`]: {
+      display: 'none',
+    },
+  }
 });
 
 const Hello = ({
@@ -47,7 +52,7 @@ const Hello = ({
         </Box>
       </Box>
 
-      <Group position="center" my="md">
+      <Group className={classes.printHide} position="center" my="md">
         <Button title="click to change the order" type="button" onClick={() => setReverse((r) => !r)}>
           {reverse ? 'Most recent to oldest' : 'Oldest to most recent'}
         </Button>
