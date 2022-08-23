@@ -6,7 +6,7 @@ import { useStyles as useLayoutStyles } from '../components/Layout/Layout';
 import { getPageContext } from '../lib/getPageContext';
 import { AsyncReturnType } from '../typings';
 import Timeline from '../components/Timeline/Timeline';
-import { IconSpacingHorizontal } from '@tabler/icons';
+import Link from '../components/Link/Link';
 
 const useStyles = createStyles({
   root: {
@@ -41,14 +41,35 @@ const Hello = ({
 
   return (
     <main className={cx(main, classes.root)}>
-      <Box component='section' sx={({ spacing }) => ({ maxWidth: 450, margin: 'auto', padding: spacing.md })}>
+      <Box component='section' sx={({ spacing, fn, breakpoints }) => ({
+        margin: '0 auto',
+        width: '100%',
+        maxWidth: breakpoints.md - (spacing.md * 2),
+        overflow: 'hidden',
+        [fn.smallerThan('md')]: {
+          paddingLeft: spacing.md,
+          paddingRight: spacing.md,
+        }
+      })}>
         <Box component='header'>
           <Title>Hello</Title>
         </Box>
         <Box component='main'>
-          My name&apos;s Valentin.I was born in the french speaking part of Switzerland in the early 80&apos;s. I speak fluently french, english and german.
-          <br />
-          Professionally, I consider myself a digital craftsman and personnally, a creative coder.
+          <p>
+            My name&apos;s Valentin.
+            <br />
+            I was born in the french speaking part of Switzerland in the early 80&apos;s but I lived in Berlin nearly half my life.
+            <br />
+            I speak fluently French, English and German.
+            <br />
+            Professionally, I consider myself a digital craftsman and personnally, a creative coder.
+          </p>
+
+          <p className={classes.printHide}>
+            I am currently exploring the potential paths my career could take and updating my skills.
+            <br />
+            If you believe I can add value to your product or your company,&nbsp;<Link href="https://www.linkedin.com/in/vvago">please get in touch on LinkedIn</Link>.
+          </p>
         </Box>
       </Box>
 
