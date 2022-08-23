@@ -26,8 +26,6 @@
     "@mantine/core": "5.2.3",
     "@mantine/hooks": "5.2.3",
     "@mantine/next": "5.2.3",
-    "@ory/integrations": "0.2.2",
-    "@ory/kratos-client": "0.8.0-alpha.2",
     "@tabler/icons": "1.85.0",
     "@tinacms/auth": "^0.50.2",
     "@tinacms/cli": "^0.60.11",
@@ -38,9 +36,7 @@
     "react-dom": "17.0.2",
     "react-tinacms-editor": "^0.53.10",
     "three": "^0.139.2",
-    "tinacms": "^0.67.0",
-    "typeface-bungee-inline": "^1.1.13",
-    "typeface-roboto": "^1.1.13"
+    "tinacms": "^0.67.0"
   },
   "devDependencies": {
     "@babel/core": "^7.17.8",
@@ -60,7 +56,6 @@
     "@types/node": "^17.0.23",
     "@types/react": "^17.0.43",
     "@types/three": "^0.139.0",
-    "@types/tinycolor2": "^1.4.3",
     "babel-loader": "^8.2.4",
     "eslint": "^8.12.0",
     "eslint-config-next": "^12.1.4",
