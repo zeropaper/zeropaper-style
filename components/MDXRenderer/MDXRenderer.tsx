@@ -8,7 +8,7 @@ import Timeline from '../Timeline/Timeline';
 
 const mdComponents: Components<{
   Timeline: {
-    items: any[]
+    [any: string]: any;
   };
 }> = {
   a: ({ href, children, ...props }: any) => (
@@ -21,7 +21,7 @@ const mdComponents: Components<{
 
 export type MDXRendererProps = {
   content: TinaMarkdownContent | TinaMarkdownContent[];
-  components?: Components<{}>;
+  components?: Components<{ [name: string]: any }>;
   tinaField?: string;
 };
 
