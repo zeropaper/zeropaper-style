@@ -13,7 +13,7 @@ import {
   useColorScheme,
 } from '@mantine/hooks';
 
-const emotionCache = createEmotionCache({ key: 'overqwil' });
+const emotionCache = createEmotionCache({ key: 'zp' });
 
 export const ThemeProvider = ({ children, ...props }: MantineProviderProps) => {
   const preferredColorScheme = useColorScheme();
