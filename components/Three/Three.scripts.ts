@@ -337,7 +337,6 @@ export const onRender = (ctx: SceneCtx) => {
   let changeColor = false
   const themeColor = theme?.colors[theme?.primaryColor][2]
   if (!prevColor || (prevColor !== themeColor)) {
-    console.info('change color', prevColor, themeColor)
     prevColor = themeColor
     changeColor = true
   }
@@ -368,7 +367,6 @@ export const onRender = (ctx: SceneCtx) => {
   })
 
   if (frameCounter >= 60) {
-    // console.info('theme?.primaryColor', theme?.primaryColor)
     frameCounter = 0;
     // debugger
   }
