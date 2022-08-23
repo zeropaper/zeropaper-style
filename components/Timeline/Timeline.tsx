@@ -37,86 +37,20 @@ export interface TimelineProps {
   // items: Experience[];
 }
 
-// export function Timeline(props: TimelineProps) {
-//   return (
-//     <div style={{ maxWidth: 320, margin: 'auto' }}>
-//       <MTimeline>
-//         {/* {props.items.map(({ title, text }, index) => (
-//           <MTimeline.Item key={`${index}${text}`} title={title} bulletSize={24}>
-//             <Text color="dimmed" size="sm">
-//               {text}
-//             </Text>
-//           </MTimeline.Item>
-//         ))} */}
-//         {/* If you do not pass bullet prop, default bullet will be rendered */}
-//         <MTimeline.Item title="Default bullet" bulletSize={24}>
-//           <Text color="dimmed" size="sm">
-//             Default bullet without anything
-//           </Text>
-//         </MTimeline.Item>
-//         {/* You can use any react node as bullet, e.g. Avatar, ThemeIcon or any svg icon */}
-//         <MTimeline.Item
-//           title="Avatar"
-//           bulletSize={24}
-//           bullet={
-//             <Avatar
-//               size={22}
-//               radius="xl"
-//               src="https://avatars0.githubusercontent.com/u/10353856?s=460&u=88394dfd67727327c1f7670a1764dc38a8a24831&v=4"
-//             />
-//           }
-//         >
-//           <Text color="dimmed" size="sm">
-//             Timeline bullet as avatar image
-//           </Text>
-//         </MTimeline.Item>
-//         <MTimeline.Item
-//           title="Icon"
-//           bulletSize={24}
-//           bullet={<IconSun size={14} />}
-//         >
-//           <Text color="dimmed" size="sm">
-//             Timeline bullet as icon
-//           </Text>
-//         </MTimeline.Item>
-//         <MTimeline.Item
-//           title="ThemeIcon"
-//           bulletSize={24}
-//           bullet={
-//             <ThemeIcon
-//               size={22}
-//               variant="gradient"
-//               gradient={{ from: 'lime', to: 'cyan' }}
-//               radius="xl"
-//             >
-//               <IconVideo size={14} />
-//             </ThemeIcon>
-//           }
-//         >
-//           <Text color="dimmed" size="sm">
-//             Timeline bullet as ThemeIcon component
-//           </Text>
-//         </MTimeline.Item>
-//       </MTimeline>
-//     </div>
-//   );
-// }
-
-
-const useTimelineItemStyles = createStyles(({ spacing }, params, getRef) => {
-
-
+const useTimelineItemStyles = createStyles(({ spacing, breakpoints }, params, getRef) => {
   return {
     root: {
       display: 'flex',
-      flexDirection: 'row-reverse',
+      flexDirection: 'row',
     },
     gutter: {
       position: 'relative',
       width: spacing.md * 3,
       display: 'flex',
-      paddingLeft: spacing.md,
       paddingRight: spacing.md,
+      [`@media (min-width: ${breakpoints.xl}px)`]: {
+        paddingLeft: spacing.md,
+      },
       '&::before,&::after': {
         position: 'absolute',
         content: '""',
@@ -124,14 +58,15 @@ const useTimelineItemStyles = createStyles(({ spacing }, params, getRef) => {
         bottom: 0,
       },
       '&::before': {
-        // background: 'yellow',
         background: 'currentColor',
         zIndex: 1,
         width: 4,
-        left: `calc(${spacing.md}px + ((${spacing.md}px - ${4}px) * 0.5))`,
+        left: `calc(((${spacing.md}px - ${4}px) * 0.5))`,
+        [`@media (min-width: ${breakpoints.xl}px)`]: {
+          left: `calc(${spacing.md}px + ((${spacing.md}px - ${4}px) * 0.5))`,
+        }
       },
       '&::after': {
-        // background: 'blue',
         position: 'absolute',
         zIndex: 0,
         left: spacing.md,
@@ -142,7 +77,6 @@ const useTimelineItemStyles = createStyles(({ spacing }, params, getRef) => {
       position: 'relative',
       zIndex: 3,
       display: 'block',
-      // marginTop: 2,
       width: spacing.md,
       height: spacing.md,
       borderRadius: spacing.md,
@@ -154,7 +88,6 @@ const useTimelineItemStyles = createStyles(({ spacing }, params, getRef) => {
     paper: {},
     dates: {
       paddingTop: 2,
-      // marginBottom: spacing.xs,
       lineHeight: 1,
     },
     employer: {},
@@ -168,7 +101,6 @@ const useTimelineItemStyles = createStyles(({ spacing }, params, getRef) => {
       marginBottom: spacing.md,
     },
     stackItem: {
-      // margin: `0 ${spacing.md * 0.5}px`,
     }
   };
 })
@@ -211,27 +143,31 @@ function ExperienceItem({
   );
 }
 
-const useTimelineStyles = createStyles<'root' | 'item', { reverseOrder?: boolean }>(({ spacing }, { reverseOrder }, getRef) => {
+const useTimelineStyles = createStyles<'root' | 'item', { reverseOrder?: boolean }>(({ spacing, breakpoints }, { reverseOrder }, getRef) => {
   return {
     root: {
-      margin: spacing.xl,
+      padding: spacing.md,
       display: 'flex',
       flexDirection: reverseOrder ? 'column-reverse' : 'column',
       [`& > .${getRef('item')}:nth-of-type(odd)`]: {
-        marginRight: 'auto',
-        marginLeft: `calc(50% - (${spacing.md}px * 1.5))`,
-        textAlign: 'left',
-        flexDirection: 'row',
+        [`@media (min-width: ${breakpoints.xl}px)`]: {
+          marginRight: 'auto',
+          marginLeft: `calc(50% - (${spacing.md}px * 1.5))`,
+          textAlign: 'left',
+          flexDirection: 'row',
+        },
       },
     },
     item: {
       ref: getRef('item'),
-      textAlign: 'right',
-      marginRight: `calc(50% - (${spacing.md}px * 1.5))`,
-      marginLeft: 'auto',
-      flexDirection: 'row-reverse',
-      maxWidth: 450,
       overflow: 'hidden',
+      [`@media (min-width: ${breakpoints.xl}px)`]: {
+        flexDirection: 'row-reverse',
+        textAlign: 'right',
+        marginRight: `calc(50% - (${spacing.md}px * 1.5))`,
+        marginLeft: 'auto',
+        maxWidth: 450,
+      },
     }
   };
 })

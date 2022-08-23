@@ -6,6 +6,7 @@ import { useStyles as useLayoutStyles } from '../components/Layout/Layout';
 import { getPageContext } from '../lib/getPageContext';
 import { AsyncReturnType } from '../typings';
 import Timeline from '../components/Timeline/Timeline';
+import { IconSpacingHorizontal } from '@tabler/icons';
 
 const useStyles = createStyles({
   root: {
@@ -35,7 +36,7 @@ const Hello = ({
 
   return (
     <main className={cx(main, classes.root)}>
-      <Box component='section' sx={{ maxWidth: 450, margin: 'auto' }}>
+      <Box component='section' sx={({ spacing }) => ({ maxWidth: 450, margin: 'auto', padding: spacing.md })}>
         <Box component='header'>
           <Title>Hello</Title>
         </Box>
