@@ -57,6 +57,9 @@ const useStyles = createUseStyles(({ spacing, fn }, _params, getRef) => {
       marginRight: spacing.sm,
       maxHeight: '1em',
       maxWidth: '1em',
+      [fn.smallerThan('md')]: {
+        transform: 'translateX(-6px)',
+      },
       '& path': {
         stroke: 'currentColor',
         strokeWidth: 40,
