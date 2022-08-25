@@ -199,12 +199,6 @@ export function Timeline({ reverseOrder }: { reverseOrder?: boolean }) {
   const { classes, cx } = useTimelineStyles({ reverseOrder });
   return (
     <Box className={classes.root}>
-      {/* <ExperienceItem
-        className={classes.item}
-        title="Hello"
-        from="1981"
-        text="My name's Valentin. I was born in the french speaking part of Switzerland in the early 80's. Professionally, I consider myself a digital craftsman and personnally, a creative coder."
-      /> */}
       <ExperienceItem
         className={classes.item}
         title="Multimedia Designer"
@@ -253,7 +247,7 @@ export function Timeline({ reverseOrder }: { reverseOrder?: boolean }) {
       <ExperienceItem
         className={classes.item}
         title="Visual Fiha"
-        text="Created an application for creative coder to generate visuals that can react to sound and can be controlled by MIDI devices. The application was published under open-source license and run without installation in the browser."
+        text="Created an application for creative coders to generate visuals that can react to sound and can be controlled by MIDI devices. The application was published under open-source license and run without installation in the browser."
         from="2017-03"
         stack={['javascript', 'ampersandjs', 'webaudio', 'midi', 'git', 'pwa', 'cssom']}
       />

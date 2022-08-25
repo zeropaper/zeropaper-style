@@ -58,7 +58,7 @@ const Hello = ({
           <p>
             My name&apos;s Valentin.
             <br />
-            I was born in the french speaking part of Switzerland in the early 80&apos;s but I lived in Berlin nearly half my life.
+            I was born in the French speaking part of Switzerland in the early 80&apos;s but I lived in Berlin nearly half my life.
             <br />
             I speak fluently French, English and German.
             <br />
@@ -68,7 +68,7 @@ const Hello = ({
           <p className={classes.printHide}>
             I am currently exploring the potential paths my career could take and updating my skills.
             <br />
-            If you believe I can add value to your product or your company,&nbsp;<Link href="https://www.linkedin.com/in/vvago">please get in touch on LinkedIn</Link>.
+            If you believe I can add value to your product and your company,&nbsp;<Link href="https://www.linkedin.com/in/vvago">please get in touch on LinkedIn</Link>.
           </p>
         </Box>
       </Box>
