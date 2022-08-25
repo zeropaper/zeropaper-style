@@ -73,8 +73,10 @@ export default createStyles(({
       position: 'relative',
       zIndex: 0,
 
-
-      backgroundImage: 'repeating-conic-gradient(#80808020 0% 25%, transparent 0% 50%) 50% / 20px 20px',
+      backgroundImage: 'linear-gradient(#eee 2px, transparent 2px), linear-gradient(90deg, #eee 2px, transparent 2px), linear-gradient(#eee 1px, transparent 1px), linear-gradient(90deg, #eee 1px, #fff 1px)',
+      backgroundColor: fn.rgba(effectColor, 0.05),
+      backgroundSize: '50px 50px, 50px 50px, 10px 10px, 10px 10px',
+      backgroundPosition: '-2px -2px, -2px -2px, -1px -1px, -1px -1px'
     },
     main: {},
     scrollable: {
