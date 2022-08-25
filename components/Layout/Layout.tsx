@@ -1,4 +1,4 @@
-import { Global } from '@mantine/core';
+import { Box, Global } from '@mantine/core';
 
 import Header from './Header';
 import Footer from './Footer';
@@ -38,9 +38,9 @@ export const LayoutContentWrapper = ({
   );
   return (
     <main {...props} id="page-content" className={mainClass}>
-      <TypographyStylesProvider className={contentClass}>
+      <Box className={contentClass}>
         {children}
-      </TypographyStylesProvider>
+      </Box>
     </main>
   );
 };
