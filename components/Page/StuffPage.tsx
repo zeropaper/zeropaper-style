@@ -36,7 +36,6 @@ export const StuffPage = (props: any) => {
     content = (
       <div>
         Something is seriously wrong.
-        {console.warn('StuffTemplate', mdx)}
       </div>
     );
   }
