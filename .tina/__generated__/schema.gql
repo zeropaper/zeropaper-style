@@ -57,8 +57,6 @@ type Query {
   getTagList(before: String, after: String, first: Float, last: Float, sort: String): TagConnection!
   getStuffDocument(relativePath: String): StuffDocument!
   getStuffList(before: String, after: String, first: Float, last: Float, sort: String): StuffConnection!
-  getPostDocument(relativePath: String): PostDocument!
-  getPostList(before: String, after: String, first: Float, last: Float, sort: String): PostConnection!
 }
 
 type DocumentConnectionEdges {
@@ -84,7 +82,7 @@ type Collection {
   documents(before: String, after: String, first: Float, last: Float, sort: String): DocumentConnection!
 }
 
-union DocumentNode = LandingPageDocument | PageDocument | TagDocument | StuffDocument | PostDocument
+union DocumentNode = LandingPageDocument | PageDocument | TagDocument | StuffDocument
 
 type LandingPageBlocksHero {
   href: String
@@ -218,36 +216,6 @@ type StuffConnection implements Connection {
   edges: [StuffConnectionEdges]
 }
 
-type Post {
-  title: String
-  description: String
-  published: Boolean
-  slug: String
-  tags: [String]
-  date: String
-  body: JSON
-}
-
-type PostDocument implements Node & Document {
-  id: ID!
-  sys: SystemInfo!
-  data: Post!
-  form: JSON!
-  values: JSON!
-  dataJSON: JSON!
-}
-
-type PostConnectionEdges {
-  cursor: String
-  node: PostDocument
-}
-
-type PostConnection implements Connection {
-  pageInfo: PageInfo
-  totalCount: Float!
-  edges: [PostConnectionEdges]
-}
-
 type Mutation {
   addPendingDocument(collection: String!, relativePath: String!, template: String): DocumentNode!
   updateDocument(collection: String, relativePath: String!, params: DocumentMutation!): DocumentNode!
@@ -260,8 +228,6 @@ type Mutation {
   createTagDocument(relativePath: String!, params: TagMutation!): TagDocument!
   updateStuffDocument(relativePath: String!, params: StuffMutation!): StuffDocument!
   createStuffDocument(relativePath: String!, params: StuffMutation!): StuffDocument!
-  updatePostDocument(relativePath: String!, params: PostMutation!): PostDocument!
-  createPostDocument(relativePath: String!, params: PostMutation!): PostDocument!
 }
 
 input DocumentMutation {
@@ -269,7 +235,6 @@ input DocumentMutation {
   page: PageMutation
   tag: TagMutation
   stuff: StuffMutation
-  post: PostMutation
 }
 
 input LandingPageBlocksHeroMutation {
@@ -324,16 +289,6 @@ input StuffMutation {
   tags: [String]
   iframe: String
   source: String
-  body: JSON
-}
-
-input PostMutation {
-  title: String
-  description: String
-  published: Boolean
-  slug: String
-  tags: [String]
-  date: String
   body: JSON
 }
 

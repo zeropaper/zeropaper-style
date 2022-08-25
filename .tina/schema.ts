@@ -159,18 +159,5 @@ export default defineSchema({
         mdxBodyField,
       ],
     },
-    {
-      label: 'Blog Posts',
-      name: 'post',
-      path: 'content/blog',
-      format: 'mdx',
-      fields: [
-        ...pageFields,
-        slugField,
-        tagsField,
-        dateField,
-        mdxBodyField,
-      ],
-    },
   ],
 })

@@ -46,13 +46,3 @@ fragment StuffParts on Stuff {
   source
   body
 }
-
-fragment PostParts on Post {
-  title
-  description
-  published
-  slug
-  tags
-  date
-  body
-}
