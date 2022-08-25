@@ -14,8 +14,8 @@ const Debug = (props: any) => (
 
 const Hero = LinkCard
 const Features = LinkCard
-
-export const Blocks = (props: LandingPage & { tinaField?: string }) => {
+export type BlocksProps = Omit<LandingPage, 'id' | '_sys' | '_values'> & { tinaField?: string };
+export const Blocks = (props: BlocksProps) => {
   if (!props.blocks || !props.blocks.length) return <>Nope</>
 
   const tinaField = props.tinaField || ''
