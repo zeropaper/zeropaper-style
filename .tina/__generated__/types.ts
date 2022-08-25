@@ -324,6 +324,7 @@ export type Stuff = {
   slug?: Maybe<Scalars['String']>;
   date?: Maybe<Scalars['String']>;
   tags?: Maybe<Array<Maybe<Scalars['String']>>>;
+  picture?: Maybe<Scalars['String']>;
   iframe?: Maybe<Scalars['String']>;
   source?: Maybe<Scalars['String']>;
   body?: Maybe<Scalars['JSON']>;
@@ -493,6 +494,7 @@ export type StuffMutation = {
   slug?: InputMaybe<Scalars['String']>;
   date?: InputMaybe<Scalars['String']>;
   tags?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  picture?: InputMaybe<Scalars['String']>;
   iframe?: InputMaybe<Scalars['String']>;
   source?: InputMaybe<Scalars['String']>;
   body?: InputMaybe<Scalars['JSON']>;
@@ -504,7 +506,7 @@ export type PagePartsFragment = { __typename?: 'Page', title?: string | null, de
 
 export type TagPartsFragment = { __typename?: 'Tag', name?: string | null, slug?: string | null, description?: string | null };
 
-export type StuffPartsFragment = { __typename?: 'Stuff', title?: string | null, description?: string | null, published?: boolean | null, slug?: string | null, date?: string | null, tags?: Array<string | null> | null, iframe?: string | null, source?: string | null, body?: any | null };
+export type StuffPartsFragment = { __typename?: 'Stuff', title?: string | null, description?: string | null, published?: boolean | null, slug?: string | null, date?: string | null, tags?: Array<string | null> | null, picture?: string | null, iframe?: string | null, source?: string | null, body?: any | null };
 
 export type GetLandingPageDocumentQueryVariables = Exact<{
   relativePath: Scalars['String'];
@@ -547,12 +549,12 @@ export type GetStuffDocumentQueryVariables = Exact<{
 }>;
 
 
-export type GetStuffDocumentQuery = { __typename?: 'Query', getStuffDocument: { __typename?: 'StuffDocument', id: string, sys: { __typename?: 'SystemInfo', filename: string, basename: string, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, data: { __typename?: 'Stuff', title?: string | null, description?: string | null, published?: boolean | null, slug?: string | null, date?: string | null, tags?: Array<string | null> | null, iframe?: string | null, source?: string | null, body?: any | null } } };
+export type GetStuffDocumentQuery = { __typename?: 'Query', getStuffDocument: { __typename?: 'StuffDocument', id: string, sys: { __typename?: 'SystemInfo', filename: string, basename: string, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, data: { __typename?: 'Stuff', title?: string | null, description?: string | null, published?: boolean | null, slug?: string | null, date?: string | null, tags?: Array<string | null> | null, picture?: string | null, iframe?: string | null, source?: string | null, body?: any | null } } };
 
 export type GetStuffListQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetStuffListQuery = { __typename?: 'Query', getStuffList: { __typename?: 'StuffConnection', totalCount: number, edges?: Array<{ __typename?: 'StuffConnectionEdges', node?: { __typename?: 'StuffDocument', id: string, sys: { __typename?: 'SystemInfo', filename: string, basename: string, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, data: { __typename?: 'Stuff', title?: string | null, description?: string | null, published?: boolean | null, slug?: string | null, date?: string | null, tags?: Array<string | null> | null, iframe?: string | null, source?: string | null, body?: any | null } } | null } | null> | null } };
+export type GetStuffListQuery = { __typename?: 'Query', getStuffList: { __typename?: 'StuffConnection', totalCount: number, edges?: Array<{ __typename?: 'StuffConnectionEdges', node?: { __typename?: 'StuffDocument', id: string, sys: { __typename?: 'SystemInfo', filename: string, basename: string, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, data: { __typename?: 'Stuff', title?: string | null, description?: string | null, published?: boolean | null, slug?: string | null, date?: string | null, tags?: Array<string | null> | null, picture?: string | null, iframe?: string | null, source?: string | null, body?: any | null } } | null } | null> | null } };
 
 export const LandingPagePartsFragmentDoc = gql`
     fragment LandingPageParts on LandingPage {
@@ -602,6 +604,7 @@ export const StuffPartsFragmentDoc = gql`
   slug
   date
   tags
+  picture
   iframe
   source
   body

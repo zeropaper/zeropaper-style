@@ -344,6 +344,15 @@
         },
         {
           "type": "string",
+          "label": "picture",
+          "name": "picture",
+          "namespace": [
+            "stuff",
+            "picture"
+          ]
+        },
+        {
+          "type": "string",
           "label": "iframe",
           "name": "iframe",
           "namespace": [

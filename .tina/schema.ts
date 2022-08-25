@@ -148,6 +148,11 @@ export default defineSchema({
         tagsField,
         {
           type: 'string',
+          label: 'picture',
+          name: 'picture',
+        },
+        {
+          type: 'string',
           label: 'iframe',
           name: 'iframe',
         },

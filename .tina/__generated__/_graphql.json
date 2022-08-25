@@ -2828,6 +2828,21 @@
           "kind": "FieldDefinition",
           "name": {
             "kind": "Name",
+            "value": "picture"
+          },
+          "arguments": [],
+          "type": {
+            "kind": "NamedType",
+            "name": {
+              "kind": "Name",
+              "value": "String"
+            }
+          }
+        },
+        {
+          "kind": "FieldDefinition",
+          "name": {
+            "kind": "Name",
             "value": "iframe"
           },
           "arguments": [],
@@ -4282,6 +4297,20 @@
                 "kind": "Name",
                 "value": "String"
               }
+            }
+          }
+        },
+        {
+          "kind": "InputValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "picture"
+          },
+          "type": {
+            "kind": "NamedType",
+            "name": {
+              "kind": "Name",
+              "value": "String"
             }
           }
         },

@@ -42,6 +42,7 @@ fragment StuffParts on Stuff {
   slug
   date
   tags
+  picture
   iframe
   source
   body

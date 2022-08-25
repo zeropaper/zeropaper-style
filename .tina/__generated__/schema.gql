@@ -191,6 +191,7 @@ type Stuff {
   slug: String
   date: String
   tags: [String]
+  picture: String
   iframe: String
   source: String
   body: JSON
@@ -287,6 +288,7 @@ input StuffMutation {
   slug: String
   date: String
   tags: [String]
+  picture: String
   iframe: String
   source: String
   body: JSON
