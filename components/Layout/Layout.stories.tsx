@@ -5,7 +5,6 @@ import Layout from './Layout';
 
 const PlaceHolder = (props: any) => <div className={props.className}>
   PlaceHolder
-  {console.info('Layout content props', props)}
 </div>
 
 export default {
