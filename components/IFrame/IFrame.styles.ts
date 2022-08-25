@@ -72,6 +72,9 @@ export default createStyles(({
       flexGrow: 1,
       position: 'relative',
       zIndex: 0,
+
+
+      backgroundImage: 'repeating-conic-gradient(#80808020 0% 25%, transparent 0% 50%) 50% / 20px 20px',
     },
     main: {},
     scrollable: {
