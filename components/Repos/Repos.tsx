@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react';
-import { ActionIcon, Box, Button, createStyles, Grid, Group, Select, Text, TextInput, Title } from '@mantine/core';
+import { ActionIcon, Box, Button, createStyles, Grid, Group, Select, Text, TextInput, Title, Pagination } from '@mantine/core';
 import { formatDistanceToNow } from 'date-fns';
 import { IconSortAscending2, IconSortDescending2 } from '@tabler/icons';
 import { RepoInfo } from '../../lib/getRepos';
@@ -92,7 +92,7 @@ export function Repos({
     return Object.values(languages).sort(({ repositories: a }, { repositories: b }) => b.length - a.length);
   }, [repos]);
   const [start, setStart] = useState(0);
-  const [limit, setLimit] = useState(10);
+  const [limit, setLimit] = useState(18);
   const [searched, setSearched] = useState('');
   const [sortOn, setSortOn] = useState<keyof RepoInfo>('updatedAt');
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('desc');
@@ -114,6 +114,9 @@ export function Repos({
   }, [filtered]);
 
   const handleToggleLanguage = (language: string) => setActiveLanguages((lngs) => lngs.includes(language) ? lngs.filter((l) => l !== language) : [...lngs, language]);
+
+  const handlePageChange = (page: number) => setStart((page - 1) * limit);
+
   return (
     <>
       <Title order={2}>Git Repositories</Title>
@@ -152,16 +155,28 @@ export function Repos({
         ))}
       </Group>
 
-      <LanguagesGraph languages={allLanguages} repos={filtered} />
+      {/* <LanguagesGraph languages={allLanguages} repos={filtered} />
       <Text component='p'>
         {`Earliest: ${formatDistanceToNow(new Date(filteredEdges[0]), { addSuffix: true })} - Latest: ${formatDistanceToNow(new Date(filteredEdges[1]), { addSuffix: true })}`}
-      </Text>
+      </Text> */}
 
       <Grid justify="center" grow mb="sm">
         {filtered.slice(start, start + limit).map(repo => (
           <Repo key={repo.name} {...repo} />
         ))}
       </Grid>
+
+      {filtered.length > limit
+        ? (
+          <Pagination
+            total={Math.ceil(filtered.length / limit)}
+            page={Math.floor(start / limit) + 1}
+            onChange={handlePageChange}
+            grow
+            mb="sm"
+          />
+        )
+        : null}
     </>
   );
 }

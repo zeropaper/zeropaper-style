@@ -14,7 +14,7 @@ const Stuff = (props: AsyncReturnType<typeof getStaticProps>['props']) => {
   return (
     <LayoutContentWrapper>
       <Head>
-        <meta name="description" content="Stuff by zeropaper" />
+        <meta name="description" content='Stuff by Valentin "zeropaper" Vago' />
       </Head>
 
       <Box component='header'>
@@ -28,7 +28,7 @@ const Stuff = (props: AsyncReturnType<typeof getStaticProps>['props']) => {
         </Text>
       </Box>
 
-      <Grid justify="center" grow my="sm">
+      {/* <Grid justify="center" grow my="sm">
         {props.data.posts.map((post) => (
           <Grid.Col sm={6} key={post.href}>
             <Paper withBorder p="sm">
@@ -38,7 +38,7 @@ const Stuff = (props: AsyncReturnType<typeof getStaticProps>['props']) => {
             </Paper>
           </Grid.Col>
         ))}
-      </Grid>
+      </Grid> */}
 
       <Repos
         totalCount={props.data.repos.totalCount}

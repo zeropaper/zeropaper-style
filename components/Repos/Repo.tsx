@@ -4,7 +4,7 @@ import { IconBrandGithub } from '@tabler/icons';
 import { RepoInfo } from '../../lib/getRepos';
 import { DraftLink as Link } from '../Link/Link';
 
-const useStyles = createStyles(({ spacing }) => ({
+const useStyles = createStyles(({ spacing, colors }) => ({
   paper: {
     display: 'flex',
     flexDirection: 'column',
@@ -22,6 +22,13 @@ const useStyles = createStyles(({ spacing }) => ({
   link: {
     justifySelf: 'flex-end',
     alignSelf: 'flex-end',
+  },
+  description: {
+    flexGrow: 1,
+    marginBottom: spacing.sm,
+  },
+  languages: {
+    color: colors.gray[6],
   }
 }));
 export function Repo({
@@ -35,15 +42,21 @@ export function Repo({
           {name}
         </Title>
 
+        {/*
         <Group>
           <Text>C: {formatDistanceToNow(new Date(createdAt), { addSuffix: true })}</Text>
           <Text>U: {formatDistanceToNow(new Date(updatedAt), { addSuffix: true })}</Text>
         </Group>
+        */}
 
-        <Text sx={{ flexGrow: 1 }}>{description}</Text>
-        <Text>{languages.nodes.map(({ name }) => name).join(', ')}</Text>
+        <Text className={classes.description}>
+          {description}
+        </Text>
+        <Text className={classes.languages}>
+          {languages.nodes.map(({ name }) => name).join(', ')}
+        </Text>
 
-        <Link className={classes.link} unpublished={false} href={url}>
+        <Link title="Code on GitHub" className={classes.link} href={url}>
           <IconBrandGithub />
         </Link>
       </Paper>
