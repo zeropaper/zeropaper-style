@@ -75,7 +75,7 @@ export const DraftLink = ({
   unpublished,
   className,
   ...props
-}: LinkProps & { unpublished: boolean }) => (
+}: LinkProps & { unpublished?: boolean }) => (
   <Link
     {...props}
     className={[className, unpublished && 'draft'].filter(Boolean).join(' ')}
