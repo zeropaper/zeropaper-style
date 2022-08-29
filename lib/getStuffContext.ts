@@ -9,6 +9,7 @@ type Stuff = {
   slug: string;
   published?: boolean;
   date: string | null;
+  picture: string | null;
 };
 export const getStuffContext = async (): Promise<{ [k: string]: Stuff }> => {
   const client = ExperimentalGetTinaClient();
@@ -23,6 +24,7 @@ export const getStuffContext = async (): Promise<{ [k: string]: Stuff }> => {
           title = null,
           excerpt = null,
           date = null,
+          picture = null,
           slug: postSlug = null
         }
       }
@@ -33,6 +35,7 @@ export const getStuffContext = async (): Promise<{ [k: string]: Stuff }> => {
         title,
         excerpt,
         date,
+        picture,
         id,
         relativePath: id.replace('content/stuff/', ''),
         slug: postSlug || id,
