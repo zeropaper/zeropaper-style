@@ -6,7 +6,7 @@ const reposQuery = `query repos($after: String) {
     repositories(
       first: 75
       after: $after
-      affiliations: [OWNER, COLLABORATOR, ORGANIZATION_MEMBER]
+      affiliations: [OWNER]
       privacy: PUBLIC
       isFork: false
       orderBy: {field: CREATED_AT, direction: DESC}
