@@ -74,8 +74,9 @@ export const getStaticProps = async ({ params }: { params: any }) => {
 export async function getStaticPaths() {
   try {
     const res = await getPageContext();
+    const filtered = filterUnpublished(Object.values(res));
     return {
-      paths: filterUnpublished(Object.keys(res)).map((slug) => `/${slug}`),
+      paths: filtered.map(({ slug }) => `/${slug}`),
       fallback: false,
     };
   } catch (e) {

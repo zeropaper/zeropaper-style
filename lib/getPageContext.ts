@@ -35,15 +35,12 @@ export const getPageContext = async () => {
       // faster than destructuring
       obj[slug] = { title, excerpt, published, id, slug, href: `/${slug}/` };
       return obj;
-      // return {
-      //   ...obj,
-      //   [slug]: { title, excerpt, id, slug, href: `/${slug}/` }
-      // };
     }, {});
   return returned as {
     [slug: string]: {
       id: string;
       href: string;
+      slug: string;
       title: string;
       excerpt?: string;
       published: boolean;
