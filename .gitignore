@@ -15,3 +15,8 @@ storybook-static
 
 public/sb
 public/sitemap*
+
+content/*/_*.mdx
+content/*/_*.json
+content/*/_*.yaml
+content/*/_*.yml
