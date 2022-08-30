@@ -1,0 +1,28 @@
+html,body,#__next,#root {
+  padding: 0;
+  margin: 0;
+  min-height: 100vh;
+}
+
+#__next, #root {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+#__next>div:not([class]) {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.skip-to-content-link {
+  display: none;
+  height: 0;
+  margin: 0;
+}
+
+.site-logo {
+  max-height: 32px;
+  max-width: 32px;
+}

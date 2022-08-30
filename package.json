@@ -8,8 +8,7 @@
   "scripts": {
     "dev": "run-p dev:*",
     "build": "run-s build:tina build:storybook",
-    "pre_start": "npm run build",
-    "start": "next start",
+    "start": "npm run build && next start",
     "lint": "next lint",
     "test": "run-p test:unit",
     "test:unit": "jest --passWithNoTests",
@@ -18,9 +17,9 @@
     "test:e2e": "cypress run",
     "dev:test:e2e": "cypress open",
     "dev:storybook": "start-storybook -p 6006 --no-open",
-    "dev:tina": "npx tinacms server:start -c \"next dev\"",
+    "dev:tina": "tinacms dev -c \"next dev\"",
     "build:storybook": "build-storybook -o public/sb",
-    "build:tina": "npx tinacms server:start -c \"next build\"",
+    "build:tina": "tinacms build && next build",
     "postbuild:tina": "next-sitemap"
   },
   "dependencies": {
@@ -29,17 +28,13 @@
     "@mantine/hooks": "5.2.4",
     "@mantine/next": "5.2.4",
     "@tabler/icons": "1.91.0",
-    "@tinacms/auth": "0.50.2",
-    "@tinacms/cli": "0.60.11",
     "axios": "0.27.2",
     "next": "12.2.5",
     "next-mdx-remote": "4.1.0",
-    "next-tinacms-cloudinary": "3.5.13",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-tinacms-editor": "0.53.10",
     "three": "0.143.0",
-    "tinacms": "0.67.0"
+    "tinacms": "0.69.2"
   },
   "devDependencies": {
     "@babel/core": "7.18.13",
@@ -56,6 +51,7 @@
     "@swc/jest": "0.2.22",
     "@testing-library/jest-dom": "5.16.5",
     "@testing-library/react": "13.3.0",
+    "@tinacms/cli": "0.61.7",
     "@types/jest": "29.0.0",
     "@types/node": "18.7.14",
     "@types/react": "18.0.17",

@@ -2,13 +2,14 @@ import { useState } from 'react';
 // import Head from 'next/head'
 import dynamic from 'next/dynamic';
 
-import { ExperimentalGetTinaClient } from '../.tina/__generated__/types';
 import { useStyles as useLayoutStyles } from '../components/Layout/Layout';
 import { getPageContext } from '../lib/getPageContext';
 import { AsyncReturnType } from '../typings';
 import { ActionIcon, Box, createStyles, Paper, Text, Title } from '@mantine/core';
 import Link from '../components/Link/Link';
 import { IconX } from '@tabler/icons';
+
+import getLandingPageDocument from '../lib/getLandingPageDocument';
 
 const useStyles = createStyles<string, {
   overlayVisible?: boolean;
@@ -63,7 +64,7 @@ const Home = ({
   const {
     classes: { main },
   } = useLayoutStyles();
-  const data = props.data?.getLandingPageDocument?.data || {};
+  const data = props.data?.landingPage || {};
   const [overlayVisible, setOverlayVisible] = useState(true);
   const { classes, cx } = useStyles({ overlayVisible });
 
@@ -91,12 +92,11 @@ export default Home;
 
 // Data Fetching
 export const getStaticProps = async function () {
-  const client = ExperimentalGetTinaClient();
   const vars = { relativePath: 'home.json' };
   return {
     props: {
       pageContext: await getPageContext(),
-      ...(await client.getLandingPageDocument(vars)),
+      ...(await getLandingPageDocument(vars)),
     },
   };
 };

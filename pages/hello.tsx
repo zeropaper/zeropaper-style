@@ -1,7 +1,6 @@
 import React from 'react';
 import { Box, Button, createStyles, Group, Title } from '@mantine/core';
 
-import { ExperimentalGetTinaClient } from '../.tina/__generated__/types';
 import { useStyles as useLayoutStyles } from '../components/Layout/Layout';
 import { getPageContext } from '../lib/getPageContext';
 import { AsyncReturnType } from '../typings';
@@ -35,7 +34,6 @@ const Hello = ({
     classes: { main },
   } = useLayoutStyles();
   const { classes, cx } = useStyles();
-  const data = props.data?.getPageDocument?.data || {};
 
   const [reverse, setReverse] = React.useState(true);
 
@@ -87,14 +85,9 @@ const Hello = ({
 export default Hello;
 
 export const getStaticProps = async function () {
-  const client = ExperimentalGetTinaClient();
-  const landingPage = await client.getPageDocument({
-    relativePath: `hello.mdx`,
-  });
   return {
     props: {
       pageContext: await getPageContext(),
-      ...landingPage,
     },
   };
 };

@@ -1,4 +1,4 @@
-import { ExperimentalGetTinaClient } from '../.tina/__generated__/types';
+import getStuffList from './getStuffList';
 
 type Stuff = {
   title: string;
@@ -12,21 +12,20 @@ type Stuff = {
   picture: string | null;
 };
 export const getStuffContext = async (): Promise<{ [k: string]: Stuff }> => {
-  const client = ExperimentalGetTinaClient();
-  const posts = await client.getStuffList();
-  const returned = posts?.data?.getStuffList?.edges || []
+  const posts = await getStuffList();
+  const returned = posts?.data?.stuffConnection?.edges || []
   return returned
-    .reduce((obj, {
+    .reduce((obj: {
+      [key: string]: Stuff
+    }, {
       node: {
         id,
-        data: {
-          published = false,
-          title = null,
-          excerpt = null,
-          date = null,
-          picture = null,
-          slug: postSlug = null
-        }
+        published = false,
+        title = null,
+        excerpt = null,
+        date = null,
+        picture = null,
+        slug: postSlug = null
       }
     }: any) => ({
       ...obj,
@@ -41,9 +40,9 @@ export const getStuffContext = async (): Promise<{ [k: string]: Stuff }> => {
         slug: postSlug || id,
         href: `/stuff/${postSlug || id}`
       }
-    }), {}) as {
+    }), {} as {
       [key: string]: Stuff
-    };
+    });
 };
 
 export default getStuffContext;

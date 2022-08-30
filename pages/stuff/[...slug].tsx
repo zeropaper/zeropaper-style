@@ -2,13 +2,13 @@ import ErrorPage from 'next/error';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { MDXRenderer } from '../../components/MDXRenderer/MDXRenderer';
-import { ExperimentalGetTinaClient } from '../../.tina/__generated__/types';
 
 import getStuffContext from '../../lib/getStuffContext';
 import IFrame from '../../components/IFrame/IFrame';
 import { AsyncReturnType } from '../../typings';
 import { LayoutContentWrapper } from '../../components/Layout/Layout';
 import filterUnpublished from '../../lib/filterUnpublished';
+import getStuffDocument from 'lib/getStuffDocument';
 
 export default function Stuff(
   props: AsyncReturnType<typeof getStaticProps>['props']
@@ -22,7 +22,7 @@ export default function Stuff(
   if (!data) {
     return <ErrorPage statusCode={500} />;
   }
-  const stuff = data?.getStuffDocument?.data || {};
+  const stuff = data?.stuff || {};
   const { date, title, body, description, iframe: iframeSrc, source } = stuff;
   return (
     <>
@@ -55,13 +55,12 @@ export default function Stuff(
 
 export const getStaticProps = async (props: { params: any }) => {
   const slug = props.params.slug.join('/');
-  const client = ExperimentalGetTinaClient();
 
   const itemFromContext = Object.values(await getStuffContext()).find(
     (item) => item.slug === slug
   );
 
-  const landingPage = await client.getStuffDocument({
+  const landingPage = await getStuffDocument({
     relativePath: itemFromContext?.relativePath || '',
   });
 

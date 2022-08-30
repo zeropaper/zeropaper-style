@@ -1,4 +1,5 @@
-import { ExperimentalGetTinaClient } from '../.tina/__generated__/types';
+import getLandingPageList from '../lib/getLandingPageList';
+import getPageList from '../lib/getPageList';
 
 const slugify = (id: string): string => {
   let slug = id;
@@ -13,27 +14,35 @@ const slugify = (id: string): string => {
 };
 
 export const getPageContext = async () => {
-  const client = ExperimentalGetTinaClient();
-  const landingPages = await client.getLandingPageList();
-  const pages = await client.getPageList();
-  const returned = [
-    ...(landingPages?.data?.getLandingPageList?.edges || []),
-    ...(pages?.data?.getPageList?.edges || [])
-  ]
-    .reduce((obj: any, page: any) => {
+  const landingPages = await getLandingPageList();
+  const pages = await getPageList();
+  const aggregated = [
+    ...(landingPages?.data?.landingPageConnection?.edges || []),
+    ...(pages?.data?.pageConnection?.edges || [])
+  ] as {
+    node: {
+      id: string;
+      published?: boolean;
+      title: string;
+      description?: string;
+      excerpt?: string;
+      body?: any;
+    };
+  }[];
+  const returned = aggregated
+    .reduce((obj: any, page) => {
       const {
         node: {
           id,
-          data: {
-            published = false,
-            title = null,
-            excerpt = null
-          }
+          published = false,
+          title = null,
+          description = null,
+          excerpt = null,
         }
       } = page;
       const slug = slugify(id);
       // faster than destructuring
-      obj[slug] = { title, excerpt, published, id, slug, href: `/${slug}/` };
+      obj[slug] = { title, description, excerpt, published, id, slug, href: `/${slug}/` };
       return obj;
     }, {});
   return returned as {
@@ -42,6 +51,7 @@ export const getPageContext = async () => {
       href: string;
       slug: string;
       title: string;
+      description?: string;
       excerpt?: string;
       published: boolean;
     };

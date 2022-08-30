@@ -1,10 +1,10 @@
 import { Box, Global } from '@mantine/core';
+import { useEditState } from 'tinacms/dist/edit-state';
 
 import Header from './Header';
 import Footer from './Footer';
 import { PropsWithChildren } from 'react';
 import useStyles from './Layout.styles';
-import { TypographyStylesProvider } from '@mantine/core';
 import { ClassNames } from '../../typings';
 
 export { useStyles };
@@ -55,42 +55,28 @@ const Layout = ({
     inner: classes.inner,
   };
 
+  const { edit } = useEditState();
   return (
     <>
       <Global styles={({
+        fn,
         other: {
           colorSchemeSwitch: { transitionDuration, transitionTimingFunction },
         },
       }) => ({
         'html,body,#__next,#root': {
-          padding: 0,
-          margin: 0,
-          minHeight: '100vh',
           transition: `background-color, color ${transitionDuration} ${transitionTimingFunction}`,
-        },
-
-        '#__next,#root': {
-          display: 'flex',
-          flexDirection: 'column',
-          position: 'relative',
         },
 
         // for Tina edit mode
         '#__next>div:not([class])': {
-          display: 'flex',
-          flexDirection: 'column',
-          flexGrow: 1,
-        },
-
-        '.skip-to-content-link': {
-          display: 'none',
-          height: 0,
-          margin: 0,
-        },
-
-        '.site-logo': {
-          maxHeight: '1em',
-          maxWidth: '1em',
+          ...(edit ? {
+            marginLeft: 10,
+            [fn.largerThan('md')]: {
+              paddingLeft: 10,
+              paddingRight: 10,
+            }
+          } : {})
         },
       })} />
 

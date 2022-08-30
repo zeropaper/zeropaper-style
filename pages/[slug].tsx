@@ -1,8 +1,8 @@
 import ErrorPage from 'next/error';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
+import { useTina } from "tinacms/dist/edit-state";
 
-import { ExperimentalGetTinaClient } from '../.tina/__generated__/types';
 import Grid from '../components/Grid/Grid';
 import { LayoutContentWrapper } from '../components/Layout/Layout';
 import { MDXRenderer } from '../components/MDXRenderer/MDXRenderer';
@@ -10,19 +10,28 @@ import filterUnpublished from '../lib/filterUnpublished';
 import { getPageContext } from '../lib/getPageContext';
 import { AsyncReturnType } from '../typings';
 
+import getLandingPageDocument from '../lib/getLandingPageDocument';
+import getPageDocument from '../lib/getPageDocument';
+
 export default function Page(
   props: AsyncReturnType<typeof getStaticProps>['props']
 ) {
-  const { data, slug } = props;
+
+  const fromTina = useTina({
+    query: props.query,
+    variables: props.variables,
+    data: props.data,
+  });
+  const { data } = fromTina;
+  const { slug } = props;
   const router = useRouter();
 
   if (!router.isFallback && !slug) {
     return <ErrorPage statusCode={404} />;
   }
 
-  const { title, seo, blocks, body } =
-    // @ts-ignore
-    (data?.getPageDocument || data?.getLandingPageDocument)?.data || {};
+  // @ts-ignore
+  const { title, seo, blocks, body } = data?.page || data?.landingPage || {};
   return (
     <LayoutContentWrapper>
       <Head>
@@ -42,12 +51,11 @@ export default function Page(
 }
 
 export const getStaticProps = async ({ params }: { params: any }) => {
-  const client = ExperimentalGetTinaClient();
   const { slug } = params;
   const pageContext = await getPageContext();
 
   try {
-    const page = await client.getPageDocument({ relativePath: `${slug}.mdx` });
+    const page = await getPageDocument({ relativePath: `${slug}.mdx` });
     if (Object.keys(page.data).length === 0) throw new Error('No data');
     return {
       props: {
@@ -57,7 +65,7 @@ export const getStaticProps = async ({ params }: { params: any }) => {
       },
     };
   } catch (e) {
-    const landingPage = await client.getLandingPageDocument({
+    const landingPage = await getLandingPageDocument({
       relativePath: `${slug}.json`,
     });
 
