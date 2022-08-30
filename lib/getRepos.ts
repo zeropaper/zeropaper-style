@@ -1,5 +1,6 @@
 
 import axios from 'axios';
+import { AsyncReturnType } from 'typings';
 
 const reposQuery = `query repos($after: String) {
   viewer {
@@ -126,9 +127,14 @@ export async function querGHGrapQL<S = any>(query: string, variables: { [k: stri
   }), options).then((res) => res.data.data);
 }
 
+const cache: { [k: string]: AsyncReturnType<typeof queryRepos> } = {};
 export default async function queryRepos(after?: string): Promise<ReposResponse> {
+  const key = after ? `${after}` : 'default';
+  if (cache[key]) return cache[key];
+
   const result = await querGHGrapQL<ReposResponse>(reposQuery, { after });
-  // the response is paginated, so we need to get all the repos
+
+  // the response is paginated, so... eagerly fetch...
   const {
     nodes,
     pageInfo: {
@@ -137,9 +143,11 @@ export default async function queryRepos(after?: string): Promise<ReposResponse>
     }
   } = result.viewer.repositories;
 
+  let returned = result;
+
   if (hasNextPage) {
     const nextPage = await queryRepos(endCursor);
-    return {
+    returned = {
       ...nextPage,
       viewer: {
         ...nextPage.viewer,
@@ -154,5 +162,7 @@ export default async function queryRepos(after?: string): Promise<ReposResponse>
     };
   }
 
-  return result;
+  cache[key] = result;
+
+  return returned;
 }
