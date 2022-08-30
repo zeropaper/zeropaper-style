@@ -117,17 +117,13 @@ const options = {
   headers: {
     Authorization: `bearer ${process.env.GITHUB_GRAPHQL_TOKEN}`,
   }
-}
+};
 
 export async function querGHGrapQL<S = any>(query: string, variables: { [k: string]: any } = {}): Promise<S> {
   return axios.post('https://api.github.com/graphql', JSON.stringify({
     query,
     variables
-  }), {
-    headers: {
-      Authorization: `bearer ${process.env.GITHUB_GRAPHQL_TOKEN}`,
-    }
-  }).then((res) => res.data.data);
+  }), options).then((res) => res.data.data);
 }
 
 export default async function queryRepos(after?: string): Promise<ReposResponse> {
