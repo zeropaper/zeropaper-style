@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import {
   MantineProvider,
   ColorScheme,
@@ -39,6 +39,17 @@ export const ThemeProvider = ({ children, ...props }: MantineProviderProps) => {
     }
   }, [colorScheme, localColorScheme]);
 
+  const theme = useMemo(() => ({
+    other: {
+      colorSchemeSwitch: {
+        transitionDuration: '324ms',
+        transitionTimingFunction: 'ease-in-out',
+      },
+    },
+    colorScheme,
+    primaryColor: colorScheme === 'dark' ? 'gray' : 'dark',
+  }), [colorScheme]);
+
   return (
     <ColorSchemeProvider
       colorScheme={colorScheme}
@@ -47,16 +58,7 @@ export const ThemeProvider = ({ children, ...props }: MantineProviderProps) => {
       <MantineProvider
         {...props}
         emotionCache={emotionCache}
-        theme={{
-          other: {
-            colorSchemeSwitch: {
-              transitionDuration: '324ms',
-              transitionTimingFunction: 'ease-in-out',
-            },
-          },
-          colorScheme,
-          primaryColor: colorScheme === 'dark' ? 'gray' : 'dark',
-        }}
+        theme={theme}
       >
         {children}
       </MantineProvider>
