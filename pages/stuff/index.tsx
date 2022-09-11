@@ -21,10 +21,14 @@ const Stuff = (props: AsyncReturnType<typeof getStaticProps>['props']) => {
         <Title>Stuff</Title>
 
         <Text component='p'>
-          Code, like paint, is a medium to me. Give me paint and it is going to be a mess, give me a text editor and I will draw you a sheep in CSS.
+          Code, like paint, is a medium to me.
+          <br />
+          If you give me paint it is going to be a mess, give me a text editor and I will draw you a sheep in CSS.
         </Text>
         <Text component='p'>
-          It is quite common that I try a new idea or tech by creating a Git repository and fiddle with it. This implies that some aspects may not be consistent across all the repositories.
+          I frequently create new repository to try a new idea or tech and tinker with it.
+          <br />
+          This implies that some aspects may not be consistent across all the repositories.
         </Text>
       </Box>
 
