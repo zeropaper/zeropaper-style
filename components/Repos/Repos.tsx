@@ -137,7 +137,10 @@ export function Repos({
           value={sortOn}
           onChange={(value: keyof RepoInfo) => setSortOn(value)} />
 
-        <ActionIcon onClick={() => setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc')}>
+        <ActionIcon
+          title={`Sort ${sortDirection === 'asc' ? 'descending' : 'ascending'}`}
+          onClick={() => setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc')}
+        >
           {sortDirection === 'asc' ? <IconSortDescending2 /> : <IconSortAscending2 />}
         </ActionIcon>
       </Group>
