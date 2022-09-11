@@ -1,4 +1,6 @@
-
+import { resolve } from 'path';
+import { tmpdir } from 'os';
+import { readFile, writeFile, stat } from 'fs/promises';
 import axios from 'axios';
 import { AsyncReturnType } from 'typings';
 
@@ -127,10 +129,29 @@ export async function querGHGrapQL<S = any>(query: string, variables: { [k: stri
   }), options).then((res) => res.data.data);
 }
 
-const cache: { [k: string]: AsyncReturnType<typeof queryRepos> } = {};
+export function cacheTmpPath(key: string) {
+  return resolve(tmpdir(), `gh-repos-${key}.json`);
+}
+
+export async function getCacheTmp(key: string): Promise<AsyncReturnType<typeof queryRepos> | null> {
+  const path = cacheTmpPath(key);
+  try {
+    await stat(path);
+    return JSON.parse(await readFile(path, 'utf-8'));
+  } catch (e) {
+    return null;
+  }
+}
+
+export async function setCacheTmp(key: string, value: AsyncReturnType<typeof queryRepos>): Promise<void> {
+  const path = cacheTmpPath(key);
+  await writeFile(path, JSON.stringify(value));
+}
+
 export default async function queryRepos(after?: string): Promise<ReposResponse> {
   const key = after ? `${after}` : 'default';
-  if (cache[key]) return cache[key];
+  const cached = await getCacheTmp(key);
+  if (cached) return cached;
 
   const result = await querGHGrapQL<ReposResponse>(reposQuery, { after });
 
@@ -162,7 +183,7 @@ export default async function queryRepos(after?: string): Promise<ReposResponse>
     };
   }
 
-  cache[key] = result;
+  setCacheTmp(key, result);
 
   return returned;
 }
