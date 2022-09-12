@@ -28,6 +28,7 @@
     "**/*.tsx"
   ],
   "exclude": [
+    "misc/ts-cheatsheet.ts",
     "node_modules"
   ]
 }
