@@ -1,5 +1,7 @@
+const withYAML = require('next-yaml')
+
 /** @type {import('next').NextConfig} */
-module.exports = {
+const config = {
   webpack(config) {
     config.module.rules.push({
       test: /\.svg$/,
@@ -52,3 +54,5 @@ module.exports = {
   reactStrictMode: true,
   pageExtensions: ['ts', 'tsx'],
 };
+
+module.exports = withYAML(config);
