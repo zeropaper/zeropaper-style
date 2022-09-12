@@ -32,5 +32,9 @@ module.exports = ({ config }) => {
     test: /\.svg$/,
     use: [svgr],
   });
+  config.module.rules.push({
+    test: /\.(yml|yaml)$/,
+    use: 'yaml-loader',
+  });
   return config;
 };

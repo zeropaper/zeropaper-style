@@ -1,8 +1,11 @@
-const withYAML = require('next-yaml')
-
 /** @type {import('next').NextConfig} */
 const config = {
   webpack(config) {
+    config.module.rules.push({
+      test: /\.(yml|yaml)$/,
+      use: 'yaml-loader',
+    });
+
     config.module.rules.push({
       test: /\.svg$/,
       use: [
@@ -55,4 +58,4 @@ const config = {
   pageExtensions: ['ts', 'tsx'],
 };
 
-module.exports = withYAML(config);
+module.exports = config;
