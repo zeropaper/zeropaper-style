@@ -1,7 +1,3 @@
-declare module '@palmabit/react-cookie-law' {
-  export const CookieBanner: any
-}
-
 declare module '*.mdx' {
   let MDXComponent: (props: any) => JSX.Element
   export default MDXComponent
