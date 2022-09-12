@@ -185,6 +185,7 @@ export const schema = defineSchema({
 
 
 export const tinaConfig = defineConfig({
+  // @ts-ignore
   client,
   schema,
   cmsCallback: (cms) => {
