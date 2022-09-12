@@ -1,5 +1,5 @@
 
-import { defineSchema, defineConfig, RouteMappingPlugin, TinaField, TinaTemplate } from "tinacms";
+import { defineSchema, defineConfig, RouteMappingPlugin, TinaField } from "tinacms";
 import { client } from "./__generated__/client";
 
 const feature = {
@@ -85,7 +85,6 @@ const pageFields: TinaField[] = [
 
 export const schema = defineSchema({
   config: {
-
     // clientId: process.env.NEXT_PUBLIC_TINA_CLIENT_ID!,
     // branch:
     //   process.env.NEXT_PUBLIC_TINA_BRANCH! || // custom branch env override
@@ -93,12 +92,6 @@ export const schema = defineSchema({
     //   process.env.HEAD!, // Netlify branch env
     // token: process.env.TINA_TOKEN!,
     media: {
-      // If you wanted cloudinary do this
-      // loadCustomStore: async () => {
-      //   const pack = await import("next-tinacms-cloudinary");
-      //   return pack.TinaCloudCloudinaryMediaStore;
-      // },
-      // this is the config for the tina cloud media store
       tina: {
         publicFolder: "public",
         mediaRoot: "uploads",
