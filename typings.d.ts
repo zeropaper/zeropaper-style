@@ -1,3 +1,5 @@
+export { Stuff } from './lib/getStuffContext';
+
 declare module '*.mdx' {
   let MDXComponent: (props: any) => JSX.Element
   export default MDXComponent
@@ -58,9 +60,10 @@ export type PageProps = {
   template?: string
 }
 
-declare type AsyncReturnType<T extends (...args: any) => Promise<any>> =
+// TODO: declare + export ??? clarify...
+declare export type AsyncReturnType<T extends (...args: any) => Promise<any>> =
   T extends (...args: any) => Promise<infer R> ? R : any
 
-declare type ClassNames<US> = Partial<ReturnType<US>['classes']>
+declare export type ClassNames<US> = Partial<ReturnType<US>['classes']>
 
-declare type ArrayFlatten<Type> = Type extends Array<infer Item> ? Item : Type;
+declare export type ArrayFlatten<Type> = Type extends Array<infer Item> ? Item : Type;

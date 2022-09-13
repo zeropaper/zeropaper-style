@@ -1,6 +1,6 @@
 import getStuffList from './getStuffList';
 
-type Stuff = {
+export type Stuff = {
   title: string;
   description: string;
   href: string;
@@ -11,6 +11,7 @@ type Stuff = {
   date: string | null;
   picture: string | null;
 };
+
 export const getStuffContext = async (): Promise<{ [k: string]: Stuff }> => {
   const posts = await getStuffList();
   const returned = posts?.data?.stuffConnection?.edges || []

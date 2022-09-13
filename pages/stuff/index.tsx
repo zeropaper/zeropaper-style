@@ -1,14 +1,14 @@
-import { useEffect } from 'react';
+import React from 'react';
 import Head from 'next/head';
-import { Box, Grid, Paper, Text, Title } from '@mantine/core';
+import { Box, Grid, Text, Title } from '@mantine/core';
 
+import type { AsyncReturnType } from '../../typings';
 import getRepos from '../../lib/getRepos';
 import { LayoutContentWrapper } from '../../components/Layout/Layout';
-import { DraftLink as Link } from '../../components/Link/Link';
 import filterUnpublished from '../../lib/filterUnpublished';
 import getStuffContext from '../../lib/getStuffContext';
-import { AsyncReturnType } from '../../typings';
 import { Repos } from '../../components/Repos/Repos';
+import PinnedStuff from '../../components/PinnedStuff/PinnedStuff';
 
 const Stuff = (props: AsyncReturnType<typeof getStaticProps>['props']) => {
   return (
@@ -32,17 +32,11 @@ const Stuff = (props: AsyncReturnType<typeof getStaticProps>['props']) => {
         </Text>
       </Box>
 
-      {/* <Grid justify="center" grow my="sm">
+      {props.data.posts.length ? (<Grid justify="center" grow my="sm">
         {props.data.posts.map((post) => (
-          <Grid.Col sm={6} key={post.href}>
-            <Paper withBorder p="sm">
-              <Link unpublished={!post?.published} href={post.href}>
-                {post.title}
-              </Link>
-            </Paper>
-          </Grid.Col>
+          <PinnedStuff key={post.href} {...post} />
         ))}
-      </Grid> */}
+      </Grid>) : null}
 
       <Repos
         totalCount={props.data.repos.totalCount}
