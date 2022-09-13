@@ -1,5 +1,5 @@
 import { Box, Global } from '@mantine/core';
-import { useEditState } from 'tinacms/dist/edit-state';
+// import { useEditState } from 'tinacms/dist/edit-state';
 
 import Header from './Header';
 import Footer from './Footer';
@@ -55,7 +55,7 @@ const Layout = ({
     inner: classes.inner,
   };
 
-  const { edit } = useEditState();
+  // const { edit } = useEditState();
   return (
     <>
       <Global styles={({
@@ -68,16 +68,16 @@ const Layout = ({
           transition: `background-color, color ${transitionDuration} ${transitionTimingFunction}`,
         },
 
-        // for Tina edit mode
-        '#__next>div:not([class])': {
-          ...(edit ? {
-            marginLeft: 10,
-            [fn.largerThan('md')]: {
-              paddingLeft: 10,
-              paddingRight: 10,
-            }
-          } : {})
-        },
+        // // for Tina edit mode
+        // '#__next>div:not([class])': {
+        //   ...(edit ? {
+        //     marginLeft: 10,
+        //     [fn.largerThan('md')]: {
+        //       paddingLeft: 10,
+        //       paddingRight: 10,
+        //     }
+        //   } : {})
+        // },
       })} />
 
       <a
