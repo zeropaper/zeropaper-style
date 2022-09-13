@@ -30,7 +30,7 @@ export const getStuffContext = async (): Promise<{ [k: string]: Stuff }> => {
     }: any) => ({
       ...obj,
       [id]: {
-        published,
+        published: !!published,
         title,
         excerpt,
         date,
