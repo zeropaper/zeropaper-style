@@ -17,7 +17,7 @@ const emotionCache = createEmotionCache({ key: 'zp' });
 
 export const ThemeProvider = ({ children, ...props }: MantineProviderProps) => {
   const preferredColorScheme = useColorScheme();
-  const [colorScheme, setColorScheme] = useState<ColorScheme>('light');
+  const [colorScheme, setColorScheme] = useState<ColorScheme>(preferredColorScheme);
 
   const [localColorScheme, setLocalColorScheme] =
     useLocalStorage<ColorScheme>({
