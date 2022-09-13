@@ -1,5 +1,8 @@
 import { Text, Box, createStyles, Title, Paper } from '@mantine/core';
 
+// @ts-ignore
+import timelineData from './timeline-data.yml';
+
 export interface TechCategory {
   name: string;
   description?: string;
@@ -199,6 +202,14 @@ export function Timeline({ reverseOrder }: { reverseOrder?: boolean }) {
   const { classes, cx } = useTimelineStyles({ reverseOrder });
   return (
     <Box className={classes.root}>
+      {timelineData.map((item: any) => (
+        <ExperienceItem
+          className={classes.item}
+          key={item.text}
+          {...item}
+        />
+      ))}
+      {/*
       <ExperienceItem
         className={classes.item}
         title="Multimedia Designer"
@@ -243,7 +254,6 @@ export function Timeline({ reverseOrder }: { reverseOrder?: boolean }) {
           'https://github.com/camunda/camunda-commons-ui',
         ]}
       />
-
       <ExperienceItem
         className={classes.item}
         title="Visual Fiha"
@@ -251,7 +261,6 @@ export function Timeline({ reverseOrder }: { reverseOrder?: boolean }) {
         from="2017-03"
         stack={['javascript', 'ampersandjs', 'webaudio', 'midi', 'git', 'pwa', 'cssom']}
       />
-
       <ExperienceItem
         className={classes.item}
         title="Lecturer"
@@ -261,16 +270,6 @@ export function Timeline({ reverseOrder }: { reverseOrder?: boolean }) {
         to="2018-01"
         stack={['javascript', 'css', 'html5', 'travisci', 'react', 'sass', 'neutrino', 'webpack', 'git', 'linux']}
       />
-
-      {/* <ExperienceItem
-        className={classes.item}
-        title="Senior Front-end Developer"
-        employer="Aperto - IBMx"
-        text=""
-        from="2018-01"
-        to="2018-04"
-        stack={['javascript', 'css', 'html5', 'drupal', 'webpack', 'git', 'macos']}
-      /> */}
       <ExperienceItem
         className={classes.item}
         title="Senior Front-end Developer"
@@ -280,7 +279,6 @@ export function Timeline({ reverseOrder }: { reverseOrder?: boolean }) {
         to="2018-11"
         stack={['javascript', 'css', 'html5', 'react-native', 'expo', 'websockets', 'mobx', 'git', 'macos']}
       />
-
       <ExperienceItem
         className={classes.item}
         title="Senior Front-end Developer"
@@ -299,7 +297,6 @@ export function Timeline({ reverseOrder }: { reverseOrder?: boolean }) {
         to="2021-02"
         stack={['javascript', 'css', 'html5', 'redux', 'react', 'nodejs', 'mongoose', 'expressjs', 'jest', 'eslint', 'jenkins', 'testing-library', 'webpack', 'aws', 'websockets', 'git', 'macos']}
       />
-      {/* Code Intelligence? */}
       <ExperienceItem
         className={classes.item}
         title="Senior Front-end Developer"
@@ -309,13 +306,7 @@ export function Timeline({ reverseOrder }: { reverseOrder?: boolean }) {
         to="2022-01"
         stack={['javascript', 'redux', 'react', 'nodejs', 'jest', 'eslint', 'typescript', 'testing-library', 'webpack', 'websockets', 'git', 'macos']}
       />
-      {/* Ory? */}
-      {/* <ExperienceItem
-        className={classes.item}
-        title="My next position"
-        text=""
-        from="2022"
-      /> */}
+       */}
     </Box>
   );
 }
