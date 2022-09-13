@@ -63,7 +63,7 @@ const Hello = ({
           <Title>Hello</Title>
         </Box>
         <Box component="main">
-          <MDXRenderer content={data.page.body} />
+          {data?.page?.body ? <MDXRenderer content={data.page.body} /> : null}
         </Box>
       </Box>
 
