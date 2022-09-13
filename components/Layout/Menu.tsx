@@ -1,28 +1,28 @@
-import * as React from 'react';
-import { createStyles as createUseStyles } from '@mantine/core';
+import * as React from "react";
+import { createStyles as createUseStyles } from "@mantine/core";
 
-import Link from '../Link/Link';
-import { ClassNames } from '../../typings';
+import Link from "../Link/Link";
+import { ClassNames } from "../../typings";
 
 const useStyles = createUseStyles({
   root: {},
   list: {
     margin: 0,
     padding: 0,
-    listStyle: 'none',
-    display: 'flex',
+    listStyle: "none",
+    display: "flex",
   },
   item: {
-    margin: '0 0.5em',
-    '&:first-of-type': {
+    margin: "0 0.5em",
+    "&:first-of-type": {
       marginLeft: 0,
     },
-    '&:last-of-type': {
+    "&:last-of-type": {
       marginRight: 0,
     },
   },
   link: {
-    display: 'flex',
+    display: "flex",
   },
 });
 
@@ -38,9 +38,9 @@ const Menu = ({
   const { classes, cx } = useStyles();
 
   const links = [
-    ['/hello', 'Hello'],
+    ["/hello", "Hello"],
     // ['/tags', 'Tags'],
-    ['/stuff', 'Stuff'],
+    ["/stuff", "Stuff"],
     // ['/contact', 'Contact'],
   ];
 

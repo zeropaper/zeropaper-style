@@ -1,8 +1,8 @@
-import React from 'react';
+import React from "react";
 
-import Layout from '../Layout/Layout';
-import IFrame from '../IFrame/IFrame';
-import { MDXRenderer } from '../MDXRenderer/MDXRenderer';
+import Layout from "../Layout/Layout";
+import IFrame from "../IFrame/IFrame";
+import { MDXRenderer } from "../MDXRenderer/MDXRenderer";
 
 export const StuffPage = (props: any) => {
   const {
@@ -10,7 +10,7 @@ export const StuffPage = (props: any) => {
     pageContext: { iframe, description, source },
   } = props;
 
-  const { body, frontmatter: { title, tags } = { title: '', tags: [] } } =
+  const { body, frontmatter: { title, tags } = { title: "", tags: [] } } =
     mdx || {};
 
   let content = null;
@@ -33,11 +33,7 @@ export const StuffPage = (props: any) => {
       </>
     );
   } else {
-    content = (
-      <div>
-        Something is seriously wrong.
-      </div>
-    );
+    content = <div>Something is seriously wrong.</div>;
   }
 
   return <Layout>{content}</Layout>;

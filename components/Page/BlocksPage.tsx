@@ -1,7 +1,7 @@
-import Head from 'next/head';
+import Head from "next/head";
 
-import Blocks from '../Blocks/Blocks';
-import { PropTypes } from './GridPage';
+import Blocks from "../Blocks/Blocks";
+import { PropTypes } from "./GridPage";
 
 export type BlocksPageProps = PropTypes & {};
 

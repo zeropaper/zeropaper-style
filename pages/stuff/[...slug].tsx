@@ -1,17 +1,17 @@
-import ErrorPage from 'next/error';
-import Head from 'next/head';
-import { useRouter } from 'next/router';
-import { MDXRenderer } from '../../components/MDXRenderer/MDXRenderer';
+import ErrorPage from "next/error";
+import Head from "next/head";
+import { useRouter } from "next/router";
+import { MDXRenderer } from "../../components/MDXRenderer/MDXRenderer";
 
-import getStuffContext from '../../lib/getStuffContext';
-import IFrame from '../../components/IFrame/IFrame';
-import { AsyncReturnType } from '../../typings';
-import { LayoutContentWrapper } from '../../components/Layout/Layout';
-import filterUnpublished from '../../lib/filterUnpublished';
-import getStuffDocument from 'lib/getStuffDocument';
+import getStuffContext from "../../lib/getStuffContext";
+import IFrame from "../../components/IFrame/IFrame";
+import { AsyncReturnType } from "../../typings";
+import { LayoutContentWrapper } from "../../components/Layout/Layout";
+import filterUnpublished from "../../lib/filterUnpublished";
+import getStuffDocument from "lib/getStuffDocument";
 
 export default function Stuff(
-  props: AsyncReturnType<typeof getStaticProps>['props']
+  props: AsyncReturnType<typeof getStaticProps>["props"]
 ) {
   const { data, slug } = props;
   const router = useRouter();
@@ -30,17 +30,17 @@ export default function Stuff(
         <title>{title}</title>
         <meta
           name="description"
-          content={description || 'Stuff by zeropaper'}
+          content={description || "Stuff by zeropaper"}
         />
         {/* <meta property="og:image" content={ogImage?.url} /> */}
       </Head>
 
       {iframeSrc ? (
         <IFrame
-          title={title || ''}
+          title={title || ""}
           iframe={iframeSrc}
-          source={source || ''}
-          description={description || ''}
+          source={source || ""}
+          description={description || ""}
           tags={(stuff.tags as string[]) || []}
           mdx={body}
         />
@@ -54,14 +54,14 @@ export default function Stuff(
 }
 
 export const getStaticProps = async (props: { params: any }) => {
-  const slug = props.params.slug.join('/');
+  const slug = props.params.slug.join("/");
 
   const itemFromContext = Object.values(await getStuffContext()).find(
     (item) => item.slug === slug
   );
 
   const landingPage = await getStuffDocument({
-    relativePath: itemFromContext?.relativePath || '',
+    relativePath: itemFromContext?.relativePath || "",
   });
 
   return {
@@ -77,7 +77,7 @@ export async function getStaticPaths() {
   return {
     paths: filterUnpublished(Object.values(context))
       .map(({ slug, id, date }) => {
-        if (slug) return { params: { slug: slug.split('/') } };
+        if (slug) return { params: { slug: slug.split("/") } };
       })
       .filter(Boolean),
     fallback: false,

@@ -1,6 +1,6 @@
-import Head from 'next/head';
+import Head from "next/head";
 
-import Grid from '../Grid/Grid';
+import Grid from "../Grid/Grid";
 
 export type PropTypes = {
   title: string;

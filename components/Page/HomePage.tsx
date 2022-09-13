@@ -1,7 +1,7 @@
-import Page, { PropTypes } from './GridPage'
+import Page, { PropTypes } from "./GridPage";
 
-export type HomePageProps = PropTypes & {}
+export type HomePageProps = PropTypes & {};
 
-export const HomePage = Page
+export const HomePage = Page;
 
-export default HomePage
+export default HomePage;

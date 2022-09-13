@@ -1,14 +1,14 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React from 'react';
+import React from "react";
 
-import Toggle from './Toggle';
+import Toggle from "./Toggle";
 
 // import { ReactComponent as LightMode } from '../../assets/light-mode.svg';
 // import { ReactComponent as DarkMode } from '../../assets/dark-mode.svg';
 
 export default {
   component: Toggle,
-  title: 'Toggle',
+  title: "Toggle",
   args: {
     checked: false,
   },
@@ -18,12 +18,12 @@ export default {
   },
 };
 
-export const Basic = (args: any) => (<Toggle {...args} />);
+export const Basic = (args: any) => <Toggle {...args} />;
 Basic.args = {
   checked: false,
 };
 
-export const ThemeMode = (args: any) => (<Basic {...args} />);
+export const ThemeMode = (args: any) => <Basic {...args} />;
 ThemeMode.args = {
   ...Basic.args,
 };

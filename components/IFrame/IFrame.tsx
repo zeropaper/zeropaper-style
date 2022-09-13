@@ -1,12 +1,12 @@
-import React, { PropsWithChildren } from 'react';
-import { useResizeObserver } from '@mantine/hooks';
-import { Button } from '@mantine/core';
+import React, { PropsWithChildren } from "react";
+import { useResizeObserver } from "@mantine/hooks";
+import { Button } from "@mantine/core";
 
-import Link from '../Link/Link';
-import TagsList from '../TagsList/TagsList';
-import { MDXRenderer } from '../MDXRenderer/MDXRenderer';
-import { TinaMarkdownContent } from 'tinacms/dist/rich-text';
-import useStyles from './IFrame.styles';
+import Link from "../Link/Link";
+import TagsList from "../TagsList/TagsList";
+import { MDXRenderer } from "../MDXRenderer/MDXRenderer";
+import { TinaMarkdownContent } from "tinacms/dist/rich-text";
+import useStyles from "./IFrame.styles";
 
 export interface PropTypes {
   iframe: string;
@@ -44,7 +44,7 @@ const IFrameWrapper = (
         <div className={classes.toggleButtonHolder}>
           <button
             style={{
-              width: (innerRect?.height && innerRect?.height * 0.25) || 'auto',
+              width: (innerRect?.height && innerRect?.height * 0.25) || "auto",
             }}
             className={classes.toggleButton}
             type="button"
@@ -65,13 +65,13 @@ const IFrameWrapper = (
           (hover || open) && classes.iframeWrapperShadow
         )}
         style={{
-          width: outerRect?.width - (open ? innerRect?.width : 0) || '100%',
+          width: outerRect?.width - (open ? innerRect?.width : 0) || "100%",
         }}
       >
         <iframe
           className={classes.iframe}
           style={{
-            width: outerRect?.width || '100%',
+            width: outerRect?.width || "100%",
             // height: outerRect?.height || '100%',
           }}
           title={title}

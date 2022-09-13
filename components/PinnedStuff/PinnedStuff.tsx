@@ -1,29 +1,23 @@
-import React from 'react';
-import { Grid, Paper, Text, Title } from '@mantine/core';
-import Image from 'next/image';
+import React from "react";
+import { Grid, Paper, Text, Title } from "@mantine/core";
+import Image from "next/image";
 
-import { DraftLink as Link } from '../../components/Link/Link';
-import type { Stuff } from '../../typings';
+import { DraftLink as Link } from "../../components/Link/Link";
+import type { Stuff } from "../../typings";
 
-export interface PropTypes extends Stuff { };
+export interface PropTypes extends Stuff {}
 
 export function PinnedStuff(props: PropTypes) {
-  const {
-    published,
-    href,
-    title,
-    picture,
-    description,
-  } = props;
+  const { published, href, title, picture, description } = props;
   return (
     <Grid.Col sm={6} key={href}>
       <Paper
         withBorder
         p="sm"
         sx={{
-          position: 'relative',
-          overflow: 'hidden',
-          height: '100%',
+          position: "relative",
+          overflow: "hidden",
+          height: "100%",
         }}
       >
         <Title order={3} size="sm" mb="sm">
@@ -32,9 +26,7 @@ export function PinnedStuff(props: PropTypes) {
           </Link>
         </Title>
 
-        <Text mb="sm">
-          {description}
-        </Text>
+        <Text mb="sm">{description}</Text>
 
         {picture ? (
           <Image
@@ -43,7 +35,7 @@ export function PinnedStuff(props: PropTypes) {
             width={400}
             height={300}
             layout="responsive"
-            objectFit='cover'
+            objectFit="cover"
           />
         ) : null}
       </Paper>

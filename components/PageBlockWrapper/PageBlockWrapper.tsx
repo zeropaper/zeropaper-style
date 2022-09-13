@@ -1,9 +1,9 @@
-import React from 'react';
+import React from "react";
 
-import useStyles from './PageBlockWrapper.styles';
-import useLayoutStyles from '../Layout/Layout.styles';
-import { MantineColor } from '@mantine/core';
-import { ClassNames } from '../../typings';
+import useStyles from "./PageBlockWrapper.styles";
+import useLayoutStyles from "../Layout/Layout.styles";
+import { MantineColor } from "@mantine/core";
+import { ClassNames } from "../../typings";
 
 export interface PropTypes {
   children: React.ReactNode;
@@ -23,8 +23,8 @@ export const Wrapper = ({
   children,
   classes: passedClasses = {},
   slant,
-  outerComponent: OuterComponent = 'div',
-  innerComponent: InnerComponent = 'div',
+  outerComponent: OuterComponent = "div",
+  innerComponent: InnerComponent = "div",
   ...props
 }: PropTypes) => {
   const { classes, cx } = useStyles();

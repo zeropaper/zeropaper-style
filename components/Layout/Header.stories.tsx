@@ -1,12 +1,12 @@
-import React from 'react';
-import { ComponentStory, ComponentMeta } from '@storybook/react';
+import React from "react";
+import { ComponentStory, ComponentMeta } from "@storybook/react";
 
-import Header from './Header';
+import Header from "./Header";
 
 export default {
-  title: 'Layout/Header',
+  title: "Layout/Header",
   parameters: {
-    layout: 'fullscreen',
+    layout: "fullscreen",
   },
   component: Header,
   args: {},

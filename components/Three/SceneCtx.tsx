@@ -1,6 +1,6 @@
-import { MantineTheme } from '@mantine/core';
-import { createContext } from 'react';
-import { Scene, Clock } from 'three';
+import { MantineTheme } from "@mantine/core";
+import { createContext } from "react";
+import { Scene, Clock } from "three";
 
 export type SceneCtx = {
   scene: Scene;

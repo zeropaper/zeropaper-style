@@ -1,5 +1,5 @@
-import React, { ComponentType } from 'react';
-import PropTypes from 'prop-types';
+import React, { ComponentType } from "react";
+import PropTypes from "prop-types";
 
 class ErrorBoundary extends React.Component<any, any> {
   constructor(props: any) {
@@ -12,7 +12,7 @@ class ErrorBoundary extends React.Component<any, any> {
   }
 
   componentDidCatch(err: any, info: any) {
-    console.warn('ErrorBoundary did catch', err.message, info); // eslint-disable-line no-console
+    console.warn("ErrorBoundary did catch", err.message, info); // eslint-disable-line no-console
     this.setState({ error: err });
     // TODO: report problem with a tool like Sentry
   }
@@ -21,15 +21,13 @@ class ErrorBoundary extends React.Component<any, any> {
     const {
       children,
       wrapInCard,
-      errorMessage = 'Doh! Something went wrong…',
+      errorMessage = "Doh! Something went wrong…",
     } = this.props;
     const { error } = this.state;
     if (error) {
       const content = (
-        <div style={{ textAlign: 'center' }} className="error-boundary">
-          <div color="error">
-            {errorMessage}
-          </div>
+        <div style={{ textAlign: "center" }} className="error-boundary">
+          <div color="error">{errorMessage}</div>
 
           {/* <details>
             <summary>Details</summary>
@@ -58,6 +56,6 @@ export const withErrorBoundary = (Comp: ComponentType) => {
       />
     </ErrorBoundary>
   );
-  Safe.displayName = `ErrorSafe(${Comp.displayName || Comp.name || 'WTF'})`;
+  Safe.displayName = `ErrorSafe(${Comp.displayName || Comp.name || "WTF"})`;
   return Safe;
 };

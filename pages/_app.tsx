@@ -1,26 +1,24 @@
-import type { AppProps } from 'next/app';
-import Head from 'next/head';
+import type { AppProps } from "next/app";
+import Head from "next/head";
 import TinaProvider from "../.tina/components/TinaDynamicProvider";
 
-import Layout from '../components/Layout/Layout';
-import ThemeProvider from '../themes/Theme';
+import Layout from "../components/Layout/Layout";
+import ThemeProvider from "../themes/Theme";
 
-import '../public/styles.css';
+import "../public/styles.css";
 
 const getPageData = (pageProps: any): any =>
-  (
-    pageProps?.data?.stuff ||
-    pageProps?.data?.post ||
-    pageProps?.data?.tag ||
-    pageProps?.data?.page ||
-    pageProps?.data?.landingPage
-  ) || {};
+  pageProps?.data?.stuff ||
+  pageProps?.data?.post ||
+  pageProps?.data?.tag ||
+  pageProps?.data?.page ||
+  pageProps?.data?.landingPage ||
+  {};
 
 const App = (props: AppProps) => {
   const { Component, pageProps } = props;
   const { relativePath } = pageProps?.variables || {};
   const pageData = getPageData(pageProps);
-
 
   return (
     <>

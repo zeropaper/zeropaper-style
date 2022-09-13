@@ -1,10 +1,10 @@
-import React from 'react';
-import ThemeProvider from '../themes/Theme';
-import './storybook.css';
-import '../public/styles.css';
+import React from "react";
+import ThemeProvider from "../themes/Theme";
+import "./storybook.css";
+import "../public/styles.css";
 
 export const parameters = {
-  layout: 'centered',
+  layout: "centered",
   actions: { argTypesRegex: "^on[A-Z].*" },
   controls: {
     matchers: {
@@ -14,19 +14,16 @@ export const parameters = {
   },
   options: {
     storySort: {
-      method: 'alphabetical',
+      method: "alphabetical",
       // order: ['Introduction', 'Atoms', 'Molecules', 'Organisms', 'Templates'],
-      locales: ['en-US']
-    }
-  }
+      locales: ["en-US"],
+    },
+  },
 };
 
 export const decorators = [
   (Story) => (
-    <ThemeProvider
-      withGlobalStyles
-      withNormalizeCSS
-    >
+    <ThemeProvider withGlobalStyles withNormalizeCSS>
       <Story />
     </ThemeProvider>
   ),

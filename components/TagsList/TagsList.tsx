@@ -1,7 +1,7 @@
-import React from 'react';
-import { createStyles as createUseStyles } from '@mantine/core';
+import React from "react";
+import { createStyles as createUseStyles } from "@mantine/core";
 
-import Link from '../Link/Link';
+import Link from "../Link/Link";
 
 interface TagsListProps {
   tags?: string[];
@@ -16,8 +16,8 @@ const useStyles = createUseStyles(() => ({
 
 const TagsList = (props: TagsListProps): React.ReactElement => {
   const { tags } = props;
-  const {classes} = useStyles();
-  return (tags ? (
+  const { classes } = useStyles();
+  return tags ? (
     <nav className={classes.root}>
       <ul className={classes.list}>
         {tags.map((tag) => (
@@ -29,7 +29,9 @@ const TagsList = (props: TagsListProps): React.ReactElement => {
         ))}
       </ul>
     </nav>
-  ): <></>);
+  ) : (
+    <></>
+  );
 };
 
 TagsList.defaultProps = {

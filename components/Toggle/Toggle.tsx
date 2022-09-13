@@ -1,11 +1,7 @@
-import React, { ChangeEventHandler, KeyboardEventHandler } from 'react';
-import useStyles from './Toggle.styles';
+import React, { ChangeEventHandler, KeyboardEventHandler } from "react";
+import useStyles from "./Toggle.styles";
 
-const Toggle = ({
-  onChange,
-  classes: passedClasses,
-  ...props
-}: any) => {
+const Toggle = ({ onChange, classes: passedClasses, ...props }: any) => {
   const ref = React.useRef<HTMLSpanElement>(null);
   const [focused, setFocused] = React.useState<boolean>(false);
   const handleFocus = () => {
@@ -14,19 +10,21 @@ const Toggle = ({
   const handleBlur = () => {
     setFocused(false);
   };
-  
-  const [checked, setChecked] = React.useState<boolean>(props.checked);
-  const {classes, cx} = useStyles();
 
-  const toggleChecked = () => setChecked((chckd) => {
-    const updated = !chckd;
-    onChange(updated);
-    return updated;
-  });
+  const [checked, setChecked] = React.useState<boolean>(props.checked);
+  const { classes, cx } = useStyles();
+
+  const toggleChecked = () =>
+    setChecked((chckd) => {
+      const updated = !chckd;
+      onChange(updated);
+      return updated;
+    });
   const keyPressToggle: KeyboardEventHandler<HTMLSpanElement> = (evt) => {
-    if (evt.key === ' ') toggleChecked();
+    if (evt.key === " ") toggleChecked();
   };
-  const handleInputChange: ChangeEventHandler<HTMLInputElement> = (evt) => setChecked(evt.target.checked);
+  const handleInputChange: ChangeEventHandler<HTMLInputElement> = (evt) =>
+    setChecked(evt.target.checked);
 
   return (
     <span

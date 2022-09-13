@@ -1,11 +1,11 @@
-import * as React from 'react';
-import PropTypes from 'prop-types';
-import { createStyles as createUseStyles } from '@mantine/core';
+import * as React from "react";
+import PropTypes from "prop-types";
+import { createStyles as createUseStyles } from "@mantine/core";
 
-import Twitter from './assets/twitter.svg';
-import LinkedIn from './assets/linkedin.svg';
-import GitHub from './assets/github.svg';
-import ExternalLink from '../Link/Link';
+import Twitter from "./assets/twitter.svg";
+import LinkedIn from "./assets/linkedin.svg";
+import GitHub from "./assets/github.svg";
+import ExternalLink from "../Link/Link";
 
 type SocialNetworksProps = {
   className?: string;
@@ -14,32 +14,32 @@ type SocialNetworksProps = {
 
 const useStyles = createUseStyles({
   root: {
-    overflow: 'hidden',
+    overflow: "hidden",
   },
   list: {
     margin: 0,
     padding: 0,
-    listStyle: 'none',
-    display: 'flex',
+    listStyle: "none",
+    display: "flex",
   },
   item: {
     padding: 0,
-    margin: '0 0.5em',
-    '&:first-of-type': {
+    margin: "0 0.5em",
+    "&:first-of-type": {
       marginLeft: 0,
     },
-    '&:last-child': {
+    "&:last-child": {
       marginRight: 0,
     },
   },
   link: {
-    display: 'flex',
+    display: "flex",
   },
   icon: {
-    width: '1.25em',
-    height: '1.25em',
-    '& path': {
-      fill: 'currentColor',
+    width: "1.25em",
+    height: "1.25em",
+    "& path": {
+      fill: "currentColor",
     },
   },
 });

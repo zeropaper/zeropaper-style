@@ -1,4 +1,4 @@
-import React, { Component, useMemo } from 'react';
+import React, { Component, useMemo } from "react";
 
 import {
   useRef,
@@ -6,21 +6,21 @@ import {
   PropsWithChildren,
   MutableRefObject,
   useCallback,
-} from 'react';
-import { useResizeObserver } from '@mantine/hooks';
-import { createStyles, MantineTheme, useMantineTheme } from '@mantine/core';
-import { PerspectiveCamera, OrthographicCamera } from 'three';
+} from "react";
+import { useResizeObserver } from "@mantine/hooks";
+import { createStyles, MantineTheme, useMantineTheme } from "@mantine/core";
+import { PerspectiveCamera, OrthographicCamera } from "three";
 
-import type { RendererCtx } from './RendererCtx';
-import type { SceneCtx } from './SceneCtx';
-import Scene from './Scene';
-import Renderer from './Renderer';
-import { useAnimationFrame, useClock, useScene } from './hooks';
-import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
+import type { RendererCtx } from "./RendererCtx";
+import type { SceneCtx } from "./SceneCtx";
+import Scene from "./Scene";
+import Renderer from "./Renderer";
+import { useAnimationFrame, useClock, useScene } from "./hooks";
+import ErrorBoundary from "../ErrorBoundary/ErrorBoundary";
 // import onRender from './onRender';
 // import onMount from './onMount';
-import * as scripts from './Three.scripts';
-import { useTheme } from '../../themes/Theme';
+import * as scripts from "./Three.scripts";
+import { useTheme } from "../../themes/Theme";
 
 export type PropTypes = {
   onMount?: (ctx: SceneCtx) => void;
@@ -29,16 +29,16 @@ export type PropTypes = {
 
 const useStyles = createStyles(() => ({
   root: {
-    width: '100%',
-    height: '100%',
+    width: "100%",
+    height: "100%",
     flexGrow: 1,
-    display: 'flex',
-    alignItems: 'stretch',
-    justifyContent: 'center',
-    overflow: 'hidden',
-    position: 'relative',
-    '& > canvas': {
-      position: 'absolute',
+    display: "flex",
+    alignItems: "stretch",
+    justifyContent: "center",
+    overflow: "hidden",
+    position: "relative",
+    "& > canvas": {
+      position: "absolute",
       flexGrow: 1,
     },
   },
@@ -115,7 +115,7 @@ export const RuntimeComponent = ({
   }, []);
 
   const renderFrame = (deltaTime: number) => {
-    const destCtx = canvas.current?.getContext('2d');
+    const destCtx = canvas.current?.getContext("2d");
     if (!canvas.current || !destCtx) return;
     if (clock) clock.getElapsedTime();
 
@@ -141,7 +141,7 @@ export const RuntimeComponent = ({
           sw,
           sh
         );
-      } catch (e) { }
+      } catch (e) {}
     });
   };
   useAnimationFrame(renderFrame);

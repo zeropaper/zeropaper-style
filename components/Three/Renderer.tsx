@@ -1,22 +1,22 @@
-import { PropsWithChildren, useEffect, useMemo, useRef } from 'react';
+import { PropsWithChildren, useEffect, useMemo, useRef } from "react";
 import {
   WebGLRenderer,
   PerspectiveCamera,
   OrthographicCamera,
   CameraHelper,
   PCFSoftShadowMap,
-} from 'three';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+} from "three";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 
-import { useScene } from './hooks';
-import { RendererCtx, RendererContext } from './RendererCtx';
+import { useScene } from "./hooks";
+import { RendererCtx, RendererContext } from "./RendererCtx";
 
 const ensureProxy = (original: HTMLElement): HTMLElement => {
   let proxy =
-    original.parentElement?.querySelector<HTMLElement>('[data-proxy]');
+    original.parentElement?.querySelector<HTMLElement>("[data-proxy]");
   if (!proxy) {
-    proxy = document.createElement('div');
-    proxy.setAttribute('data-proxy', 'true');
+    proxy = document.createElement("div");
+    proxy.setAttribute("data-proxy", "true");
     original.parentElement?.insertBefore(proxy, original);
   }
   return proxy;
@@ -42,21 +42,22 @@ const useCamera = ({
   >(() => {
     let instance;
     let ctrls: OrbitControls | null = null;
-    if (id === 'camera') {
-      const found = scene.getObjectByName('camera') as PerspectiveCamera | null;
+    if (id === "camera") {
+      const found = scene.getObjectByName("camera") as PerspectiveCamera | null;
       instance = found || new PerspectiveCamera();
-      instance.name = 'camera';
+      instance.name = "camera";
       const destCanvas = destinationCanvasRef.current;
       if (destCanvas?.width && destCanvas?.height) {
         requestAnimationFrame(() => {
           const proxy = ensureProxy(destCanvas);
           proxy.style.top = `${(destCanvas?.height || 0) * (topPrct * 0.01)}px`;
-          proxy.style.left = `${(destCanvas?.width || 0) * (leftPrct * 0.01)
-            }px`;
+          proxy.style.left = `${
+            (destCanvas?.width || 0) * (leftPrct * 0.01)
+          }px`;
           proxy.style.height = `${renderer.domElement?.height}px`;
           proxy.style.width = `${renderer.domElement?.width}px`;
-          proxy.style.position = 'absolute';
-          proxy.style.zIndex = '5';
+          proxy.style.position = "absolute";
+          proxy.style.zIndex = "5";
           // proxy.style.background = 'lime';
           // proxy.style.opacity = '0.5';
         });
@@ -74,7 +75,7 @@ const useCamera = ({
         ctrls.maxDistance = 60;
 
         const controlSpeed =
-          'ontouchstart' in window || navigator.maxTouchPoints ? 1 : 0.1;
+          "ontouchstart" in window || navigator.maxTouchPoints ? 1 : 0.1;
         ctrls.rotateSpeed = controlSpeed;
         ctrls.panSpeed = controlSpeed;
         ctrls.zoomSpeed = controlSpeed;
@@ -115,7 +116,7 @@ const Renderer = ({
     onUnmount: (ctx: RendererCtx) => void;
     onContextChange?: (ctx: RendererCtx) => void;
   } & Partial<
-    Pick<RendererCtx, 'heightPrct' | 'leftPrct' | 'topPrct' | 'widthPrct'>
+    Pick<RendererCtx, "heightPrct" | "leftPrct" | "topPrct" | "widthPrct">
   >
 >) => {
   const scene = useScene();
@@ -139,7 +140,7 @@ const Renderer = ({
   });
 
   const cameraHelper = useMemo<CameraHelper | null>(() => {
-    if (id !== 'camera') return null;
+    if (id !== "camera") return null;
     const instance = new CameraHelper(camera);
     instance.name = `${camera.name}-helper`;
     instance.visible = false;
@@ -196,7 +197,7 @@ const Renderer = ({
   }, []);
 
   useEffect(() => {
-    if (typeof onContextChange === 'function') onContextChange(context);
+    if (typeof onContextChange === "function") onContextChange(context);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [context]);
 

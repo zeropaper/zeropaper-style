@@ -1,22 +1,21 @@
-import ErrorPage from 'next/error';
-import Head from 'next/head';
-import { useRouter } from 'next/router';
+import ErrorPage from "next/error";
+import Head from "next/head";
+import { useRouter } from "next/router";
 import { useTina } from "tinacms/dist/edit-state";
 
-import Grid from '../components/Grid/Grid';
-import { LayoutContentWrapper } from '../components/Layout/Layout';
-import { MDXRenderer } from '../components/MDXRenderer/MDXRenderer';
-import filterUnpublished from '../lib/filterUnpublished';
-import { getPageContext } from '../lib/getPageContext';
-import { AsyncReturnType } from '../typings';
+import Grid from "../components/Grid/Grid";
+import { LayoutContentWrapper } from "../components/Layout/Layout";
+import { MDXRenderer } from "../components/MDXRenderer/MDXRenderer";
+import filterUnpublished from "../lib/filterUnpublished";
+import { getPageContext } from "../lib/getPageContext";
+import { AsyncReturnType } from "../typings";
 
-import getLandingPageDocument from '../lib/getLandingPageDocument';
-import getPageDocument from '../lib/getPageDocument';
+import getLandingPageDocument from "../lib/getLandingPageDocument";
+import getPageDocument from "../lib/getPageDocument";
 
 export default function Page(
-  props: AsyncReturnType<typeof getStaticProps>['props']
+  props: AsyncReturnType<typeof getStaticProps>["props"]
 ) {
-
   const fromTina = useTina({
     query: props.query,
     variables: props.variables,
@@ -42,7 +41,7 @@ export default function Page(
       <h1 data-tinafield="title">{title}</h1>
 
       {body ? (
-        <MDXRenderer tinaField="body" content={body || ''} />
+        <MDXRenderer tinaField="body" content={body || ""} />
       ) : (
         <Grid blocks={blocks || []} />
       )}
@@ -56,7 +55,7 @@ export const getStaticProps = async ({ params }: { params: any }) => {
 
   try {
     const page = await getPageDocument({ relativePath: `${slug}.mdx` });
-    if (Object.keys(page.data).length === 0) throw new Error('No data');
+    if (Object.keys(page.data).length === 0) throw new Error("No data");
     return {
       props: {
         pageContext,

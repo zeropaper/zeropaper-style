@@ -1,7 +1,7 @@
-import React from 'react';
+import React from "react";
 
-import Slim from './assets/zeropaper-slim.svg';
-import Fat from './assets/zeropaper-fat.svg';
+import Slim from "./assets/zeropaper-slim.svg";
+import Fat from "./assets/zeropaper-fat.svg";
 
 type LogoProps = {
   slim?: boolean;

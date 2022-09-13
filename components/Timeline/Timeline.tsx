@@ -1,7 +1,7 @@
-import { Text, Box, createStyles, Title, Paper } from '@mantine/core';
+import { Text, Box, createStyles, Title, Paper } from "@mantine/core";
 
 // @ts-ignore
-import timelineData from './timeline-data.yml';
+import timelineData from "./timeline-data.yml";
 
 export interface TechCategory {
   name: string;
@@ -40,84 +40,86 @@ export interface TimelineProps {
   // items: Experience[];
 }
 
-const useTimelineItemStyles = createStyles(({ spacing, breakpoints, colors }, params, getRef) => {
-  return {
-    root: {
-      display: 'flex',
-      flexDirection: 'row',
-    },
-    gutter: {
-      position: 'relative',
-      width: spacing.md * 2,
-      display: 'flex',
+const useTimelineItemStyles = createStyles(
+  ({ spacing, breakpoints, colors }, params, getRef) => {
+    return {
+      root: {
+        display: "flex",
+        flexDirection: "row",
+      },
+      gutter: {
+        position: "relative",
+        width: spacing.md * 2,
+        display: "flex",
 
-      [`@media print`]: {
-        display: 'none',
-      },
+        [`@media print`]: {
+          display: "none",
+        },
 
-      [`@media (min-width: ${breakpoints.xl}px)`]: {
-        paddingLeft: spacing.md,
-        paddingRight: spacing.md,
-        width: spacing.md * 3,
-      },
-      '&::before,&::after': {
-        position: 'absolute',
-        content: '""',
-        top: 0,
-        bottom: 0,
-      },
-      '&::before': {
-        background: 'currentColor',
-        zIndex: 1,
-        width: 4,
-        left: `calc(((${spacing.md}px - ${4}px) * 0.5))`,
         [`@media (min-width: ${breakpoints.xl}px)`]: {
-          left: `calc(${spacing.md}px + ((${spacing.md}px - ${4}px) * 0.5))`,
-        }
+          paddingLeft: spacing.md,
+          paddingRight: spacing.md,
+          width: spacing.md * 3,
+        },
+        "&::before,&::after": {
+          position: "absolute",
+          content: '""',
+          top: 0,
+          bottom: 0,
+        },
+        "&::before": {
+          background: "currentColor",
+          zIndex: 1,
+          width: 4,
+          left: `calc(((${spacing.md}px - ${4}px) * 0.5))`,
+          [`@media (min-width: ${breakpoints.xl}px)`]: {
+            left: `calc(${spacing.md}px + ((${spacing.md}px - ${4}px) * 0.5))`,
+          },
+        },
+        "&::after": {
+          position: "absolute",
+          zIndex: 0,
+          left: spacing.md,
+          width: spacing.md,
+        },
       },
-      '&::after': {
-        position: 'absolute',
-        zIndex: 0,
-        left: spacing.md,
+      dot: {
+        position: "relative",
+        zIndex: 3,
+        display: "block",
         width: spacing.md,
+        height: spacing.md,
+        borderRadius: spacing.md,
+        backgroundColor: "currentColor",
       },
-    },
-    dot: {
-      position: 'relative',
-      zIndex: 3,
-      display: 'block',
-      width: spacing.md,
-      height: spacing.md,
-      borderRadius: spacing.md,
-      backgroundColor: 'currentColor'
-    },
-    paperWrapper: {
-      marginBottom: spacing.lg,
-      width: '100%',
-      [`@media print`]: {
-        breakInside: 'avoid',
-        pageBreakInside: 'avoid',
-        display: 'table',
+      paperWrapper: {
+        marginBottom: spacing.lg,
+        width: "100%",
+        [`@media print`]: {
+          breakInside: "avoid",
+          pageBreakInside: "avoid",
+          display: "table",
+        },
       },
-    },
-    paper: {},
-    dates: {
-      paddingTop: 2,
-      lineHeight: 1,
-    },
-    employer: {},
-    title: {},
-    text: {
-      fontSize: '1.2rem',
-      marginBottom: spacing.md,
-    },
-    stack: {
-      marginBottom: spacing.md,
-      color: colors.gray[6],
-    },
-    stackItem: {}
-  };
-})
+      paper: {},
+      dates: {
+        paddingTop: 2,
+        lineHeight: 1,
+      },
+      employer: {},
+      title: {},
+      text: {
+        fontSize: "1.2rem",
+        marginBottom: spacing.md,
+      },
+      stack: {
+        marginBottom: spacing.md,
+        color: colors.gray[6],
+      },
+      stackItem: {},
+    };
+  }
+);
 
 function ExperienceItem({
   title,
@@ -127,7 +129,7 @@ function ExperienceItem({
   className,
   employer,
   stack,
-}: Experience & { className?: string; }) {
+}: Experience & { className?: string }) {
   const { classes, cx } = useTimelineItemStyles();
   return (
     <Box className={cx(className, classes.root)}>
@@ -135,13 +137,21 @@ function ExperienceItem({
         <Box className={classes.dot} />
       </Box>
 
-      <Box component='section' className={classes.paperWrapper}>
+      <Box component="section" className={classes.paperWrapper}>
         <Box className={classes.dates}>
           {from}
           {/* {`${from}${to ? ` - ${to}` : ''}`} */}
         </Box>
-        <Paper p="xs" my="xs" withBorder component='main' className={classes.paper}>
-          <Title className={classes.title} order={2}>{title}</Title>
+        <Paper
+          p="xs"
+          my="xs"
+          withBorder
+          component="main"
+          className={classes.paper}
+        >
+          <Title className={classes.title} order={2}>
+            {title}
+          </Title>
           {employer && <Title order={3}>@ {employer}</Title>}
           <Text className={classes.text}>{text}</Text>
 
@@ -149,7 +159,7 @@ function ExperienceItem({
             {/* {(stack || []).map((tech) => (
               <span className={classes.stackItem} key={tech}>{tech}</span>
             ))} */}
-            {(stack || []).join(', ')}
+            {(stack || []).join(", ")}
           </Box>
         </Paper>
       </Box>
@@ -157,57 +167,58 @@ function ExperienceItem({
   );
 }
 
-const useTimelineStyles = createStyles<'root' | 'item', { reverseOrder?: boolean }>(({ spacing, breakpoints, fn }, { reverseOrder }, getRef) => {
+const useTimelineStyles = createStyles<
+  "root" | "item",
+  { reverseOrder?: boolean }
+>(({ spacing, breakpoints, fn }, { reverseOrder }, getRef) => {
   return {
     root: {
       // padding: spacing.md,
-      display: 'flex',
-      margin: '0 auto',
-      width: '100%',
-      maxWidth: breakpoints.md - (spacing.md * 2),
-      overflow: 'hidden',
-      [fn.smallerThan('md')]: {
+      display: "flex",
+      margin: "0 auto",
+      width: "100%",
+      maxWidth: breakpoints.md - spacing.md * 2,
+      overflow: "hidden",
+      [fn.smallerThan("md")]: {
         paddingLeft: spacing.md,
         paddingRight: spacing.md,
       },
-      flexDirection: reverseOrder ? 'column-reverse' : 'column',
-      [`& > .${getRef('item')}:nth-of-type(odd)`]: {
+      flexDirection: reverseOrder ? "column-reverse" : "column",
+      [`& > .${getRef("item")}:nth-of-type(odd)`]: {
         [`@media (min-width: ${breakpoints.xl}px)`]: {
-          marginRight: 'auto',
+          marginRight: "auto",
           marginLeft: `calc(50% - (${spacing.md}px * 1.5))`,
-          textAlign: 'left',
-          flexDirection: 'row',
+          textAlign: "left",
+          flexDirection: "row",
         },
       },
-      [`& > .${getRef('item')}:${reverseOrder ? 'first' : 'last'}-of-type > div:nth-of-type(1)`]: {
-        '&::before,&::after': {
-          display: 'none',
-        }
-      }
+      [`& > .${getRef("item")}:${
+        reverseOrder ? "first" : "last"
+      }-of-type > div:nth-of-type(1)`]: {
+        "&::before,&::after": {
+          display: "none",
+        },
+      },
     },
     item: {
-      ref: getRef('item'),
-      overflow: 'hidden',
+      ref: getRef("item"),
+      overflow: "hidden",
       [`@media (min-width: ${breakpoints.xl}px)`]: {
-        flexDirection: 'row-reverse',
-        textAlign: 'right',
+        flexDirection: "row-reverse",
+        textAlign: "right",
         marginRight: `calc(50% - (${spacing.md}px * 1.5))`,
-        marginLeft: 'auto',
+        marginLeft: "auto",
       },
-    }
+    },
   };
-})
+});
 
 export function Timeline({ reverseOrder }: { reverseOrder?: boolean }) {
   const { classes, cx } = useTimelineStyles({ reverseOrder });
   return (
     <Box className={classes.root}>
       {timelineData.map((item: any) => (
-        <ExperienceItem
-          className={classes.item}
-          key={item.text}
-          {...item}
-        />
+        <ExperienceItem className={classes.item} key={item.text} {...item} />
       ))}
       {/*
       <ExperienceItem

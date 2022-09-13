@@ -1,7 +1,7 @@
-const path = require('path');
+const path = require("path");
 
 const svgr = {
-  loader: '@svgr/webpack',
+  loader: "@svgr/webpack",
   options: {
     // use prettier to format JS code output (default: true)
     prettier: false,
@@ -21,10 +21,10 @@ const svgr = {
 module.exports = ({ config }) => {
   config.module.rules.forEach((rule, r) => {
     const testStr = rule.test.toString();
-    if (testStr.includes('svg')) {
+    if (testStr.includes("svg")) {
       config.module.rules[r] = {
         ...rule,
-        test: new RegExp(testStr.split('|svg').join('').split('svg|').join('')),
+        test: new RegExp(testStr.split("|svg").join("").split("svg|").join("")),
       };
     }
   });
@@ -34,7 +34,7 @@ module.exports = ({ config }) => {
   });
   config.module.rules.push({
     test: /\.(yml|yaml)$/,
-    use: 'yaml-loader',
+    use: "yaml-loader",
   });
   return config;
 };

@@ -1,52 +1,52 @@
-import * as React from 'react';
+import * as React from "react";
 import {
   createStyles as createUseStyles,
   useMantineColorScheme,
   keyframes,
-} from '@mantine/core';
+} from "@mantine/core";
 
-import Link, { useStyles as useLinkStyles } from '../Link/Link';
-import Logo from '../Logo/Logo';
-import Menu from './Menu';
-import LightMode from './assets/light-mode.svg';
-import DarkMode from './assets/dark-mode.svg';
-import { ClassNames } from '../../typings';
+import Link, { useStyles as useLinkStyles } from "../Link/Link";
+import Logo from "../Logo/Logo";
+import Menu from "./Menu";
+import LightMode from "./assets/light-mode.svg";
+import DarkMode from "./assets/dark-mode.svg";
+import { ClassNames } from "../../typings";
 
 const drawStroke = keyframes({
-  '0%': {
-    strokeDasharray: '200%',
-    strokeDashoffset: '0%',
+  "0%": {
+    strokeDasharray: "200%",
+    strokeDashoffset: "0%",
   },
-  '100%': {
-    strokeDasharray: '200%',
-    strokeDashoffset: '400%',
+  "100%": {
+    strokeDasharray: "200%",
+    strokeDashoffset: "400%",
   },
 });
 
 const useStyles = createUseStyles(({ spacing, fn }, _params, getRef) => {
-  const logo = getRef('logo');
+  const logo = getRef("logo");
   return {
     root: {},
     inner: {
-      display: 'flex',
-      alignItems: 'center',
+      display: "flex",
+      alignItems: "center",
       paddingTop: spacing.sm,
       paddingBottom: spacing.sm,
     },
     title: {
       fontWeight: 300,
-      fontSize: 'min(32px, 7vw)',
+      fontSize: "min(32px, 7vw)",
       flexGrow: 1,
       margin: 0,
-      [fn.smallerThan('md')]: {
-        width: '25%',
+      [fn.smallerThan("md")]: {
+        width: "25%",
       },
     },
     titleLink: {
-      display: 'flex',
-      alignItems: 'center',
-      textDecoration: 'none',
-      borderBottom: 'none',
+      display: "flex",
+      alignItems: "center",
+      textDecoration: "none",
+      borderBottom: "none",
 
       [`&:hover .${logo} path`]: {
         animationName: drawStroke,
@@ -55,62 +55,62 @@ const useStyles = createUseStyles(({ spacing, fn }, _params, getRef) => {
     logo: {
       ref: logo,
       marginRight: spacing.sm,
-      maxHeight: '1em',
-      maxWidth: '1em',
-      [fn.smallerThan('md')]: {
-        transform: 'translateX(-6px)',
+      maxHeight: "1em",
+      maxWidth: "1em",
+      [fn.smallerThan("md")]: {
+        transform: "translateX(-6px)",
       },
-      '& path': {
-        stroke: 'currentColor',
+      "& path": {
+        stroke: "currentColor",
         strokeWidth: 40,
-        fill: 'none',
-        animationDuration: '2s',
+        fill: "none",
+        animationDuration: "2s",
         // animationIterationCount: 'infinite',
-        animationFillMode: 'forwards',
-        animationTimingFunction: 'linear',
+        animationFillMode: "forwards",
+        animationTimingFunction: "linear",
       },
     },
     linkText: {
-      [fn.smallerThan('sm')]: {
-        display: 'none',
+      [fn.smallerThan("sm")]: {
+        display: "none",
       },
     },
     menu: {
       flexGrow: 1,
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      [fn.smallerThan('md')]: {
-        width: '50%',
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      [fn.smallerThan("md")]: {
+        width: "50%",
         // flexGrow: 2,
       },
     },
     themeToggleWrapper: {
-      width: '33%',
-      textAlign: 'right',
-      display: 'flex',
-      justifyContent: 'flex-end',
-      alignItems: 'center',
-      [fn.smallerThan('md')]: {
+      width: "33%",
+      textAlign: "right",
+      display: "flex",
+      justifyContent: "flex-end",
+      alignItems: "center",
+      [fn.smallerThan("md")]: {
         // width: '25%',
         // flexGrow: 1,
       },
     },
     themeToggle: {
-      background: 'none',
-      border: 'none',
-      textDecoration: 'underline',
-      font: 'inherit',
-      cursor: 'pointer',
-      color: 'inherit',
-      display: 'inline-flex',
-      alignItems: 'baseline',
+      background: "none",
+      border: "none",
+      textDecoration: "underline",
+      font: "inherit",
+      cursor: "pointer",
+      color: "inherit",
+      display: "inline-flex",
+      alignItems: "baseline",
       margin: 0,
       padding: 0,
     },
     themeModeIcon: {
-      '& path': {
-        fill: 'currentColor',
+      "& path": {
+        fill: "currentColor",
       },
     },
   };
@@ -131,7 +131,7 @@ const ThemeModeToggle = () => {
       onClick={toggleMode}
       className={cx(classes.themeToggle, linkClasses.root)}
     >
-      {colorScheme === 'dark' ? (
+      {colorScheme === "dark" ? (
         <LightMode className={classes.themeModeIcon} />
       ) : (
         <DarkMode className={classes.themeModeIcon} />

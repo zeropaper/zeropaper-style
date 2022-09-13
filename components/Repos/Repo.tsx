@@ -1,27 +1,27 @@
-import { createStyles, Grid, Group, Paper, Text, Title } from '@mantine/core';
-import { formatDistanceToNow } from 'date-fns';
-import { IconBrandGithub } from '@tabler/icons';
-import { RepoInfo } from '../../lib/getRepos';
-import { DraftLink as Link } from '../Link/Link';
+import { createStyles, Grid, Group, Paper, Text, Title } from "@mantine/core";
+import { formatDistanceToNow } from "date-fns";
+import { IconBrandGithub } from "@tabler/icons";
+import { RepoInfo } from "../../lib/getRepos";
+import { DraftLink as Link } from "../Link/Link";
 
 const useStyles = createStyles(({ spacing, colors }) => ({
   paper: {
-    display: 'flex',
-    flexDirection: 'column',
+    display: "flex",
+    flexDirection: "column",
     flexGrow: 1,
-    height: '100%',
+    height: "100%",
   },
   title: {
     margin: 0,
     marginBottom: spacing.sm,
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
     gap: spacing.xs,
   },
   link: {
-    justifySelf: 'flex-end',
-    alignSelf: 'flex-end',
+    justifySelf: "flex-end",
+    alignSelf: "flex-end",
   },
   description: {
     flexGrow: 1,
@@ -29,10 +29,15 @@ const useStyles = createStyles(({ spacing, colors }) => ({
   },
   languages: {
     color: colors.gray[6],
-  }
+  },
 }));
 export function Repo({
-  name, description, url, languages, createdAt, updatedAt,
+  name,
+  description,
+  url,
+  languages,
+  createdAt,
+  updatedAt,
 }: RepoInfo) {
   const { classes } = useStyles();
   return (
@@ -49,11 +54,9 @@ export function Repo({
         </Group>
         */}
 
-        <Text className={classes.description}>
-          {description}
-        </Text>
+        <Text className={classes.description}>{description}</Text>
         <Text className={classes.languages}>
-          {languages.nodes.map(({ name }) => name).join(', ')}
+          {languages.nodes.map(({ name }) => name).join(", ")}
         </Text>
 
         <Link title="Code on GitHub" className={classes.link} href={url}>

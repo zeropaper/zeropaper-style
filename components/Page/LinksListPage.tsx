@@ -1,11 +1,11 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import moment from 'moment';
-import { createStyles as createUseStyles } from '@mantine/core';
+import React from "react";
+import PropTypes from "prop-types";
+import moment from "moment";
+import { createStyles as createUseStyles } from "@mantine/core";
 
-import Layout from '../Layout/Layout';
-import Link from '../Link/Link';
-import TagsList from '../TagsList/TagsList';
+import Layout from "../Layout/Layout";
+import Link from "../Link/Link";
+import TagsList from "../TagsList/TagsList";
 
 const useStyles = createUseStyles(() => ({
   root: {},
@@ -20,17 +20,15 @@ export const ListItem = (props: any) => {
     title,
     date,
     tags,
-    titleComponent: TitleComponent = 'h2',
+    titleComponent: TitleComponent = "h2",
   } = props;
-  const {classes} = useStyles(props);
+  const { classes } = useStyles(props);
   return (
     <li key={to} className={classes.itemRoot}>
-      {date && (<div>{moment(date).format('MMMM Do, YYYY')}</div>)}
+      {date && <div>{moment(date).format("MMMM Do, YYYY")}</div>}
 
       <TitleComponent>
-        <Link href={to}>
-          {title}
-        </Link>
+        <Link href={to}>{title}</Link>
       </TitleComponent>
 
       <TagsList tags={tags} />
@@ -44,16 +42,14 @@ export const lowerCaseSort = (a: string, b: string) => {
   if (lcA > lcB) return 1;
   if (lcA < lcB) return -1;
   return 0;
-}
+};
 
 const LinksListTemplate = (props: any) => {
-  const {
-    pageContext,
-  } = props;
+  const { pageContext } = props;
 
   const { [pageContext.list]: list } = pageContext;
 
-  const {classes} = useStyles(props);
+  const { classes } = useStyles(props);
 
   return (
     <Layout className={classes.root}>
@@ -61,19 +57,18 @@ const LinksListTemplate = (props: any) => {
         <h1>{pageContext.pageTitle}</h1>
       </header>
 
-      {Array.isArray(list)
-        ? list.map(ListItem)
-        : (
-          <ul className={classes.topLevelList}>
-            {Object.keys(list).sort(lowerCaseSort).map((key) => (
+      {Array.isArray(list) ? (
+        list.map(ListItem)
+      ) : (
+        <ul className={classes.topLevelList}>
+          {Object.keys(list)
+            .sort(lowerCaseSort)
+            .map((key) => (
               <li key={key}>
                 <h2>{key}</h2>
 
                 <ul className={classes.subList}>
-                  {list[key].map(({
-                    to,
-                    title,
-                  }: any) => (
+                  {list[key].map(({ to, title }: any) => (
                     <ListItem
                       to={to}
                       title={title}
@@ -84,8 +79,8 @@ const LinksListTemplate = (props: any) => {
                 </ul>
               </li>
             ))}
-          </ul>
-        )}
+        </ul>
+      )}
     </Layout>
   );
 };

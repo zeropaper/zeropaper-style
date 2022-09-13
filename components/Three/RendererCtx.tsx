@@ -1,11 +1,5 @@
-import {
-  createContext,
-} from 'react'
-import {
-  Renderer,
-  PerspectiveCamera,
-  OrthographicCamera,
-} from 'three'
+import { createContext } from "react";
+import { Renderer, PerspectiveCamera, OrthographicCamera } from "three";
 
 export type RendererCtx = {
   widthPrct: number | 100;
@@ -16,7 +10,7 @@ export type RendererCtx = {
   camera: PerspectiveCamera | OrthographicCamera | null;
   render: (deltaTime: number) => void;
   id: string;
-}
+};
 
 const defaultRenderer: RendererCtx = {
   widthPrct: 100,
@@ -25,8 +19,8 @@ const defaultRenderer: RendererCtx = {
   topPrct: 0,
   renderer: null,
   camera: null,
-  id: '',
+  id: "",
   render: (deltaTime: number) => {},
-}
+};
 
-export const RendererContext = createContext(defaultRenderer)
+export const RendererContext = createContext(defaultRenderer);

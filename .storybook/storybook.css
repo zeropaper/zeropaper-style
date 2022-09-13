@@ -6,7 +6,7 @@ body.sb-main-fullscreen.sb-show-main {
   min-height: 100vh;
 }
 
-body.sb-main-fullscreen.sb-show-main #root{
+body.sb-main-fullscreen.sb-show-main #root {
   min-height: 100vh;
   display: flex;
   flex-direction: column;

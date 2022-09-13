@@ -1,8 +1,8 @@
-import NextLink, { LinkProps as NextLinkProps } from 'next/link';
-import { Button, createStyles } from '@mantine/core';
-import { ComponentType, PropsWithChildren } from 'react';
+import NextLink, { LinkProps as NextLinkProps } from "next/link";
+import { Button, createStyles } from "@mantine/core";
+import { ComponentType, PropsWithChildren } from "react";
 
-export * from 'next/link';
+export * from "next/link";
 
 type LinkProps = NextLinkProps & {
   className?: string;
@@ -15,15 +15,15 @@ export const useStyles = createStyles(
     root: {
       ...fn.focusStyles(),
       color: colors?.[primaryColor][5],
-      transition: 'color 162ms ease-in-out',
-      '&:hover,&:focus': {
+      transition: "color 162ms ease-in-out",
+      "&:hover,&:focus": {
         color: colors[primaryColor][3],
       },
-      '&.draft': {
-        color: colors?.['orange'][5],
+      "&.draft": {
+        color: colors?.["orange"][5],
       },
-      '&.draft:hover,&.draft:focus': {
-        color: colors['orange'][3],
+      "&.draft:hover,&.draft:focus": {
+        color: colors["orange"][3],
       },
     },
   })
@@ -32,7 +32,7 @@ export const useStyles = createStyles(
 export const Link = ({
   // children,
   className,
-  component: Component = 'a',
+  component: Component = "a",
 
   // Next Link Props
   href,
@@ -78,7 +78,7 @@ export const DraftLink = ({
 }: LinkProps & { unpublished?: boolean }) => (
   <Link
     {...props}
-    className={[className, unpublished && 'draft'].filter(Boolean).join(' ')}
+    className={[className, unpublished && "draft"].filter(Boolean).join(" ")}
   />
 );
 
