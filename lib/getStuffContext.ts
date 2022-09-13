@@ -2,7 +2,7 @@ import getStuffList from './getStuffList';
 
 type Stuff = {
   title: string;
-  excerpt: string;
+  description: string;
   href: string;
   id: string;
   relativePath: string;
@@ -22,7 +22,7 @@ export const getStuffContext = async (): Promise<{ [k: string]: Stuff }> => {
         id,
         published = false,
         title = null,
-        excerpt = null,
+        description = null,
         date = null,
         picture = null,
         slug: postSlug = null
@@ -32,7 +32,7 @@ export const getStuffContext = async (): Promise<{ [k: string]: Stuff }> => {
       [id]: {
         published: !!published,
         title,
-        excerpt,
+        description,
         date,
         picture,
         id,
