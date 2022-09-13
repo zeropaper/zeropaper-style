@@ -1,11 +1,14 @@
 import React from "react";
 import { Box, Button, createStyles, Group, Title } from "@mantine/core";
+import { useTina } from "tinacms/dist/edit-state";
 
 import { useStyles as useLayoutStyles } from "../components/Layout/Layout";
 import { getPageContext } from "../lib/getPageContext";
 import { AsyncReturnType } from "../typings";
 import Timeline from "../components/Timeline/Timeline";
 import Link from "../components/Link/Link";
+import getPageDocument from "lib/getPageDocument";
+import { MDXRenderer } from "components/MDXRenderer/MDXRenderer";
 
 const useStyles = createStyles({
   root: {
@@ -30,6 +33,11 @@ const Hello = ({
   pageContext,
   ...props
 }: AsyncReturnType<typeof getStaticProps>["props"]) => {
+  const { data } = useTina({
+    query: pageContext.query,
+    variables: pageContext.variables,
+    data: pageContext.data,
+  });
   const {
     classes: { main },
   } = useLayoutStyles();
@@ -56,29 +64,7 @@ const Hello = ({
           <Title>Hello</Title>
         </Box>
         <Box component="main">
-          <p>
-            My name&apos;s Valentin.
-            <br />
-            I was born in the French speaking part of Switzerland in the early
-            80&apos;s but I lived in Berlin nearly half my life.
-            <br />
-            I speak fluently French, English and German.
-            <br />
-            Professionally, I consider myself a digital craftsman and
-            personnally, a creative coder.
-          </p>
-
-          <p className={classes.printHide}>
-            I am currently exploring the potential paths my career could take
-            and updating my skills.
-            <br />
-            If you believe I can add value to your product and your
-            company,&nbsp;
-            <Link href="https://www.linkedin.com/in/vvago">
-              please get in touch on LinkedIn
-            </Link>
-            .
-          </p>
+          <MDXRenderer content={data.page.body} />
         </Box>
       </Box>
 
@@ -102,7 +88,9 @@ export default Hello;
 export const getStaticProps = async function () {
   return {
     props: {
-      pageContext: await getPageContext(),
+      pageContext: await getPageDocument({
+        relativePath: "hello.mdx",
+      }),
     },
   };
 };
