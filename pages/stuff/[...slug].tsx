@@ -1,8 +1,9 @@
 import ErrorPage from "next/error";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { MDXRenderer } from "../../components/MDXRenderer/MDXRenderer";
+import { useTina } from "tinacms/dist/edit-state";
 
+import { MDXRenderer } from "../../components/MDXRenderer/MDXRenderer";
 import getStuffContext from "../../lib/getStuffContext";
 import IFrame from "../../components/IFrame/IFrame";
 import { AsyncReturnType } from "../../typings";
@@ -13,7 +14,12 @@ import getStuffDocument from "lib/getStuffDocument";
 export default function Stuff(
   props: AsyncReturnType<typeof getStaticProps>["props"]
 ) {
-  const { data, slug } = props;
+  const { data } = useTina({
+    query: props.query,
+    variables: props.variables,
+    data: props.data,
+  });
+  const { slug } = props;
   const router = useRouter();
 
   if (!router.isFallback && !slug) {
@@ -23,7 +29,7 @@ export default function Stuff(
     return <ErrorPage statusCode={500} />;
   }
   const stuff = data?.stuff || {};
-  const { date, title, body, description, iframe: iframeSrc, source } = stuff;
+  const { title, body, description, iframe: iframeSrc, source } = stuff;
   return (
     <>
       <Head>
@@ -76,7 +82,7 @@ export async function getStaticPaths() {
   const context = await getStuffContext();
   return {
     paths: filterUnpublished(Object.values(context))
-      .map(({ slug, id, date }) => {
+      .map(({ slug }) => {
         if (slug) return { params: { slug: slug.split("/") } };
       })
       .filter(Boolean),
