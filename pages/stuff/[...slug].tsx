@@ -6,10 +6,11 @@ import { useTina } from "tinacms/dist/edit-state";
 import { MDXRenderer } from "../../components/MDXRenderer/MDXRenderer";
 import getStuffContext from "../../lib/getStuffContext";
 import IFrame from "../../components/IFrame/IFrame";
-import { AsyncReturnType } from "../../typings";
 import { LayoutContentWrapper } from "../../components/Layout/Layout";
 import filterUnpublished from "../../lib/filterUnpublished";
-import getStuffDocument from "lib/getStuffDocument";
+import getStuffDocument from "../../lib/getStuffDocument";
+import getGlobal from "../../lib/getGlobal";
+import type { AsyncReturnType } from "../../typings";
 
 export default function Stuff(
   props: AsyncReturnType<typeof getStaticProps>["props"]
@@ -73,6 +74,7 @@ export const getStaticProps = async (props: { params: any }) => {
   return {
     props: {
       slug,
+      global: await getGlobal(),
       ...landingPage,
     },
   };

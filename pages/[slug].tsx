@@ -12,6 +12,7 @@ import { AsyncReturnType } from "../typings";
 
 import getLandingPageDocument from "../lib/getLandingPageDocument";
 import getPageDocument from "../lib/getPageDocument";
+import getGlobal from "../lib/getGlobal";
 
 export default function Page(
   props: AsyncReturnType<typeof getStaticProps>["props"]
@@ -54,23 +55,27 @@ export const getStaticProps = async ({ params }: { params: any }) => {
   const pageContext = await getPageContext();
 
   try {
-    const page = await getPageDocument({ relativePath: `${slug}.mdx` });
+    const relativePath = `${slug}.mdx`;
+    const page = await getPageDocument({ relativePath });
     if (Object.keys(page.data).length === 0) throw new Error("No data");
     return {
       props: {
         pageContext,
+        global: await getGlobal(),
         slug,
         ...page,
       },
     };
   } catch (e) {
+    const relativePath = `${slug}.json`;
     const landingPage = await getLandingPageDocument({
-      relativePath: `${slug}.json`,
+      relativePath,
     });
 
     return {
       props: {
         pageContext,
+        global: await getGlobal(),
         slug,
         ...landingPage,
       },

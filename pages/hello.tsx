@@ -3,12 +3,11 @@ import { Box, Button, createStyles, Group, Title } from "@mantine/core";
 import { useTina } from "tinacms/dist/edit-state";
 
 import { useStyles as useLayoutStyles } from "../components/Layout/Layout";
-import { getPageContext } from "../lib/getPageContext";
 import { AsyncReturnType } from "../typings";
 import Timeline from "../components/Timeline/Timeline";
-import Link from "../components/Link/Link";
-import getPageDocument from "lib/getPageDocument";
-import { MDXRenderer } from "components/MDXRenderer/MDXRenderer";
+import { MDXRenderer } from "../components/MDXRenderer/MDXRenderer";
+import getPageDocument from "../lib/getPageDocument";
+import getGlobal from "../lib/getGlobal";
 
 const useStyles = createStyles({
   root: {
@@ -88,6 +87,7 @@ export default Hello;
 export const getStaticProps = async function () {
   return {
     props: {
+      global: await getGlobal(),
       pageContext: await getPageDocument({
         relativePath: "hello.mdx",
       }),

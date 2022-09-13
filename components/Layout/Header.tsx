@@ -4,6 +4,7 @@ import {
   useMantineColorScheme,
   keyframes,
 } from "@mantine/core";
+import type { TinaField } from "tinacms";
 
 import Link, { useStyles as useLinkStyles } from "../Link/Link";
 import Logo from "../Logo/Logo";
@@ -143,9 +144,16 @@ const ThemeModeToggle = () => {
 export type PropTypes = React.Attributes &
   React.HTMLAttributes<HTMLDivElement> & {
     classes?: ClassNames<typeof useStyles>;
+    title?: string;
+    linkTitle?: string;
   };
 
-const Header = ({ classes: passedClasses, className }: PropTypes) => {
+const Header = ({
+  classes: passedClasses,
+  className,
+  title = 'zeropaper',
+  linkTitle = 'Valentin “zeropaper” Vago'
+}: PropTypes) => {
   const { classes, cx } = useStyles();
   return (
     <header className={cx(className, classes.root, passedClasses?.root)}>
@@ -153,13 +161,13 @@ const Header = ({ classes: passedClasses, className }: PropTypes) => {
         <h1 className={cx(classes.title, passedClasses?.title)}>
           <Link
             className={cx(classes.titleLink, passedClasses?.titleLink)}
-            title="Valentin “zeropaper” Vago"
+            title={linkTitle}
             component="a"
             href="/"
           >
             <Logo slim className={cx(classes.logo, passedClasses?.logo)} />
 
-            <span className={classes.linkText}>zeropaper</span>
+            <span className={classes.linkText}>{title}</span>
           </Link>
         </h1>
 
@@ -176,6 +184,24 @@ const Header = ({ classes: passedClasses, className }: PropTypes) => {
       </div>
     </header>
   );
+};
+
+export const headerSchema: TinaField = {
+  type: "object",
+  label: "Header",
+  name: "header",
+  fields: [
+    {
+      type: 'string',
+      name: 'title',
+      label: 'Title',
+    },
+    {
+      type: 'string',
+      name: 'linkTitle',
+      label: 'Link Title',
+    }
+  ],
 };
 
 export default Header;

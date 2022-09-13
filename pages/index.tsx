@@ -1,10 +1,6 @@
 import { useState } from "react";
-// import Head from 'next/head'
 import dynamic from "next/dynamic";
-
-import { useStyles as useLayoutStyles } from "../components/Layout/Layout";
-import { getPageContext } from "../lib/getPageContext";
-import { AsyncReturnType } from "../typings";
+import { IconX } from "@tabler/icons";
 import {
   ActionIcon,
   Box,
@@ -13,10 +9,13 @@ import {
   Text,
   Title,
 } from "@mantine/core";
-import Link from "../components/Link/Link";
-import { IconX } from "@tabler/icons";
 
+import type { AsyncReturnType } from "../typings";
+import { useStyles as useLayoutStyles } from "../components/Layout/Layout";
+import Link from "../components/Link/Link";
+import { getPageContext } from "../lib/getPageContext";
 import getLandingPageDocument from "../lib/getLandingPageDocument";
+import getGlobal from "../lib/getGlobal";
 
 const useStyles = createStyles<
   string,
@@ -117,6 +116,7 @@ export const getStaticProps = async function () {
   const vars = { relativePath: "home.json" };
   return {
     props: {
+      global: await getGlobal(),
       pageContext: await getPageContext(),
       ...(await getLandingPageDocument(vars)),
     },

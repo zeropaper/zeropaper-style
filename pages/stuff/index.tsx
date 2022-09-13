@@ -9,6 +9,7 @@ import filterUnpublished from "../../lib/filterUnpublished";
 import getStuffContext from "../../lib/getStuffContext";
 import { Repos } from "../../components/Repos/Repos";
 import PinnedStuff from "../../components/PinnedStuff/PinnedStuff";
+import getGlobal from "../../lib/getGlobal";
 
 const Stuff = (props: AsyncReturnType<typeof getStaticProps>["props"]) => {
   return (
@@ -55,6 +56,7 @@ export default Stuff;
 
 export const getStaticProps = async function () {
   const postsListData = await getStuffContext();
+  const global = await getGlobal();
   const posts = filterUnpublished(Object.values(postsListData));
   const {
     viewer: { repositories: repos },
@@ -62,6 +64,7 @@ export const getStaticProps = async function () {
   return {
     props: {
       data: {
+        global,
         repos,
         posts,
       },

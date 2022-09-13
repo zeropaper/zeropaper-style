@@ -1,0 +1,21 @@
+{
+  "header": {
+    "title": "zeropaper",
+    "linkTitle": "Valentin \"zeropaper\" Vago"
+  },
+  "footer": {
+    "hideSocialNetworks": false
+  },
+  "menu": {
+    "links": [
+      {
+        "href": "/stuff",
+        "label": "Stuff"
+      },
+      {
+        "href": "/hello",
+        "label": "Hello"
+      }
+    ]
+  }
+}

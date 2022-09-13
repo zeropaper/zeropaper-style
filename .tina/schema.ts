@@ -2,6 +2,10 @@
 import { defineSchema, defineConfig, RouteMappingPlugin, TinaField } from "tinacms";
 import { client } from "./__generated__/client";
 
+import { footerSchema } from "../components/Layout/Footer";
+import { headerSchema } from "../components/Layout/Header";
+import { menuSchema } from "../components/Layout/Menu";
+
 const feature = {
   label: 'Feature' as const,
   name: 'feature' as const,
@@ -100,6 +104,20 @@ export const schema = defineSchema({
   },
   collections: [
     {
+      label: "Global",
+      name: "global",
+      path: "content/global",
+      ui: {
+        global: true,
+      },
+      format: "json",
+      fields: [
+        headerSchema,
+        footerSchema,
+        menuSchema,
+      ],
+    },
+    {
       label: 'Landing Pages',
       name: 'landingPage',
       path: 'content/landing',
@@ -163,13 +181,13 @@ export const schema = defineSchema({
         // seoFields,
         tagsField,
         {
-          type: 'string',
-          label: 'picture',
+          type: 'image',
+          label: 'Picture',
           name: 'picture',
         },
         {
           type: 'string',
-          label: 'iframe',
+          label: 'Iframe',
           name: 'iframe',
         },
         {

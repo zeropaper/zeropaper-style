@@ -3,6 +3,7 @@ import { createStyles as createUseStyles } from "@mantine/core";
 
 import Link from "../Link/Link";
 import { ClassNames } from "../../typings";
+import { TinaField } from "tinacms";
 
 const useStyles = createUseStyles({
   root: {},
@@ -57,6 +58,38 @@ const Menu = ({
       </ul>
     </nav>
   );
+};
+
+export const menuSchema: TinaField = {
+  type: "object",
+  label: "Menu",
+  name: "menu",
+  fields: [
+    {
+      type: 'object',
+      name: 'links',
+      label: 'Links',
+      list: true,
+      ui: {
+        defaultItem: {
+          href: "/",
+          label: "Home",
+        },
+      },
+      fields: [
+        {
+          type: "string",
+          label: "Link",
+          name: "href",
+        },
+        {
+          type: "string",
+          label: "Label",
+          name: "label",
+        },
+      ],
+    }
+  ],
 };
 
 export default Menu;
