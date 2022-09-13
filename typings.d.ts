@@ -62,3 +62,5 @@ declare type AsyncReturnType<T extends (...args: any) => Promise<any>> =
   T extends (...args: any) => Promise<infer R> ? R : any
 
 declare type ClassNames<US> = Partial<ReturnType<US>['classes']>
+
+declare type ArrayFlatten<Type> = Type extends Array<infer Item> ? Item : Type;
