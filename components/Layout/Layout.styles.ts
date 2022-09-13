@@ -44,15 +44,16 @@ export default createStyles(({
       position: 'sticky',
       top: 0,
       zIndex: 900,
+      '& + *': {
+        flexGrow: 1,
+        zIndex: 500,
+      },
     },
     main: {
       backgroundColor,
       transition,
-      flexGrow: 1,
-      zIndex: 500,
     },
-    content: {
-    },
+    content: {},
     footer: {
       backgroundColor,
       transition,
