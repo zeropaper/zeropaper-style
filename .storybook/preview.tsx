@@ -1,5 +1,7 @@
 import React from 'react';
 import ThemeProvider from '../themes/Theme';
+import './storybook.css';
+import '../public/styles.css';
 
 export const parameters = {
   layout: 'centered',

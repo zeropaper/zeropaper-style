@@ -5,6 +5,9 @@ import Header from './Header';
 
 export default {
   title: 'Layout/Header',
+  parameters: {
+    layout: 'fullscreen',
+  },
   component: Header,
   args: {},
   argTypes: {},

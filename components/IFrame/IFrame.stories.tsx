@@ -2,7 +2,7 @@ import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
 import IFrame from './IFrame';
-import { withLayout } from '../Layout/Layout.stories';
+import { withLayout } from '../../.storybook/decorators';
 import type { TinaMarkdownContent } from 'tinacms/dist/rich-text';
 
 const exampleMdx: TinaMarkdownContent | TinaMarkdownContent[] = {

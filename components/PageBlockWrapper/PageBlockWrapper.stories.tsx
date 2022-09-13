@@ -1,7 +1,7 @@
 import React from 'react'
 import { ComponentStory, ComponentMeta } from '@storybook/react'
 
-import { withLayout } from '../Layout/Layout.stories';
+import { withLayout } from '../../.storybook/decorators';
 import { useStyles } from '../Layout/Layout';
 import Wrapper from './PageBlockWrapper'
 import { useTheme } from '../../themes/Theme';

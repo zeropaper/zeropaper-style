@@ -92,7 +92,6 @@ const Layout = ({
         className={cx(classes.header, passedClasses?.header)}
       />
 
-      {/* {content} */}
       {children}
 
       <Footer

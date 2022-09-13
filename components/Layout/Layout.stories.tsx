@@ -1,18 +1,30 @@
 import React from 'react';
-import { ComponentStory, ComponentMeta, DecoratorFn } from '@storybook/react';
+import { Box } from '@mantine/core';
+import { ComponentStory, ComponentMeta } from '@storybook/react';
 
 import Layout from './Layout';
 
-const PlaceHolder = (props: any) => <div className={props.className}>
-  PlaceHolder
-</div>
+const PlaceHolder = ({
+  text,
+  minHeight
+}: {
+  minHeight?: string,
+  text: string
+}) => <Box sx={() => ({
+  minHeight: minHeight || 'auto',
+  backgroundColor: 'lightgrey',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+})}>
+    {text}
+  </Box>
 
 export default {
   title: 'Layout/Complete',
   component: Layout,
   args: {
-    component: PlaceHolder,
-    classes: {},
+    children: <PlaceHolder text='Simple' />,
   },
   argTypes: {},
   parameters: {
@@ -23,13 +35,13 @@ export default {
 const Template: ComponentStory<typeof Layout> = (args) => <Layout {...args} />;
 
 export const Base = Template.bind({});
-Base.args = {};
+Base.args = {
+  children: <PlaceHolder text='Placeholder' />,
+};
 Base.argTypes = {};
 
-
-// eslint-disable-next-line storybook/prefer-pascal-case
-export const withLayout: DecoratorFn = (Story) => (
-  <Layout>
-    <Story />
-  </Layout>
-)
+export const LongContent = Template.bind({});
+LongContent.args = {
+  children: <PlaceHolder minHeight='400vh' text='Placeholder' />,
+};
+LongContent.argTypes = {};
