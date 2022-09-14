@@ -7,8 +7,8 @@ import Link from "../Link/Link";
 
 const mdComponents: Components<{
 }> = {
-  a: ({ href, children, ...props }: any) => (
-    <Link {...props} href={href || "#"}>
+  a: ({ type, url, children, ...props }: any) => (
+    <Link {...props} href={url || "#"}>
       {children}
     </Link>
   ),
