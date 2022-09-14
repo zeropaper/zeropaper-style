@@ -157,7 +157,7 @@ const Header = ({
   const { classes, cx } = useStyles();
   return (
     <header className={cx(className, classes.root, passedClasses?.root)}>
-      <div className={cx(classes.inner, passedClasses?.inner)}>
+      <div className={cx('inner-layout', classes.inner, passedClasses?.inner)}>
         <h1 className={cx(classes.title, passedClasses?.title)}>
           <Link
             className={cx(classes.titleLink, passedClasses?.titleLink)}

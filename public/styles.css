@@ -26,3 +26,17 @@ html,body,#__next,#root {
   max-height: 32px;
   max-width: 32px;
 }
+
+.inner-layout {
+  margin:0 auto;
+  max-width:960px;
+  width: auto;
+  overflow:hidden;
+}
+
+@media (max-width: 992px) {
+  .inner-layout{
+      padding-left: 16px;
+      padding-right: 16px;
+  }
+}

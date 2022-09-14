@@ -46,7 +46,7 @@ const Footer = ({
   const { classes, cx } = useStyles();
   return (
     <footer className={cx(className, classes.root, passedClasses?.root)}>
-      <div className={cx(classes.inner, passedClasses?.inner)}>
+      <div className={cx('inner-layout', classes.inner, passedClasses?.inner)}>
         <Link
           className={cx(classes.column, passedClasses?.column)}
           href="/no-cookies"

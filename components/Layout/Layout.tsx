@@ -32,6 +32,7 @@ export const LayoutContentWrapper = ({
     className
   );
   const contentClass = cx(
+    'inner-layout',
     classes.inner,
     classes.content,
     passedClasses?.content
