@@ -50,6 +50,7 @@ export default function Stuff(
           description={description || ""}
           tags={(stuff.tags as string[]) || []}
           mdx={body}
+          id="page-content"
         />
       ) : (
         <LayoutContentWrapper>

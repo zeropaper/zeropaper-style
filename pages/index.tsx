@@ -84,7 +84,7 @@ const Home = ({
   const { classes, cx } = useStyles({ overlayVisible });
 
   return (
-    <Box component="main" className={cx(main, classes.root)}>
+    <Box id="page-content" component="main" className={cx(main, classes.root)}>
       <Paper p="md" withBorder className={classes.paper}>
         <ActionIcon
           title="Hide that message and show the pretty thing"

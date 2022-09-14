@@ -33,20 +33,23 @@ export default function Page(
   // @ts-ignore
   const { title, seo, blocks, body } = data?.page || data?.landingPage || {};
   return (
-    <LayoutContentWrapper>
+    <>
       <Head>
         <title>{title}</title>
         {/* <meta property="og:image" content={ogImage?.url} /> */}
       </Head>
 
-      <h1 data-tinafield="title">{title}</h1>
+      <LayoutContentWrapper>
 
-      {body ? (
-        <MDXRenderer tinaField="body" content={body || ""} />
-      ) : (
-        <Grid blocks={blocks || []} />
-      )}
-    </LayoutContentWrapper>
+        <h1 data-tinafield="title">{title}</h1>
+
+        {body ? (
+          <MDXRenderer tinaField="body" content={body || ""} />
+        ) : (
+          <Grid blocks={blocks || []} />
+        )}
+      </LayoutContentWrapper>
+    </>
   );
 }
 

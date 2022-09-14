@@ -45,7 +45,7 @@ const Hello = ({
   const [reverse, setReverse] = React.useState(true);
 
   return (
-    <main className={cx(main, classes.root)}>
+    <main id="page-content" className={cx(main, classes.root)}>
       <Box
         component="section"
         sx={({ spacing, fn, breakpoints }) => ({

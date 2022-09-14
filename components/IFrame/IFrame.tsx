@@ -1,6 +1,5 @@
 import React, { PropsWithChildren } from "react";
 import { useResizeObserver } from "@mantine/hooks";
-import { Button } from "@mantine/core";
 
 import Link from "../Link/Link";
 import TagsList from "../TagsList/TagsList";
@@ -8,20 +7,15 @@ import { MDXRenderer } from "../MDXRenderer/MDXRenderer";
 import { TinaMarkdownContent } from "tinacms/dist/rich-text";
 import useStyles from "./IFrame.styles";
 
-export interface PropTypes {
-  iframe: string;
-  title: string;
-  description?: string;
-  source?: string;
-  mdx?: TinaMarkdownContent | TinaMarkdownContent[];
-  tags?: string[];
-  open?: boolean;
-}
-
 const IFrameWrapper = (
-  props: PropsWithChildren<{ src: string; title: string; open?: boolean }>
+  props: PropsWithChildren<{
+    src: string;
+    id?: string;
+    title: string;
+    open?: boolean
+  }>
 ) => {
-  const { children, title, src } = props;
+  const { children, title, src, id } = props;
   const [open, setOpen] = React.useState(props.open || false);
   const [hover, setHover] = React.useState(false);
   const { classes, cx } = useStyles();
@@ -31,7 +25,7 @@ const IFrameWrapper = (
   const [innerRef, innerRect] = useResizeObserver();
 
   return (
-    <div className={classes.root} ref={outerRef}>
+    <div className={classes.root} ref={outerRef} id={id}>
       <aside
         ref={innerRef}
         className={cx({
@@ -39,7 +33,6 @@ const IFrameWrapper = (
           [classes.asideOpen]: open,
           asideOpen: open,
         })}
-        // style={open ? { right: 0 } : {}}
       >
         <div className={classes.toggleButtonHolder}>
           <button
@@ -84,8 +77,28 @@ const IFrameWrapper = (
   );
 };
 
+export interface PropTypes {
+  iframe: string;
+  title: string;
+  description?: string;
+  source?: string;
+  mdx?: TinaMarkdownContent | TinaMarkdownContent[];
+  tags?: string[];
+  open?: boolean;
+  id?: string;
+}
+
 const IFrame = (props: PropTypes) => {
-  const { iframe: src, title, description, source, mdx, tags, open } = props;
+  const {
+    iframe: src,
+    title,
+    description,
+    source,
+    mdx,
+    tags,
+    open,
+    id,
+  } = props;
   const { classes } = useStyles();
 
   const content = (
@@ -108,7 +121,7 @@ const IFrame = (props: PropTypes) => {
   if (!src) return content;
 
   return (
-    <IFrameWrapper src={src} title={title} open={open}>
+    <IFrameWrapper id={id} src={src} title={title} open={open}>
       {content}
     </IFrameWrapper>
   );
