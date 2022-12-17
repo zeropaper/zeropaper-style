@@ -35,8 +35,7 @@
     "next": "12.3.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "three": "0.144.0",
-    "tinacms": "0.69.7"
+    "three": "0.144.0"
   },
   "devDependencies": {
     "@babel/core": "7.19.0",
@@ -53,7 +52,6 @@
     "@swc/jest": "0.2.22",
     "@testing-library/jest-dom": "5.16.5",
     "@testing-library/react": "13.4.0",
-    "@tinacms/cli": "0.61.13",
     "@types/jest": "29.0.2",
     "@types/node": "18.7.18",
     "@types/react": "18.0.20",
