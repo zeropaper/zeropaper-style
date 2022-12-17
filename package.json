@@ -7,8 +7,7 @@
   },
   "scripts": {
     "dev": "run-p dev:*",
-    "preview": "npm run preview:tina",
-    "build": "run-s build:tina build:storybook",
+    "build": "run-s build:next build:storybook",
     "prestart": "npm run build",
     "start": "next start",
     "lint": "next lint",
@@ -19,11 +18,10 @@
     "test:e2e": "cypress run",
     "dev:test:e2e": "cypress open",
     "dev:storybook": "start-storybook -p 6006 --no-open",
-    "dev:tina": "tinacms dev -c \"next dev\"",
-    "preview:tina": "tinacms dev -c \"next build\"",
+    "dev:next": "next dev",
     "build:storybook": "build-storybook -o public/sb",
-    "build:tina": "tinacms build && next build",
-    "postbuild:tina": "next-sitemap"
+    "build:next": "next build",
+    "postbuild:next": "next-sitemap"
   },
   "dependencies": {
     "@emotion/react": "11.10.5",
