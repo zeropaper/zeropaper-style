@@ -34,9 +34,12 @@ export function PinnedStuff(props: PropTypes) {
             src={picture}
             width={400}
             height={300}
-            layout="responsive"
-            objectFit="cover"
-          />
+            sizes="100vw"
+            style={{
+              width: "100%",
+              height: "auto",
+              objectFit: "cover"
+            }} />
         ) : null}
       </Paper>
     </Grid.Col>
