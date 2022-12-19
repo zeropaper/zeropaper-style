@@ -1,7 +1,7 @@
 import ErrorPage from "next/error";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { useTina } from "tinacms/dist/edit-state";
+import { useTina } from "tinacms/dist/react";
 
 import { MDXRenderer } from "../../components/MDXRenderer/MDXRenderer";
 import getStuffContext from "../../lib/getStuffContext";

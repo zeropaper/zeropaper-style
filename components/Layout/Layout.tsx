@@ -1,5 +1,4 @@
 import { Box, Global } from "@mantine/core";
-// import { useEditState } from 'tinacms/dist/edit-state';
 
 import Header from "./Header";
 import Footer from "./Footer";

@@ -20,3 +20,5 @@ content/*/_*.mdx
 content/*/_*.json
 content/*/_*.yaml
 content/*/_*.yml
+
+.tina/__generated__

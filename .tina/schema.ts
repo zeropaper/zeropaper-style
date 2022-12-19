@@ -1,5 +1,5 @@
 
-import { defineSchema, defineConfig, RouteMappingPlugin, TinaField } from "tinacms";
+import { defineSchema, defineConfig, RouteMappingPlugin, SchemaField } from "tinacms";
 import { client } from "./__generated__/client";
 
 import { footerSchema } from "../components/Layout/Footer";
@@ -22,7 +22,7 @@ const feature = {
   ],
 }
 
-const dateField: TinaField = {
+const dateField: SchemaField = {
   label: "Date",
   name: "date",
   type: "datetime",
@@ -31,7 +31,7 @@ const dateField: TinaField = {
   }
 }
 
-const tagsField: TinaField = {
+const tagsField: SchemaField = {
   label: "Tags",
   name: "tags",
   // type: "reference",
@@ -43,35 +43,35 @@ const tagsField: TinaField = {
   }
 }
 
-const mdxBodyField: TinaField = {
+const mdxBodyField: SchemaField = {
   type: "rich-text",
   label: "Body",
   name: "body",
   isBody: true,
 }
 
-const slugField: TinaField = {
+const slugField: SchemaField = {
   type: 'string',
   label: 'Slug',
   name: 'slug',
 }
-const publishedField: TinaField = {
+const publishedField: SchemaField = {
   type: 'boolean',
   name: 'published',
   label: 'Published',
 }
-const titleField: TinaField = {
+const titleField: SchemaField = {
   type: 'string',
   name: 'title',
   label: 'Title',
 }
-const descriptionField: TinaField = {
+const descriptionField: SchemaField = {
   type: 'string',
   name: 'description',
   label: 'Description',
 }
 
-const seoFields: TinaField = {
+const seoFields: SchemaField = {
   type: 'object',
   name: 'seo',
   label: 'SEO',
@@ -81,27 +81,13 @@ const seoFields: TinaField = {
   ],
 };
 
-const pageFields: TinaField[] = [
+const pageFields: SchemaField[] = [
   titleField,
   descriptionField,
   publishedField,
 ]
 
 export const schema = defineSchema({
-  config: {
-    // clientId: process.env.NEXT_PUBLIC_TINA_CLIENT_ID!,
-    // branch:
-    //   process.env.NEXT_PUBLIC_TINA_BRANCH! || // custom branch env override
-    //   process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_REF! || // Vercel branch env
-    //   process.env.HEAD!, // Netlify branch env
-    // token: process.env.TINA_TOKEN!,
-    media: {
-      tina: {
-        publicFolder: "public",
-        mediaRoot: "uploads",
-      },
-    },
-  },
   collections: [
     {
       label: "Global",
@@ -122,7 +108,7 @@ export const schema = defineSchema({
       name: 'landingPage',
       path: 'content/landing',
       format: 'json',
-      match: '*.json',
+      // match: '*.json',
       fields: [
         ...pageFields,
         {
@@ -149,7 +135,7 @@ export const schema = defineSchema({
       label: 'Pages',
       name: 'page',
       path: 'content/pages',
-      match: '*.mdx',
+      // match: '*.mdx',
       format: 'mdx',
       fields: [
         ...pageFields,
@@ -161,7 +147,7 @@ export const schema = defineSchema({
       name: 'tag',
       path: 'content/tags',
       format: 'json',
-      match: '*.json',
+      // match: '*.json',
       fields: [
         { type: 'string', name: 'name' },
         { type: 'string', name: 'slug' },
@@ -172,7 +158,7 @@ export const schema = defineSchema({
       label: 'Stuff',
       name: 'stuff',
       path: 'content/stuff',
-      match: '**/*.mdx',
+      // match: '**/*.mdx',
       format: 'mdx',
       fields: [
         ...pageFields,
@@ -202,37 +188,37 @@ export const schema = defineSchema({
 });
 
 
-export const tinaConfig = defineConfig({
-  // @ts-ignore
-  client,
-  schema,
-  cmsCallback: (cms) => {
-    /**
-     * When `tina-admin` is enabled, this plugin configures contextual editing for collections
-     */
-    const RouteMapping = new RouteMappingPlugin((collection, document) => {
-      if (["page", "landingPage"].includes(collection.name)) {
-        if (document._sys.filename === "home") {
-          return `/`;
-        }
-        if (document._sys.filename === "no-cookies") {
-          return `/no-cookies`;
-        }
-        return undefined;
-      }
-      return `/${collection.name}/${document._sys.filename}`;
-    });
-    cms.plugins.add(RouteMapping);
+// export const tinaConfig = defineConfig({
+//   // @ts-ignore
+//   client,
+//   schema,
+//   cmsCallback: (cms) => {
+//     /**
+//      * When `tina-admin` is enabled, this plugin configures contextual editing for collections
+//      */
+//     const RouteMapping = new RouteMappingPlugin((collection, document) => {
+//       if (["page", "landingPage"].includes(collection.name)) {
+//         if (document._sys.filename === "home") {
+//           return `/`;
+//         }
+//         if (document._sys.filename === "no-cookies") {
+//           return `/no-cookies`;
+//         }
+//         return undefined;
+//       }
+//       return `/${collection.name}/${document._sys.filename}`;
+//     });
+//     cms.plugins.add(RouteMapping);
 
-    return cms;
-  },
-  formifyCallback: ({ formConfig, createForm, createGlobalForm }) => {
-    if (formConfig.id === "content/global/index.json") {
-      return createGlobalForm(formConfig);
-    }
+//     return cms;
+//   },
+//   formifyCallback: ({ formConfig, createForm, createGlobalForm }) => {
+//     if (formConfig.id === "content/global/index.json") {
+//       return createGlobalForm(formConfig);
+//     }
 
-    return createForm(formConfig);
-  },
-});
+//     return createForm(formConfig);
+//   },
+// });
 
 export default schema;

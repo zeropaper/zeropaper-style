@@ -1,7 +1,7 @@
 import ErrorPage from "next/error";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { useTina } from "tinacms/dist/edit-state";
+import { useTina } from "tinacms/dist/react";
 
 import Grid from "../components/Grid/Grid";
 import { LayoutContentWrapper } from "../components/Layout/Layout";

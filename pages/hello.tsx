@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, Button, createStyles, Group, Title } from "@mantine/core";
-import { useTina } from "tinacms/dist/edit-state";
+import { useTina } from "tinacms/dist/react";
 
 import { useStyles as useLayoutStyles } from "../components/Layout/Layout";
 import { AsyncReturnType } from "../typings";

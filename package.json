@@ -6,7 +6,7 @@
     "prettierTarget": "{components,contexts,utils,pages,content,.storybook,.github}{/**/,/}*.{md,mdx,json,js,css,html,js,ts,tsx}"
   },
   "scripts": {
-    "dev": "run-p dev:*",
+    "dev": "run-p dev:next dev:storybook",
     "build": "run-s build:next build:storybook",
     "prestart": "npm run build",
     "start": "next start",
@@ -18,9 +18,9 @@
     "test:e2e": "cypress run",
     "dev:test:e2e": "cypress open",
     "dev:storybook": "start-storybook -p 6006 --no-open",
-    "dev:next": "next dev",
+    "dev:next": "tinacms dev -c \"next dev\"",
     "build:storybook": "build-storybook -o public/sb",
-    "build:next": "next build",
+    "build:next": "tinacms build && next build",
     "postbuild:next": "next-sitemap"
   },
   "dependencies": {
@@ -29,11 +29,13 @@
     "@mantine/hooks": "5.9.4",
     "@mantine/next": "5.9.4",
     "@tabler/icons": "1.117.0",
+    "@tinacms/cli": "^1.0.4",
     "axios": "1.2.1",
     "next": "13.0.7",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "three": "0.147.0"
+    "three": "0.147.0",
+    "tinacms": "^1.1.1"
   },
   "devDependencies": {
     "@babel/core": "7.20.5",
