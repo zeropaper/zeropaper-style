@@ -32,7 +32,7 @@ const useStyles = createUseStyles(
   })
 );
 
-export type PropTypes = React.Attributes &
+export type FooterProps = React.Attributes &
   React.HTMLAttributes<HTMLDivElement> & {
     classes?: ClassNames<typeof useStyles>;
     hideSocialNetworks?: boolean;
@@ -42,7 +42,7 @@ const Footer = ({
   classes: passedClasses,
   className,
   hideSocialNetworks,
-}: PropTypes) => {
+}: FooterProps) => {
   const { classes, cx } = useStyles();
   return (
     <footer className={cx(className, classes.root, passedClasses?.root)}>

@@ -141,7 +141,7 @@ const ThemeModeToggle = () => {
   );
 };
 
-export type PropTypes = React.Attributes &
+export type HeaderProps = React.Attributes &
   React.HTMLAttributes<HTMLDivElement> & {
     classes?: ClassNames<typeof useStyles>;
     title?: string;
@@ -153,7 +153,7 @@ const Header = ({
   className,
   title = 'zeropaper',
   linkTitle = 'Valentin “zeropaper” Vago'
-}: PropTypes) => {
+}: HeaderProps) => {
   const { classes, cx } = useStyles();
   return (
     <header className={cx(className, classes.root, passedClasses?.root)}>

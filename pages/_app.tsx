@@ -6,6 +6,7 @@ import ThemeProvider from "../themes/Theme";
 
 import "../public/styles.css";
 
+import { header, footer } from "../content/global/index.json";
 
 const App = (props: AppProps) => {
   const { Component, pageProps } = props;
@@ -21,7 +22,7 @@ const App = (props: AppProps) => {
             content="minimum-scale=1, initial-scale=1, width=device-width"
           />
         </Head>
-        <Layout>
+        <Layout header={header} footer={footer}>
           <Component {...pageProps} />
         </Layout>
       </>

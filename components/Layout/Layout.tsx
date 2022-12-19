@@ -1,17 +1,19 @@
 import { Box, Global } from "@mantine/core";
 
-import Header from "./Header";
-import Footer from "./Footer";
+import Header, { HeaderProps } from "./Header";
+import Footer, { FooterProps } from "./Footer";
 import { PropsWithChildren } from "react";
 import useStyles from "./Layout.styles";
 import { ClassNames } from "../../typings";
 
 export { useStyles };
 
-export interface PropTypes {
+export interface LayoutProps {
   children: React.ReactNode;
   classes?: ClassNames<typeof useStyles>;
   className?: string;
+  header?: HeaderProps;
+  footer?: FooterProps;
 }
 
 export const LayoutContentWrapper = ({
@@ -43,14 +45,12 @@ export const LayoutContentWrapper = ({
   );
 };
 
-const Layout = ({ children, classes: passedClasses }: PropTypes) => {
+const Layout = ({ children, classes: passedClasses, header, footer }: LayoutProps) => {
   const { classes, cx } = useStyles();
   const commonClasses = {
     root: classes.root,
     inner: classes.inner,
   };
-
-  // const { edit } = useEditState();
   return (
     <>
       <Global
@@ -63,17 +63,6 @@ const Layout = ({ children, classes: passedClasses }: PropTypes) => {
           "html,body,#__next,#root": {
             transition: `background-color, color ${transitionDuration} ${transitionTimingFunction}`,
           },
-
-          // // for Tina edit mode
-          // '#__next>div:not([class])': {
-          //   ...(edit ? {
-          //     marginLeft: 10,
-          //     [fn.largerThan('md')]: {
-          //       paddingLeft: 10,
-          //       paddingRight: 10,
-          //     }
-          //   } : {})
-          // },
         })}
       />
 
@@ -86,6 +75,7 @@ const Layout = ({ children, classes: passedClasses }: PropTypes) => {
 
       <Header
         classes={commonClasses}
+        {...header}
         className={cx(classes.header, passedClasses?.header)}
       />
 
@@ -93,6 +83,7 @@ const Layout = ({ children, classes: passedClasses }: PropTypes) => {
 
       <Footer
         classes={commonClasses}
+        {...footer}
         className={cx(classes.footer, passedClasses?.footer)}
       />
     </>
