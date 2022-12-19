@@ -61,7 +61,7 @@ export const Link = ({
   };
 
   return (
-    <NextLink {...linkProps}>
+    <NextLink {...linkProps} legacyBehavior>
       <Component {...rest} className={cx(className, classes.root)} />
     </NextLink>
   );
