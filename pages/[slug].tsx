@@ -89,7 +89,9 @@ export const getStaticProps = async ({ params }: { params: any }) => {
 export async function getStaticPaths() {
   try {
     const res = await getPageContext();
-    const filtered = filterUnpublished(Object.values(res));
+    const filtered = filterUnpublished(Object.values(res))
+      .filter((page) => !['index', 'hello'].includes(page.slug));
+    console.info('filtered', filtered);
     return {
       paths: filtered.map(({ slug }) => `/${slug}`),
       fallback: false,
