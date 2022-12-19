@@ -1,6 +1,5 @@
 
-import { defineSchema, defineConfig, RouteMappingPlugin, SchemaField } from "tinacms";
-import { client } from "./__generated__/client";
+import { defineSchema, SchemaField, Collection } from "tinacms";
 
 import { footerSchema } from "../components/Layout/Footer";
 import { headerSchema } from "../components/Layout/Header";
@@ -87,138 +86,112 @@ const pageFields: SchemaField[] = [
   publishedField,
 ]
 
-export const schema = defineSchema({
-  collections: [
+// Collections
+
+const globals: Collection = {
+  label: "Global",
+  name: "global",
+  path: "content/global",
+  ui: {
+    global: true,
+  },
+  format: "json",
+  fields: [
+    headerSchema,
+    footerSchema,
+    menuSchema,
+  ],
+}
+
+const landingPages: Collection = {
+  label: 'Landing Pages',
+  name: 'landingPage',
+  path: 'content/landing',
+  format: 'json',
+  fields: [
+    ...pageFields,
     {
-      label: "Global",
-      name: "global",
-      path: "content/global",
-      ui: {
-        global: true,
-      },
-      format: "json",
-      fields: [
-        headerSchema,
-        footerSchema,
-        menuSchema,
-      ],
-    },
-    {
-      label: 'Landing Pages',
-      name: 'landingPage',
-      path: 'content/landing',
-      format: 'json',
-      // match: '*.json',
-      fields: [
-        ...pageFields,
+      label: 'Blocks',
+      name: 'blocks',
+      type: 'object',
+      list: true,
+      templates: [
         {
-          label: 'Blocks',
-          name: 'blocks',
-          type: 'object',
-          list: true,
-          templates: [
-            {
-              label: 'Hero',
-              name: 'hero',
-              fields: [
-                { name: 'href', label: 'HREF', type: 'string' },
-                { name: 'title', label: 'Title', type: 'string' },
-                { name: 'description', label: 'Description', type: 'string' },
-              ],
-            },
-            feature,
+          label: 'Hero',
+          name: 'hero',
+          fields: [
+            { name: 'href', label: 'HREF', type: 'string' },
+            { name: 'title', label: 'Title', type: 'string' },
+            { name: 'description', label: 'Description', type: 'string' },
           ],
         },
-      ],
-    },
-    {
-      label: 'Pages',
-      name: 'page',
-      path: 'content/pages',
-      // match: '*.mdx',
-      format: 'mdx',
-      fields: [
-        ...pageFields,
-        mdxBodyField,
-      ],
-    },
-    {
-      label: 'Tags',
-      name: 'tag',
-      path: 'content/tags',
-      format: 'json',
-      // match: '*.json',
-      fields: [
-        { type: 'string', name: 'name' },
-        { type: 'string', name: 'slug' },
-        { type: 'string', name: 'description' },
-      ],
-    },
-    {
-      label: 'Stuff',
-      name: 'stuff',
-      path: 'content/stuff',
-      // match: '**/*.mdx',
-      format: 'mdx',
-      fields: [
-        ...pageFields,
-        slugField,
-        dateField,
-        // seoFields,
-        tagsField,
-        {
-          type: 'image',
-          label: 'Picture',
-          name: 'picture',
-        },
-        {
-          type: 'string',
-          label: 'Iframe',
-          name: 'iframe',
-        },
-        {
-          type: 'string',
-          label: 'Source',
-          name: 'source',
-        },
-        mdxBodyField,
+        feature,
       ],
     },
   ],
+}
+
+const pages: Collection = {
+  label: 'Pages',
+  name: 'page',
+  path: 'content/pages',
+  format: 'mdx',
+  fields: [
+    ...pageFields,
+    mdxBodyField,
+  ],
+}
+
+const tags: Collection = {
+  label: 'Tags',
+  name: 'tag',
+  path: 'content/tags',
+  format: 'json',
+  fields: [
+    { type: 'string', name: 'name' },
+    { type: 'string', name: 'slug' },
+    { type: 'string', name: 'description' },
+  ],
+}
+
+const stuff: Collection = {
+  label: 'Stuff',
+  name: 'stuff',
+  path: 'content/stuff',
+  format: 'mdx',
+  fields: [
+    ...pageFields,
+    slugField,
+    dateField,
+    // seoFields,
+    tagsField,
+    {
+      type: 'image',
+      label: 'Picture',
+      name: 'picture',
+    },
+    {
+      type: 'string',
+      label: 'Iframe',
+      name: 'iframe',
+    },
+    {
+      type: 'string',
+      label: 'Source',
+      name: 'source',
+    },
+    mdxBodyField,
+  ],
+}
+
+export const schema = defineSchema({
+  collections: [
+    globals,
+    landingPages,
+    pages,
+    tags,
+    stuff,
+  ],
 });
-
-
-// export const tinaConfig = defineConfig({
-//   // @ts-ignore
-//   client,
-//   schema,
-//   cmsCallback: (cms) => {
-//     /**
-//      * When `tina-admin` is enabled, this plugin configures contextual editing for collections
-//      */
-//     const RouteMapping = new RouteMappingPlugin((collection, document) => {
-//       if (["page", "landingPage"].includes(collection.name)) {
-//         if (document._sys.filename === "home") {
-//           return `/`;
-//         }
-//         if (document._sys.filename === "no-cookies") {
-//           return `/no-cookies`;
-//         }
-//         return undefined;
-//       }
-//       return `/${collection.name}/${document._sys.filename}`;
-//     });
-//     cms.plugins.add(RouteMapping);
-
-//     return cms;
-//   },
-//   formifyCallback: ({ formConfig, createForm, createGlobalForm }) => {
-//     if (formConfig.id === "content/global/index.json") {
-//       return createGlobalForm(formConfig);
-//     }
-
-//     return createForm(formConfig);
-//   },
-// });
 
 export default schema;
