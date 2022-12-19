@@ -2,6 +2,7 @@ import * as React from "react";
 import PropTypes from "prop-types";
 import { createStyles as createUseStyles } from "@mantine/core";
 
+import Mastodon from "./assets/mastodon.svg";
 import Twitter from "./assets/twitter.svg";
 import LinkedIn from "./assets/linkedin.svg";
 import GitHub from "./assets/github.svg";
@@ -54,6 +55,15 @@ const SocialNetworks = ({
   return (
     <nav className={cx(classes.root, passedClasses?.root, className)}>
       <ul className={cx(classes.list, passedClasses?.list)}>
+        <li className={classes.item}>
+          <ExternalLink
+            className={classes.link}
+            rel="me"
+            href="https://mastodon.xyz/@zeropaper"
+          >
+            <Mastodon className={classes.icon} />
+          </ExternalLink>
+        </li>
         <li className={classes.item}>
           <ExternalLink
             className={classes.link}
