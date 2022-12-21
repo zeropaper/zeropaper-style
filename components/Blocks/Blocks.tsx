@@ -1,9 +1,11 @@
+import { MDXRenderer } from "components/MDXRenderer/MDXRenderer";
 import React from "react";
 
 import type { LandingPage } from "../../.tina/__generated__/types";
 
 import LinkCard from "../LinkCard/LinkCard";
 import Wrapper from "../PageBlockWrapper/PageBlockWrapper";
+import Timeline from "../Timeline/Timeline";
 
 const Debug = (props: any) => (
   <details>
@@ -25,18 +27,17 @@ export const Blocks = (props: BlocksProps) => {
   return (
     <>
       {props.blocks.map(function (block: any, i: number) {
-        const type: string = block?.__typename || "";
-
+        const type: string = (block?.__typename || "")
+          .replace("Landing", "")
+          .replace("PageBlocks", "");
         switch (type) {
-          case "LandingPageBlocksContent":
-          case "PageBlocksContent":
+          case "Content":
             return (
               <React.Fragment key={i + type}>
-                <Debug data={block} />
+                <MDXRenderer content={block} />
               </React.Fragment>
             );
-          case "LandingPageBlocksHero":
-          case "PageBlocksHero":
+          case "Hero":
             return (
               <React.Fragment key={i + type}>
                 <Hero
@@ -47,8 +48,7 @@ export const Blocks = (props: BlocksProps) => {
                 />
               </React.Fragment>
             );
-          case "LandingPageBlocksFeature":
-          case "PageBlocksFeature":
+          case "Feature":
             return (
               <Wrapper {...(block.deco || {})} key={i + type}>
                 <Features
@@ -58,6 +58,12 @@ export const Blocks = (props: BlocksProps) => {
                     .join(".")}
                 />
               </Wrapper>
+            );
+          case "Timeline":
+            return (
+              <React.Fragment key={i + type}>
+                <Timeline block={block} />
+              </React.Fragment>
             );
           default:
             return (

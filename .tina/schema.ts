@@ -5,21 +5,8 @@ import { footerSchema } from "../components/Layout/Footer";
 import { headerSchema } from "../components/Layout/Header";
 import { menuSchema } from "../components/Layout/Menu";
 
-const feature = {
-  label: 'Feature' as const,
-  name: 'feature' as const,
-  fields: [
-    { name: 'href', label: 'HREF', type: 'string' as const },
-    { name: 'title', label: 'Title', type: 'string' as const },
-    { name: 'description', label: 'Description', type: 'string' as const },
-    {
-      name: 'deco', label: 'Deco', type: 'object' as const, fields: [
-        { name: 'slant', label: 'Slant', type: 'boolean' as const },
-        { name: 'background', label: 'Background', type: 'string' as const, options: ['red', 'blue', 'green', 'yellow'] }
-      ]
-    },
-  ],
-}
+
+// Fields
 
 const dateField: SchemaField = {
   label: "Date",
@@ -86,6 +73,122 @@ const pageFields: SchemaField[] = [
   publishedField,
 ]
 
+// Block templates
+
+const deco = {
+  name: 'deco', label: 'Deco', type: 'object', fields: [
+    { name: 'slant', label: 'Slant', type: 'boolean' },
+    { name: 'background', label: 'Background', type: 'string', options: ['red', 'blue', 'green', 'yellow'] }
+  ]
+}
+
+const feature = {
+  label: 'Feature',
+  name: 'feature',
+  fields: [
+    { name: 'href', label: 'HREF', type: 'string' },
+    { name: 'title', label: 'Title', type: 'string' },
+    { name: 'description', label: 'Description', type: 'string' },
+    deco,
+  ] as SchemaField[],
+}
+
+const hero = {
+  label: 'Hero',
+  name: 'hero',
+  fields: [
+    { name: 'href', label: 'HREF', type: 'string' },
+    { name: 'title', label: 'Title', type: 'string' },
+    { name: 'description', label: 'Description', type: 'string' },
+    deco,
+  ] as SchemaField[],
+}
+
+const markdown = {
+  label: 'Markdown',
+  name: 'markdown',
+  fields: [
+    {
+      name: 'content',
+      label: 'Content',
+      type: "rich-text",
+      isBody: false,
+    },
+    deco,
+  ] as SchemaField[],
+}
+
+const timelineItem = {
+  label: 'Timeline Item',
+  name: 'timelineItem',
+  fields: [
+    titleField,
+    {
+      name: 'employer',
+      label: 'Employer',
+      type: "string",
+    },
+    {
+      name: 'text',
+      label: 'Text',
+      type: "rich-text",
+      isBody: false,
+    },
+    {
+      name: 'from',
+      label: 'From',
+      type: 'string',
+      // type: "datetime",
+      // ui: {
+      //   dateFormat: 'YYYY-MM'
+      // }
+    },
+    {
+      name: 'to',
+      label: 'To',
+      type: 'string',
+      // type: "datetime",
+      // ui: {
+      //   dateFormat: 'YYYY-MM'
+      // }
+    },
+    {
+      name: 'stack',
+      label: 'Stack',
+      type: "string",
+      list: true,
+    },
+    {
+      name: 'links',
+      label: 'Links',
+      type: "string",
+      list: true,
+    },
+  ] as SchemaField[],
+}
+
+const timeline = {
+  label: 'Timeline',
+  name: 'timeline',
+  fields: [
+    {
+      name: 'introduction',
+      label: 'Introduction',
+      type: "rich-text",
+      isBody: false,
+    },
+    {
+      label: 'Items',
+      name: 'items',
+      type: 'object',
+      list: true,
+      templates: [
+        timelineItem,
+      ],
+    }
+  ] as SchemaField[],
+}
+
 // Collections
 
 const globals: Collection = {
@@ -116,16 +219,10 @@ const landingPages: Collection = {
       type: 'object',
       list: true,
       templates: [
-        {
-          label: 'Hero',
-          name: 'hero',
-          fields: [
-            { name: 'href', label: 'HREF', type: 'string' },
-            { name: 'title', label: 'Title', type: 'string' },
-            { name: 'description', label: 'Description', type: 'string' },
-          ],
-        },
+        hero,
         feature,
+        markdown,
+        timeline,
       ],
     },
   ],

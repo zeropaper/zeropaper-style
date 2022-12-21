@@ -17,12 +17,11 @@ import getGlobal from "../lib/getGlobal";
 export default function Page(
   props: AsyncReturnType<typeof getStaticProps>["props"]
 ) {
-  const fromTina = useTina({
+  const { data } = useTina({
     query: props.query,
     variables: props.variables,
     data: props.data,
   });
-  const { data } = fromTina;
   const { slug } = props;
   const router = useRouter();
 
@@ -40,7 +39,6 @@ export default function Page(
       </Head>
 
       <LayoutContentWrapper>
-
         <h1 data-tinafield="title">{title}</h1>
 
         {body ? (
@@ -56,7 +54,6 @@ export default function Page(
 export const getStaticProps = async ({ params }: { params: any }) => {
   const { slug } = params;
   const pageContext = await getPageContext();
-
   try {
     const relativePath = `${slug}.mdx`;
     const page = await getPageDocument({ relativePath });
@@ -90,7 +87,7 @@ export async function getStaticPaths() {
   try {
     const res = await getPageContext();
     const filtered = filterUnpublished(Object.values(res))
-      .filter((page) => !['index', 'hello'].includes(page.slug));
+      .filter((page) => !['index'].includes(page.slug));
     return {
       paths: filtered.map(({ slug }) => `/${slug}`),
       fallback: false,

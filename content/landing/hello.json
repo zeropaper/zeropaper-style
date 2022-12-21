@@ -1,0 +1,214 @@
+{
+  "title": "Hello",
+  "_collection": "landingPage",
+  "_keepTemplateKey": false,
+  "_template": "landingPage",
+  "_relativePath": "hello.json",
+  "_id": "content/landing/hello.json",
+  "published": true,
+  "blocks": [
+    {
+      "introduction": "My name is Valentin.\\\nI was born in the French speaking part of Switzerland in the early\n80's but I lived in Berlin nearly half my life.\\\nI speak fluently French, English and German.\\\nProfessionally, I consider myself a digital craftsman and\npersonally, a creative coder.\n\nI am currently exploring the potential paths my career could take\nand updating my skills.\\\nIf you believe I can add value to your product and your\ncompany, [please get in touch on LinkedIn](https://www.linkedin.com/in/vvago).\n",
+      "items": [
+        {
+          "title": "Multimedia Designer",
+          "text": "I began creating with softwares like 3D Studio Max and Photoshop, Illustrator, After Effects, Flash and the likes. Although I was still studying, it's around that time that I wrote my first invoices and started working on my first website and took the 'zeropaper' alias.\n",
+          "from": "2001",
+          "to": "2005",
+          "_template": "timelineItem"
+        },
+        {
+          "title": "Trainee Web Developer",
+          "text": "My Multimedia Design studies ended with as the first trainee of a company called Mediagonal (now liip). It's really during that time that I discovered Linux and used since then. I had the chance to learn from pioneers in their fields and I got my to face my first JavaScript challenge.\n",
+          "from": "2004",
+          "to": "2004",
+          "_template": "timelineItem"
+        },
+        {
+          "title": "Web Developer",
+          "text": "Moved to Berlin and worked for several years as a freelance web developer. Mostly with PHP at first, focusing on Drupal after a while. Mundraub.org, reset.org and Nitro Snowboards are among my favorite projects of that time. Although the period started on the back-end side, I gradually moved to the front-end side and started working with Sass (Compass), 96 grids and of course jQuery. And that I switched from SVN to GIT.\n",
+          "from": "2005",
+          "stack": [
+            "css",
+            "html5",
+            "javascript",
+            "sass",
+            "php",
+            "drupal",
+            "git",
+            "linux"
+          ],
+          "_template": "timelineItem"
+        },
+        {
+          "title": "Software Developer",
+          "employer": "MyDriver",
+          "text": "I got convinced to take a position at a VTC start-up funded by Sixt but the experience cut short as they moved the whole development to an other location (and remote work wasn't a thing back in the days). However, it's during that time that I started using front-end frameworks like Backbone.js. It's about that time that I first used a JavaScript bundler like Grunt.js and wrote my first plugins for it.\n",
+          "from": "2012",
+          "to": "2013",
+          "stack": [
+            "backbonejs",
+            "gruntjs",
+            "sass",
+            "compass",
+            "jquery",
+            "git",
+            "linux"
+          ],
+          "_template": "timelineItem"
+        },
+        {
+          "title": "Core Developer",
+          "employer": "Camunda",
+          "text": "Designing, developing and maintaining the UI of the Camunda BPM platform web-apps, documentation and blog. The major part of my work was published under an open-source license.\n",
+          "from": "2014-01",
+          "to": "2017-03",
+          "stack": [
+            "gruntjs",
+            "requirejs",
+            "mocha",
+            "jenkins",
+            "angularjs",
+            "bootstrap",
+            "html5",
+            "protractor",
+            "git",
+            "linux"
+          ],
+          "_template": "timelineItem"
+        },
+        {
+          "title": "Visual Fiha",
+          "text": "Created an application for creative coders to generate visuals that can react to sound and can be controlled by MIDI devices. The application was published under open-source license and run without installation in the browser.\n",
+          "from": "2017-03",
+          "stack": [
+            "javascript",
+            "ampersandjs",
+            "webaudio",
+            "midi",
+            "git",
+            "pwa",
+            "cssom"
+          ],
+          "_template": "timelineItem"
+        },
+        {
+          "title": "Lecturer",
+          "employer": "Devugees - DCI",
+          "text": "Teaching front‐end development fundamentals, writing exercises and establishing the curriculum for the students.\n",
+          "from": "2017-07",
+          "to": "2018-01",
+          "stack": [
+            "javascript",
+            "css",
+            "html5",
+            "travisci",
+            "react",
+            "sass",
+            "neutrino",
+            "webpack",
+            "git",
+            "linux"
+          ],
+          "_template": "timelineItem"
+        },
+        {
+          "title": "Senior Front-end Developer",
+          "employer": "MWD",
+          "text": "Created a React Native application for the Berlin ice hockey team.\n",
+          "from": "2018-05",
+          "to": "2018-11",
+          "stack": [
+            "javascript",
+            "css",
+            "html5",
+            "react-native",
+            "expo",
+            "websockets",
+            "mobx",
+            "git",
+            "macos"
+          ],
+          "_template": "timelineItem"
+        },
+        {
+          "title": "Senior Front-end Developer",
+          "employer": "jobpal",
+          "text": "In charge of the B2B dashboard (based on ReactJS) development and maintenance.\n",
+          "from": "2018-11",
+          "to": "2020-11",
+          "stack": [
+            "javascript",
+            "css",
+            "html5",
+            "redux",
+            "react",
+            "nodejs",
+            "mongoose",
+            "expressjs",
+            "jest",
+            "circleci",
+            "eslint",
+            "testing-library",
+            "webpack",
+            "aws",
+            "websockets",
+            "git",
+            "macos"
+          ],
+          "_template": "timelineItem"
+        },
+        {
+          "title": "Senior Front-end Developer",
+          "employer": "SmartRecruiters",
+          "text": "My role at SmartRecruiters was to ease the integration of the software I created during my time at jobpal.\n",
+          "from": "2020-11",
+          "to": "2021-04",
+          "stack": [
+            "javascript",
+            "typescript",
+            "css",
+            "html5",
+            "redux",
+            "react",
+            "nodejs",
+            "mongoose",
+            "expressjs",
+            "jest",
+            "eslint",
+            "jenkins",
+            "testing-library",
+            "webpack",
+            "aws",
+            "websockets",
+            "git",
+            "macos"
+          ],
+          "_template": "timelineItem"
+        },
+        {
+          "title": "Senior Front-end Developer",
+          "employer": "GoStudent",
+          "text": "During my time at GoStudent, I took over the improvement of the front-end repositories and the harmonization of their tools and code styling as well as drafting the technical specifications for the development of new features.\n",
+          "from": "2021-07",
+          "to": "2021-12",
+          "stack": [
+            "javascript",
+            "typescript",
+            "gitlab ci",
+            "jest",
+            "react",
+            "eslint",
+            "websockets",
+            "webpack",
+            "testing-library",
+            "git",
+            "macos"
+          ],
+          "_template": "timelineItem"
+        }
+      ],
+      "_template": "timeline"
+    }
+  ]
+}
