@@ -1,3 +1,19 @@
 {
-  "title": "zeropaper"
+  "title": "zeropaper",
+  "_collection": "landingPage",
+  "_keepTemplateKey": false,
+  "_template": "landingPage",
+  "_relativePath": "home.json",
+  "_id": "content/landing/home.json",
+  "published": true,
+  "blocks": [
+    {
+      "content": "my name's Valentin and I craft code since the end of last century.\n",
+      "deco": {
+        "slant": true,
+        "background": "yellow"
+      },
+      "_template": "markdown"
+    }
+  ]
 }

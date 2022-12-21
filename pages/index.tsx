@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { ReactNode, useState } from "react";
 import dynamic from "next/dynamic";
 import { IconX } from "@tabler/icons";
+import { useTina } from "tinacms/dist/react";
 import {
   ActionIcon,
   Box,
@@ -13,9 +14,10 @@ import {
 import type { AsyncReturnType } from "../typings";
 import { useStyles as useLayoutStyles } from "../components/Layout/Layout";
 import Link from "../components/Link/Link";
-import { getPageContext } from "../lib/getPageContext";
 import getLandingPageDocument from "../lib/getLandingPageDocument";
 import getGlobal from "../lib/getGlobal";
+import { MDXRenderer } from "components/MDXRenderer/MDXRenderer";
+import { TinaMarkdownContent } from "tinacms/dist/rich-text";
 
 const useStyles = createStyles<
   string,
@@ -72,37 +74,73 @@ const Three = dynamic(() => import("../components/Three/Three"), {
   loading: Loader,
 });
 
-const Home = ({
-  pageContext,
-  ...props
-}: AsyncReturnType<typeof getStaticProps>["props"]) => {
+function getFirstMarkdownBlock<A extends ({ __typename: string, content?: any } | null | undefined)[]>(blocks: A) {
+  return blocks.find((block) => block
+    && block.__typename === "LandingPageBlocksMarkdown"
+    && block.content) as { content: TinaMarkdownContent | TinaMarkdownContent[] } | undefined;
+}
+
+function LandingPageModal({
+  content,
+  classes,
+  onClose
+}: {
+  content: ReactNode;
+  classes: {
+    [k: string]: string;
+  };
+  onClose: () => void
+}) {
+  return (
+    <Paper p="md" withBorder className={classes.paper}>
+      <ActionIcon
+        title="Hide that message and show the pretty thing"
+        className={classes.close}
+        name="close"
+        onClick={onClose}
+      >
+        <IconX />
+      </ActionIcon>
+      <Title>Hello</Title>
+      <Text sx={{ maxWidth: 350 }}>
+        {content}
+      </Text>
+      <Box className={classes.readMoreWrapper}>
+        <Link href="/hello">Read more</Link>
+      </Box>
+    </Paper>
+  )
+}
+
+const Home = (props: AsyncReturnType<typeof getStaticProps>["props"]) => {
   const {
     classes: { main },
   } = useLayoutStyles();
-  const data = props.data?.landingPage || {};
+  const { data } = useTina({
+    query: props.query,
+    variables: props.variables,
+    data: props.data,
+  });
+
+  let content: ReactNode = null;
+  if (Array.isArray(data.landingPage.blocks)) {
+    const markdownBlock = getFirstMarkdownBlock(data.landingPage.blocks);
+    if (markdownBlock?.content) {
+      content = (
+        <MDXRenderer content={markdownBlock.content} />
+      )
+    }
+  }
   const [overlayVisible, setOverlayVisible] = useState(true);
   const { classes, cx } = useStyles({ overlayVisible });
 
   return (
     <Box id="page-content" component="main" className={cx(main, classes.root)}>
-      <Paper p="md" withBorder className={classes.paper}>
-        <ActionIcon
-          title="Hide that message and show the pretty thing"
-          className={classes.close}
-          name="close"
-          onClick={() => setOverlayVisible(false)}
-        >
-          <IconX />
-        </ActionIcon>
-        <Title>Hello</Title>
-        <Text sx={{ maxWidth: 350 }}>
-          my name&apos;s Valentin and I craft code since the end of last
-          century.
-        </Text>
-        <Box className={classes.readMoreWrapper}>
-          <Link href="/hello">Read more</Link>
-        </Box>
-      </Paper>
+      <LandingPageModal
+        classes={classes}
+        onClose={() => setOverlayVisible(false)}
+        content={content}
+      />
 
       <Three />
     </Box>
@@ -117,7 +155,6 @@ export const getStaticProps = async function () {
   return {
     props: {
       global: await getGlobal(),
-      pageContext: await getPageContext(),
       ...(await getLandingPageDocument(vars)),
     },
   };
