@@ -15,6 +15,18 @@ export default {
   },
   argTypes: {
     children: { table: { disable: true } },
+    className: { table: { disable: true } },
+    outerComponent: { table: { disable: true } },
+    innerComponent: { table: { disable: true } },
+    classes: { table: { disable: true } },
+    background: {
+      control: {
+        type: "select",
+        options: [
+          "dark", "gray", "red", "pink", "grape", "violet", "indigo", "blue", "cyan", "green", "lime", "yellow", "orange", "teal"
+        ]
+      }
+    },
   },
   args: {
     slant: true,

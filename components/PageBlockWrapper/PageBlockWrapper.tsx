@@ -14,6 +14,7 @@ export interface PropTypes {
   innerComponent?: React.ElementType;
   classes?: ClassNames<typeof useStyles>;
   slant?: boolean;
+  plain?: boolean;
 }
 
 export const Wrapper = ({
@@ -23,6 +24,7 @@ export const Wrapper = ({
   children,
   classes: passedClasses = {},
   slant,
+  plain,
   outerComponent: OuterComponent = "div",
   innerComponent: InnerComponent = "div",
   ...props
@@ -33,8 +35,9 @@ export const Wrapper = ({
     layoutClasses.root,
     classes.root,
     {
-      [classes.decoSlant]: slant,
-      [`${background}`]: !!background,
+      [classes.plain]: plain,
+      [classes.decoSlant]: !plain && slant,
+      [`${background}`]: !plain && !!background,
     },
     passedClasses.root,
     className

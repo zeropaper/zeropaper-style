@@ -32,6 +32,9 @@ export default createStyles(
           ),
         },
       },
+      plain: {
+        padding: 0,
+      },
       decoSlant: {
         margin: `calc(${size}px - 3px) auto`,
         zIndex: 1,
