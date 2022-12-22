@@ -2,10 +2,11 @@ import { MDXRenderer } from "components/MDXRenderer/MDXRenderer";
 import React from "react";
 
 import type { LandingPage } from "../../.tina/__generated__/types";
+import useLayoutStyles from "../Layout/Layout.styles";
 
 import LinkCard from "../LinkCard/LinkCard";
 import Wrapper from "./Wrapper/Wrapper";
-import Timeline from "../Timeline/Timeline";
+import Timeline from "./Timeline";
 
 const Debug = (props: any) => (
   <details>
@@ -27,8 +28,8 @@ function tinaFieldName(tinaField: string, i: number, type: string) {
     .join(".")
 }
 export const Blocks = (props: BlocksProps) => {
-  if (!props.blocks || !props.blocks.length) return <>no blocks</>;
-
+  const { classes } = useLayoutStyles();
+  if (!props.blocks || !props.blocks.length) return null;
   const tinaField = props.tinaField || "";
 
   return (
@@ -39,14 +40,6 @@ export const Blocks = (props: BlocksProps) => {
           .replace("PageBlocks", "");
         switch (type) {
           case "Feature":
-            return (
-              <React.Fragment key={i + type}>
-                <Hero
-                  {...block}
-                  tinaField={tinaFieldName(tinaField, i, type)}
-                />
-              </React.Fragment>
-            );
           case "Hero":
             return (
               <Wrapper {...(block.deco || {})} key={i + type}>
@@ -54,6 +47,17 @@ export const Blocks = (props: BlocksProps) => {
                   {...block}
                   tinaField={tinaFieldName(tinaField, i, type)}
                 />
+              </Wrapper>
+            );
+          case "Markdown":
+            return (
+              <Wrapper {...(block.deco || {})} key={i + type}>
+                <div className={classes.inner}>
+                  <MDXRenderer
+                    content={block.content}
+                    tinaField={tinaFieldName(tinaField, i, type)}
+                  />
+                </div>
               </Wrapper>
             );
           case "Timeline":
