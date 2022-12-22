@@ -78,7 +78,12 @@ const pageFields: SchemaField[] = [
 const deco = {
   name: 'deco', label: 'Deco', type: 'object', fields: [
     { name: 'slant', label: 'Slant', type: 'boolean' },
-    { name: 'background', label: 'Background', type: 'string', options: ['red', 'blue', 'green', 'yellow'] }
+    {
+      name: 'background',
+      label: 'Background',
+      type: 'string',
+      options: ["dark", "gray", "red", "pink", "grape", "violet", "indigo", "blue", "cyan", "green", "lime", "yellow", "orange", "teal"]
+    }
   ]
 }
 
