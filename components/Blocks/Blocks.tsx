@@ -16,9 +16,16 @@ const Debug = (props: any) => (
 
 const Hero = LinkCard;
 const Features = LinkCard;
-export type BlocksProps = Omit<LandingPage, "id" | "_sys" | "_values"> & {
+export type BlocksProps = {
+  blocks: LandingPage["blocks"];
   tinaField?: string;
 };
+
+function tinaFieldName(tinaField: string, i: number, type: string) {
+  return [tinaField, i]
+    .filter((v) => typeof v !== undefined && v !== null)
+    .join(".")
+}
 export const Blocks = (props: BlocksProps) => {
   if (!props.blocks || !props.blocks.length) return <>no blocks</>;
 
@@ -31,39 +38,29 @@ export const Blocks = (props: BlocksProps) => {
           .replace("Landing", "")
           .replace("PageBlocks", "");
         switch (type) {
-          case "Content":
-            return (
-              <React.Fragment key={i + type}>
-                <MDXRenderer content={block} />
-              </React.Fragment>
-            );
-          case "Hero":
+          case "Feature":
             return (
               <React.Fragment key={i + type}>
                 <Hero
                   {...block}
-                  tinaField={[tinaField, i]
-                    .filter((v) => typeof v !== undefined && v !== null)
-                    .join(".")}
+                  tinaField={tinaFieldName(tinaField, i, type)}
                 />
               </React.Fragment>
             );
-          case "Feature":
+          case "Hero":
             return (
               <Wrapper {...(block.deco || {})} key={i + type}>
                 <Features
                   {...block}
-                  tinaField={[tinaField, i]
-                    .filter((v) => typeof v !== undefined && v !== null)
-                    .join(".")}
+                  tinaField={tinaFieldName(tinaField, i, type)}
                 />
               </Wrapper>
             );
           case "Timeline":
             return (
-              <React.Fragment key={i + type}>
+              <Wrapper plain key={i + type}>
                 <Timeline block={block} />
-              </React.Fragment>
+              </Wrapper>
             );
           default:
             return (
