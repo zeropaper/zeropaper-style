@@ -1,13 +1,13 @@
 import React from "react";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
 
-import { withLayout } from "../../.storybook/decorators";
-import { useStyles } from "../Layout/Layout";
-import Wrapper from "./PageBlockWrapper";
-import { useTheme } from "../../themes/Theme";
+import { withLayout } from "../../../.storybook/decorators";
+import { useStyles } from "../../Layout/Layout";
+import Wrapper from "./Wrapper";
+import { useTheme } from "../../../themes/Theme";
 
 export default {
-  title: "Atoms/PageBlockWrapper",
+  title: "Blocks/Wrapper",
   component: Wrapper,
   decorators: [withLayout],
   parameters: {

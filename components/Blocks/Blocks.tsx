@@ -4,7 +4,7 @@ import React from "react";
 import type { LandingPage } from "../../.tina/__generated__/types";
 
 import LinkCard from "../LinkCard/LinkCard";
-import Wrapper from "../PageBlockWrapper/PageBlockWrapper";
+import Wrapper from "./Wrapper/Wrapper";
 import Timeline from "../Timeline/Timeline";
 
 const Debug = (props: any) => (
