@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { useTina } from "tinacms/dist/react";
 
 import Grid from "../components/Grid/Grid";
-import { LayoutContentWrapper } from "../components/Layout/Layout";
+import { LayoutContentWrapper, useStyles as useLayoutStyles } from "../components/Layout/Layout";
 import { MDXRenderer } from "../components/MDXRenderer/MDXRenderer";
 import filterUnpublished from "../lib/filterUnpublished";
 import { getPageContext } from "../lib/getPageContext";
@@ -17,6 +17,7 @@ import getGlobal from "../lib/getGlobal";
 export default function Page(
   props: AsyncReturnType<typeof getStaticProps>["props"]
 ) {
+  const { classes } = useLayoutStyles()
   const { data } = useTina({
     query: props.query,
     variables: props.variables,
@@ -38,15 +39,20 @@ export default function Page(
         {/* <meta property="og:image" content={ogImage?.url} /> */}
       </Head>
 
-      <LayoutContentWrapper>
-        <h1 data-tinafield="title">{title}</h1>
-
-        {body ? (
+      {body ? (
+        <LayoutContentWrapper>
+          <h1 data-tinafield="title">{title}</h1>
           <MDXRenderer tinaField="body" content={body || ""} />
-        ) : (
-          <Grid blocks={blocks || []} />
-        )}
-      </LayoutContentWrapper>
+        </LayoutContentWrapper>
+      ) : (
+        <>
+          <main id="page-content">
+            <h1 data-tinafield="title" className={classes.inner}>{title}</h1>
+
+            <Grid blocks={blocks || []} />
+          </main>
+        </>
+      )}
     </>
   );
 }
