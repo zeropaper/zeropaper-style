@@ -126,6 +126,11 @@ const markdown = {
 const timelineItem = {
   label: 'Timeline Item',
   name: 'timelineItem',
+  ui: {
+    itemProps: (item) => ({
+      label: [item?.from, item?.employer].filter(Boolean).join(' - ')
+    }),
+  },
   fields: [
     titleField,
     {
@@ -143,19 +148,11 @@ const timelineItem = {
       name: 'from',
       label: 'From',
       type: 'string',
-      // type: "datetime",
-      // ui: {
-      //   dateFormat: 'YYYY-MM'
-      // }
     },
     {
       name: 'to',
       label: 'To',
       type: 'string',
-      // type: "datetime",
-      // ui: {
-      //   dateFormat: 'YYYY-MM'
-      // }
     },
     {
       name: 'stack',
