@@ -1,76 +1,18 @@
 import { SceneCtx } from "./SceneCtx";
 import * as THREE from "three";
-import { MantineTheme } from "@mantine/core";
-
-function updateCamera(scene: SceneCtx["scene"]) {
-  const camera = scene.getObjectByName("camera");
-
-  if (!camera) return;
-  camera.position.x = camera.position.x || -15;
-  camera.position.y = camera.position.y || 15;
-  camera.position.z = camera.position.z || -15;
-  camera.lookAt(scene.position);
-  // camera.updateMatrix()
-  return camera;
-}
-
-function updateCameraSide(scene: SceneCtx["scene"]) {
-  const camera = scene.getObjectByName("camera-side") as
-    | THREE.OrthographicCamera
-    | undefined;
-
-  if (!camera) return;
-  camera.position.x = 0;
-  camera.position.y = 0;
-  camera.position.z = 20;
-  camera.zoom = camera.position.z * 0.75;
-  camera.near = 0.001;
-  camera.far = camera.position.z * 2;
-  camera.lookAt(scene.position);
-  camera.updateProjectionMatrix();
-  return camera;
-}
-
-function updateCameraTop(scene: SceneCtx["scene"]) {
-  const camera = scene.getObjectByName("camera-top") as
-    | THREE.OrthographicCamera
-    | undefined;
-
-  if (!camera) return;
-  camera.position.x = 0;
-  camera.position.y = 20;
-  camera.position.z = 0;
-  camera.zoom = camera.position.y * 0.75;
-  camera.near = 0.001;
-  camera.far = camera.position.y * 2;
-  camera.lookAt(scene.position);
-  camera.updateProjectionMatrix();
-  return camera;
-}
+import {
+  ensure,
+  updateCamera,
+  updateCameraSide,
+  updateCameraTop,
+  ensureSceneHelper,
+  ensureSpotLight,
+  ensureShadowCaster,
+  ensureAmbientLight,
+  degToRad,
+} from "./util";
 
 // ------------------------------------------------------------
-
-function ensure(
-  name: string,
-  creator: (_THREE: typeof THREE) => THREE.Object3D,
-  object: THREE.Object3D,
-  recreate = false
-) {
-  const found = object.getObjectByName(name);
-  if (found) {
-    if (!recreate) return found;
-    object.remove(found);
-  }
-
-  const created = creator(THREE);
-  created.name = name;
-  object.add(created);
-  return created;
-}
-
-// ------------------------------------------------------------
-
-const degToRad = (deg: number) => (deg * Math.PI) / 180;
 
 type MeshMaterial =
   | THREE.MeshStandardMaterial
@@ -235,87 +177,6 @@ const ensureOtherCube = (
 
 // ------------------------------------------------------------
 
-const ensureSceneHelper = (scene: SceneCtx["scene"], recreate = false) => {
-  return ensure(
-    "scene-helper",
-    (_THREE) => {
-      const group = new THREE.Group();
-      const grid = new THREE.GridHelper(24, 12);
-      group.add(grid);
-      const gridX = grid.clone();
-      gridX.rotateX(Math.PI / 2);
-      group.add(gridX);
-      const gridZ = grid.clone();
-      gridZ.rotateZ(Math.PI / 2);
-      group.add(gridZ);
-      group.add(new THREE.AxesHelper(3));
-      return group;
-    },
-    scene,
-    recreate
-  );
-};
-
-const ensureSpotLight = (scene: SceneCtx["scene"], recreate = false) => {
-  return ensure(
-    "spot-light",
-    (_THREE) => {
-      const instance = new THREE.SpotLight(0xffffff, 0.7);
-      // let helper = scene.getObjectByName('spot-light-helper') as THREE.SpotLightHelper | undefined
-      // if (helper) scene.remove(helper)
-      // helper = new THREE.SpotLightHelper(instance, 0x0000aa);
-      // helper.name = 'spot-light-helper'
-      // scene.add(helper)
-      // helper.update()
-      instance.castShadow = true;
-      instance.shadow.mapSize.width = 2048 * 2;
-      instance.shadow.mapSize.height = 2048 * 2;
-      instance.shadow.camera.near = 1;
-      instance.shadow.camera.far = 500;
-      instance.shadow.focus = 0.5;
-      instance.lookAt(scene.position);
-      return instance;
-    },
-    scene,
-    recreate
-  );
-};
-
-const ensureShadowCaster = (scene: SceneCtx["scene"], recreate = false) => {
-  return ensure(
-    "shadow-caster",
-    (_THREE) => {
-      const geometry = new THREE.PlaneGeometry(500, 500, 10, 10);
-      const material = new THREE.ShadowMaterial();
-      material.opacity = 0.5;
-
-      const instance = new THREE.Mesh(geometry, material);
-      instance.receiveShadow = true;
-      instance.position.y = -12;
-      instance.rotation.x = degToRad(-90);
-      return instance;
-    },
-    scene,
-    recreate
-  );
-};
-
-const ensureAmbientLight = (scene: SceneCtx["scene"], recreate = false) => {
-  return ensure(
-    "ambient-light",
-    (_THREE) => {
-      const instance = new THREE.AmbientLight(0x999999, 1);
-      // instance.castShadow = true;
-      instance.position.set(10, 10, 10);
-      return instance;
-    },
-    scene,
-    recreate
-  );
-};
-
-// ------------------------------------------------------------
-
 // export const onResize = (scene: SceneCtx['scene'], recreate = false) => {
 //   updateCamera(scene);
 //   updateCameraSide(scene);
@@ -398,8 +259,8 @@ export const onRender = (ctx: SceneCtx) => {
 
   (
     scene.getObjectByName("spot-light-helper") as
-      | THREE.SpotLightHelper
-      | undefined
+    | THREE.SpotLightHelper
+    | undefined
   )?.update();
 
   const fraction = 1 - ((now * 0.1) % 1);
