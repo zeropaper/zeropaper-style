@@ -1,24 +1,21 @@
-import React, { Component, useMemo } from "react";
+import React from "react";
 
 import {
   useRef,
   useEffect,
   PropsWithChildren,
-  MutableRefObject,
   useCallback,
 } from "react";
 import { useResizeObserver } from "@mantine/hooks";
 import { createStyles, MantineTheme, useMantineTheme } from "@mantine/core";
-import { PerspectiveCamera, OrthographicCamera } from "three";
+import { PerspectiveCamera, OrthographicCamera, Vector3, Raycaster } from "three";
 
 import type { RendererCtx } from "./RendererCtx";
 import type { SceneCtx } from "./SceneCtx";
 import Scene from "./Scene";
-import Renderer from "./Renderer";
+import Renderer, { PointerHandler } from "./Renderer";
 import { useAnimationFrame, useClock, useScene } from "./hooks";
 import ErrorBoundary from "../ErrorBoundary/ErrorBoundary";
-// import onRender from './onRender';
-// import onMount from './onMount';
 import * as scripts from "./Three.scripts";
 import { useTheme } from "../../themes/Theme";
 
@@ -45,14 +42,12 @@ const useStyles = createStyles(() => ({
 }));
 
 export const RuntimeComponent = ({
-  // container,
   width = 0,
   height = 0,
   onMount,
   onRender,
 }: PropsWithChildren<
   {
-    // container: MutableRefObject<any>;
     width: number;
     height: number;
   } & PropTypes
@@ -62,9 +57,6 @@ export const RuntimeComponent = ({
   const scene = useScene();
   const clock = useClock();
   const theme = useTheme();
-  function getTheme() {
-    return theme;
-  }
 
   useEffect(() => {
     if (canvas.current) {
@@ -114,7 +106,7 @@ export const RuntimeComponent = ({
     );
   }, []);
 
-  const renderFrame = (deltaTime: number) => {
+  const renderFrame = useCallback((deltaTime: number) => {
     const destCtx = canvas.current?.getContext("2d");
     if (!canvas.current || !destCtx) return;
     if (clock) clock.getElapsedTime();
@@ -141,10 +133,20 @@ export const RuntimeComponent = ({
           sw,
           sh
         );
-      } catch (e) {}
+      } catch (e) { }
     });
-  };
+  }, [clock, onRender, scene, theme]);
+
   useAnimationFrame(renderFrame);
+
+  const handleClick = useCallback<PointerHandler<'click'>>((evt) => {
+    console.info('clicked', evt)
+    if (scripts.onClick) scripts.onClick(evt)
+  }, [])
+
+  const handlePointerEvent = useCallback<PointerHandler<'pointerenter' | 'pointerleave' | 'pointermove'>>(({ type, object, vector }) => {
+    console.info(type, vector.x, vector.y, object)
+  }, [])
 
   const ratio = width / height;
   let canvases = [
@@ -152,6 +154,10 @@ export const RuntimeComponent = ({
       destinationCanvasRef={canvas}
       key="camera"
       id="camera"
+      onClick={handleClick}
+      // onPointerMove={handlePointerEvent}
+      onPointerEnter={scripts.onPointerEnter}
+      onPointerLeave={scripts.onPointerLeave}
       onMount={handleRendererMount}
       onUnmount={handleRendererUnmount}
     />,
@@ -186,6 +192,10 @@ export const RuntimeComponent = ({
         destinationCanvasRef={canvas}
         key="wide-camera"
         id="camera"
+        onClick={handleClick}
+        // onPointerMove={handlePointerEvent}
+        onPointerEnter={scripts.onPointerEnter}
+        onPointerLeave={scripts.onPointerLeave}
         heightPrct={100}
         leftPrct={25}
         topPrct={0}
@@ -223,6 +233,10 @@ export const RuntimeComponent = ({
         destinationCanvasRef={canvas}
         key="tall-camera"
         id="camera"
+        onClick={handleClick}
+        // onPointerMove={handlePointerEvent}
+        onPointerEnter={scripts.onPointerEnter}
+        onPointerLeave={scripts.onPointerLeave}
         heightPrct={50}
         leftPrct={0}
         topPrct={0}

@@ -1,10 +1,13 @@
-import { PropsWithChildren, useEffect, useMemo, useRef } from "react";
+import { PropsWithChildren, useCallback, useEffect, useMemo, useRef } from "react";
 import {
   WebGLRenderer,
   PerspectiveCamera,
   OrthographicCamera,
   CameraHelper,
   PCFSoftShadowMap,
+  Vector3,
+  Raycaster,
+  Object3D,
 } from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 
@@ -15,6 +18,7 @@ const ensureProxy = (original: HTMLElement): HTMLElement => {
   let proxy =
     original.parentElement?.querySelector<HTMLElement>("[data-proxy]");
   if (!proxy) {
+    console.log("creating proxy", original.parentElement)
     proxy = document.createElement("div");
     proxy.setAttribute("data-proxy", "true");
     original.parentElement?.insertBefore(proxy, original);
@@ -51,9 +55,8 @@ const useCamera = ({
         requestAnimationFrame(() => {
           const proxy = ensureProxy(destCanvas);
           proxy.style.top = `${(destCanvas?.height || 0) * (topPrct * 0.01)}px`;
-          proxy.style.left = `${
-            (destCanvas?.width || 0) * (leftPrct * 0.01)
-          }px`;
+          proxy.style.left = `${(destCanvas?.width || 0) * (leftPrct * 0.01)
+            }px`;
           proxy.style.height = `${renderer.domElement?.height}px`;
           proxy.style.width = `${renderer.domElement?.width}px`;
           proxy.style.position = "absolute";
@@ -97,6 +100,14 @@ const useCamera = ({
     destinationCanvasRef.current?.height,
   ]);
 
+export interface PointerHandler<T extends 'pointermove' | 'pointerenter' | 'pointerleave' | 'click'> {
+  (event: {
+    type: T,
+    object: Object3D | null,
+    vector: Vector3
+  }): void
+}
+
 const Renderer = ({
   id,
   destinationCanvasRef,
@@ -104,6 +115,10 @@ const Renderer = ({
   onMount,
   onUnmount,
   onContextChange,
+  onPointerEnter,
+  onPointerLeave,
+  onClick,
+  onPointerMove,
   widthPrct = 100,
   heightPrct = 100,
   leftPrct = 0,
@@ -115,6 +130,10 @@ const Renderer = ({
     onMount: (ctx: RendererCtx) => void;
     onUnmount: (ctx: RendererCtx) => void;
     onContextChange?: (ctx: RendererCtx) => void;
+    onPointerEnter?: PointerHandler<'pointerenter'>;
+    onPointerLeave?: PointerHandler<'pointerleave'>;
+    onPointerMove?: PointerHandler<'pointermove'>;
+    onClick?: PointerHandler<'click'>;
   } & Partial<
     Pick<RendererCtx, "heightPrct" | "leftPrct" | "topPrct" | "widthPrct">
   >
@@ -129,7 +148,6 @@ const Renderer = ({
     // }
     return instance;
   }, []);
-
   const [camera, controls] = useCamera({
     id,
     scene,
@@ -147,14 +165,93 @@ const Renderer = ({
     return instance;
   }, [camera, id]);
 
+  const proxy = useRef(destinationCanvasRef.current ? ensureProxy(destinationCanvasRef.current) : null)
+
+  useEffect(() => {
+    if (proxy.current || !destinationCanvasRef.current) return;
+    proxy.current = ensureProxy(destinationCanvasRef.current)
+  }, [proxy, destinationCanvasRef])
+
+  const handleMouseMove = useCallback(
+    (e: MouseEvent) => {
+      if (!proxy.current) return;
+      const rect = proxy.current.getBoundingClientRect();
+      mouse.current.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+      mouse.current.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
+      if (onPointerMove) onPointerMove({
+        type: 'pointermove',
+        object: intersected.current,
+        vector: mouse.current
+      })
+    }, [onPointerMove])
+
+  const handleClick = useCallback(
+    (e: MouseEvent) => {
+      if (!proxy.current) return;
+      if (onClick) onClick({
+        type: 'click',
+        object: intersected.current,
+        vector: mouse.current
+      })
+    }, [onClick])
+
+  useEffect(() => {
+    if (!proxy.current) return;
+    proxy.current.addEventListener("mousemove", handleMouseMove, false);
+    proxy.current.addEventListener("click", handleClick);
+    return () => {
+      proxy.current?.removeEventListener("mousemove", handleMouseMove, false);
+      proxy.current?.removeEventListener("click", handleClick);
+    };
+  }, [handleClick, handleMouseMove])
+
+  const mouse = useRef<Vector3>(new Vector3());
+  const raycaster = useRef<Raycaster>(new Raycaster());
+  let intersected = useRef<any | null>(null);
+
   const context = useMemo(
     () => ({
       id,
       render: () => {
-        // @ts-ignore
-        if (!scene || Number.isNaN(camera?.aspect)) return;
+        if (!scene || !(camera instanceof PerspectiveCamera)) return;
         cameraHelper?.update();
         controls?.update();
+
+        if (!scene.children || !scene.children.length) {
+          renderer.render(scene, camera);
+          return;
+        }
+
+        camera.updateMatrixWorld();
+        raycaster.current.setFromCamera(mouse.current, camera);
+
+        const intersects = raycaster.current.intersectObjects(scene.children, true);
+        if (intersects.length > 0) {
+          if (intersected.current != intersects[0].object) {
+            if (intersected.current) {
+              if (onPointerLeave) onPointerLeave({
+                type: 'pointerleave',
+                object: intersected.current,
+                vector: mouse.current
+              })
+            }
+
+            intersected.current = intersects[0].object;
+            if (onPointerEnter) onPointerEnter({
+              type: 'pointerenter',
+              object: intersected.current,
+              vector: mouse.current
+            })
+          }
+        } else {
+          if (intersected.current && onPointerLeave) onPointerLeave({
+            type: 'pointerleave',
+            object: intersected.current,
+            vector: mouse.current
+          })
+
+          intersected.current = null;
+        }
         renderer.render(scene, camera);
       },
       renderer,
@@ -164,18 +261,7 @@ const Renderer = ({
       leftPrct,
       topPrct,
     }),
-    [
-      id,
-      renderer,
-      camera,
-      widthPrct,
-      heightPrct,
-      leftPrct,
-      topPrct,
-      scene,
-      cameraHelper,
-      controls,
-    ]
+    [id, renderer, camera, widthPrct, heightPrct, leftPrct, topPrct, scene, cameraHelper, controls, onPointerEnter, onPointerLeave]
   );
 
   useEffect(() => {
