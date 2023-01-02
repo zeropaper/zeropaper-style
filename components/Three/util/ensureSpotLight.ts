@@ -6,7 +6,7 @@ export const ensureSpotLight = (scene: SceneCtx["scene"], recreate = false) => {
   return ensure<THREE.SpotLight>(
     "spot-light",
     (_THREE) => {
-      const instance = new THREE.SpotLight(0xffffff, 0.7);
+      const instance = new THREE.SpotLight(0xffffff, 0.3);
       // let helper = scene.getObjectByName('spot-light-helper') as THREE.SpotLightHelper | undefined
       // if (helper) scene.remove(helper)
       // helper = new THREE.SpotLightHelper(instance, 0x0000aa);

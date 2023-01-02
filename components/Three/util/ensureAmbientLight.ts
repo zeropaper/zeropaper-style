@@ -2,7 +2,10 @@ import { SceneCtx } from "../SceneCtx";
 import * as THREE from "three";
 import { ensure } from "./ensure";
 
-export const ensureAmbientLight = (scene: SceneCtx["scene"], recreate = false) => {
+export const ensureAmbientLight = (
+  scene: SceneCtx["scene"],
+  recreate = false
+) => {
   return ensure<THREE.AmbientLight>(
     "ambient-light",
     (_THREE) => {

@@ -14,11 +14,11 @@ export function updateCamera(scene: SceneCtx["scene"]) {
   return camera;
 }
 export function updateCameraSide(scene: SceneCtx["scene"]) {
-  const camera = scene.getObjectByName("camera-side") as THREE.OrthographicCamera |
-    undefined;
+  const camera = scene.getObjectByName("camera-side") as
+    | THREE.OrthographicCamera
+    | undefined;
 
-  if (!camera)
-    return;
+  if (!camera) return;
   camera.position.x = 0;
   camera.position.y = 0;
   camera.position.z = 20;
@@ -30,11 +30,11 @@ export function updateCameraSide(scene: SceneCtx["scene"]) {
   return camera;
 }
 export function updateCameraTop(scene: SceneCtx["scene"]) {
-  const camera = scene.getObjectByName("camera-top") as THREE.OrthographicCamera |
-    undefined;
+  const camera = scene.getObjectByName("camera-top") as
+    | THREE.OrthographicCamera
+    | undefined;
 
-  if (!camera)
-    return;
+  if (!camera) return;
   camera.position.x = 0;
   camera.position.y = 20;
   camera.position.z = 0;

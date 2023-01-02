@@ -1,4 +1,10 @@
-import { PropsWithChildren, useCallback, useEffect, useMemo, useRef } from "react";
+import {
+  PropsWithChildren,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+} from "react";
 import {
   WebGLRenderer,
   PerspectiveCamera,
@@ -8,6 +14,8 @@ import {
   Vector3,
   Raycaster,
   Object3D,
+  Mesh,
+  Group,
 } from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 
@@ -18,7 +26,7 @@ const ensureProxy = (original: HTMLElement): HTMLElement => {
   let proxy =
     original.parentElement?.querySelector<HTMLElement>("[data-proxy]");
   if (!proxy) {
-    console.log("creating proxy", original.parentElement)
+    console.log("creating proxy", original.parentElement);
     proxy = document.createElement("div");
     proxy.setAttribute("data-proxy", "true");
     original.parentElement?.insertBefore(proxy, original);
@@ -48,6 +56,11 @@ const useCamera = ({
     let ctrls: OrbitControls | null = null;
     if (id === "camera") {
       const found = scene.getObjectByName("camera") as PerspectiveCamera | null;
+      if (!found) {
+        const cameraTarget = new Group()
+        cameraTarget.name = "camera-target"
+        scene.add(cameraTarget)
+      }
       instance = found || new PerspectiveCamera();
       instance.name = "camera";
       const destCanvas = destinationCanvasRef.current;
@@ -100,12 +113,10 @@ const useCamera = ({
     destinationCanvasRef.current?.height,
   ]);
 
-export interface PointerHandler<T extends 'pointermove' | 'pointerenter' | 'pointerleave' | 'click'> {
-  (event: {
-    type: T,
-    object: Object3D | null,
-    vector: Vector3
-  }): void
+export interface PointerHandler<
+  T extends "pointermove" | "pointerenter" | "pointerleave" | "click"
+> {
+  (event: { type: T; object: Object3D | null; vector: Vector3 }): void;
 }
 
 const Renderer = ({
@@ -130,10 +141,10 @@ const Renderer = ({
     onMount: (ctx: RendererCtx) => void;
     onUnmount: (ctx: RendererCtx) => void;
     onContextChange?: (ctx: RendererCtx) => void;
-    onPointerEnter?: PointerHandler<'pointerenter'>;
-    onPointerLeave?: PointerHandler<'pointerleave'>;
-    onPointerMove?: PointerHandler<'pointermove'>;
-    onClick?: PointerHandler<'click'>;
+    onPointerEnter?: PointerHandler<"pointerenter">;
+    onPointerLeave?: PointerHandler<"pointerleave">;
+    onPointerMove?: PointerHandler<"pointermove">;
+    onClick?: PointerHandler<"click">;
   } & Partial<
     Pick<RendererCtx, "heightPrct" | "leftPrct" | "topPrct" | "widthPrct">
   >
@@ -165,92 +176,114 @@ const Renderer = ({
     return instance;
   }, [camera, id]);
 
-  const proxy = useRef(destinationCanvasRef.current ? ensureProxy(destinationCanvasRef.current) : null)
+  const proxyRef = useRef(
+    destinationCanvasRef.current
+      ? ensureProxy(destinationCanvasRef.current)
+      : null
+  );
 
   useEffect(() => {
-    if (proxy.current || !destinationCanvasRef.current) return;
-    proxy.current = ensureProxy(destinationCanvasRef.current)
-  }, [proxy, destinationCanvasRef])
+    if (proxyRef.current || !destinationCanvasRef.current) return;
+    proxyRef.current = ensureProxy(destinationCanvasRef.current);
+  }, [proxyRef, destinationCanvasRef]);
 
   const handleMouseMove = useCallback(
     (e: MouseEvent) => {
-      if (!proxy.current) return;
-      const rect = proxy.current.getBoundingClientRect();
-      mouse.current.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
-      mouse.current.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
-      if (onPointerMove) onPointerMove({
-        type: 'pointermove',
-        object: intersected.current,
-        vector: mouse.current
-      })
-    }, [onPointerMove])
+      if (!proxyRef.current) return;
+      const rect = proxyRef.current.getBoundingClientRect();
+      mouseRef.current.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+      mouseRef.current.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
+      if (onPointerMove)
+        onPointerMove({
+          type: "pointermove",
+          object: intersectedRef.current,
+          vector: mouseRef.current,
+        });
+    },
+    [onPointerMove]
+  );
 
   const handleClick = useCallback(
     (e: MouseEvent) => {
-      if (!proxy.current) return;
-      if (onClick) onClick({
-        type: 'click',
-        object: intersected.current,
-        vector: mouse.current
-      })
-    }, [onClick])
+      if (!proxyRef.current) return;
+      if (onClick)
+        onClick({
+          type: "click",
+          object: intersectedRef.current,
+          vector: mouseRef.current,
+        });
+    },
+    [onClick]
+  );
 
   useEffect(() => {
-    if (!proxy.current) return;
-    proxy.current.addEventListener("mousemove", handleMouseMove, false);
-    proxy.current.addEventListener("click", handleClick);
+    if (!proxyRef.current) return;
+    proxyRef.current.addEventListener("mousemove", handleMouseMove, false);
+    proxyRef.current.addEventListener("click", handleClick);
     return () => {
-      proxy.current?.removeEventListener("mousemove", handleMouseMove, false);
-      proxy.current?.removeEventListener("click", handleClick);
+      proxyRef.current?.removeEventListener(
+        "mousemove",
+        handleMouseMove,
+        false
+      );
+      proxyRef.current?.removeEventListener("click", handleClick);
     };
-  }, [handleClick, handleMouseMove])
+  }, [handleClick, handleMouseMove]);
 
-  const mouse = useRef<Vector3>(new Vector3());
-  const raycaster = useRef<Raycaster>(new Raycaster());
-  let intersected = useRef<any | null>(null);
+  // TODO: try to avoid refs by using useMemo (like renderer, cameraHelper)
+  const mouseRef = useRef<Vector3>(new Vector3());
+  const raycasterRef = useRef<Raycaster>(new Raycaster());
+  let intersectedRef = useRef<Object3D | null>(null);
 
   const context = useMemo(
     () => ({
       id,
       render: () => {
-        if (!scene || !(camera instanceof PerspectiveCamera)) return;
-        cameraHelper?.update();
-        controls?.update();
+        if (!scene) return;
 
-        if (!scene.children || !scene.children.length) {
+        if (!(camera instanceof PerspectiveCamera)) {
           renderer.render(scene, camera);
           return;
         }
 
-        camera.updateMatrixWorld();
-        raycaster.current.setFromCamera(mouse.current, camera);
+        cameraHelper?.update();
+        controls?.update();
 
-        const intersects = raycaster.current.intersectObjects(scene.children, true);
+        camera.updateMatrixWorld();
+        raycasterRef.current.setFromCamera(mouseRef.current, camera);
+
+        const intersects =
+          raycasterRef.current
+            .intersectObjects(scene.children, true)
+            .filter((i) => i.object instanceof Mesh) || [];
         if (intersects.length > 0) {
-          if (intersected.current != intersects[0].object) {
-            if (intersected.current) {
-              if (onPointerLeave) onPointerLeave({
-                type: 'pointerleave',
-                object: intersected.current,
-                vector: mouse.current
-              })
+          if (intersectedRef.current != intersects[0].object) {
+            if (intersectedRef.current) {
+              if (onPointerLeave)
+                onPointerLeave({
+                  type: "pointerleave",
+                  object: intersectedRef.current,
+                  vector: mouseRef.current,
+                });
             }
 
-            intersected.current = intersects[0].object;
-            if (onPointerEnter) onPointerEnter({
-              type: 'pointerenter',
-              object: intersected.current,
-              vector: mouse.current
-            })
+            intersectedRef.current = intersects[0].object;
+            if (onPointerEnter)
+              onPointerEnter({
+                type: "pointerenter",
+                object: intersectedRef.current,
+                vector: mouseRef.current,
+              });
           }
         } else {
-          if (intersected.current && onPointerLeave) onPointerLeave({
-            type: 'pointerleave',
-            object: intersected.current,
-            vector: mouse.current
-          })
+          if (intersectedRef.current && onPointerLeave)
+            onPointerLeave({
+              type: "pointerleave",
+              object: intersectedRef.current,
+              vector: mouseRef.current,
+            });
 
-          intersected.current = null;
+          intersectedRef.current = null;
         }
         renderer.render(scene, camera);
       },
@@ -261,7 +294,20 @@ const Renderer = ({
       leftPrct,
       topPrct,
     }),
-    [id, renderer, camera, widthPrct, heightPrct, leftPrct, topPrct, scene, cameraHelper, controls, onPointerEnter, onPointerLeave]
+    [
+      id,
+      renderer,
+      camera,
+      widthPrct,
+      heightPrct,
+      leftPrct,
+      topPrct,
+      scene,
+      cameraHelper,
+      controls,
+      onPointerEnter,
+      onPointerLeave,
+    ]
   );
 
   useEffect(() => {

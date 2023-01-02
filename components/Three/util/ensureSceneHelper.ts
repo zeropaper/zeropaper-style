@@ -2,7 +2,10 @@ import { SceneCtx } from "../SceneCtx";
 import * as THREE from "three";
 import { ensure } from "./ensure";
 
-export const ensureSceneHelper = (scene: SceneCtx["scene"], recreate = false) => {
+export const ensureSceneHelper = (
+  scene: SceneCtx["scene"],
+  recreate = false
+) => {
   return ensure<THREE.Group>(
     "scene-helper",
     (_THREE) => {

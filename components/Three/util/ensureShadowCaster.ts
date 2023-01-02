@@ -3,7 +3,10 @@ import * as THREE from "three";
 import { ensure } from "./ensure";
 import { degToRad } from "./degToRad";
 
-export const ensureShadowCaster = (scene: SceneCtx["scene"], recreate = false) => {
+export const ensureShadowCaster = (
+  scene: SceneCtx["scene"],
+  recreate = false
+) => {
   return ensure<THREE.Mesh>(
     "shadow-caster",
     (_THREE) => {

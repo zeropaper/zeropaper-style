@@ -1,14 +1,9 @@
 import React from "react";
 
-import {
-  useRef,
-  useEffect,
-  PropsWithChildren,
-  useCallback,
-} from "react";
+import { useRef, useEffect, PropsWithChildren, useCallback } from "react";
 import { useResizeObserver } from "@mantine/hooks";
-import { createStyles, MantineTheme, useMantineTheme } from "@mantine/core";
-import { PerspectiveCamera, OrthographicCamera, Vector3, Raycaster } from "three";
+import { createStyles } from "@mantine/core";
+import { PerspectiveCamera, OrthographicCamera } from "three";
 
 import type { RendererCtx } from "./RendererCtx";
 import type { SceneCtx } from "./SceneCtx";
@@ -16,7 +11,7 @@ import Scene from "./Scene";
 import Renderer, { PointerHandler } from "./Renderer";
 import { useAnimationFrame, useClock, useScene } from "./hooks";
 import ErrorBoundary from "../ErrorBoundary/ErrorBoundary";
-import * as scripts from "./Three.scripts";
+import * as scripts from "./unfolding-boxes";
 import { useTheme } from "../../themes/Theme";
 
 export type PropTypes = {
@@ -106,47 +101,50 @@ export const RuntimeComponent = ({
     );
   }, []);
 
-  const renderFrame = useCallback((deltaTime: number) => {
-    const destCtx = canvas.current?.getContext("2d");
-    if (!canvas.current || !destCtx) return;
-    if (clock) clock.getElapsedTime();
+  const renderFrame = useCallback(
+    (deltaTime: number) => {
+      const destCtx = canvas.current?.getContext("2d");
+      if (!canvas.current || !destCtx) return;
+      if (clock) clock.getElapsedTime();
 
-    if (onRender) onRender({ scene, clock, theme });
+      if (onRender) onRender({ scene, clock, theme });
 
-    destCtx.clearRect(0, 0, destCtx.canvas.width, destCtx.canvas.height);
-    contexts.current.forEach((ctx) => {
-      const { leftPrct, topPrct, renderer } = ctx;
-      if (!renderer?.domElement || !canvas.current) return;
-      ctx.render(deltaTime);
+      destCtx.clearRect(0, 0, destCtx.canvas.width, destCtx.canvas.height);
+      contexts.current.forEach((ctx) => {
+        const { leftPrct, topPrct, renderer } = ctx;
+        if (!renderer?.domElement || !canvas.current) return;
+        ctx.render(deltaTime);
 
-      try {
-        const { width: dw, height: dh } = canvas.current;
-        const { width: sw, height: sh } = renderer.domElement;
-        destCtx?.drawImage(
-          renderer.domElement,
-          0,
-          0,
-          sw,
-          sh,
-          leftPrct * 0.01 * dw,
-          topPrct * 0.01 * dh,
-          sw,
-          sh
-        );
-      } catch (e) { }
-    });
-  }, [clock, onRender, scene, theme]);
+        try {
+          const { width: dw, height: dh } = canvas.current;
+          const { width: sw, height: sh } = renderer.domElement;
+          destCtx?.drawImage(
+            renderer.domElement,
+            0,
+            0,
+            sw,
+            sh,
+            leftPrct * 0.01 * dw,
+            topPrct * 0.01 * dh,
+            sw,
+            sh
+          );
+        } catch (e) {}
+      });
+    },
+    [clock, onRender, scene, theme]
+  );
 
   useAnimationFrame(renderFrame);
 
-  const handleClick = useCallback<PointerHandler<'click'>>((evt) => {
-    console.info('clicked', evt)
-    if (scripts.onClick) scripts.onClick(evt)
-  }, [])
+  const handleClick = useCallback<PointerHandler<"click">>((evt) => {
+    // console.info('clicked', scripts.onClick, evt)
+    if (scripts.onClick) scripts.onClick(evt);
+  }, []);
 
-  const handlePointerEvent = useCallback<PointerHandler<'pointerenter' | 'pointerleave' | 'pointermove'>>(({ type, object, vector }) => {
-    console.info(type, vector.x, vector.y, object)
-  }, [])
+  // const handlePointerEvent = useCallback<PointerHandler<'pointerenter' | 'pointerleave' | 'pointermove'>>(({ type, object, vector }) => {
+  //   console.info(type, vector.x, vector.y, object)
+  // }, [])
 
   const ratio = width / height;
   let canvases = [
@@ -258,16 +256,17 @@ export const RuntimeComponent = ({
 export const Three = ({ onMount, onRender }: PropTypes) => {
   const [ref, rect] = useResizeObserver();
   const { classes } = useStyles();
-
+  const width = Math.floor(rect.width);
+  const height = Math.floor(rect.height);
   return (
     <div ref={ref} className={classes.root}>
       <ErrorBoundary>
-        <Scene width={Math.floor(rect.width)} height={Math.floor(rect.height)}>
+        <Scene width={width} height={height}>
           <RuntimeComponent
             onMount={onMount || scripts.onMount}
             onRender={onRender || scripts.onRender}
-            width={Math.floor(rect.width)}
-            height={Math.floor(rect.height)}
+            width={width}
+            height={height}
           />
         </Scene>
       </ErrorBoundary>

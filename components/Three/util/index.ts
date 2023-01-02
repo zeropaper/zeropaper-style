@@ -1,4 +1,8 @@
-export { updateCamera, updateCameraSide, updateCameraTop } from "./updateCamera";
+export {
+  updateCamera,
+  updateCameraSide,
+  updateCameraTop,
+} from "./updateCamera";
 export { ensure } from "./ensure";
 export { ensureSceneHelper } from "./ensureSceneHelper";
 export { ensureSpotLight } from "./ensureSpotLight";

@@ -259,8 +259,8 @@ export const onRender = (ctx: SceneCtx) => {
 
   (
     scene.getObjectByName("spot-light-helper") as
-    | THREE.SpotLightHelper
-    | undefined
+      | THREE.SpotLightHelper
+      | undefined
   )?.update();
 
   const fraction = 1 - ((now * 0.1) % 1);
@@ -280,3 +280,7 @@ export const onRender = (ctx: SceneCtx) => {
   frameCounter += 1;
   prevNow = now;
 };
+
+export const onPointerEnter = (evt: any) => {};
+export const onPointerLeave = (evt: any) => {};
+export const onClick = (evt: any) => {};
