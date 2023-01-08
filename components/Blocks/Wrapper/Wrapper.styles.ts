@@ -1,10 +1,67 @@
-import { createStyles, CSSObject } from "@mantine/core";
+import { createStyles, CSSObject, MantineTheme } from "@mantine/core";
+
+const patterns = {
+  isometric: (theme: MantineTheme) => {
+    const color = theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[1];
+    const colorFaded = theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[2];
+    return {
+      backgroundSize: '20px 35px',
+      backgroundPosition: '0 0, 0 0, 10px 18px, 10px 18px, 0 0, 10px 18px',
+      backgroundImage: `linear-gradient(
+        30deg,
+        ${color} 12%,
+        transparent 12.5%,
+        transparent 87%,
+        ${color} 87.5%,
+        ${color}
+      ),
+      linear-gradient(
+        150deg,
+        ${color} 12%,
+        transparent 12.5%,
+        transparent 87%,
+        ${color} 87.5%,
+        ${color}
+      ),
+      linear-gradient(
+        30deg,
+        ${color} 12%,
+        transparent 12.5%,
+        transparent 87%,
+        ${color} 87.5%,
+        ${color}
+      ),
+      linear-gradient(
+        150deg,
+        ${color} 12%,
+        transparent 12.5%,
+        transparent 87%,
+        ${color} 87.5%,
+        ${color}
+      ),
+      linear-gradient(
+        60deg,
+        ${colorFaded} 25%,
+        transparent 25.5%,
+        transparent 75%,
+        ${colorFaded} 75%,
+        ${colorFaded}
+      ),
+      linear-gradient(
+        60deg,
+        ${colorFaded} 25%,
+        transparent 25.5%,
+        transparent 75%,
+        ${colorFaded} 75%, ${colorFaded}
+      )`,
+    }
+  }
+} as const
 
 export default createStyles(
-  ({ spacing, colors, primaryColor, colorScheme, fn }) => {
+  (theme) => {
+    const { spacing, colors, primaryColor, colorScheme, fn } = theme;
     const size = spacing.xl * 2;
-    const top = "polygon(0 100%,100% 0,100% 100%)";
-    const bottom = "polygon(0 0,100% 0,0 100%)";
 
     return {
       root: {
@@ -18,7 +75,7 @@ export default createStyles(
 
         ...Object.keys(colors).reduce((acc, key) => {
           acc[`&.${key}`] = {
-            background: fn[colorScheme === "dark" ? "darken" : "lighten"](
+            backgroundColor: fn[colorScheme === "dark" ? "darken" : "lighten"](
               colors[key][4],
               0.75
             ),
@@ -26,7 +83,7 @@ export default createStyles(
           return acc;
         }, {} as { [key: string]: CSSObject }),
         ["&.primary"]: {
-          background: fn[colorScheme === "dark" ? "darken" : "lighten"](
+          backgroundColor: fn[colorScheme === "dark" ? "darken" : "lighten"](
             colors[primaryColor][4],
             0.75
           ),
@@ -36,34 +93,21 @@ export default createStyles(
         padding: 0,
       },
       decoSlant: {
-        margin: `calc(${size}px - 3px) auto`,
         zIndex: 1,
-        "&::before,&::after": {
-          content: '""',
-          left: 0,
-          width: "100%",
-          right: 0,
-          height: size,
-          position: "absolute",
-          zIndex: 0,
-          backgroundColor: "inherit",
-        },
-        "&::before": {
-          clipPath: top,
-          bottom: "calc(100% - 1px)",
-        },
-        "&::after": {
-          clipPath: bottom,
-          top: "calc(100% - 1px)",
-        },
-        "& + $root:not($decoSlant)": {
-          marginTop: `calc(-1 * ${size}px)`,
-          paddingTop: `calc(2 * ${size}px)`,
-          zIndex: 0,
-        },
+        clipPath: `polygon(
+          0% ${size}px,
+          100% 0%,
+          100% calc(100% - ${size}px),
+          0% 100%
+        )`,
+        margin: `0 auto calc(-1 * (${size}px + 1px)) auto`,
       },
+      pattern: patterns.isometric(theme),
       inner: {
         margin: `calc(${size}px - 1px) auto`,
+      },
+      innerPlain: {
+        margin: `0 auto`,
       },
     };
   }

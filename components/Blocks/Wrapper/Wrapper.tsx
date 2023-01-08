@@ -39,12 +39,13 @@ export const Wrapper = ({
       [classes.decoSlant]: !plain && slant,
       [`${background}`]: !plain && !!background,
     },
+    // classes.pattern,
     passedClasses.root,
     className
   );
   const innerClasses = cx(
     layoutClasses.inner,
-    classes.inner,
+    plain ? classes.innerPlain : classes.inner,
     passedClasses.inner,
     innerClassName
   );
