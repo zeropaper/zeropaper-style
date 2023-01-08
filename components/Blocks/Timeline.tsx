@@ -188,7 +188,10 @@ const useTimelineStyles = createStyles<
       },
     },
     introduction: {
+      fontSize: "1.2rem",
       overflow: "hidden",
+      maxWidth: 600,
+      margin: "0 auto",
     },
     item: {
       ref: getRef("item"),
