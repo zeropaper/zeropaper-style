@@ -27,7 +27,6 @@ export default createStyles(
       },
     };
     const backgroundColor = colorScheme === "light" ? white : colors.dark[7];
-    const transition = `background-color ${transitionDuration} ${transitionTimingFunction}`;
     return {
       root,
       inner,
@@ -38,7 +37,6 @@ export default createStyles(
       },
       header: {
         backgroundColor,
-        transition,
         position: "sticky",
         top: 0,
         zIndex: 900,
@@ -49,12 +47,10 @@ export default createStyles(
       },
       main: {
         backgroundColor,
-        transition,
       },
       content: {},
       footer: {
         backgroundColor,
-        transition,
         position: "sticky",
         bottom: 0,
         zIndex: 100,
