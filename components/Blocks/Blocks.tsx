@@ -15,7 +15,6 @@ const Debug = (props: any) => (
   </details>
 );
 
-const Hero = LinkCard;
 const Features = LinkCard;
 export type BlocksProps = {
   blocks: LandingPage["blocks"];
@@ -67,11 +66,12 @@ export const Blocks = (props: BlocksProps) => {
               </Wrapper>
             );
           default:
-            return (
-              <React.Fragment
-                key={i + type}
-              >{`Unknown "${type}" block type`}</React.Fragment>
-            );
+            if (process.env.NODE_ENV === "development") {
+              return (
+                <Debug key={i + type} block={block} />
+              );
+            }
+            return null;
         }
       })}
     </>
