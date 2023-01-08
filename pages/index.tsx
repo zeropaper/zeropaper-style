@@ -74,22 +74,25 @@ const Three = dynamic(() => import("../components/Three/Three"), {
   loading: Loader,
 });
 
-function getFirstMarkdownBlock<A extends ({ __typename: string, content?: any } | null | undefined)[]>(blocks: A) {
-  return blocks.find((block) => block
-    && block.__typename === "LandingPageBlocksMarkdown"
-    && block.content) as { content: TinaMarkdownContent | TinaMarkdownContent[] } | undefined;
+function getFirstMarkdownBlock<
+  A extends ({ __typename: string; content?: any } | null | undefined)[]
+>(blocks: A) {
+  return blocks.find(
+    (block) =>
+      block && block.__typename === "LandingPageBlocksMarkdown" && block.content
+  ) as { content: TinaMarkdownContent | TinaMarkdownContent[] } | undefined;
 }
 
 function LandingPageModal({
   content,
   classes,
-  onClose
+  onClose,
 }: {
   content: ReactNode;
   classes: {
     [k: string]: string;
   };
-  onClose: () => void
+  onClose: () => void;
 }) {
   return (
     <Paper p="md" withBorder className={classes.paper}>
@@ -102,14 +105,12 @@ function LandingPageModal({
         <IconX />
       </ActionIcon>
       <Title>Hello</Title>
-      <Text sx={{ maxWidth: 350 }}>
-        {content}
-      </Text>
+      <Text sx={{ maxWidth: 350 }}>{content}</Text>
       <Box className={classes.readMoreWrapper}>
         <Link href="/hello">Read more</Link>
       </Box>
     </Paper>
-  )
+  );
 }
 
 const Home = (props: AsyncReturnType<typeof getStaticProps>["props"]) => {
@@ -126,9 +127,7 @@ const Home = (props: AsyncReturnType<typeof getStaticProps>["props"]) => {
   if (Array.isArray(data.landingPage.blocks)) {
     const markdownBlock = getFirstMarkdownBlock(data.landingPage.blocks);
     if (markdownBlock?.content) {
-      content = (
-        <MDXRenderer content={markdownBlock.content} />
-      )
+      content = <MDXRenderer content={markdownBlock.content} />;
     }
   }
   const [overlayVisible, setOverlayVisible] = useState(true);

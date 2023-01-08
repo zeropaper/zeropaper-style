@@ -12,7 +12,7 @@ const IFrameWrapper = (
     src: string;
     id?: string;
     title: string;
-    open?: boolean
+    open?: boolean;
   }>
 ) => {
   const { children, title, src, id } = props;

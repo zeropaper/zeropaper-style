@@ -5,8 +5,7 @@ import {
 } from "tinacms/dist/rich-text";
 import Link from "../Link/Link";
 
-const mdComponents: Components<{
-}> = {
+const mdComponents: Components<{}> = {
   a: ({ type, url, children, ...props }: any) => (
     <Link {...props} href={url || "#"}>
       {children}

@@ -46,7 +46,7 @@ const Footer = ({
   const { classes, cx } = useStyles();
   return (
     <footer className={cx(className, classes.root, passedClasses?.root)}>
-      <div className={cx('inner-layout', classes.inner, passedClasses?.inner)}>
+      <div className={cx("inner-layout", classes.inner, passedClasses?.inner)}>
         <Link
           className={cx(classes.column, passedClasses?.column)}
           href="/no-cookies"
@@ -54,12 +54,14 @@ const Footer = ({
           No Cookies
         </Link>
 
-        {hideSocialNetworks ? null : <SocialNetworks
-          className={cx(classes.column, passedClasses?.column)}
-          classes={{
-            list: classes.snList,
-          }}
-        />}
+        {hideSocialNetworks ? null : (
+          <SocialNetworks
+            className={cx(classes.column, passedClasses?.column)}
+            classes={{
+              list: classes.snList,
+            }}
+          />
+        )}
       </div>
     </footer>
   );
@@ -71,13 +73,13 @@ export const footerSchema: TinaField = {
   name: "footer",
   fields: [
     {
-      name: 'hideSocialNetworks',
-      label: 'Hide Social Networks',
-      type: 'boolean',
+      name: "hideSocialNetworks",
+      label: "Hide Social Networks",
+      type: "boolean",
       ui: {
         defaultValue: true,
-      }
-    }
+      },
+    },
   ],
 };
 

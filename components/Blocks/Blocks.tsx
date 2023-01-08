@@ -24,7 +24,7 @@ export type BlocksProps = {
 function tinaFieldName(tinaField: string, i: number, type: string) {
   return [tinaField, i]
     .filter((v) => typeof v !== undefined && v !== null)
-    .join(".")
+    .join(".");
 }
 export const Blocks = (props: BlocksProps) => {
   const { classes } = useLayoutStyles();
@@ -67,9 +67,7 @@ export const Blocks = (props: BlocksProps) => {
             );
           default:
             if (process.env.NODE_ENV === "development") {
-              return (
-                <Debug key={i + type} block={block} />
-              );
+              return <Debug key={i + type} block={block} />;
             }
             return null;
         }

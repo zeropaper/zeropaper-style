@@ -151,13 +151,13 @@ export type HeaderProps = React.Attributes &
 const Header = ({
   classes: passedClasses,
   className,
-  title = 'zeropaper',
-  linkTitle = 'Valentin “zeropaper” Vago'
+  title = "zeropaper",
+  linkTitle = "Valentin “zeropaper” Vago",
 }: HeaderProps) => {
   const { classes, cx } = useStyles();
   return (
     <header className={cx(className, classes.root, passedClasses?.root)}>
-      <div className={cx('inner-layout', classes.inner, passedClasses?.inner)}>
+      <div className={cx("inner-layout", classes.inner, passedClasses?.inner)}>
         <h1 className={cx(classes.title, passedClasses?.title)}>
           <Link
             className={cx(classes.titleLink, passedClasses?.titleLink)}
@@ -192,15 +192,15 @@ export const headerSchema: TinaField = {
   name: "header",
   fields: [
     {
-      type: 'string',
-      name: 'title',
-      label: 'Title',
+      type: "string",
+      name: "title",
+      label: "Title",
     },
     {
-      type: 'string',
-      name: 'linkTitle',
-      label: 'Link Title',
-    }
+      type: "string",
+      name: "linkTitle",
+      label: "Link Title",
+    },
   ],
 };
 

@@ -66,9 +66,9 @@ export const menuSchema: TinaField = {
   name: "menu",
   fields: [
     {
-      type: 'object',
-      name: 'links',
-      label: 'Links',
+      type: "object",
+      name: "links",
+      label: "Links",
       list: true,
       ui: {
         defaultItem: {
@@ -88,7 +88,7 @@ export const menuSchema: TinaField = {
           name: "label",
         },
       ],
-    }
+    },
   ],
 };
 

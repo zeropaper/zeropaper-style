@@ -1,4 +1,12 @@
-import { Text, Box, createStyles, Title, Paper, Group, Button } from "@mantine/core";
+import {
+  Text,
+  Box,
+  createStyles,
+  Title,
+  Paper,
+  Group,
+  Button,
+} from "@mantine/core";
 import { MDXRenderer } from "components/MDXRenderer/MDXRenderer";
 import { useState } from "react";
 
@@ -180,8 +188,9 @@ const useTimelineStyles = createStyles<
           flexDirection: "row",
         },
       },
-      [`& > .${getRef("item")}:${reverse ? "first" : "last"
-        }-of-type > div:nth-of-type(1)`]: {
+      [`& > .${getRef("item")}:${
+        reverse ? "first" : "last"
+      }-of-type > div:nth-of-type(1)`]: {
         "&::before,&::after": {
           display: "none",
         },
@@ -211,21 +220,20 @@ const useTimelineStyles = createStyles<
   };
 });
 
-export function Timeline({ block: { introduction, items } }: {
+export function Timeline({
+  block: { introduction, items },
+}: {
   block: {
     introduction: any;
-    items: any[]
-  }
+    items: any[];
+  };
 }) {
   const [reverse, setReverse] = useState(true);
 
   const { classes } = useTimelineStyles({ reverse });
   return (
     <>
-      <Box
-        component="section"
-        className={classes.introduction}
-      >
+      <Box component="section" className={classes.introduction}>
         {introduction ? <MDXRenderer content={introduction} /> : null}
       </Box>
 
@@ -241,7 +249,11 @@ export function Timeline({ block: { introduction, items } }: {
 
       <Box className={classes.root}>
         {items.map((item: any) => (
-          <TimelineItem className={classes.item} key={JSON.stringify(item.text)} {...item} />
+          <TimelineItem
+            className={classes.item}
+            key={JSON.stringify(item.text)}
+            {...item}
+          />
         ))}
       </Box>
     </>

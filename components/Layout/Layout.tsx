@@ -33,7 +33,7 @@ export const LayoutContentWrapper = ({
     className
   );
   const contentClass = cx(
-    'inner-layout',
+    "inner-layout",
     classes.inner,
     classes.content,
     passedClasses?.content
@@ -45,7 +45,12 @@ export const LayoutContentWrapper = ({
   );
 };
 
-const Layout = ({ children, classes: passedClasses, header, footer }: LayoutProps) => {
+const Layout = ({
+  children,
+  classes: passedClasses,
+  header,
+  footer,
+}: LayoutProps) => {
   const { classes, cx } = useStyles();
   const commonClasses = {
     root: classes.root,

@@ -23,9 +23,22 @@ export default {
       control: {
         type: "select",
         options: [
-          "dark", "gray", "red", "pink", "grape", "violet", "indigo", "blue", "cyan", "green", "lime", "yellow", "orange", "teal"
-        ]
-      }
+          "dark",
+          "gray",
+          "red",
+          "pink",
+          "grape",
+          "violet",
+          "indigo",
+          "blue",
+          "cyan",
+          "green",
+          "lime",
+          "yellow",
+          "orange",
+          "teal",
+        ],
+      },
     },
   },
   args: {

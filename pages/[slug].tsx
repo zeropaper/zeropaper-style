@@ -4,7 +4,10 @@ import { useRouter } from "next/router";
 import { useTina } from "tinacms/dist/react";
 
 import Grid from "../components/Grid/Grid";
-import { LayoutContentWrapper, useStyles as useLayoutStyles } from "../components/Layout/Layout";
+import {
+  LayoutContentWrapper,
+  useStyles as useLayoutStyles,
+} from "../components/Layout/Layout";
 import { MDXRenderer } from "../components/MDXRenderer/MDXRenderer";
 import filterUnpublished from "../lib/filterUnpublished";
 import { getPageContext } from "../lib/getPageContext";
@@ -17,7 +20,7 @@ import getGlobal from "../lib/getGlobal";
 export default function Page(
   props: AsyncReturnType<typeof getStaticProps>["props"]
 ) {
-  const { classes } = useLayoutStyles()
+  const { classes } = useLayoutStyles();
   const { data } = useTina({
     query: props.query,
     variables: props.variables,
@@ -47,7 +50,9 @@ export default function Page(
       ) : (
         <>
           <main id="page-content">
-            <h1 data-tinafield="title" className={classes.inner}>{title}</h1>
+            <h1 data-tinafield="title" className={classes.inner}>
+              {title}
+            </h1>
 
             <Grid blocks={blocks || []} />
           </main>
@@ -92,8 +97,9 @@ export const getStaticProps = async ({ params }: { params: any }) => {
 export async function getStaticPaths() {
   try {
     const res = await getPageContext();
-    const filtered = filterUnpublished(Object.values(res))
-      .filter((page) => !['index'].includes(page.slug));
+    const filtered = filterUnpublished(Object.values(res)).filter(
+      (page) => !["index"].includes(page.slug)
+    );
     return {
       paths: filtered.map(({ slug }) => `/${slug}`),
       fallback: false,

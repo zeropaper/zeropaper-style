@@ -38,8 +38,9 @@ export function PinnedStuff(props: PropTypes) {
             style={{
               width: "100%",
               height: "auto",
-              objectFit: "cover"
-            }} />
+              objectFit: "cover",
+            }}
+          />
         ) : null}
       </Paper>
     </Grid.Col>
