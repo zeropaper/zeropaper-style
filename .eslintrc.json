@@ -1,20 +1,29 @@
 {
-  "extends": "next/core-web-vitals",
+  "extends": [
+    "next/core-web-vitals",
+    "prettier"
+  ],
   "overrides": [
     {
       "files": "**/*.test.{ts,tsx}",
-      "plugins": ["jest"],
+      "plugins": [
+        "jest"
+      ],
       "env": {
         "jest/globals": true
       },
-      "extends": ["plugin:jest/all"],
+      "extends": [
+        "plugin:jest/all"
+      ],
       "rules": {
         "jest/prefer-lowercase-title": "off"
       }
     },
     {
       "files": "**/*.stories.tsx",
-      "extends": ["plugin:storybook/recommended"]
+      "extends": [
+        "plugin:storybook/recommended"
+      ]
     }
   ]
 }
