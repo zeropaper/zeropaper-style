@@ -11,6 +11,13 @@
       "introduction": "My name is Valentin.\\\nI was born in the French speaking part of Switzerland in the early\n80's but I lived in Berlin nearly half my life.\\\nI speak fluently French, English and German.\\\nProfessionally, I consider myself a digital craftsman and\npersonally, a creative coder.\n\nI am currently exploring the potential paths my career could take\nand updating my skills.\\\nIf you believe I can add value to your product and your\ncompany, [please get in touch on LinkedIn](https://www.linkedin.com/in/vvago).\n",
       "items": [
         {
+          "title": "Technical drawer",
+          "text": "Architecture has been my first professional orientation and, in its essence, is still very influential.\n\nPlanning, describing and elaborating complex concepts while adding some form of elegance to it.\n\nI learn technical drawing with pen and paper but got into 3D and coding with OpenGL in the early versions of design assisted softwares like ArchiCAD.\n",
+          "from": "1994",
+          "to": "1999",
+          "_template": "timelineItem"
+        },
+        {
           "title": "Multimedia Designer",
           "text": "I began creating with softwares like 3D Studio Max and Photoshop, Illustrator, After Effects, Flash and the likes. Although I was still studying, it's around that time that I wrote my first invoices and started working on my first website and took the 'zeropaper' alias.\n",
           "from": "2001",
