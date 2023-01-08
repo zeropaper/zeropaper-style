@@ -4,12 +4,12 @@ import * as THREE from "three";
 export function updateCamera(scene: SceneCtx["scene"]) {
   const camera = scene.getObjectByName("camera");
 
-  if (!camera)
-    return;
+  if (!camera) return;
+  const target = scene.getObjectByName("camera-target") as THREE.Group;
   camera.position.x = camera.position.x || -15;
   camera.position.y = camera.position.y || 15;
   camera.position.z = camera.position.z || -15;
-  camera.lookAt(scene.position);
+  camera.lookAt(target.position);
   // camera.updateMatrix()
   return camera;
 }
