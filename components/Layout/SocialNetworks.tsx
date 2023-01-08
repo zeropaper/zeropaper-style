@@ -61,7 +61,7 @@ const SocialNetworks = ({
             rel="me"
             href="https://mastodon.xyz/@zeropaper"
           >
-            <Mastodon className={classes.icon} />
+            <Mastodon width="1.25rem" height="1.25rem" className={classes.icon} />
           </ExternalLink>
         </li>
         <li className={classes.item}>
@@ -70,7 +70,7 @@ const SocialNetworks = ({
             rel="me"
             href="https://twitter.com/zeropaper"
           >
-            <Twitter className={classes.icon} />
+            <Twitter width="1.25rem" height="1.25rem" className={classes.icon} />
           </ExternalLink>
         </li>
         <li className={classes.item}>
@@ -79,7 +79,7 @@ const SocialNetworks = ({
             rel="me"
             href="https://github.com/zeropaper"
           >
-            <GitHub className={classes.icon} />
+            <GitHub width="1.25rem" height="1.25rem" className={classes.icon} />
           </ExternalLink>
         </li>
         <li className={classes.item}>
@@ -88,7 +88,7 @@ const SocialNetworks = ({
             rel="me"
             href="https://www.linkedin.com/in/vvago"
           >
-            <LinkedIn className={classes.icon} />
+            <LinkedIn width="1.25rem" height="1.25rem" className={classes.icon} />
           </ExternalLink>
         </li>
       </ul>
