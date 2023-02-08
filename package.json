@@ -29,7 +29,7 @@
     "@mantine/hooks": "5.10.0",
     "@mantine/next": "5.10.0",
     "@tabler/icons": "1.119.0",
-    "@tinacms/cli": "^1.0.5",
+    "@tinacms/cli": "^1.0.9",
     "axios": "1.2.2",
     "next": "13.1.1",
     "react": "18.2.0",
